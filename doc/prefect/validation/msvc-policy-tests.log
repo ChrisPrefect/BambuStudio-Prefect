@@ -1,0 +1,49 @@
+Native Windows policy tests (dependency-free; does not establish a full GUI build)
+UTC: 2026-10-20T22:44:37.9975792+00:00
+Repository HEAD: aefb764d3a36e05004ec82e20ddf37714ce718a7
+Compiler: Microsoft MSVC x64 19.50.35739, linker 14.50.35739
+Compiler SHA256: CB461B804D4792DB79046C59E17C42A0214CD5112560486114EBE52FCEC107AD
+Linker SHA256: 7BA9173DC57AAA229F122A5D8D27A99E1357C83723A461F7B06765367DBF88EE
+SDK: Microsoft.Windows.SDK.CPP + CPP.x64 10.0.26100.9169
+Portable binary paths represented by CXX and TEST_BIN to omit machine-specific user paths. Build output is B:/compiler-probe.
+
+TEST: background_test
+SOURCE SHA256: 18E9E377844CAC7FB429B2BF778A58F6992BEEC87AA550B450C607D331D97516
+COMMAND: & $env:CXX /nologo /MD /EHsc /std:c++17 /utf-8 /W4 /WX /FeB:/compiler-probe/background_test_v145.exe /FoB:/compiler-probe/background_test_v145.obj tests/prefect/background_test.cpp
+background_test.cpp
+COMPILE EXIT: 0
+EXE SHA256: 5B08CA0E3572DCCC36D33CF408B3A0E0DEB33A0C3DD1AE1F313B5228D13B6A4F
+COMMAND: & "$env:TEST_BIN/background_test_v145.exe"
+Background slicing lifecycle policy: all regression checks passed
+TEST EXIT: 0
+
+TEST: filament_sync_test
+SOURCE SHA256: 9A3E71A3AE7591E1965FE4E1D2E428D008A56D2C68B54987118F9FA695061709
+COMMAND: & $env:CXX /nologo /MD /EHsc /std:c++17 /utf-8 /W4 /WX /FeB:/compiler-probe/filament_sync_test_v145.exe /FoB:/compiler-probe/filament_sync_test_v145.obj tests/prefect/filament_sync_test.cpp
+filament_sync_test.cpp
+COMPILE EXIT: 0
+EXE SHA256: B3E2B76F1D92EF8CBC0816D727D66E3F82F785A6A116B25B436B6AD5131721E3
+COMMAND: & "$env:TEST_BIN/filament_sync_test_v145.exe"
+TEST EXIT: 0
+
+TEST: simple_fields_test
+SOURCE SHA256: 575AB0BD8ABA658940162F3AF2CE4E41B52B2A90E91E67795EE362FF1A8CAAD7
+COMMAND: & $env:CXX /nologo /MD /EHsc /std:c++17 /utf-8 /W4 /WX /FeB:/compiler-probe/simple_fields_test_v145.exe /FoB:/compiler-probe/simple_fields_test_v145.obj tests/prefect/simple_fields_test.cpp
+simple_fields_test.cpp
+COMPILE EXIT: 0
+EXE SHA256: D500EF7A3C6646DF97D08A6767BA301DB68FA600017E1D05D7155CE7139D1993
+COMMAND: & "$env:TEST_BIN/simple_fields_test_v145.exe"
+Simple field policy: all regression checks passed
+TEST EXIT: 0
+
+TEST: workflow_test
+SOURCE SHA256: 3DA6EFE8664E8A6EC2253225F3C2C7AD545B61C745F8CCAB7DA3CF88EE19F806
+COMMAND: & $env:CXX /nologo /MD /EHsc /std:c++17 /utf-8 /W4 /WX /FeB:/compiler-probe/workflow_test_v145.exe /FoB:/compiler-probe/workflow_test_v145.obj tests/prefect/workflow_test.cpp
+workflow_test.cpp
+COMPILE EXIT: 0
+EXE SHA256: 546916821EA3CFDC70975DB7D99916B883292A6CE99CA08780E90FF20B5C2622
+COMMAND: & "$env:TEST_BIN/workflow_test_v145.exe"
+Cold-pull reminder policy: all regression checks passed
+TEST EXIT: 0
+
+RESULT: 4/4 native policy tests compiled, linked and executed successfully.

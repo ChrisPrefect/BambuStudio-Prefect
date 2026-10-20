@@ -1,0 +1,24 @@
+{
+  "source_head": "aefb764d3a36e05004ec82e20ddf37714ce718a7",
+  "source_tree": "587565647fc3d2f36bf1533b4263d2b23fcad4dd",
+  "commits": [
+    {
+      "local": "28cd37152ba37b66ae4ef8891504efd6d5e51ab1",
+      "remote": "2b4187439a730f620ffff52c0d828a8f19ad1018",
+      "tree": "fd63edf77a6e4d9407b6084c9a432ff3f74a8575",
+      "message": "Prefect: adapt Windows CI to installed Visual Studio and verified upstream deps"
+    },
+    {
+      "local": "2bcab0e8a5fd0ffd5db74b173d0118e43714b311",
+      "remote": "8862ffb3d4f9968c932132e28edc135399603361",
+      "tree": "313f0b9530ea03a068911588834b70c3d127cfb3",
+      "message": "Prefect: guard filament actions in plain G-code preview as well as sliced 3MF"
+    },
+    {
+      "local": "b3b72be9b564a5c3887d0b846fba117e297db5fb",
+      "remote": "aefb764d3a36e05004ec82e20ddf37714ce718a7",
+      "tree": "587565647fc3d2f36bf1533b4263d2b23fcad4dd",
+      "message": "Prefect: assign only editable model selections and describe the fork on its homepage"
+    }
+  ]
+}

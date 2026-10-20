@@ -23,7 +23,8 @@
       "tests": [
         "tests/prefect/filament_sync_test.cpp"
       ],
-      "commit": "7bde42eed27083591b1c26ffedf3441636ff1620"
+      "commit": "7bde42eed27083591b1c26ffedf3441636ff1620",
+      "follow_up_commits": ["8862ffb3d4f9968c932132e28edc135399603361"]
     },
     {
       "id": "F02",
@@ -102,7 +103,8 @@
           "text": "prefect_click_filament_assigns_selection"
         }
       ],
-      "commit": "259a5f96c6124102d6865d8b08b82ebbf62abf76"
+      "commit": "259a5f96c6124102d6865d8b08b82ebbf62abf76",
+      "follow_up_commits": ["8862ffb3d4f9968c932132e28edc135399603361", "aefb764d3a36e05004ec82e20ddf37714ce718a7"]
     },
     {
       "id": "F06",
@@ -119,7 +121,8 @@
           "text": "Set as support interface"
         }
       ],
-      "commit": "8e00cd6931e28b38966ffbf502d82b1f5f4546c6"
+      "commit": "8e00cd6931e28b38966ffbf502d82b1f5f4546c6",
+      "follow_up_commits": ["8862ffb3d4f9968c932132e28edc135399603361"]
     },
     {
       "id": "F07",

@@ -24,3 +24,15 @@ Die maschinenlesbare Feature-Zuordnung steht in [changes.json](changes.json).
 Details zum Rebase und Patch-Export stehen in [UPSTREAM-UPDATES.md](UPSTREAM-UPDATES.md).
 
 Die unveränderten ursprünglichen lokalen Commit-IDs und ihre GitHub-Zuordnung stehen in [remote-commits.json](remote-commits.json). Die Originalserie ist lokal unter `prefect/local-series-20261021` gesichert; die Tree-SHAs jeder Stufe stimmen überein.
+
+Ergänzende Commits nach der ersten Feature-Serie:
+
+| Commit | Bedeutung beim Nachtragen |
+| --- | --- |
+| `2b4187439a730f620ffff52c0d828a8f19ad1018` | CI-Compiler automatisch erkennen; nur exakt passende offizielle Abhängigkeiten wiederverwenden; GitHub-Commitzuordnung dokumentieren |
+| `8862ffb3d4f9968c932132e28edc135399603361` | F01/F05/F06 zusätzlich vor Änderungen in reinen G-Code-Ansichten schützen |
+| `aefb764d3a36e05004ec82e20ddf37714ce718a7` | F05 auf tatsächlich zuweisbare Modellzeilen begrenzen, Erfolg zurückmelden und nutzlosen Undo-Eintrag vermeiden; Fork-Startseite und Abhängigkeits-Layoutprüfung |
+
+Die vollständigen 17 Stufen dieser Serie wurden sowohl als Rohdiffs als auch
+als exportierte Format-Patches erneut angewendet. Alle Zwischen- und Endtrees
+stimmen überein: [Nachweis](validation/patch-replay.md).

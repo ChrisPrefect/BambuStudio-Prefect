@@ -121,6 +121,28 @@ erfolgreiches Linken. Der Audit ersetzt deshalb keinen Compilerlauf der GUI.
   Sichtbarkeit gemeinsamer Optionszeilen. Daraus wird kein Laufzeitnachweis
   abgeleitet.
 
+## Zusätzlicher nativer Windows-Lauf und Patch-Rekonstruktion
+
+Der Quellstand `aefb764d3a36e05004ec82e20ddf37714ce718a7` enthält außerdem
+die geprüften G-Code-Ansichts- und Auswahlfilterkorrekturen. Alle vier
+Policytests wurden mit **Microsoft MSVC 19.50.35739 / Linker 14.50.35739**
+erneut kompiliert, gelinkt und ausgeführt: jeweils Compiler- und Test-Exitcode
+**0**. Optionen: `/MD /EHsc /std:c++17 /utf-8 /W4 /WX`; Assertions bleiben
+aktiv. [Originalprotokoll mit Quell-/EXE-/Compiler-Hashes](validation/msvc-policy-tests.log).
+Dieser zusätzliche Lauf ersetzt ebenfalls keinen vollständigen GUI-Build.
+
+Alle **17 Commits** bis zu diesem Stand wurden zweimal auf der unveränderten
+Upstream-Basis rekonstruiert: einmal mit rohen Git-Diffs, einmal mit den
+tatsächlich exportierten Format-Patches. **Alle 34 Treevergleiche bestanden**;
+der Endtree ist `587565647fc3d2f36bf1533b4263d2b23fcad4dd`. Der normale
+Repository-Index blieb unverändert. [Prüfbericht](validation/patch-replay.md),
+[maschinenlesbare Einzelbelege](validation/patch-replay.json) und
+[reproduzierbares Werkzeug](tools/export_and_replay_patches.py).
+Maschinenspezifische Pfadpräfixe sind in den veröffentlichten Belegen durch
+`$CHECKOUT` beziehungsweise `$PATCH_DIR` ersetzt; Inhalts-Hashes und Exitcodes
+bleiben erhalten. Dieser Nachweis betrifft die festgelegte Basis, keine
+behauptete konfliktfreie Anwendung auf eine unbekannte zukünftige Version.
+
 ## Noch ausstehende Nachweise
 
 | Bereich | Status dieses Protokolls | Erforderlicher Nachweis |
