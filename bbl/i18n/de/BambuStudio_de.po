@@ -22670,3 +22670,79 @@ msgstr ""
 
 #~ msgid "⌥+Left mouse button"
 #~ msgstr "⌥+Linke Maustaste"
+
+#. Prefect workflow
+msgid "Workflow"
+msgstr "Workflow"
+
+#. Prefect workflow
+msgid "Prefect workflow"
+msgstr "Prefect-Workflow"
+
+#. Prefect workflow
+msgid "Automatically sync filaments from the selected printer"
+msgstr "Filamente automatisch vom ausgewählten Drucker synchronisieren"
+
+#. Prefect workflow
+msgid "Updates project filaments when AMS or external spool information changes. The printer must be connected."
+msgstr "Übernimmt Änderungen am AMS oder an der externen Spule in die Projektfilamente. Der Drucker muss verbunden sein."
+
+#. Prefect workflow
+msgid "Keep the printer box collapsed"
+msgstr "Drucker-Box immer eingeklappt halten"
+
+#. Prefect workflow
+msgid "Keeps the printer section compact, including after profile changes. Restart Studio after changing this option."
+msgstr "Hält den Druckerbereich auch nach Profilwechseln eingeklappt. Studio nach dem Ändern dieser Option neu starten."
+
+#. Prefect workflow
+msgid "Slice automatically in the background"
+msgstr "Automatisch im Hintergrund slicen"
+
+#. Prefect workflow
+msgid "Slices the current plate after edits using the existing background worker. Print and export still require your action."
+msgstr "Slicet die aktuelle Platte nach Änderungen automatisch im Hintergrund. Drucken und Exportieren werden weiterhin von dir gestartet."
+
+#. Prefect workflow
+msgid "Assign clicked filament to selected objects"
+msgstr "Angeklicktes Filament markierten Objekten zuweisen"
+
+#. Prefect workflow
+msgid "Click a filament colour to assign it to the current object selection. Painting tools keep their own behaviour."
+msgstr "Ein Klick auf ein Filament weist es den markierten Objekten zu. Die Malwerkzeuge behalten ihre eigene Bedienung."
+
+#. Prefect workflow
+msgid "Always import multiple models as separate objects"
+msgstr "Mehrere Modelle immer als einzelne Objekte importieren"
+
+#. Prefect workflow
+msgid "Skips the multipart-object question during model import. Explicit project imports retain their structure."
+msgstr "Überspringt die Frage nach einem Objekt mit mehreren Teilen beim Modellimport. Projektimporte behalten ihre Struktur."
+
+#. Prefect workflow
+msgid "Hide daily tips completely"
+msgstr "Tipps vollständig ausblenden"
+
+#. Prefect workflow
+msgid "Removes the tips panel and its reserved space from slicing notifications and hides the Daily Tips window."
+msgstr "Entfernt die Tipps und deren Platzbedarf aus der Slice-Anzeige und blendet das separate Tipps-Fenster aus."
+
+#. Prefect workflow
+msgid "Hide the TPU cold-pull reminder"
+msgstr "TPU-Cold-Pull-Hinweis ausblenden"
+
+#. Prefect workflow
+msgid "Hides only the cold-pull advisory for TPU. Other material warnings and printer restrictions remain enabled."
+msgstr "Blendet den Cold-Pull-Hinweis für TPU aus. Andere Materialwarnungen und Druckerbeschränkungen bleiben aktiv."
+
+#. Prefect workflow
+msgid "Set as support interface"
+msgstr "Als Supportinterface festlegen"
+
+#. Prefect workflow
+msgid "Use this filament for the support/raft interface in the global process settings"
+msgstr "Dieses Filament in den globalen Prozesseinstellungen für die Support-/Raft-Kontaktfläche verwenden"
+
+#. Prefect workflow
+msgid "Click to assign this filament to selected objects. Shift-click to pick filament color."
+msgstr "Klicken, um markierten Objekten dieses Filament zuzuweisen. Umschalt-Klick öffnet die Farbauswahl."
