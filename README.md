@@ -1,3 +1,20 @@
+# Bambu Studio Prefect
+
+Eigener Workflow-Fork auf Basis von **v02.08.02.61**: automatische Filamentübernahme,
+eigene Felder in der einfachen Ansicht, eingeklappte Drucker-Box,
+Hintergrundslicing, Filamentzuweisung per Klick, Supportinterface-Menü,
+getrennte Modellimporte sowie ausgeblendete TPU-Cold-Pull-Hinweise und Tipps.
+
+[Alle neun Anpassungen und Bedienung](doc/prefect/README.md) ·
+[Änderungen bei Upstream-Updates nachtragen](doc/prefect/UPSTREAM-UPDATES.md) ·
+[Prüfprotokoll](doc/prefect/VALIDATION.md) ·
+[Windows-Builds](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/workflows/prefect-workflow.yml)
+
+Die Fork-Version startet mit einem eigenen Profil über `Start-Prefect.ps1`.
+Ausführbare Builds und deren tatsächlichen Prüfstand nennt das Prüfprotokoll.
+
+---
+
 ![image](https://user-images.githubusercontent.com/106916061/179006347-497d24c0-9bd6-45b7-8c49-d5cc8ecfe5d7.png)
 # BambuStudio
 Bambu Studio is a cutting-edge, feature-rich slicing software.  

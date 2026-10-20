@@ -13,6 +13,13 @@ Ohne Auswahl bleiben die bisherigen Funktionen bestehen. Shift-Klick auf das Far
 Shift-Klick auf den Namen öffnen weiterhin die Profilauswahl. Das `...`-Menü bleibt
 unverändert erreichbar. Bei deaktivierter Option gilt das bisherige Verhalten.
 
+Eine ausschließlich markierte Plattenzeile, eine Einstellungs-/Gruppenzeile oder
+ein Supportblocker/-enforcer gilt nicht als zuweisbare Objektauswahl. Der Klick
+öffnet in diesem Fall wie bisher die Farbe-/Profilauswahl und erzeugt keinen
+wirkungslosen Undo-Eintrag. In gemischten Auswahlen werden nur gültige
+Objekt-/Instanz-/Teil-/Modifier- oder vorhandene Höhenbereichseinträge geändert;
+der bestehende Sonderfall für Schnittverbinder bleibt erhalten.
+
 ## Implementierung
 
 Basis: `v02.08.02.61` / `926a7192574bcb9b3a732e1ec59a46d79cb45466`.
@@ -41,6 +48,11 @@ Die Fehlerkorrekturen im vorhandenen ObjectList-Weg sind Teil dieses Features:
 2. Vor Zugriff auf `volumes[vol_idx]` wurde fälschlich `obj_idx` mit der Anzahl der
    Volumes verglichen. Jetzt werden negative/zu große Objekt- und Volumeindizes
    abgefangen und `vol_idx` gegen die tatsächliche Volumeanzahl geprüft.
+3. Der gemeinsame Zuweisungseinstieg filtert nicht zuweisbare Zeilentypen und
+   veraltete Modellindizes vor jedem Konfigurationszugriff. Der erste gültige
+   Eintrag legt den Undo-Snapshot an. Die Methode liefert nun einen Boolean
+   zurück; nur nach tatsächlich zugelassener Zuweisung wird der Filamentklick
+   konsumiert. Bereits bestehende Aufrufer dürfen den Rückgabewert ignorieren.
 
 ## Nachziehen bei Upstream-Updates
 
@@ -66,6 +78,9 @@ Die Fehlerkorrekturen im vorhandenen ObjectList-Weg sind Teil dieses Features:
 6. Rechts auf Dropdown-Pfeil bzw. mit Shift auf Name klicken: Presetauswahl verfügbar.
 7. Option deaktivieren: bestehende Farbe-/Presetbedienung wiederhergestellt.
 8. Geslicte 3MF/G-code-Vorschau: Klick erzeugt kein neues Projekt.
+9. Nur eine Platte, Einstellungs-/Gruppenzeile oder einen Supportblocker auswählen:
+   Klick ändert keine Modellkonfiguration und erzeugt keinen Undo-Eintrag.
+   Gemischte gültige/ungültige Auswahl: nur zulässige Einträge erhalten das Material.
 
 Diese GUI-Szenarien benötigen einen vollständigen GUI-Build; die lokale Arbeit
 enthält keinen behaupteten Laufzeitnachweis dafür.

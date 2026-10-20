@@ -3,6 +3,7 @@ name: Prefect workflow checks and Windows portable build
 on:
   push:
     branches: ['prefect/**']
+    paths-ignore: ['doc/**', 'README.md']
   pull_request:
     branches: ['prefect/**']
   workflow_dispatch:

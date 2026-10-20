@@ -32,7 +32,8 @@ if ((Get-FileHash -Algorithm SHA256 -LiteralPath $inner).Hash -ne '50DABBD4E85D3
     throw 'Official dependency payload checksum mismatch.'
 }
 Expand-Archive -LiteralPath $inner -DestinationPath (Join-Path $PWD 'out/prefect-deps-stage') -Force
-if (-not (Test-Path 'out/prefect-deps-stage/usr/local/include/boost/version.hpp')) {
+if (-not (Test-Path 'out/prefect-deps-stage/usr/local/include/boost-1_84/boost/version.hpp') -or
+    -not (Test-Path 'out/prefect-deps-stage/usr/local/OpenCVConfig.cmake')) {
     throw 'Unexpected official dependency layout.'
 }
 'PREFECT_DEPS_RESTORED=true' >> $env:GITHUB_ENV

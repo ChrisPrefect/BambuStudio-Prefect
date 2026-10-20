@@ -4202,11 +4202,7 @@ bool Sidebar::assign_filament_to_selection(size_t filament_id)
             return false;
         p->plater->change_extruder_for_assemble_selection(static_cast<int>(filament_id + 1));
     } else {
-        wxDataViewItemArray selection;
-        p->m_object_list->GetSelections(selection);
-        if (selection.IsEmpty())
-            return false;
-        p->m_object_list->set_extruder_for_selected_items(static_cast<int>(filament_id + 1));
+        return p->m_object_list->set_extruder_for_selected_items(static_cast<int>(filament_id + 1));
     }
     return true;
 }

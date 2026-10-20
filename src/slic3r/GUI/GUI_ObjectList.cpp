@@ -6909,43 +6909,59 @@ void ObjectList::on_set_extruder_timer(wxTimerEvent& evt)
 }
 
 // BBS: remove "const" qualifier
-void ObjectList::set_extruder_for_selected_items(const int extruder)
+bool ObjectList::set_extruder_for_selected_items(const int extruder)
 {
     // BBS: check extruder id
     std::vector<std::string> colors = wxGetApp().plater()->get_extruder_colors_from_plater_config();
-    if (extruder > colors.size())
-        return;
+    if (extruder < 0 || static_cast<size_t>(extruder) > colors.size())
+        return false;
 
     wxDataViewItemArray sels;
     GetSelections(sels);
 
     if (sels.empty())
-        return;
+        return false;
 
-    take_snapshot("Change Filaments");
-
+    bool assigned = false;
     for (const wxDataViewItem& sel_item : sels)
     {
         /* We can change extruder for Object/Volume only.
          * So, if Instance is selected, get its Object item and change it
          */
+        if (!sel_item.IsOk())
+            continue;
         ItemType sel_item_type = m_objects_model->GetItemType(sel_item);
         wxDataViewItem item = (sel_item_type & itInstance) ? m_objects_model->GetObject(sel_item) : sel_item;
+        if (!item.IsOk())
+            continue;
         ItemType type = m_objects_model->GetItemType(item);
+        const bool cut_connectors = (type & itInfo) &&
+            m_objects_model->GetInfoItemType(item) == InfoItemType::CutConnectors;
+        // Plate/settings/group/support-info rows are not model assignments.
+        // In particular get_item_config(itPlate) returns a shared dummy config.
+        if (!(type & (itObject | itVolume | itLayer)) && !cut_connectors)
+            continue;
+        const int obj_idx = m_objects_model->GetObjectIdByItem(item);
+        if (obj_idx < 0 || obj_idx >= static_cast<int>(m_objects->size()))
+            continue;
         if (type & itVolume) {
-            const int obj_idx = m_objects_model->GetObjectIdByItem(item);
             int vol_idx = m_objects_model->GetVolumeIdByItem(item);
             vol_idx     = m_objects_model->get_real_volume_index_in_3d(obj_idx, vol_idx);
-            if (obj_idx < 0 || obj_idx >= static_cast<int>(m_objects->size()) || vol_idx < 0 ||
-                vol_idx >= static_cast<int>((*m_objects)[obj_idx]->volumes.size()))
+            if (vol_idx < 0 || vol_idx >= static_cast<int>((*m_objects)[obj_idx]->volumes.size()))
                 continue;
             auto volume_type = (*m_objects)[obj_idx]->volumes[vol_idx]->type();
             if (volume_type != ModelVolumeType::MODEL_PART && volume_type != ModelVolumeType::PARAMETER_MODIFIER)
                 continue;
         }
 
-        if (type & itLayerRoot)
+        if ((type & itLayer) && (*m_objects)[obj_idx]->layer_config_ranges.find(m_objects_model->GetLayerRangeByItem(item)) ==
+                                   (*m_objects)[obj_idx]->layer_config_ranges.end())
             continue;
+
+        if (!assigned) {
+            take_snapshot("Change Filaments");
+            assigned = true;
+        }
 
         // BBS: handle extruder 0 for part, use it's parent extruder
         int new_extruder = extruder;
@@ -6958,8 +6974,7 @@ void ObjectList::set_extruder_for_selected_items(const int extruder)
             }
         }
 
-        if (type & itInfo && m_objects_model->GetInfoItemType(item) == InfoItemType::CutConnectors) {
-            const int obj_idx = m_objects_model->GetObjectIdByItem(item);
+        if (cut_connectors) {
             for (size_t i = 0; i < (*m_objects)[obj_idx]->volumes.size(); i++) {
                 auto mv = (*m_objects)[obj_idx]->volumes[i];
                 if (mv->is_cut_connector()) {
@@ -6991,12 +7006,16 @@ void ObjectList::set_extruder_for_selected_items(const int extruder)
         m_objects_model->SetExtruder(extruder_str, item);
     }
 
+    if (!assigned)
+        return false;
+
     // update scene
     wxGetApp().plater()->get_partplate_list().reset_thumbnail_assembly_view_data();
     wxGetApp().plater()->update();
 
     // BBS: update extruder/filament column
     Refresh();
+    return true;
 }
 
 void ObjectList::on_plate_added(PartPlate* part_plate)

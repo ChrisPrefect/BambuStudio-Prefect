@@ -485,7 +485,8 @@ public:
     void enable_layers_editing();
 
     //BBS: remove const qualifier
-    void set_extruder_for_selected_items(const int extruder);
+    // Returns false when the selection contains no assignable model item.
+    bool set_extruder_for_selected_items(const int extruder);
     wxDataViewItemArray reorder_volumes_and_get_selection(int obj_idx, std::function<bool(const ModelVolume*)> add_to_selection = nullptr);
     void apply_volumes_order();
     // BBS
