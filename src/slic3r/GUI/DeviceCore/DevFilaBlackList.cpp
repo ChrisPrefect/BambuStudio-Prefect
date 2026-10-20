@@ -6,6 +6,8 @@
 #include "DevConfigUtil.h"
 
 #include "libslic3r/Utils.hpp"
+#include "libslic3r/AppConfig.hpp"
+#include "libslic3r/PrefectWorkflow.hpp"
 
 #include "slic3r/GUI/I18N.hpp"
 #include "slic3r/GUI/GUI_App.hpp"
@@ -106,6 +108,9 @@ void check_filaments(const DevFilaBlacklist::CheckFilamentInfo& check_info, DevF
         {
             std::string action = filament_item.contains("action") ? filament_item["action"].get<std::string>() : "";
             std::string description = filament_item.contains("description") ? filament_item["description"].get<std::string>() : "";
+            if (PrefectWorkflow::suppress_tpu_cold_pull(
+                    GUI::wxGetApp().app_config->get_bool("prefect_suppress_tpu_cold_pull"), action, description))
+                continue;
             if (action.empty() || description.empty()) {
                 assert(false);
                 BOOST_LOG_TRIVIAL(error) << __FUNCTION__ << ": ERROR: filaments_blacklist item missing action or description";
