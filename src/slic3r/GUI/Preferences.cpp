@@ -927,6 +927,9 @@ wxBoxSizer *PreferencesDialog::create_item_checkbox(wxString title, wxWindow *pa
             app_config->save();
         }
 
+        if (param == "background_processing" && wxGetApp().plater())
+            wxGetApp().plater()->schedule_background_process();
+
         if (param == "staff_pick_switch") {
             bool pbool = app_config->get("staff_pick_switch") == "true";
             wxGetApp().switch_staff_pick(pbool);
@@ -1319,6 +1322,7 @@ void PreferencesDialog::create()
     };
     add_tab(_CTX(L_CONTEXT("General", "Preference"), "Preference"), create_general_tab());
     add_tab(_CTX(L_CONTEXT("User", "Preference"), "Preference"), create_user_tab());
+    add_tab(_L("Workflow"), create_prefect_tab());
     add_tab(_CTX(L_CONTEXT("3D", "Preference"), "Preference"), create_3d_tab());
     add_tab(_CTX(L_CONTEXT("Other", "Preference"), "Preference"), create_other_tab());
 
@@ -1519,6 +1523,44 @@ wxWindow *PreferencesDialog::create_general_tab()
     sizer->Add(wrap_option_row(scrolled, item_beta_version_update), flags);
     sizer->Add(wrap_option_row(scrolled, item_priv_policy), flags);
     sizer->Add(wrap_option_row(scrolled, item_downloads), flags);
+    scrolled->SetSizer(sizer);
+    scrolled->FitInside();
+    return scrolled;
+}
+
+wxWindow *PreferencesDialog::create_prefect_tab()
+{
+    auto scrolled = new ScrollPanel(m_book);
+    auto sizer = new wxBoxSizer(wxVERTICAL);
+    auto flags = row_flags();
+    sizer->Add(create_item_title(_L("Prefect workflow"), scrolled, _L("Prefect workflow")),
+               wxSizerFlags().Expand().Border(wxTOP, FromDIP(24)));
+    sizer->AddSpacer(FromDIP(8));
+    auto add = [&](const wxString &label, const wxString &help, const std::string &key) {
+        sizer->Add(wrap_option_row(scrolled, create_item_checkbox(label, scrolled, help, 50, key)), flags);
+    };
+    add(_L("Automatically sync filaments from the selected printer"),
+        _L("Updates project filaments when AMS or external spool information changes. The printer must be connected."),
+        "prefect_auto_sync_filaments");
+    add(_L("Keep the printer box collapsed"),
+        _L("Keeps the printer section compact, including after profile changes. Restart Studio after changing this option."),
+        "prefect_printer_collapsed");
+    add(_L("Slice automatically in the background"),
+        _L("Slices the current plate after edits using the existing background worker. Print and export still require your action."),
+        "background_processing");
+    add(_L("Assign clicked filament to selected objects"),
+        _L("Click a filament colour to assign it to the current object selection. Painting tools keep their own behaviour."),
+        "prefect_click_filament_assigns_selection");
+    add(_L("Always import multiple models as separate objects"),
+        _L("Skips the multipart-object question during model import. Explicit project imports retain their structure."),
+        "prefect_import_separate_objects");
+    add(_L("Hide daily tips completely"),
+        _L("Removes the tips panel and its reserved space from slicing notifications and hides the Daily Tips window."),
+        "prefect_hide_tips");
+    add(_L("Hide the TPU cold-pull reminder"),
+        _L("Hides only the cold-pull advisory for TPU. Other material warnings and printer restrictions remain enabled."),
+        "prefect_suppress_tpu_cold_pull");
+    sizer->AddSpacer(FromDIP(20));
     scrolled->SetSizer(sizer);
     scrolled->FitInside();
     return scrolled;
@@ -2071,6 +2113,15 @@ void PreferencesDialog::on_reset_preferences()
     // Reset to factory defaults. Touch only UI preference keys — keep vendor /
     // printer / preset state intact, which AppConfig::reset() would also clear.
     static const char *kPrefKeys[] = {
+        "background_processing",
+        "prefect_auto_sync_filaments",
+        "prefect_click_filament_assigns_selection",
+        "prefect_printer_collapsed",
+        "prefect_import_separate_objects",
+        "prefect_hide_tips",
+        "prefect_suppress_tpu_cold_pull",
+        "prefect_simple_fields_enabled",
+        "prefect_simple_fields",
         "language",
         // "region", keep this intensinaly to avoid re-login
         "use_inches",

@@ -24,7 +24,9 @@ deps/build-linux/*
 install_*
 build_*/
 SVG
-doc/
+doc/*
+!doc/prefect/
+!doc/prefect/**
 **/process_full/
 **/machine_full/
 **/filament_full/
@@ -37,6 +39,7 @@ compile_commands.json
 .claude/settings.local.json
 **/node_modules/
 .worktrees/
+/out/
 **/dist/
 # Legacy device_page bundle copies (runtime lives in resources/web/device_page/dist/)
 resources/web/device_page/assets/

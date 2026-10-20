@@ -97,11 +97,20 @@ void AppConfig::set_defaults()
             set_bool("autocenter", true);
 #endif
 
-#ifdef SUPPORT_BACKGROUND_PROCESSING
-        // Disable background processing by default as it is not stable.
+        // Prefect workflow: the existing debounced worker is available in all builds.
         if (get("background_processing").empty())
-            set_bool("background_processing", false);
-#endif
+            set_bool("background_processing", true);
+
+        for (const char *key : {"prefect_auto_sync_filaments", "prefect_click_filament_assigns_selection",
+                                "prefect_printer_collapsed", "prefect_import_separate_objects",
+                                "prefect_hide_tips", "prefect_suppress_tpu_cold_pull"}) {
+            if (get(key).empty())
+                set_bool(key, true);
+        }
+        if (get("prefect_simple_fields_enabled").empty())
+            set_bool("prefect_simple_fields_enabled", false);
+        if (get("prefect_workflow_revision").empty())
+            set("prefect_workflow_revision", "1");
 
 #ifdef SUPPORT_SHOW_DROP_PROJECT
         if (get("show_drop_project_dialog").empty())
@@ -812,9 +821,17 @@ std::string AppConfig::load()
         }
     }
 
-    // Override missing or keys with their defaults.
+    // A copied stock profile may explicitly disable the previously unsupported
+    // worker. Enable it once on first load in this fork; later choices survive.
+    // Inspect the file rather than constructor defaults (load merges storage).
+    const bool prefect_migrated = !j.contains("app") || !j["app"].contains("prefect_workflow_revision");
+    if (prefect_migrated) {
+        set_bool("background_processing", true);
+        set("prefect_workflow_revision", "1");
+    }
+    // Override missing keys with their defaults.
     this->set_defaults();
-    m_dirty = false;
+    m_dirty = prefect_migrated;
     return "";
 }
 
