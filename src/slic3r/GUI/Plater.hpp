@@ -155,6 +155,7 @@ class Sidebar : public wxPanel
     std::string                            m_prefect_observed_device;
     std::map<int, DynamicPrintConfig>       m_prefect_observed_filaments;
     bool                                   m_prefect_filament_sync_running{false};
+    bool                                   m_prefect_printer_collapse_applied{false};
 
     void update_sync_ams_btn_enable(wxUpdateUIEvent &e);
 

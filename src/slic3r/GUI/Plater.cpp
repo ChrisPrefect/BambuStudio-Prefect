@@ -2568,6 +2568,8 @@ Sidebar::Sidebar(Plater *parent)
         // add printer title
         scrolled_sizer->Add(p->m_panel_printer_title, 0, wxEXPAND | wxALL, 0);
         p->m_panel_printer_title->Bind(wxEVT_LEFT_DOWN, [this] (auto & e) {
+            if (wxGetApp().app_config->get_bool("prefect_printer_collapsed"))
+                return;
             if (p->m_panel_printer_content->GetMaxHeight() == 0)
                 p->m_panel_printer_content->SetMaxSize({-1, -1});
             else
@@ -2584,6 +2586,9 @@ Sidebar::Sidebar(Plater *parent)
         /*************************** 2. add printer content ************************/
         p->m_panel_printer_content = new wxPanel(p->scrolled, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
         p->m_panel_printer_content->SetBackgroundColour(wxColour(255, 255, 255));
+        m_prefect_printer_collapse_applied = wxGetApp().app_config->get_bool("prefect_printer_collapsed");
+        if (m_prefect_printer_collapse_applied)
+            p->m_panel_printer_content->SetMaxSize({-1, 0});
         StateColor panel_bd_col(std::pair<wxColour, int>(wxColour("#00AE42"), StateColor::Pressed),
                                 std::pair<wxColour, int>(wxColour("#00AE42"), StateColor::Hovered),
                                 std::pair<wxColour, int>(wxColour("#EEEEEE"), StateColor::Normal));
@@ -5078,6 +5083,11 @@ void Sidebar::show_mode_sizer(bool show)
 
 void Sidebar::update_ui_from_settings()
 {
+    const bool force_collapse = wxGetApp().app_config->get_bool("prefect_printer_collapsed");
+    if (force_collapse || m_prefect_printer_collapse_applied)
+        p->m_panel_printer_content->SetMaxSize({-1, force_collapse ? 0 : -1});
+    m_prefect_printer_collapse_applied = force_collapse;
+    m_scrolled_sizer->Layout();
     // BBS
     //p->object_manipulation->update_ui_from_settings();
     // update Cut gizmo, if it's open
