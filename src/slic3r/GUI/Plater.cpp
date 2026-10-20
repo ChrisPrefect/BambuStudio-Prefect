@@ -1,5 +1,6 @@
 #include "Plater.hpp"
 #include "PrefectFilamentSyncPolicy.hpp"
+#include "PrefectBackgroundPolicy.hpp"
 #include <array>
 #include <boost/format/format_fwd.hpp>
 #include <cstddef>
@@ -6621,6 +6622,7 @@ public:
     HelioBackgroundProcess      helio_background_process;
     bool helio_using_reference_material { false }; // True when user selected a reference material for unsupported filament
     bool suppressed_backround_processing_update { false };
+    bool prefect_background_start_prepared { false };
     // UIThreadWorker can be used as a replacement for BoostThreadWorker if
     // no additional worker threads are desired (useful for debugging or profiling)
     PlaterWorker<BoostThreadWorker> m_worker;
@@ -7013,11 +7015,10 @@ public:
     void process_validation_warning(StringObjectException const &warning) const;
 
     bool background_processing_enabled() const {
-#ifdef SUPPORT_BACKGROUND_PROCESSING
-        return this->get_config("background_processing") == "1";
-#else
-        return false;
-#endif
+        // PREFECT: this is an application preference (stored as a JSON boolean),
+        // not a print configuration value. Keep the existing worker and debounce.
+        return wxGetApp().app_config->get_bool("background_processing") &&
+               !q->m_only_gcode && !q->is_gcode_3mf();
     }
     std::vector<std::vector<DynamicPrintConfig>> get_extruder_filament_info();
     void update_print_volume_state();
@@ -11206,6 +11207,16 @@ unsigned int Plater::priv::update_background_process(bool force_validation, bool
 // Restart background processing thread based on a bitmask of UpdateBackgroundProcessReturnState.
 bool Plater::priv::restart_background_process(unsigned int state)
 {
+    // PREFECT: some scene-update paths call this method without going through
+    // update_restart_background_process(). Route their automatic starts through
+    // its job/plate/script checks; explicit Slice/export uses the force flags.
+    const bool forced = (state & (UPDATE_BACKGROUND_PROCESS_FORCE_RESTART | UPDATE_BACKGROUND_PROCESS_FORCE_EXPORT)) != 0;
+    if (Prefect::requires_prepared_background_start(background_processing_enabled(), forced, prefect_background_start_prepared)) {
+        if ((state & UPDATE_BACKGROUND_PROCESS_RESTART) != 0)
+            schedule_background_process();
+        return false;
+    }
+
     if (m_ui_jobs.is_any_running()) {
         // Avoid a race condition
         BOOST_LOG_TRIVIAL(warning) << __FUNCTION__ << boost::format(", Line %1%: ui jobs running, return false")%__LINE__;
@@ -11314,6 +11325,23 @@ void Plater::priv::export_gcode(fs::path output_path, bool output_path_on_remova
 }
 unsigned int Plater::priv::update_restart_background_process(bool force_update_scene, bool force_update_preview)
 {
+    // PREFECT automatic slicing: keep editing responsive and let an explicit
+    // Slice All/export finish before touching its plate/worker context.
+    const auto action = Prefect::background_update_action({
+        background_processing_enabled(), !q->m_only_gcode && !q->is_gcode_3mf(),
+        m_is_slicing, background_process.is_export_scheduled() || background_process.is_upload_scheduled(),
+        m_ui_jobs.is_any_running(), view3D->is_dragging(),
+        view3D->get_canvas3d()->get_gizmos_manager().is_in_editing_mode(),
+        background_process.state() == BackgroundSlicingProcess::STATE_FINISHED ||
+            background_process.state() == BackgroundSlicingProcess::STATE_CANCELED,
+        background_process.running() && background_process.get_current_plate() != partplate_list.get_curr_plate() });
+    const bool automatic = action != Prefect::BackgroundUpdateAction::ValidateOnly;
+    if (action == Prefect::BackgroundUpdateAction::Retry) {
+        // No model/config was consumed: retry the same pending update once idle.
+        background_process_timer.Start(500, wxTIMER_ONE_SHOT);
+        return 0;
+    }
+
     bool switch_print = true;
 
     //BBS: judge whether can switch print or not
@@ -11323,6 +11351,7 @@ unsigned int Plater::priv::update_restart_background_process(bool force_update_s
         BOOST_LOG_TRIVIAL(warning) << __FUNCTION__ << boost::format(": plate count %1%, can not switch") % partplate_list.get_plate_count();
         switch_print = false;
     }
+
     // bitmask of UpdateBackgroundProcessReturnState
     unsigned int state = update_background_process(false, false, switch_print);
 
@@ -11331,7 +11360,72 @@ unsigned int Plater::priv::update_restart_background_process(bool force_update_s
 
     if (force_update_preview)
         this->preview->reload_print();
-    this->restart_background_process(state);
+
+    if (automatic && !background_process.empty() && !background_process.running() &&
+        (state & UPDATE_BACKGROUND_PROCESS_INVALID) == 0 &&
+        !partplate_list.get_curr_plate()->is_slice_result_valid() &&
+        process_completed_with_error != partplate_list.get_curr_plate_index() &&
+        !sidebar->has_broken_mixed_filament()) {
+        // The preference may have just been enabled after a validation-only
+        // update. There need not be a new Print::apply invalidation this time.
+        state |= UPDATE_BACKGROUND_PROCESS_RESTART;
+    }
+
+    if (automatic && background_process.running())
+        state &= ~UPDATE_BACKGROUND_PROCESS_RESTART;
+
+    if (automatic && (state & UPDATE_BACKGROUND_PROCESS_RESTART) != 0) {
+        // The manual Slice path obtains consent before executing post-process
+        // commands. Automatic slicing must not bypass that choice or open a
+        // modal dialog while the user is editing.
+        bool has_scripts = false;
+        const auto *scripts = wxGetApp().preset_bundle->prints.get_edited_preset().config.opt<ConfigOptionStrings>("post_process");
+        if (scripts != nullptr) {
+            for (const std::string &script : scripts->values) {
+                if (!boost::trim_copy(script).empty()) {
+                    has_scripts = true;
+                    break;
+                }
+            }
+        }
+        if (has_scripts && !m_post_process_script_skip_choice) {
+            const std::string choice = wxGetApp().app_config->get("post_process_script_choice");
+            if (choice == "execute")
+                m_post_process_script_skip_choice = false;
+            else if (choice == "do_not_execute")
+                m_post_process_script_skip_choice = true;
+        }
+        if (!Prefect::background_script_choice_resolved(has_scripts, m_post_process_script_skip_choice) ||
+            sidebar->has_broken_mixed_filament())
+            state &= ~UPDATE_BACKGROUND_PROCESS_RESTART;
+        else {
+            if (has_scripts)
+                background_process.set_skip_post_process_once(*m_post_process_script_skip_choice);
+            if (printer_technology == ptFFF) {
+                const DynamicPrintConfig full_config = wxGetApp().preset_bundle->full_config();
+                Model::setExtruderParams(full_config, wxGetApp().preset_bundle->filament_presets.size());
+                Model::setPrintSpeedTable(full_config, background_process.fff_print()->config());
+            }
+            // A previous Slice All leaves these flags set after completion.
+            // This run intentionally slices only the currently selected plate.
+            m_slice_all = false;
+            m_cur_slice_plate = partplate_list.get_curr_plate_index();
+            background_process.set_task(PrintBase::TaskParams());
+        }
+    }
+    bool restarted = false;
+    {
+        struct PreparedStartGuard {
+            bool &prepared;
+            ~PreparedStartGuard() { prepared = false; }
+        } prepared_start_guard { prefect_background_start_prepared };
+        prefect_background_start_prepared = automatic;
+        restarted = this->restart_background_process(state);
+    }
+    if (restarted && automatic) {
+        preview->get_canvas3d()->on_back_slice_begin();
+        main_frame->update_slice_print_status(MainFrame::eEventSliceUpdate, false, false);
+    }
 
     return state;
 }
@@ -12923,6 +13017,10 @@ void Plater::priv::on_process_completed(SlicingProcessCompletedEvent &evt)
     if (evt.cancelled()) {
         BOOST_LOG_TRIVIAL(info) << __FUNCTION__ << boost::format(", cancel event, status: %1%") % evt.status();
         this->notification_manager->set_slicing_progress_canceled(_u8L("Slicing Canceled"));
+        // PREFECT: cancelling an automatic run also cancels a pending retry.
+        // A later model/config change schedules a fresh run as usual.
+        if (background_processing_enabled() && !m_is_slicing)
+            background_process_timer.Stop();
         is_finished = true;
     }
 
@@ -13076,6 +13174,8 @@ void Plater::priv::on_process_completed(SlicingProcessCompletedEvent &evt)
             }
         }
         q->SetDropTarget(new PlaterDropTarget(q));
+        if (background_processing_enabled())
+            main_frame->update_slice_print_status(MainFrame::eEventSliceUpdate, ready_to_slice, !ready_to_slice);
     }
     else
     {
