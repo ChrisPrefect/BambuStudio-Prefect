@@ -204,6 +204,7 @@ public:
     void edit_filament();
     // Prefect: filament swatches act on the current selection before opening the color picker.
     bool assign_filament_to_selection(size_t filament_id);
+    void set_support_interface_filament(size_t filament_id);
     void add_custom_filament(wxColour new_col, const std::string& preset_name = std::string(), bool skip_preset_validation = false);
     void scroll_filament_area_to_bottom();
     bool is_new_project_in_gcode3mf();

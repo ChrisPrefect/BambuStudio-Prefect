@@ -1515,6 +1515,14 @@ void MenuFactory::create_filament_action_menu(bool init, int active_filament_men
 
     if (init) {
         append_menu_item(
+            menu, wxID_ANY, _L("Set as support interface"),
+            _L("Use this filament for the support/raft interface in the global process settings"),
+            [](wxCommandEvent&) { plater()->sidebar().set_support_interface_filament(kSidebarContextMenuFilamentId); },
+            "", nullptr, []() { return printer_technology() == ptFFF; }, m_parent);
+    }
+
+    if (init) {
+        append_menu_item(
             menu, wxID_ANY, _L("Edit"), "", [](wxCommandEvent&) {
                 plater()->sidebar().edit_filament(); }, "", nullptr,
             []() { return true; }, m_parent);

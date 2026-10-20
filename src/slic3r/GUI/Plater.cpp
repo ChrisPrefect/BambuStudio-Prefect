@@ -4210,6 +4210,22 @@ bool Sidebar::assign_filament_to_selection(size_t filament_id)
     return true;
 }
 
+void Sidebar::set_support_interface_filament(size_t filament_id)
+{
+    if (filament_id == static_cast<size_t>(kSidebarContextMenuFilamentId))
+        filament_id = p->m_menu_filament_id;
+    if (filament_id >= wxGetApp().preset_bundle->filament_presets.size() || p->plater->using_exported_file())
+        return;
+
+    p->plater->take_snapshot("Set as support interface");
+    // Use the global print preset, just like changing Support/Raft interface in Process settings.
+    // load_config propagates dirty-state and reslicing without the optional recommendation dialog.
+    DynamicPrintConfig config = wxGetApp().preset_bundle->prints.get_edited_preset().config;
+    config.set_key_value("support_interface_filament", new ConfigOptionInt(static_cast<int>(filament_id + 1)));
+    wxGetApp().get_tab(Preset::TYPE_PRINT)->load_config(config);
+    p->plater->update();
+}
+
 void Sidebar::delete_filament(size_t filament_id, int replace_filament_id) {
     if (is_new_project_in_gcode3mf()) { return; }
     if (p->combos_filament.size() <= 1) return;
