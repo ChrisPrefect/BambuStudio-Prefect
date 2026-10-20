@@ -42,6 +42,20 @@ jobs:
       - uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: x64
+      - name: Select installed Visual Studio generator
+        shell: pwsh
+        run: |
+          $major = ([version]$env:VisualStudioVersion).Major
+          $generator = switch ($major) {
+            18 { 'Visual Studio 18 2026' }
+            17 { 'Visual Studio 17 2022' }
+            default { throw "Unsupported Visual Studio major: $major" }
+          }
+          "PREFECT_GENERATOR=$generator" >> $env:GITHUB_ENV
+          "PREFECT_VS_MAJOR=$major" >> $env:GITHUB_ENV
+          cmake --version
+          cl 2>&1 | Select-Object -First 3
+          $global:LASTEXITCODE = 0
       - name: Install upstream build tools
         shell: pwsh
         run: |
@@ -52,19 +66,25 @@ jobs:
         uses: actions/cache@v4
         with:
           path: out/prefect-deps-stage
-          key: prefect-win2025-vs17-${{ hashFiles('deps/**', 'cmake/modules/**') }}
-      - name: Build upstream dependencies
+          key: prefect-win2025-vs${{ env.PREFECT_VS_MAJOR }}-${{ hashFiles('deps/**', 'cmake/**') }}
+      - name: Restore matching official upstream dependencies
         if: steps.deps.outputs.cache-hit != 'true'
         shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ./scripts/prefect/Restore-UpstreamDependencies.ps1
+      - name: Build upstream dependencies
+        if: steps.deps.outputs.cache-hit != 'true' && env.PREFECT_DEPS_RESTORED != 'true'
+        shell: pwsh
         run: |
-          cmake -S deps -B out/prefect-deps -G "Visual Studio 17 2022" -A x64 -DDESTDIR="$env:GITHUB_WORKSPACE/out/prefect-deps-stage" -DCMAKE_BUILD_TYPE=Release -DDEP_DEBUG=OFF
+          cmake -S deps -B out/prefect-deps -G "$env:PREFECT_GENERATOR" -A x64 -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DDESTDIR="$env:GITHUB_WORKSPACE/out/prefect-deps-stage" -DCMAKE_BUILD_TYPE=Release -DDEP_DEBUG=OFF
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           cmake --build out/prefect-deps --config Release --parallel 2
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Compile and package Prefect fork
         shell: pwsh
         run: |
-          cmake -S . -B out/prefect-app -G "Visual Studio 17 2022" -A x64 -DBBL_RELEASE_TO_PUBLIC=1 -DBBL_INTERNAL_TESTING=0 -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$env:GITHUB_WORKSPACE/out/prefect-deps-stage/usr/local" -DCMAKE_INSTALL_PREFIX="$env:GITHUB_WORKSPACE/out/prefect-portable"
+          cmake -S . -B out/prefect-app -G "$env:PREFECT_GENERATOR" -A x64 -DBBL_RELEASE_TO_PUBLIC=1 -DBBL_INTERNAL_TESTING=0 -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$env:GITHUB_WORKSPACE/out/prefect-deps-stage/usr/local" -DCMAKE_INSTALL_PREFIX="$env:GITHUB_WORKSPACE/out/prefect-portable"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           cmake --build out/prefect-app --target install --config Release --parallel 2
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

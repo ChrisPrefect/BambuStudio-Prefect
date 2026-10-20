@@ -23,7 +23,7 @@
       "tests": [
         "tests/prefect/filament_sync_test.cpp"
       ],
-      "commit": "271e6449d056d1d48647f127755bc9751d5c6793"
+      "commit": "7bde42eed27083591b1c26ffedf3441636ff1620"
     },
     {
       "id": "F02",
@@ -46,7 +46,7 @@
       "tests": [
         "tests/prefect/simple_fields_test.cpp"
       ],
-      "commit": "84dc2b1416eda3f41e879cc19425ef0d4d64d966"
+      "commit": "24ec77e37aa7386a28685b9dc2c4e25eedbceed4"
     },
     {
       "id": "F03",
@@ -61,7 +61,7 @@
           "text": "prefect_printer_collapsed"
         }
       ],
-      "commit": "62c6a22d89a56356f7b0f4e6f72bb7666e0b697a"
+      "commit": "21a50b6a27492730d65596854120e12d3fca1401"
     },
     {
       "id": "F04",
@@ -83,7 +83,7 @@
       "tests": [
         "tests/prefect/background_test.cpp"
       ],
-      "commit": "dcd6b229cfe1a3da13c1cacc700fa7cd5e441796"
+      "commit": "5ff0e5923769afbebb27992cd3ab0bad5668aeac"
     },
     {
       "id": "F05",
@@ -102,7 +102,7 @@
           "text": "prefect_click_filament_assigns_selection"
         }
       ],
-      "commit": "ff833abb53a99156b03ff15ee720f3fd668b62cc"
+      "commit": "259a5f96c6124102d6865d8b08b82ebbf62abf76"
     },
     {
       "id": "F06",
@@ -119,7 +119,7 @@
           "text": "Set as support interface"
         }
       ],
-      "commit": "904901adb509d2b0e7ae97d8bb4574dff0ff42b5"
+      "commit": "8e00cd6931e28b38966ffbf502d82b1f5f4546c6"
     },
     {
       "id": "F07",
@@ -134,7 +134,7 @@
           "text": "prefect_import_separate_objects"
         }
       ],
-      "commit": "4ef4c7d252a90aaa2965626f973fd165fc55067b"
+      "commit": "b5cbd93c935b27ae703cfdb67168d7cab51d3e04"
     },
     {
       "id": "F08",
@@ -152,7 +152,7 @@
       "tests": [
         "tests/prefect/workflow_test.cpp"
       ],
-      "commit": "e67394ffb07601ac644dba08016e2a06ad2774c6"
+      "commit": "9edd36287f0c15ded96232ea4338141d127044a2"
     },
     {
       "id": "F09",
@@ -171,9 +171,9 @@
           "text": "const bool show_tips"
         }
       ],
-      "commit": "871e85b815541cd2cc698fc9f68c32bc34e5f8c9"
+      "commit": "159fc3816810124188975ffa8069ffa64000daf9"
     }
   ],
   "fork_repository": "https://github.com/ChrisPrefect/BambuStudio-Prefect",
-  "foundation_commit": "cdcc804f0ae838c583155957bb40fcd3a2ea4626"
+  "foundation_commit": "7a24a42d0db96d22db5dbb7a08699a1a2a8e1443"
 }

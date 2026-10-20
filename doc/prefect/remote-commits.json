@@ -1,0 +1,92 @@
+{
+  "upstream": "926a7192574bcb9b3a732e1ec59a46d79cb45466",
+  "local_original_head": "0fbcd843b78b11e73326a6c1e6f0f737cd3b12e2",
+  "github_feature_head": "f059b366b7ca4e8cb057e4ebf09a59c3dd3b212c",
+  "note": "Die GitHub-GitData-Schnittstelle setzt eigene Commit-Metadaten. Die jeweiligen Tree-SHAs sind identisch. Originalserie bleibt unter prefect/local-series-20261021 erhalten.",
+  "commits": [
+    {
+      "local": "cdcc804f0ae838c583155957bb40fcd3a2ea4626",
+      "remote": "7a24a42d0db96d22db5dbb7a08699a1a2a8e1443",
+      "message": "Prefect: add workflow preferences and migrate isolated profile defaults",
+      "tree": "5a45ff60607e946cdb53bbd64dec4843a7c851d4"
+    },
+    {
+      "local": "271e6449d056d1d48647f127755bc9751d5c6793",
+      "remote": "7bde42eed27083591b1c26ffedf3441636ff1620",
+      "message": "F01: synchronize project filaments automatically after printer changes",
+      "tree": "e592acfafe266ed9e25d7723eb5441787d10b119"
+    },
+    {
+      "local": "84dc2b1416eda3f41e879cc19425ef0d4d64d966",
+      "remote": "24ec77e37aa7386a28685b9dc2c4e25eedbceed4",
+      "message": "F02: let users choose process fields shown in simple mode",
+      "tree": "7b737cd883278ab516224aecf0b4871c87f9502f"
+    },
+    {
+      "local": "62c6a22d89a56356f7b0f4e6f72bb7666e0b697a",
+      "remote": "21a50b6a27492730d65596854120e12d3fca1401",
+      "message": "F03: keep the printer section collapsed across sidebar refreshes",
+      "tree": "f0ae4c2cd09e655225f891d8e126559b08253e0b"
+    },
+    {
+      "local": "dcd6b229cfe1a3da13c1cacc700fa7cd5e441796",
+      "remote": "5ff0e5923769afbebb27992cd3ab0bad5668aeac",
+      "message": "F04: slice the current plate automatically with guarded background jobs",
+      "tree": "8f643aa19ac4d8c61e6d123bc750d9e756639381"
+    },
+    {
+      "local": "ff833abb53a99156b03ff15ee720f3fd668b62cc",
+      "remote": "259a5f96c6124102d6865d8b08b82ebbf62abf76",
+      "message": "F05: assign clicked filament to selected objects and parts",
+      "tree": "eb8c47952b80b644c81253d84ec59ca748fb4081"
+    },
+    {
+      "local": "904901adb509d2b0e7ae97d8bb4574dff0ff42b5",
+      "remote": "8e00cd6931e28b38966ffbf502d82b1f5f4546c6",
+      "message": "F06: add filament menu action for the global support interface",
+      "tree": "91bf546bb7dcb58b179320d5f1a379085bf709ab"
+    },
+    {
+      "local": "4ef4c7d252a90aaa2965626f973fd165fc55067b",
+      "remote": "b5cbd93c935b27ae703cfdb67168d7cab51d3e04",
+      "message": "F07: import multiple models separately without merge questions",
+      "tree": "8090667543678fd93b2ed8132673d973e9ec64b3"
+    },
+    {
+      "local": "e67394ffb07601ac644dba08016e2a06ad2774c6",
+      "remote": "9edd36287f0c15ded96232ea4338141d127044a2",
+      "message": "F08: suppress only the exact TPU cold-pull advisory",
+      "tree": "b4747fbbd47108a5c52e94f013e081fb47b7a00f"
+    },
+    {
+      "local": "871e85b815541cd2cc698fc9f68c32bc34e5f8c9",
+      "remote": "159fc3816810124188975ffa8069ffa64000daf9",
+      "message": "F09: hide daily tips and remove their slicing notification space",
+      "tree": "79dbad44f2b36ecad6d13712775d634453cf5d88"
+    },
+    {
+      "local": "0b35a22b184eb0c2e2a7ab41614b85789257b41c",
+      "remote": "443e622d66b2a6d0c8569cedb2d17f934afdc2d9",
+      "message": "Prefect: translate workflow controls and support interface action into German",
+      "tree": "86b00a4bf75f98b766b2a80f46b8d1fd86fb7fd5"
+    },
+    {
+      "local": "defc0a3b72b3b7f35b72f39d36c31dba4a0f5a64",
+      "remote": "ce7e6b11ca3a02c14e27fad26d4b52a568eb4c07",
+      "message": "Prefect: add isolated launcher and reproducible policy and Windows build jobs",
+      "tree": "724c8c472d433790d90b6ef54d06a3dc2fe12c90"
+    },
+    {
+      "local": "9de2fbebdff01a39c751e07965a3dfbaf4fc0798",
+      "remote": "65f587b1e77853eb84c2aefdacb862da56a2d306",
+      "message": "Prefect: preserve German catalog additions in a repeatable update script",
+      "tree": "e6da12001aff010d784a1d65e323ede49f338b25"
+    },
+    {
+      "local": "0fbcd843b78b11e73326a6c1e6f0f737cd3b12e2",
+      "remote": "f059b366b7ca4e8cb057e4ebf09a59c3dd3b212c",
+      "message": "Prefect: document all nine changes, replay commits and executed validation",
+      "tree": "e36274f1920335ce1a6ad9f13b6ff2608edae476"
+    }
+  ]
+}
