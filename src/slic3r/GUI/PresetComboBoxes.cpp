@@ -834,6 +834,14 @@ PlaterPresetComboBox::PlaterPresetComboBox(wxWindow *parent, Preset::Type preset
 
     if (m_type == Preset::TYPE_FILAMENT)
     {
+        // Prefect: the row body assigns; keep the arrow and Shift-click available for preset editing.
+        Bind(wxEVT_LEFT_DOWN, [this](wxMouseEvent &event) {
+            if (wxGetApp().app_config->get_bool("prefect_click_filament_assigns_selection") &&
+                !event.ShiftDown() && event.GetX() < GetClientSize().GetWidth() - FromDIP(24) &&
+                wxGetApp().sidebar().assign_filament_to_selection(m_filament_idx))
+                return;
+            event.Skip();
+        });
         // BBS: not show color picker
 #if 0
         Bind(wxEVT_LEFT_DOWN, [this](wxMouseEvent &event) {
@@ -867,8 +875,12 @@ PlaterPresetComboBox::PlaterPresetComboBox(wxWindow *parent, Preset::Type preset
         int em = wxGetApp().em_unit();
         clr_picker = new wxBitmapButton(parent, wxID_ANY, {}, wxDefaultPosition, wxSize(FromDIP(20), FromDIP(20)), wxBU_EXACTFIT | wxBU_AUTODRAW | wxBORDER_NONE);
         clr_picker->SetBackgroundColour(StateColor::darkModeColorFor(*wxWHITE));
-        clr_picker->SetToolTip(_L("Click to pick filament color"));
+        clr_picker->SetToolTip(_L("Click to assign this filament to selected objects. Shift-click to pick filament color."));
         clr_picker->Bind(wxEVT_BUTTON, [this](wxCommandEvent& e) {
+            if (wxGetApp().app_config->get_bool("prefect_click_filament_assigns_selection") &&
+                !wxGetKeyState(WXK_SHIFT) &&
+                wxGetApp().sidebar().assign_filament_to_selection(m_filament_idx))
+                return;
             // Check if it's an official filament
             auto fila_type = Preset::remove_suffix_modified(GetValue().ToUTF8().data());
             bool is_official = boost::algorithm::starts_with(fila_type, "Bambu");

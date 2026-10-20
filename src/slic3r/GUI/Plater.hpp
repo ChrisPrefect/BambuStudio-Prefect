@@ -202,6 +202,8 @@ public:
     void delete_filament(size_t filament_id = size_t(-1), int replace_filament_id = -1);  // 0 base, -1 means default
     void change_filament(size_t from_id, size_t to_id);  // 0 base
     void edit_filament();
+    // Prefect: filament swatches act on the current selection before opening the color picker.
+    bool assign_filament_to_selection(size_t filament_id);
     void add_custom_filament(wxColour new_col, const std::string& preset_name = std::string(), bool skip_preset_validation = false);
     void scroll_filament_area_to_bottom();
     bool is_new_project_in_gcode3mf();

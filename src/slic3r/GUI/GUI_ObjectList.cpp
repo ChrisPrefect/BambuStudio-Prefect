@@ -6930,17 +6930,18 @@ void ObjectList::set_extruder_for_selected_items(const int extruder)
          * So, if Instance is selected, get its Object item and change it
          */
         ItemType sel_item_type = m_objects_model->GetItemType(sel_item);
-        wxDataViewItem item = (sel_item_type & itInstance) ? m_objects_model->GetObject(item) : sel_item;
+        wxDataViewItem item = (sel_item_type & itInstance) ? m_objects_model->GetObject(sel_item) : sel_item;
         ItemType type = m_objects_model->GetItemType(item);
         if (type & itVolume) {
             const int obj_idx = m_objects_model->GetObjectIdByItem(item);
             int vol_idx = m_objects_model->GetVolumeIdByItem(item);
             vol_idx     = m_objects_model->get_real_volume_index_in_3d(obj_idx, vol_idx);
-            if ((obj_idx < m_objects->size()) && (obj_idx < (*m_objects)[obj_idx]->volumes.size())) {
-                auto volume_type = (*m_objects)[obj_idx]->volumes[vol_idx]->type();
-                if (volume_type != ModelVolumeType::MODEL_PART && volume_type != ModelVolumeType::PARAMETER_MODIFIER)
-                    continue;
-            }
+            if (obj_idx < 0 || obj_idx >= static_cast<int>(m_objects->size()) || vol_idx < 0 ||
+                vol_idx >= static_cast<int>((*m_objects)[obj_idx]->volumes.size()))
+                continue;
+            auto volume_type = (*m_objects)[obj_idx]->volumes[vol_idx]->type();
+            if (volume_type != ModelVolumeType::MODEL_PART && volume_type != ModelVolumeType::PARAMETER_MODIFIER)
+                continue;
         }
 
         if (type & itLayerRoot)

@@ -4190,6 +4190,26 @@ void Sidebar::add_filament() {
     scroll_filament_area_to_bottom();
 }
 
+bool Sidebar::assign_filament_to_selection(size_t filament_id)
+{
+    if (filament_id >= wxGetApp().preset_bundle->filament_presets.size() || p->plater->using_exported_file())
+        return false;
+
+    if (p->plater->is_assemble_undo_stack_active()) {
+        const Selection &selection = p->plater->get_assmeble_canvas3D()->get_selection();
+        if (selection.is_empty())
+            return false;
+        p->plater->change_extruder_for_assemble_selection(static_cast<int>(filament_id + 1));
+    } else {
+        wxDataViewItemArray selection;
+        p->m_object_list->GetSelections(selection);
+        if (selection.IsEmpty())
+            return false;
+        p->m_object_list->set_extruder_for_selected_items(static_cast<int>(filament_id + 1));
+    }
+    return true;
+}
+
 void Sidebar::delete_filament(size_t filament_id, int replace_filament_id) {
     if (is_new_project_in_gcode3mf()) { return; }
     if (p->combos_filament.size() <= 1) return;
