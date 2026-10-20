@@ -1,0 +1,77 @@
+name: Prefect workflow checks and Windows portable build
+
+on:
+  push:
+    branches: ['prefect/**']
+  pull_request:
+    branches: ['prefect/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: prefect-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  policy-tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile and run workflow policy regressions
+        shell: bash
+        run: |
+          mkdir -p out/prefect-tests
+          for test in tests/prefect/*_test.cpp; do
+            binary="out/prefect-tests/$(basename "$test" .cpp)"
+            g++ -std=c++17 -Wall -Wextra -Werror -pedantic "$test" -o "$binary"
+            "$binary"
+          done
+      - name: Validate change manifest
+        run: python scripts/prefect/check_manifest.py
+
+  windows-portable:
+    needs: policy-tests
+    runs-on: windows-2025
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+      - name: Install upstream build tools
+        shell: pwsh
+        run: |
+          choco install strawberryperl pkgconfiglite nsis -y --no-progress
+          if ($LASTEXITCODE -notin 0, 3010) { exit $LASTEXITCODE }
+      - name: Cache compiled upstream dependencies
+        id: deps
+        uses: actions/cache@v4
+        with:
+          path: out/prefect-deps-stage
+          key: prefect-win2025-vs17-${{ hashFiles('deps/**', 'cmake/modules/**') }}
+      - name: Build upstream dependencies
+        if: steps.deps.outputs.cache-hit != 'true'
+        shell: pwsh
+        run: |
+          cmake -S deps -B out/prefect-deps -G "Visual Studio 17 2022" -A x64 -DDESTDIR="$env:GITHUB_WORKSPACE/out/prefect-deps-stage" -DCMAKE_BUILD_TYPE=Release -DDEP_DEBUG=OFF
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cmake --build out/prefect-deps --config Release --parallel 2
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Compile and package Prefect fork
+        shell: pwsh
+        run: |
+          cmake -S . -B out/prefect-app -G "Visual Studio 17 2022" -A x64 -DBBL_RELEASE_TO_PUBLIC=1 -DBBL_INTERNAL_TESTING=0 -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$env:GITHUB_WORKSPACE/out/prefect-deps-stage/usr/local" -DCMAKE_INSTALL_PREFIX="$env:GITHUB_WORKSPACE/out/prefect-portable"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cmake --build out/prefect-app --target install --config Release --parallel 2
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Copy-Item scripts/prefect/Start-Prefect.ps1 out/prefect-portable/
+          git rev-parse HEAD | Set-Content out/prefect-portable/PREFECT-COMMIT.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BambuStudio-Prefect-Windows-x64-${{ github.sha }}
+          path: out/prefect-portable/
+          if-no-files-found: error
