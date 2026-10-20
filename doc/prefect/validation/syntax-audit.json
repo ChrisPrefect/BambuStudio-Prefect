@@ -1,0 +1,723 @@
+[
+  {
+    "path": "src/libslic3r/AppConfig.cpp",
+    "new_file": false,
+    "baseline_error_nodes": 2,
+    "current_error_nodes": 2,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "AppConfig::set_defaults()",
+      "AppConfig::load()"
+    ],
+    "changed_ranges": [
+      [
+        100,
+        100
+      ],
+      [
+        102,
+        113
+      ],
+      [
+        824,
+        832
+      ],
+      [
+        834,
+        834
+      ]
+    ]
+  },
+  {
+    "path": "src/libslic3r/PrefectWorkflow.hpp",
+    "new_file": true,
+    "baseline_error_nodes": 0,
+    "current_error_nodes": 0,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "suppress_tpu_cold_pull(bool enabled, std::string_view action, std::string_view description)"
+    ],
+    "changed_ranges": [
+      [
+        1,
+        18
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/DailyTips.cpp",
+    "new_file": false,
+    "baseline_error_nodes": 0,
+    "current_error_nodes": 0,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "DailyTipsPanel::render()",
+      "DailyTipsWindow::open()",
+      "DailyTipsWindow::render()"
+    ],
+    "changed_ranges": [
+      [
+        282,
+        283
+      ],
+      [
+        619,
+        620
+      ],
+      [
+        632,
+        635
+      ],
+      [
+        695,
+        695
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/DeviceCore/DevFilaBlackList.cpp",
+    "new_file": false,
+    "baseline_error_nodes": 1,
+    "current_error_nodes": 1,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "check_filaments(const DevFilaBlacklist::CheckFilamentInfo& check_info, DevFilaBlacklist::CheckResult &result)"
+    ],
+    "changed_ranges": [
+      [
+        9,
+        10
+      ],
+      [
+        111,
+        113
+      ],
+      [
+        430,
+        430
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/GUI_Factories.cpp",
+    "new_file": false,
+    "baseline_error_nodes": 0,
+    "current_error_nodes": 0,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "MenuFactory::create_filament_action_menu(bool init, int active_filament_menu_id)"
+    ],
+    "changed_ranges": [
+      [
+        1516,
+        1523
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/GUI_ObjectList.cpp",
+    "new_file": false,
+    "baseline_error_nodes": 10,
+    "current_error_nodes": 10,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "ObjectList::set_extruder_for_selected_items(const int extruder)"
+    ],
+    "changed_ranges": [
+      [
+        6933,
+        6933
+      ],
+      [
+        6939,
+        6944
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/OG_CustomCtrl.cpp",
+    "new_file": false,
+    "baseline_error_nodes": 5,
+    "current_error_nodes": 5,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "OG_CustomCtrl::CtrlLine::update_visibility(ConfigOptionMode mode)"
+    ],
+    "changed_ranges": [
+      [
+        855,
+        855
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/OptionsGroup.cpp",
+    "new_file": false,
+    "baseline_error_nodes": 5,
+    "current_error_nodes": 5,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "ConfigOptionsGroup::is_visible(ConfigOptionMode mode)",
+      "ConfigOptionsGroup::is_option_visible(const Option& option, ConfigOptionMode mode) const",
+      "ConfigOptionsGroup::is_line_visible(const Line& line, ConfigOptionMode mode) const",
+      "ConfigOptionsGroup::update_visibility(ConfigOptionMode mode)"
+    ],
+    "changed_ranges": [
+      [
+        20,
+        20
+      ],
+      [
+        845,
+        851
+      ],
+      [
+        865,
+        884
+      ],
+      [
+        898,
+        902
+      ],
+      [
+        909,
+        912
+      ],
+      [
+        914,
+        914
+      ],
+      [
+        916,
+        918
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/OptionsGroup.hpp",
+    "new_file": false,
+    "baseline_error_nodes": 0,
+    "current_error_nodes": 0,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "is_option_visible(const Option& option, ConfigOptionMode mode) const",
+      "is_line_visible(const Line& line, ConfigOptionMode mode) const"
+    ],
+    "changed_ranges": [
+      [
+        288,
+        298
+      ],
+      [
+        351,
+        352
+      ],
+      [
+        376,
+        376
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/ParamsPanel.cpp",
+    "new_file": false,
+    "baseline_error_nodes": 0,
+    "current_error_nodes": 0,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "ParamsPanel::ParamsPanel( wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, const wxString& name )",
+      "ParamsPanel::create_layout()",
+      "ParamsPanel::delete_subwindows()"
+    ],
+    "changed_ranges": [
+      [
+        293,
+        298
+      ],
+      [
+        442,
+        443
+      ],
+      [
+        802,
+        805
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/ParamsPanel.hpp",
+    "new_file": false,
+    "baseline_error_nodes": 1,
+    "current_error_nodes": 1,
+    "added_error_nodes": [],
+    "changed_functions": [],
+    "changed_ranges": [
+      [
+        91,
+        91
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/Plater.cpp",
+    "new_file": false,
+    "baseline_error_nodes": 12,
+    "current_error_nodes": 12,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "Sidebar::Sidebar(Plater *parent)",
+      "Sidebar::~Sidebar()",
+      "Sidebar::assign_filament_to_selection(size_t filament_id)",
+      "Sidebar::set_support_interface_filament(size_t filament_id)",
+      "Sidebar::load_ams_list(MachineObject* obj)",
+      "Sidebar::sync_ams_list(bool is_from_big_sync_btn, bool automatic)",
+      "Sidebar::update_ui_from_settings()",
+      "background_processing_enabled() const",
+      "Plater::priv::load_files(const std::vector<fs::path>& input_files, LoadStrategy strategy, bool ask_multi)",
+      "Plater::priv::restart_background_process(unsigned int state)",
+      "Plater::priv::update_restart_background_process(bool force_update_scene, bool force_update_preview)",
+      "~PreparedStartGuard()",
+      "Plater::priv::on_process_completed(SlicingProcessCompletedEvent &evt)"
+    ],
+    "changed_ranges": [
+      [
+        2,
+        3
+      ],
+      [
+        2462,
+        2485
+      ],
+      [
+        2572,
+        2573
+      ],
+      [
+        2590,
+        2592
+      ],
+      [
+        3260,
+        3260
+      ],
+      [
+        4193,
+        4228
+      ],
+      [
+        4606,
+        4618
+      ],
+      [
+        4642,
+        4642
+      ],
+      [
+        4656,
+        4657
+      ],
+      [
+        4673,
+        4674
+      ],
+      [
+        4682,
+        4682
+      ],
+      [
+        4690,
+        4723
+      ],
+      [
+        4725,
+        4726
+      ],
+      [
+        4727,
+        4727
+      ],
+      [
+        4777,
+        4780
+      ],
+      [
+        4789,
+        4789
+      ],
+      [
+        4795,
+        4796
+      ],
+      [
+        4886,
+        4892
+      ],
+      [
+        4896,
+        4897
+      ],
+      [
+        4901,
+        4902
+      ],
+      [
+        5123,
+        5127
+      ],
+      [
+        6661,
+        6661
+      ],
+      [
+        7054,
+        7057
+      ],
+      [
+        9320,
+        9323
+      ],
+      [
+        9659,
+        9659
+      ],
+      [
+        11249,
+        11258
+      ],
+      [
+        11367,
+        11383
+      ],
+      [
+        11393,
+        11393
+      ],
+      [
+        11402,
+        11467
+      ],
+      [
+        13059,
+        13062
+      ],
+      [
+        13216,
+        13217
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/Plater.hpp",
+    "new_file": false,
+    "baseline_error_nodes": 2,
+    "current_error_nodes": 2,
+    "added_error_nodes": [],
+    "changed_functions": [],
+    "changed_ranges": [
+      [
+        10,
+        10
+      ],
+      [
+        154,
+        158
+      ],
+      [
+        205,
+        207
+      ],
+      [
+        215,
+        215
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/PrefectBackgroundPolicy.hpp",
+    "new_file": true,
+    "baseline_error_nodes": 0,
+    "current_error_nodes": 0,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "background_update_action(const BackgroundUpdateState &state)",
+      "requires_prepared_background_start(bool enabled, bool forced, bool prepared)",
+      "background_script_choice_resolved(bool has_scripts, const std::optional<bool> &skip_choice)"
+    ],
+    "changed_ranges": [
+      [
+        1,
+        47
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/PrefectFilamentSyncPolicy.hpp",
+    "new_file": true,
+    "baseline_error_nodes": 0,
+    "current_error_nodes": 0,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "filament_sync_action(const FilamentSyncState &state)"
+    ],
+    "changed_ranges": [
+      [
+        1,
+        31
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/PrefectSimpleView.hpp",
+    "new_file": true,
+    "baseline_error_nodes": 0,
+    "current_error_nodes": 0,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "SimpleFieldSelection()",
+      "SimpleFieldSelection(const std::string& serialized)",
+      "base_key(const std::string& key)",
+      "serialize() const",
+      "contains(const std::string& key) const",
+      "contains_any(Iterator first, Iterator last, KeyOf key_of) const",
+      "visible(bool upstream_visible, bool is_simple, bool is_print, bool enabled, const std::string& key) const"
+    ],
+    "changed_ranges": [
+      [
+        1,
+        74
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/Preferences.cpp",
+    "new_file": false,
+    "baseline_error_nodes": 7,
+    "current_error_nodes": 7,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "*PreferencesDialog::create_item_checkbox(wxString title, wxWindow *parent, wxString tooltip, int padding_left, std::string param)",
+      "PreferencesDialog::create()",
+      "*PreferencesDialog::create_prefect_tab()",
+      "PreferencesDialog::on_reset_preferences()"
+    ],
+    "changed_ranges": [
+      [
+        930,
+        932
+      ],
+      [
+        1325,
+        1325
+      ],
+      [
+        1531,
+        1568
+      ],
+      [
+        2116,
+        2124
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/Preferences.hpp",
+    "new_file": false,
+    "baseline_error_nodes": 5,
+    "current_error_nodes": 5,
+    "added_error_nodes": [],
+    "changed_functions": [],
+    "changed_ranges": [
+      [
+        122,
+        122
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/PresetComboBoxes.cpp",
+    "new_file": false,
+    "baseline_error_nodes": 2,
+    "current_error_nodes": 2,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "PlaterPresetComboBox::PlaterPresetComboBox(wxWindow *parent, Preset::Type preset_type)"
+    ],
+    "changed_ranges": [
+      [
+        837,
+        844
+      ],
+      [
+        878,
+        878
+      ],
+      [
+        880,
+        883
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/Search.cpp",
+    "new_file": false,
+    "baseline_error_nodes": 0,
+    "current_error_nodes": 0,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "OptionsSearcher::append_options(DynamicPrintConfig *config, Preset::Type type, ConfigOptionMode mode)"
+    ],
+    "changed_ranges": [
+      [
+        16,
+        16
+      ],
+      [
+        20,
+        20
+      ],
+      [
+        75,
+        76
+      ],
+      [
+        97,
+        98
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/SlicingProgressNotification.cpp",
+    "new_file": false,
+    "baseline_error_nodes": 0,
+    "current_error_nodes": 0,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "NotificationManager::SlicingProgressNotification::render(GLCanvas3D& canvas, float initial_y, bool move_from_overlay, float overlay_width, float right_margin)"
+    ],
+    "changed_ranges": [
+      [
+        222,
+        224
+      ],
+      [
+        236,
+        236
+      ],
+      [
+        292,
+        308
+      ],
+      [
+        309,
+        309
+      ],
+      [
+        494,
+        494
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/Tab.cpp",
+    "new_file": false,
+    "baseline_error_nodes": 8,
+    "current_error_nodes": 8,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "Tab::create_preset_tab()",
+      "TabPrint::configure_simple_fields(wxWindow* parent)"
+    ],
+    "changed_ranges": [
+      [
+        17,
+        18
+      ],
+      [
+        25,
+        28
+      ],
+      [
+        3198,
+        3321
+      ]
+    ]
+  },
+  {
+    "path": "src/slic3r/GUI/Tab.hpp",
+    "new_file": false,
+    "baseline_error_nodes": 0,
+    "current_error_nodes": 0,
+    "added_error_nodes": [],
+    "changed_functions": [],
+    "changed_ranges": [
+      [
+        488,
+        489
+      ]
+    ]
+  },
+  {
+    "path": "tests/prefect/background_test.cpp",
+    "new_file": true,
+    "baseline_error_nodes": 0,
+    "current_error_nodes": 0,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "main()"
+    ],
+    "changed_ranges": [
+      [
+        1,
+        58
+      ]
+    ]
+  },
+  {
+    "path": "tests/prefect/filament_sync_test.cpp",
+    "new_file": true,
+    "baseline_error_nodes": 0,
+    "current_error_nodes": 0,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "main()"
+    ],
+    "changed_ranges": [
+      [
+        1,
+        40
+      ]
+    ]
+  },
+  {
+    "path": "tests/prefect/simple_fields_test.cpp",
+    "new_file": true,
+    "baseline_error_nodes": 0,
+    "current_error_nodes": 0,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "main()"
+    ],
+    "changed_ranges": [
+      [
+        1,
+        46
+      ]
+    ]
+  },
+  {
+    "path": "tests/prefect/workflow_test.cpp",
+    "new_file": true,
+    "baseline_error_nodes": 0,
+    "current_error_nodes": 0,
+    "added_error_nodes": [],
+    "changed_functions": [
+      "main()"
+    ],
+    "changed_ranges": [
+      [
+        1,
+        23
+      ]
+    ]
+  }
+]

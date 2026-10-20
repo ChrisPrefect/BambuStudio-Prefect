@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-21",
+  "timezone": "Europe/Zurich",
+  "upstream_tag": "v02.08.02.61",
+  "upstream_commit": "926a7192574bcb9b3a732e1ec59a46d79cb45466",
+  "fork_revision": "871e85b815541cd2cc698fc9f68c32bc34e5f8c9 (feature commits recorded after tests; tested source content unchanged)",
+  "compiler": "Zig 0.14.1 (bundled Clang, native Windows x86_64)",
+  "flags": [
+    "-std=c++17",
+    "-UNDEBUG",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-OReleaseFast"
+  ],
+  "runner": "zig build -j1, absolute local/global cache directories",
+  "build_summary": "9/9 steps succeeded",
+  "tests": [
+    {
+      "test": "background",
+      "source": "tests/prefect/background_test.cpp",
+      "source_sha256_lf": "18e9e377844cac7fb429b2bf778a58f6992beec87aa550b450c607d331d97516",
+      "policy": "src/slic3r/GUI/PrefectBackgroundPolicy.hpp",
+      "policy_sha256_lf": "bcd39131a07869991ede5e713cd55dd82552b31c79594e72e18d54516deda504",
+      "binary": "out/prefect-tests/background.exe",
+      "binary_sha256": "3217e1513f0f2d3bb2e083bdd75c909e0258fdb8421d8a8352ba8b5bba32a7af",
+      "assert_call_sites": 14,
+      "assertions_enabled": true,
+      "exit_code": 0
+    },
+    {
+      "test": "filament_sync",
+      "source": "tests/prefect/filament_sync_test.cpp",
+      "source_sha256_lf": "9a3e71a3ae7591e1965fe4e1d2e428d008a56d2c68b54987118f9fa695061709",
+      "policy": "src/slic3r/GUI/PrefectFilamentSyncPolicy.hpp",
+      "policy_sha256_lf": "3bede31dcf90882b697017a4e8b46a5431ded1104dc7be78cd25b00f1400280c",
+      "binary": "out/prefect-tests/filament_sync.exe",
+      "binary_sha256": "24a7288ba9db9829c1d74863d310b921b5f86e7067610eec23a483513b407e8c",
+      "assert_call_sites": 9,
+      "assertions_enabled": true,
+      "exit_code": 0
+    },
+    {
+      "test": "simple_fields",
+      "source": "tests/prefect/simple_fields_test.cpp",
+      "source_sha256_lf": "575ab0bd8aba658940162f3af2ce4e41b52b2a90e91e67795ee362ff1a8caad7",
+      "policy": "src/slic3r/GUI/PrefectSimpleView.hpp",
+      "policy_sha256_lf": "baf6ee80c217587b1a29df734f95564b7a5f6deed5d1e633e9ac76980412cec1",
+      "binary": "out/prefect-tests/simple_fields.exe",
+      "binary_sha256": "209e26bfb088116b91508fe0a5e7c22ea6b5a01979edaa161ed93dc45d2036a1",
+      "assert_call_sites": 20,
+      "assertions_enabled": true,
+      "exit_code": 0
+    },
+    {
+      "test": "workflow",
+      "source": "tests/prefect/workflow_test.cpp",
+      "source_sha256_lf": "3da6efe8664e8a6ec2253225f3c2c7ad545b61c745f8ccab7da3cf88ee19f806",
+      "policy": "src/libslic3r/PrefectWorkflow.hpp",
+      "policy_sha256_lf": "6daba19629849ae9cdae99ed21caddab5f94673ad4556f6b2d12fa6b3ceeb70d",
+      "binary": "out/prefect-tests/workflow.exe",
+      "binary_sha256": "bee8e4ef96f8d7c5d6906650b131fdf9af87a285de828ac3231e97354d60b65c",
+      "assert_call_sites": 8,
+      "assertions_enabled": true,
+      "exit_code": 0
+    }
+  ],
+  "syntax_audit": {
+    "files": 27,
+    "baseline_error_nodes": 60,
+    "current_error_nodes": 60,
+    "added_error_nodes": 0,
+    "parser": "tree-sitter C++ with pinned Python binding 0.25.x; comparison to git HEAD"
+  },
+  "manifest_check": "passed",
+  "git_diff_check": "passed; CRLF conversion notices only",
+  "full_gui_build": "not verified",
+  "printer_runtime_tests": "not performed"
+}

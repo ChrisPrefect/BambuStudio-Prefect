@@ -1,0 +1,23 @@
+Absolute task paths normalized to $CHECKOUT, $ZIG and $GLOBAL_CACHE.
+Command exit code: 0
+$ZIG\zig.exe build-exe -cflags -std=c++17 -UNDEBUG -Wall -Wextra -Werror -pedantic -- $CHECKOUT\tests\prefect\filament_sync_test.cpp -OReleaseFast -Mroot -lc++ -lc --cache-dir $CHECKOUT\out\prefect-zig-cache --global-cache-dir $GLOBAL_CACHE --name filament_sync --zig-lib-dir $ZIG\lib\ --listen=-
+$CHECKOUT\out\prefect-zig-cache\o\07447b11bd2329998db92493ac613eed\filament_sync.exe
+$ZIG\zig.exe build-exe -cflags -std=c++17 -UNDEBUG -Wall -Wextra -Werror -pedantic -- $CHECKOUT\tests\prefect\workflow_test.cpp -OReleaseFast -Mroot -lc++ -lc --cache-dir $CHECKOUT\out\prefect-zig-cache --global-cache-dir $GLOBAL_CACHE --name workflow --zig-lib-dir $ZIG\lib\ --listen=-
+$CHECKOUT\out\prefect-zig-cache\o\be71e9285ec2c5a9a46ed93ef033db64\workflow.exe
+Cold-pull reminder policy: all regression checks passed
+$ZIG\zig.exe build-exe -cflags -std=c++17 -UNDEBUG -Wall -Wextra -Werror -pedantic -- $CHECKOUT\tests\prefect\background_test.cpp -OReleaseFast -Mroot -lc++ -lc --cache-dir $CHECKOUT\out\prefect-zig-cache --global-cache-dir $GLOBAL_CACHE --name background --zig-lib-dir $ZIG\lib\ --listen=-
+$CHECKOUT\out\prefect-zig-cache\o\7454f90dfb0d45292e8a47ccc81035cc\background.exe
+Background slicing lifecycle policy: all regression checks passed
+$ZIG\zig.exe build-exe -cflags -std=c++17 -UNDEBUG -Wall -Wextra -Werror -pedantic -- $CHECKOUT\tests\prefect\simple_fields_test.cpp -OReleaseFast -Mroot -lc++ -lc --cache-dir $CHECKOUT\out\prefect-zig-cache --global-cache-dir $GLOBAL_CACHE --name simple_fields --zig-lib-dir $ZIG\lib\ --listen=-
+$CHECKOUT\out\prefect-zig-cache\o\40afbb00c64ebf70c59104f88eda6eee\simple_fields.exe
+Simple field policy: all regression checks passed
+Build Summary: 9/9 steps succeeded
+install success
++- run background success 6ms MaxRSS:3M
+|  +- zig build-exe background ReleaseFast native cached 98ms MaxRSS:16M
++- run filament_sync success 5ms MaxRSS:3M
+|  +- zig build-exe filament_sync ReleaseFast native cached 66ms MaxRSS:16M
++- run simple_fields success 5ms MaxRSS:3M
+|  +- zig build-exe simple_fields ReleaseFast native cached 99ms MaxRSS:16M
++- run workflow success 5ms MaxRSS:3M
+   +- zig build-exe workflow ReleaseFast native cached 98ms MaxRSS:16M

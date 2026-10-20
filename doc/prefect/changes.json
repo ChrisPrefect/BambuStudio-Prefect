@@ -1,0 +1,179 @@
+{
+  "upstream_tag": "v02.08.02.61",
+  "upstream_commit": "926a7192574bcb9b3a732e1ec59a46d79cb45466",
+  "branch": "prefect/workflow",
+  "changes": [
+    {
+      "id": "F01",
+      "title": "Filamente automatisch synchronisieren",
+      "documentation": "doc/prefect/01-filament-auto-sync.md",
+      "configuration": {
+        "prefect_auto_sync_filaments": true
+      },
+      "anchors": [
+        {
+          "file": "src/slic3r/GUI/Plater.cpp",
+          "text": "m_prefect_observed_filaments"
+        },
+        {
+          "file": "src/slic3r/GUI/PrefectFilamentSyncPolicy.hpp",
+          "text": "filament_sync_action"
+        }
+      ],
+      "tests": [
+        "tests/prefect/filament_sync_test.cpp"
+      ],
+      "commit": "271e6449d056d1d48647f127755bc9751d5c6793"
+    },
+    {
+      "id": "F02",
+      "title": "Eigene Felder in der einfachen Ansicht",
+      "documentation": "doc/prefect/simple-fields.md",
+      "configuration": {
+        "prefect_simple_fields_enabled": false,
+        "prefect_simple_fields": ""
+      },
+      "anchors": [
+        {
+          "file": "src/slic3r/GUI/Tab.cpp",
+          "text": "TabPrint::configure_simple_fields"
+        },
+        {
+          "file": "src/slic3r/GUI/PrefectSimpleView.hpp",
+          "text": "SimpleFieldSelection"
+        }
+      ],
+      "tests": [
+        "tests/prefect/simple_fields_test.cpp"
+      ],
+      "commit": "84dc2b1416eda3f41e879cc19425ef0d4d64d966"
+    },
+    {
+      "id": "F03",
+      "title": "Druckerbox dauerhaft eingeklappt",
+      "documentation": "doc/prefect/03-printer-collapsed.md",
+      "configuration": {
+        "prefect_printer_collapsed": true
+      },
+      "anchors": [
+        {
+          "file": "src/slic3r/GUI/Plater.cpp",
+          "text": "prefect_printer_collapsed"
+        }
+      ],
+      "commit": "62c6a22d89a56356f7b0f4e6f72bb7666e0b697a"
+    },
+    {
+      "id": "F04",
+      "title": "Automatisch im Hintergrund slicen",
+      "documentation": "doc/prefect/04-background-slicing.md",
+      "configuration": {
+        "background_processing": true
+      },
+      "anchors": [
+        {
+          "file": "src/slic3r/GUI/Plater.cpp",
+          "text": "prefect_background_start_prepared"
+        },
+        {
+          "file": "src/slic3r/GUI/PrefectBackgroundPolicy.hpp",
+          "text": "background_update_action"
+        }
+      ],
+      "tests": [
+        "tests/prefect/background_test.cpp"
+      ],
+      "commit": "dcd6b229cfe1a3da13c1cacc700fa7cd5e441796"
+    },
+    {
+      "id": "F05",
+      "title": "Filament per Klick zuweisen",
+      "documentation": "doc/prefect/05-click-filament-assignment.md",
+      "configuration": {
+        "prefect_click_filament_assigns_selection": true
+      },
+      "anchors": [
+        {
+          "file": "src/slic3r/GUI/Plater.cpp",
+          "text": "Sidebar::assign_filament_to_selection"
+        },
+        {
+          "file": "src/slic3r/GUI/PresetComboBoxes.cpp",
+          "text": "prefect_click_filament_assigns_selection"
+        }
+      ],
+      "commit": "ff833abb53a99156b03ff15ee720f3fd668b62cc"
+    },
+    {
+      "id": "F06",
+      "title": "Filament als Supportinterface festlegen",
+      "documentation": "doc/prefect/06-support-interface-menu.md",
+      "configuration": {},
+      "anchors": [
+        {
+          "file": "src/slic3r/GUI/Plater.cpp",
+          "text": "Sidebar::set_support_interface_filament"
+        },
+        {
+          "file": "src/slic3r/GUI/GUI_Factories.cpp",
+          "text": "Set as support interface"
+        }
+      ],
+      "commit": "904901adb509d2b0e7ae97d8bb4574dff0ff42b5"
+    },
+    {
+      "id": "F07",
+      "title": "Mehrere Modelle einzeln importieren",
+      "documentation": "doc/prefect/07-separate-imports.md",
+      "configuration": {
+        "prefect_import_separate_objects": true
+      },
+      "anchors": [
+        {
+          "file": "src/slic3r/GUI/Plater.cpp",
+          "text": "prefect_import_separate_objects"
+        }
+      ],
+      "commit": "4ef4c7d252a90aaa2965626f973fd165fc55067b"
+    },
+    {
+      "id": "F08",
+      "title": "TPU-Cold-Pull-Hinweis ausblenden",
+      "documentation": "doc/prefect/08-tpu-cold-pull.md",
+      "configuration": {
+        "prefect_suppress_tpu_cold_pull": true
+      },
+      "anchors": [
+        {
+          "file": "src/slic3r/GUI/DeviceCore/DevFilaBlackList.cpp",
+          "text": "PrefectWorkflow::suppress_tpu_cold_pull"
+        }
+      ],
+      "tests": [
+        "tests/prefect/workflow_test.cpp"
+      ],
+      "commit": "e67394ffb07601ac644dba08016e2a06ad2774c6"
+    },
+    {
+      "id": "F09",
+      "title": "Tipps vollständig ausblenden",
+      "documentation": "doc/prefect/09-hide-tips.md",
+      "configuration": {
+        "prefect_hide_tips": true
+      },
+      "anchors": [
+        {
+          "file": "src/slic3r/GUI/DailyTips.cpp",
+          "text": "prefect_hide_tips"
+        },
+        {
+          "file": "src/slic3r/GUI/SlicingProgressNotification.cpp",
+          "text": "const bool show_tips"
+        }
+      ],
+      "commit": "871e85b815541cd2cc698fc9f68c32bc34e5f8c9"
+    }
+  ],
+  "fork_repository": "https://github.com/ChrisPrefect/BambuStudio-Prefect",
+  "foundation_commit": "cdcc804f0ae838c583155957bb40fcd3a2ea4626"
+}
