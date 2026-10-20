@@ -279,6 +279,8 @@ ImVec2 DailyTipsPanel::get_size()
 
 void DailyTipsPanel::render()
 {
+    if (wxGetApp().app_config->get_bool("prefect_hide_tips"))
+        return;
     ImGuiWrapper& imgui = *wxGetApp().imgui();
     float scale = imgui.get_font_size() / 15.0f;
 
@@ -614,6 +616,8 @@ DailyTipsWindow::DailyTipsWindow()
 
 void DailyTipsWindow::open()
 {
+    if (wxGetApp().app_config->get_bool("prefect_hide_tips"))
+        return;
     m_show = true;
     m_panel->retrieve_data_from_hint_database(HintDataNavigation::Curr);
 }
@@ -625,6 +629,10 @@ void DailyTipsWindow::close()
 
 void DailyTipsWindow::render()
 {
+    if (wxGetApp().app_config->get_bool("prefect_hide_tips")) {
+        m_show = false;
+        return;
+    }
     if (!m_show)
         return;
     //if (m_show)
