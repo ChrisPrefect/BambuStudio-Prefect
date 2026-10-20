@@ -2467,7 +2467,7 @@ Sidebar::Sidebar(Plater *parent)
         const auto action = Prefect::filament_sync_action({
             wxGetApp().app_config->get_bool("prefect_auto_sync_filaments"), wxGetApp().is_closing(),
             machine && machine->get_dev_id() == m_prefect_observed_device,
-            !p->plater->using_exported_file() && !p->plater->is_gcode_3mf(),
+            !p->plater->only_gcode_mode() && !p->plater->using_exported_file(),
             machine && machine->is_online(), machine && p->plater->is_same_printer_for_connected_and_selected(false),
             p->plater->is_background_process_slicing() || p->plater->background_process().running() ||
                 !p->plater->get_ui_job_worker().is_idle() ||
@@ -4192,7 +4192,8 @@ void Sidebar::add_filament() {
 
 bool Sidebar::assign_filament_to_selection(size_t filament_id)
 {
-    if (filament_id >= wxGetApp().preset_bundle->filament_presets.size() || p->plater->using_exported_file())
+    if (filament_id >= wxGetApp().preset_bundle->filament_presets.size() ||
+        p->plater->only_gcode_mode() || p->plater->using_exported_file())
         return false;
 
     if (p->plater->is_assemble_undo_stack_active()) {
@@ -4214,7 +4215,8 @@ void Sidebar::set_support_interface_filament(size_t filament_id)
 {
     if (filament_id == static_cast<size_t>(kSidebarContextMenuFilamentId))
         filament_id = p->m_menu_filament_id;
-    if (filament_id >= wxGetApp().preset_bundle->filament_presets.size() || p->plater->using_exported_file())
+    if (filament_id >= wxGetApp().preset_bundle->filament_presets.size() ||
+        p->plater->only_gcode_mode() || p->plater->using_exported_file())
         return;
 
     p->plater->take_snapshot("Set as support interface");

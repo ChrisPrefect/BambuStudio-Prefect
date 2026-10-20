@@ -105,3 +105,7 @@ anschließend das Slicing-Ergebnis. Eine ScopeGuard setzt die Reentranzsperre zu
 Der reine Policy-Test lässt sich ohne GUI-Abhängigkeiten mit einem C++-Compiler bauen:
 `c++ -std=c++17 tests/prefect/filament_sync_test.cpp -o prefect_filament_sync_policy`
 und anschließend ausführen. Er ersetzt die Geräte- und GUI-Prüfungen nicht.
+
+### G-Code-Ansichten bei Updates
+
+Die Projektbearbeitung prueft sowohl only_gcode_mode() (reine G-Code-Datei) als auch using_exported_file() (geslicte 3MF). is_gcode_3mf() ist im Basisstand nur ein Alias fuer using_exported_file() und deckt reine G-Code-Dateien nicht ab. Derselbe Schutz gilt fuer Klickzuweisung und Supportinterface-Menue.
