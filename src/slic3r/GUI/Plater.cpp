@@ -9317,7 +9317,10 @@ std::vector<size_t> Plater::priv::load_files(const std::vector<fs::path>& input_
                 // convert_model_if(model, answer_convert_from_imperial_units == wxID_YES);
             }
 
-             if (!is_project_file && model.looks_like_multipart_object()) {
+             // PREFECT: preserve the objects already provided by the importer;
+             // this only disables the heuristic offer to merge them into parts.
+             if (!is_project_file && model.looks_like_multipart_object() &&
+                 !wxGetApp().app_config->get_bool("prefect_import_separate_objects")) {
                MessageDialog msg_dlg(q, _L(
                     "This file contains several objects positioned at multiple heights.\n"
                     "Instead of considering them as multiple objects, should \n"
@@ -9653,7 +9656,7 @@ std::vector<size_t> Plater::priv::load_files(const std::vector<fs::path>& input_
     if (new_model != nullptr && new_model->objects.size() > 1) {
         //BBS do not popup this dialog
 
-        if (ask_multi) {
+        if (ask_multi && !wxGetApp().app_config->get_bool("prefect_import_separate_objects")) {
             MessageDialog msg_dlg(q, _L("Load these files as a single object with multiple parts?\n"), _L("Object with multiple parts was detected"),
                                   wxICON_WARNING | wxYES | wxNO);
             if (msg_dlg.ShowModal() == wxID_YES) { new_model->convert_multipart_object(filaments_cnt); }
