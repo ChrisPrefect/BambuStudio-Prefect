@@ -1,0 +1,9 @@
+{
+  "source_run_id": 39509466108,
+  "source_commit": "aefb764d3a36e05004ec82e20ddf37714ce718a7",
+  "source_tree": "587565647fc3d2f36bf1533b4263d2b23fcad4dd",
+  "tag": "v02.08.02.61-prefect.1",
+  "title": "Bambu Studio Prefect 2.8.2.61 – Workflow 1",
+  "patch_file": "BambuStudio-Prefect-patches-20261021.zip",
+  "patch_sha256": "938bebafd9e6bdbb3a71f8447f9235e101a39329a9417a7ad6c81be2fc1af052"
+}

@@ -1,0 +1,34 @@
+name: Prepare verified Prefect release assets
+
+on:
+  push:
+    branches: ['delivery/windows']
+    paths: ['.github/workflows/prefect-publish.yml', 'delivery/windows/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: prefect-release-assets
+  cancel-in-progress: false
+
+jobs:
+  prepare-draft:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: delivery/windows
+          persist-credentials: false
+      - name: Verify successful Windows build and attach draft release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python delivery/windows/publish_draft.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Prefect-release-verification
+          path: prepared-release.json
+          if-no-files-found: error
