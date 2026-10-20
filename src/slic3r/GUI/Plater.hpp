@@ -7,6 +7,7 @@
 #include <boost/filesystem/path.hpp>
 
 #include <wx/panel.h>
+#include <wx/timer.h>
 // BBS
 #include <wx/notebook.h>
 
@@ -150,6 +151,10 @@ class Sidebar : public wxPanel
     int                                     m_last_combo_bedtype_count{0};
     bool                                    m_begin_sync_printer_status{false};
     SyncAmsInfoDialog*                      m_sync_dlg{nullptr};
+    wxTimer                                m_prefect_filament_sync_timer;
+    std::string                            m_prefect_observed_device;
+    std::map<int, DynamicPrintConfig>       m_prefect_observed_filaments;
+    bool                                   m_prefect_filament_sync_running{false};
 
     void update_sync_ams_btn_enable(wxUpdateUIEvent &e);
 
@@ -203,7 +208,7 @@ public:
     void on_bed_type_change(BedType bed_type);
     void load_ams_list(MachineObject* obj);
     std::map<int, DynamicPrintConfig> build_filament_ams_list(MachineObject* obj);
-    void sync_ams_list(bool is_from_big_sync_btn = false);
+    void sync_ams_list(bool is_from_big_sync_btn = false, bool automatic = false);
     bool sync_extruder_list();
     bool need_auto_sync_extruder_list_after_connect_priner(const MachineObject* obj);
     void update_sync_status(const MachineObject* obj);

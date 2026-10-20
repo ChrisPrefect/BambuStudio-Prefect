@@ -1,4 +1,5 @@
 #include "Plater.hpp"
+#include "PrefectFilamentSyncPolicy.hpp"
 #include <array>
 #include <boost/format/format_fwd.hpp>
 #include <cstddef>
@@ -2457,6 +2458,30 @@ void Sidebar::update_sync_ams_btn_enable(wxUpdateUIEvent &e)
 Sidebar::Sidebar(Plater *parent)
     : wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(42 * wxGetApp().em_unit(), -1)), p(new priv(parent))
 {
+    // Prefect: debounce device updates; never mutate filament assignments from the MQTT callback stack.
+    m_prefect_filament_sync_timer.SetOwner(this);
+    Bind(wxEVT_TIMER, [this](wxTimerEvent &) {
+        auto *manager = wxGetApp().getDeviceManager();
+        auto *machine = manager ? manager->get_selected_machine() : nullptr;
+        const auto action = Prefect::filament_sync_action({
+            wxGetApp().app_config->get_bool("prefect_auto_sync_filaments"), wxGetApp().is_closing(),
+            machine && machine->get_dev_id() == m_prefect_observed_device,
+            !p->plater->using_exported_file() && !p->plater->is_gcode_3mf(),
+            machine && machine->is_online(), machine && p->plater->is_same_printer_for_connected_and_selected(false),
+            p->plater->is_background_process_slicing() || p->plater->background_process().running() ||
+                !p->plater->get_ui_job_worker().is_idle() ||
+                !wxGetApp().mainframe || !wxGetApp().mainframe->IsEnabled() || m_prefect_filament_sync_running});
+        if (action == Prefect::FilamentSyncAction::Stop)
+            return;
+        if (action == Prefect::FilamentSyncAction::Retry) {
+            m_prefect_filament_sync_timer.StartOnce(1000);
+            return;
+        }
+        m_prefect_filament_sync_running = true;
+        ScopeGuard sync_guard([this]() { m_prefect_filament_sync_running = false; });
+        sync_ams_list(false, true);
+    }, m_prefect_filament_sync_timer.GetId());
+
     Choice::register_dynamic_list("support_filament", &dynamic_filament_list);
     Choice::register_dynamic_list("support_interface_filament", &dynamic_filament_list);
     Choice::register_dynamic_list("wall_filament", &dynamic_filament_list);
@@ -3226,6 +3251,7 @@ Sidebar::Sidebar(Plater *parent)
 }
 
 Sidebar::~Sidebar() {
+    m_prefect_filament_sync_timer.Stop();
     if (m_extruder_warning_dialog) {
         m_extruder_warning_dialog->Hide();
         m_extruder_warning_dialog->Destroy();
@@ -4535,6 +4561,19 @@ void Sidebar::load_ams_list(MachineObject* obj)
 {
     std::map<int, DynamicPrintConfig> filament_ams_list = build_filament_ams_list(obj);
 
+    // Compare a pristine device snapshot. sync_ams_list adds transient "filament_changed" fields
+    // to PresetBundle::filament_ams_list, so comparing that mutable map would retrigger every message.
+    const std::string observed_device = obj ? obj->get_dev_id() : "";
+    if (observed_device != m_prefect_observed_device || filament_ams_list != m_prefect_observed_filaments) {
+        m_prefect_observed_device = observed_device;
+        m_prefect_observed_filaments = filament_ams_list;
+        if (obj && !filament_ams_list.empty() && !m_prefect_filament_sync_running &&
+            wxGetApp().app_config->get_bool("prefect_auto_sync_filaments"))
+            m_prefect_filament_sync_timer.StartOnce(750);
+        else if (!obj)
+            m_prefect_filament_sync_timer.Stop();
+    }
+
     bool device_change     = false;
     const std::string& device = obj ? obj->get_dev_id() : "";
     if (p->ams_list_device != device) {
@@ -4558,7 +4597,7 @@ void Sidebar::load_ams_list(MachineObject* obj)
     p->combo_printer->update();
 }
 
-void Sidebar::sync_ams_list(bool is_from_big_sync_btn)
+void Sidebar::sync_ams_list(bool is_from_big_sync_btn, bool automatic)
 {
     wxBusyCursor cursor;
     // Force load ams list
@@ -4572,6 +4611,8 @@ void Sidebar::sync_ams_list(bool is_from_big_sync_btn)
         if (obj) {
             BOOST_LOG_TRIVIAL(info) << __FUNCTION__ << "obj->is_online(): " << obj->is_online();
         }
+        if (automatic)
+            return;
         auto printer_name = p->plater->get_selected_printer_name_in_combox();
         p->plater->pop_warning_and_go_to_device_page(printer_name, Plater::PrinterWarningType::NOT_CONNECTED, _L("Sync printer information"));
         return;
@@ -4587,6 +4628,8 @@ void Sidebar::sync_ams_list(bool is_from_big_sync_btn)
         }
     }
     if (!exist_at_list_one_filament) {
+        if (automatic)
+            return;
         if (!obj->is_filament_installed()) {
             p->plater->pop_warning_and_go_to_device_page("", Plater::PrinterWarningType::UNINSTALL_FILAMENT, _L("Sync printer information"));
             return;
@@ -4594,7 +4637,7 @@ void Sidebar::sync_ams_list(bool is_from_big_sync_btn)
         p->plater->pop_warning_and_go_to_device_page("", Plater::PrinterWarningType::EMPTY_FILAMENT, _L("Sync printer information"));
         return;
     }
-    if (!wxGetApp().plater()->is_same_printer_for_connected_and_selected()) {
+    if (!wxGetApp().plater()->is_same_printer_for_connected_and_selected(!automatic)) {
         return;
     }
     std::string ams_filament_ids = wxGetApp().app_config->get("ams_filament_ids", p->ams_list_device);
@@ -4602,36 +4645,44 @@ void Sidebar::sync_ams_list(bool is_from_big_sync_btn)
     if (!ams_filament_ids.empty()) {
         boost::algorithm::split(list2, ams_filament_ids, boost::algorithm::is_any_of(","));
     }
-    wxGetApp().plater()->update_all_plate_thumbnails(true);//preview thumbnail for sync_dlg
-    SyncAmsInfoDialog::SyncInfo temp_info;
-    temp_info.use_dialog_pos = false;
-    temp_info.cancel_text_to_later = is_from_big_sync_btn;
-    if (m_sync_dlg == nullptr) {
-        m_sync_dlg = new SyncAmsInfoDialog(this, temp_info);
-    } else {
-        m_sync_dlg->set_info(temp_info);
-    }
-    int dlg_res{(int) wxID_CANCEL};
-    if (m_sync_dlg->is_need_show()) {
-        m_sync_dlg->deal_only_exist_ext_spool(obj);
-        if (m_sync_dlg->is_dirty_filament()) {
-            wxGetApp().get_tab(Preset::TYPE_FILAMENT)->select_preset(wxGetApp().preset_bundle->filament_presets[0], false, "", false, true);
-            wxGetApp().preset_bundle->export_selections(*wxGetApp().app_config);
-            dynamic_filament_list.update();
+    SyncAmsInfoDialog::SyncResult sync_result;
+    int dlg_res = wxID_YES;
+    bool skip_ext = obj->GetFilaSwitch()->IsInstalled() && obj->GetFilaSwitch()->IsReady();
+    if (!automatic) {
+        wxGetApp().plater()->update_all_plate_thumbnails(true);//preview thumbnail for sync_dlg
+        SyncAmsInfoDialog::SyncInfo temp_info;
+        temp_info.use_dialog_pos = false;
+        temp_info.cancel_text_to_later = is_from_big_sync_btn;
+        if (m_sync_dlg == nullptr) {
+            m_sync_dlg = new SyncAmsInfoDialog(this, temp_info);
+        } else {
+            m_sync_dlg->set_info(temp_info);
         }
-        m_sync_dlg->set_check_dirty_fialment(false);
-        dlg_res = m_sync_dlg->ShowModal();
+        dlg_res = wxID_CANCEL;
+        if (m_sync_dlg->is_need_show()) {
+            m_sync_dlg->deal_only_exist_ext_spool(obj);
+            if (m_sync_dlg->is_dirty_filament()) {
+                wxGetApp().get_tab(Preset::TYPE_FILAMENT)->select_preset(wxGetApp().preset_bundle->filament_presets[0], false, "", false, true);
+                wxGetApp().preset_bundle->export_selections(*wxGetApp().app_config);
+                dynamic_filament_list.update();
+            }
+            m_sync_dlg->set_check_dirty_fialment(false);
+            dlg_res = m_sync_dlg->ShowModal();
+        } else {
+            dlg_res =(int) wxID_YES;
+        }
+        if (dlg_res == wxID_CANCEL)
+            return;
+        sync_result = m_sync_dlg->get_result();
+        if (!sync_result.is_same_printer) {
+            BOOST_LOG_TRIVIAL(info) << __FUNCTION__ << "check error: sync_result.is_same_printer value is false";
+            return;
+        }
+        skip_ext = m_sync_dlg->has_selector(nullptr);
     } else {
-        dlg_res =(int) wxID_YES;
+        // Printer contents are authoritative in automatic mode: direct sync, no mapping wizard.
+        p->plater->take_snapshot("Synchronize filaments from printer");
     }
-    if (dlg_res == wxID_CANCEL)
-        return;
-    auto sync_result = m_sync_dlg->get_result();
-    if (!sync_result.is_same_printer) {
-        BOOST_LOG_TRIVIAL(info) << __FUNCTION__ << "check error: sync_result.is_same_printer value is false";
-        return;
-    }
-    auto skip_ext = m_sync_dlg->has_selector(nullptr);
     if (skip_ext) {
         list2.clear();
     } else {
@@ -4681,6 +4732,10 @@ void Sidebar::sync_ams_list(bool is_from_big_sync_btn)
         detail += from_u8("\n- " + tray_name + "(" + filament_type + ") ") + _L(uk.second);
     }
     if (n == 0) {
+        if (automatic) {
+            BOOST_LOG_TRIVIAL(warning) << "Prefect automatic filament sync: no compatible filaments";
+            return;
+        }
         MessageDialog dlg(this,
             _L("There are no compatible filaments, and sync is not performed.") + detail,
             _L("Sync filaments with AMS"), wxOK);
@@ -4689,12 +4744,14 @@ void Sidebar::sync_ams_list(bool is_from_big_sync_btn)
     }
     ams_filament_ids = boost::algorithm::join(list2, ",");
     wxGetApp().app_config ->set("ams_filament_ids", p->ams_list_device, ams_filament_ids);
-    if (!unknowns.empty()) {
+    if (!unknowns.empty() && !automatic) {
         MessageDialog dlg(this,
             _L("There are some unknown or uncompatible filaments mapped to generic preset.\nPlease update Bambu Studio or restart Bambu Studio to check if there is an update to system presets.") + detail,
             _L("Sync filaments with AMS"), wxOK);
         dlg.ShowModal();
     }
+    if (!unknowns.empty() && automatic)
+        BOOST_LOG_TRIVIAL(warning) << "Prefect automatic filament sync used fallback presets for " << unknowns.size() << " slot(s)";
     BOOST_LOG_TRIVIAL(info) << __FUNCTION__ << "on_filament_count_change";
     wxGetApp().plater()->on_filament_count_change(n);
     BOOST_LOG_TRIVIAL(info) << __FUNCTION__ << "finish on_filament_count_change";
@@ -4784,14 +4841,23 @@ void Sidebar::sync_ams_list(bool is_from_big_sync_btn)
     }
     Layout();
 
-    wxGetApp().get_tab(Preset::TYPE_FILAMENT)->select_preset(wxGetApp().preset_bundle->filament_presets[0]);
+    if (automatic) {
+        // Avoid Tab::select_preset's dirty-preset confirmation in this explicitly automatic path.
+        wxGetApp().preset_bundle->filaments.select_preset_by_name(wxGetApp().preset_bundle->filament_presets[0], true);
+        wxGetApp().get_tab(Preset::TYPE_FILAMENT)->load_current_preset();
+    } else {
+        wxGetApp().get_tab(Preset::TYPE_FILAMENT)->select_preset(wxGetApp().preset_bundle->filament_presets[0]);
+    }
     wxGetApp().preset_bundle->export_selections(*wxGetApp().app_config);
     dynamic_filament_list.update();
     BOOST_LOG_TRIVIAL(info) << __FUNCTION__ << "begin pop_finsish_sync_ams_dialog";
-    pop_finsish_sync_ams_dialog();
+    if (!automatic)
+        pop_finsish_sync_ams_dialog();
     BOOST_LOG_TRIVIAL(info) << __FUNCTION__ << "finish pop_finsish_sync_ams_dialog";
 
     wxGetApp().plater()->get_partplate_list().reset_thumbnail_assembly_view_data();
+    if (automatic)
+        p->plater->update();
 }
 
 PlaterPresetComboBox* Sidebar::printer_combox()
