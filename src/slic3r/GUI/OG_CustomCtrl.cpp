@@ -852,8 +852,7 @@ void OG_CustomCtrl::CtrlLine::update_visibility(ConfigOptionMode mode)
         return;
     const std::vector<Option>& option_set = og_line.get_options();
 
-    const ConfigOptionMode& line_mode = option_set.front().opt.mode;
-    is_visible = og_line.toggle_visible && line_mode <= mode;
+    is_visible = og_line.toggle_visible && ctrl->opt_group->is_line_visible(og_line, mode);
 
     if (draw_just_act_buttons)
         return;

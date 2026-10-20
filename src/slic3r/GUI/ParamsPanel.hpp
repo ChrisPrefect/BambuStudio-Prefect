@@ -88,6 +88,7 @@ class ParamsPanel : public wxPanel
         bool m_tips_arror_blink{false};
         wxStaticText* m_title_view { nullptr };
         SwitchButton* m_mode_view { nullptr };
+        wxButton* m_simple_fields_btn { nullptr };
         //wxBitmapButton* m_search_button { nullptr };
         wxStaticLine* m_staticline_print { nullptr };
         //wxBoxSizer* m_print_sizer { nullptr };

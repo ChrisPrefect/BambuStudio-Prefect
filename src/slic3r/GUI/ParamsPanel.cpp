@@ -290,6 +290,12 @@ ParamsPanel::ParamsPanel( wxWindow* parent, wxWindowID id, const wxPoint& pos, c
 
         m_title_view = new Label(m_top_panel, _L("Advance"));
         m_mode_view = new SwitchButton(m_top_panel, wxID_ABOUT);
+        m_simple_fields_btn = new wxButton(m_top_panel, wxID_ANY, wxString::FromUTF8("Felder..."), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+        m_simple_fields_btn->SetToolTip(wxString::FromUTF8("Sichtbare Druckeinstellungen der einfachen Ansicht auswählen"));
+        m_simple_fields_btn->Bind(wxEVT_BUTTON, [this](wxCommandEvent&) {
+            if (auto* tab = dynamic_cast<TabPrint*>(wxGetApp().get_tab(Preset::TYPE_PRINT)))
+                tab->configure_simple_fields(this);
+        });
 
         // BBS: new layout
         //m_search_btn = new ScalableButton(m_top_panel, wxID_ANY, "search", wxEmptyString, wxDefaultSize, wxDefaultPosition, wxBU_EXACTFIT | wxNO_BORDER, true);
@@ -433,6 +439,8 @@ void ParamsPanel::create_layout()
         m_mode_sizer->Add( m_title_view, 0, wxALIGN_CENTER );
         m_mode_sizer->AddSpacer(FromDIP(2));
         m_mode_sizer->Add(m_mode_view, 0, wxALIGN_CENTER);
+        m_mode_sizer->AddSpacer(FromDIP(6));
+        m_mode_sizer->Add(m_simple_fields_btn, 0, wxALIGN_CENTER);
         m_mode_sizer->AddSpacer(FromDIP(10));
         m_mode_sizer->Add(m_setting_btn, 0, wxALIGN_CENTER);
         m_mode_sizer->AddSpacer(FromDIP(12));
@@ -791,6 +799,10 @@ void ParamsPanel::free_sizers()
 
 void ParamsPanel::delete_subwindows()
 {
+    if (m_simple_fields_btn) {
+        delete m_simple_fields_btn;
+        m_simple_fields_btn = nullptr;
+    }
     if (m_title_label)
     {
         delete m_title_label;

@@ -17,6 +17,7 @@
 #include "libslic3r/Utils.hpp"
 #include "libslic3r/AppConfig.hpp"
 #include "I18N.hpp"
+#include "PrefectSimpleView.hpp"
 
 namespace Slic3r { namespace GUI {
 
@@ -841,6 +842,13 @@ void ConfigOptionsGroup::Show(const bool show)
 
 bool ConfigOptionsGroup::is_visible(ConfigOptionMode mode)
 {
+    const bool is_print = m_config_type == Preset::TYPE_PRINT || m_config_type == Preset::TYPE_MODEL || m_config_type == Preset::TYPE_PLATE;
+    if (mode == comSimple && is_print && wxGetApp().app_config->get_bool("prefect_simple_fields_enabled")) {
+        for (const auto& line : m_lines)
+            if (line.toggle_visible && is_line_visible(line, mode))
+                return true;
+        return m_options_mode.empty();
+    }
     if (m_options_mode.empty())
         return true;
     if (m_options_mode.size() == 1)
@@ -852,6 +860,26 @@ bool ConfigOptionsGroup::is_visible(ConfigOptionMode mode)
             hidden_row_cnt++;
 
     return hidden_row_cnt != m_options_mode.size();
+}
+
+bool ConfigOptionsGroup::is_option_visible(const Option& option, ConfigOptionMode mode) const
+{
+    const bool is_print = m_config_type == Preset::TYPE_PRINT || m_config_type == Preset::TYPE_MODEL || m_config_type == Preset::TYPE_PLATE;
+    if (mode != comSimple || !is_print || !wxGetApp().app_config->get_bool("prefect_simple_fields_enabled"))
+        return option.opt.mode <= mode;
+    return Prefect::SimpleFieldSelection(wxGetApp().app_config->get("prefect_simple_fields")).contains(option.opt_id);
+}
+
+bool ConfigOptionsGroup::is_line_visible(const Line& line, ConfigOptionMode mode) const
+{
+    const bool is_print = m_config_type == Preset::TYPE_PRINT || m_config_type == Preset::TYPE_MODEL || m_config_type == Preset::TYPE_PLATE;
+    if (mode != comSimple || !is_print || !wxGetApp().app_config->get_bool("prefect_simple_fields_enabled"))
+        return OptionsGroup::is_line_visible(line, mode);
+    const Prefect::SimpleFieldSelection fields(wxGetApp().app_config->get("prefect_simple_fields"));
+    // A shared-label row is one selectable UI unit. A manually edited partial
+    // list must show that row even when only its second option was listed.
+    const auto& options = line.get_options();
+    return fields.contains_any(options.begin(), options.end(), [](const Option& option) { return option.opt_id; });
 }
 
 bool ConfigOptionsGroup::update_visibility(ConfigOptionMode mode)
@@ -867,27 +895,27 @@ bool ConfigOptionsGroup::update_visibility(ConfigOptionMode mode)
 
 	int opt_mode_size = m_options_mode.size();
 	if (m_grid_sizer->GetEffectiveRowsCount() != opt_mode_size &&
-		opt_mode_size == 1)
-		return m_options_mode[0] <= mode;
+		opt_mode_size == 1) {
+        const bool show = is_visible(mode);
+        Show(show);
+        return show;
+    }
 
 	Show(true);
 
     int coef = 0;
     int hidden_row_cnt = 0;
     const int cols = m_grid_sizer->GetCols();
-    Line * line = &m_lines.front();
-    size_t line_opt_end = line->get_options().size();
-    for (auto opt_mode : m_options_mode) {
-        const bool show = opt_mode <= mode && line->toggle_visible;
-        if (--line_opt_end == 0) {
-            ++line;
-            line_opt_end = line->get_options().size();
-        }
+    for (const auto& line : m_lines) {
+        if (line.get_options().empty())
+            continue;
+        const bool show = is_line_visible(line, mode) && line.toggle_visible;
         if (!show) {
             hidden_row_cnt++;
-            for (int i = 0; i < cols; ++i)
-                m_grid_sizer->Show(coef + i, show);
         }
+        for (int i = 0; i < cols; ++i)
+            if (static_cast<size_t>(coef + i) < m_grid_sizer->GetItemCount())
+                m_grid_sizer->Show(coef + i, show);
         coef+= cols;
 	}
 

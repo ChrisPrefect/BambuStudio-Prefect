@@ -13,9 +13,11 @@
 
 #include "libslic3r/PrintConfig.hpp"
 #include "libslic3r/PresetBundle.hpp"
+#include "libslic3r/AppConfig.hpp"
 #include "GUI_App.hpp"
 #include "Plater.hpp"
 #include "Tab.hpp"
+#include "PrefectSimpleView.hpp"
 
 #define FTS_FUZZY_MATCH_IMPLEMENTATION
 #include "fts_fuzzy_match.h"
@@ -70,6 +72,8 @@ static std::string get_key(const std::string &opt_key, Preset::Type type) { retu
 
 void OptionsSearcher::append_options(DynamicPrintConfig *config, Preset::Type type, ConfigOptionMode mode)
 {
+    const GUI::Prefect::SimpleFieldSelection simple_fields(GUI::wxGetApp().app_config->get("prefect_simple_fields"));
+    const bool custom_simple = GUI::wxGetApp().app_config->get_bool("prefect_simple_fields_enabled");
     auto emplace = [this, type](const std::string key, const wxString &label) {
         const GroupAndCategory &gc = groups_and_categories[key];
         if (gc.group.IsEmpty() || gc.category.IsEmpty()) return;
@@ -90,7 +94,8 @@ void OptionsSearcher::append_options(DynamicPrintConfig *config, Preset::Type ty
 
     for (std::string opt_key : config->keys()) {
         const ConfigOptionDef &opt = config->def()->options.at(opt_key);
-        if (opt.mode > mode) continue;
+        if (!simple_fields.visible(opt.mode <= mode, mode == comSimple, type == Preset::TYPE_PRINT, custom_simple, opt_key))
+            continue;
 
         int cnt = 0;
 

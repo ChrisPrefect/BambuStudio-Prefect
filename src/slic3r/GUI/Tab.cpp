@@ -14,12 +14,18 @@
 
 #include "Search.hpp"
 #include "OG_CustomCtrl.hpp"
+#include "PrefectSimpleView.hpp"
+#include "libslic3r/AppConfig.hpp"
 
 #include <wx/app.h>
 #include <wx/button.h>
 #include <wx/scrolwin.h>
 #include <wx/sizer.h>
 #include <wx/tipwin.h>
+#include <wx/checklst.h>
+#include <wx/checkbox.h>
+#include <wx/srchctrl.h>
+#include <wx/display.h>
 
 #include <wx/bmpcbox.h>
 #include <wx/bmpbuttn.h>
@@ -3187,6 +3193,130 @@ void Tab::update_frequently_changed_parameters()
         og_freq_chng_params->set_value("brim", bool(m_config->opt_float("brim_width") > 0.0));
         update_wiping_button_visibility();
     }
+}
+
+void TabPrint::configure_simple_fields(wxWindow* parent)
+{
+    struct Entry {
+        std::vector<std::string> keys;
+        wxString label;
+        bool upstream_simple;
+    };
+    std::map<std::string, Entry> entries;
+    for (const auto& page : m_pages)
+        for (const auto& group : page->m_optgroups)
+            for (const auto& line : group->get_lines()) {
+                Entry entry;
+                entry.upstream_simple = !line.get_options().empty() && line.get_options().front().opt.mode <= comSimple;
+                for (const auto& option : line.get_options()) {
+                    const auto key = Prefect::SimpleFieldSelection::base_key(option.opt_id);
+                    const wxString title = option.opt.full_label.empty() ? _(option.opt.label) : _(option.opt.full_label);
+                    if (!entry.label.empty())
+                        entry.label += " + ";
+                    entry.label += title + " [" + from_u8(key) + "]";
+                    entry.keys.push_back(key);
+                }
+                if (!entry.keys.empty()) {
+                    const auto first_key = entry.keys.front();
+                    entry.label = translate_category(page->title(), Preset::TYPE_PRINT) + " / " + _(group->title) + " / " + entry.label;
+                    entries.emplace(first_key, std::move(entry));
+                }
+            }
+
+    auto* app_config = wxGetApp().app_config;
+    Prefect::SimpleFieldSelection fields(app_config->get("prefect_simple_fields"));
+    const bool enabled = app_config->get_bool("prefect_simple_fields_enabled");
+    if (!enabled && fields.keys.empty())
+        for (const auto& item : entries)
+            if (item.second.upstream_simple)
+                fields.keys.insert(item.second.keys.begin(), item.second.keys.end());
+
+    wxDialog dialog(parent, wxID_ANY, wxString::FromUTF8("Einfache Ansicht: Druckeinstellungen"),
+                    wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+    auto* layout = new wxBoxSizer(wxVERTICAL);
+    auto* use_custom = new wxCheckBox(&dialog, wxID_ANY, wxString::FromUTF8("Eigene Feldauswahl für die einfache Ansicht verwenden"));
+    use_custom->SetValue(enabled);
+    layout->Add(use_custom, 0, wxEXPAND | wxALL, dialog.FromDIP(12));
+    auto* explanation = new wxStaticText(&dialog, wxID_ANY,
+        wxString::FromUTF8("Wähle die sichtbaren Felder. Die erweiterte Ansicht bleibt vollständig.\n"
+                           "Gemeinsame Eingabezeilen werden zusammen gewählt (+).\n"
+                           "Druckerabhängige Felder erscheinen weiterhin nur bei passenden Voraussetzungen."));
+    layout->Add(explanation, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, dialog.FromDIP(12));
+    auto* search = new wxSearchCtrl(&dialog, wxID_ANY);
+    search->SetDescriptiveText(wxString::FromUTF8("Feldname, Kategorie oder Konfigurationsschlüssel suchen"));
+    layout->Add(search, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, dialog.FromDIP(12));
+    auto* list = new wxCheckListBox(&dialog, wxID_ANY);
+    layout->Add(list, 1, wxEXPAND | wxLEFT | wxRIGHT, dialog.FromDIP(12));
+    auto* defaults = new wxButton(&dialog, wxID_ANY, wxString::FromUTF8("Upstream-Standard wiederherstellen"));
+    layout->Add(defaults, 0, wxALL, dialog.FromDIP(12));
+    layout->Add(dialog.CreateSeparatedButtonSizer(wxOK | wxCANCEL), 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, dialog.FromDIP(12));
+
+    std::vector<std::string> shown_keys;
+    auto rebuild = [&]() {
+        list->Freeze();
+        list->Clear();
+        shown_keys.clear();
+        const wxString filter = search->GetValue().Lower();
+        for (const auto& item : entries) {
+            const auto& entry = item.second;
+            if (!filter.empty() && entry.label.Lower().Find(filter) == wxNOT_FOUND)
+                continue;
+            const unsigned index = list->Append(entry.label);
+            const bool checked = fields.contains_any(entry.keys.begin(), entry.keys.end(), [](const std::string& key) { return key; });
+            list->Check(index, checked);
+            shown_keys.push_back(item.first);
+        }
+        list->Thaw();
+    };
+    list->Bind(wxEVT_CHECKLISTBOX, [&](wxCommandEvent& event) {
+        const int index = event.GetInt();
+        if (index < 0 || static_cast<size_t>(index) >= shown_keys.size())
+            return;
+        for (const auto& key : entries.at(shown_keys[index]).keys) {
+            if (list->IsChecked(index))
+                fields.keys.insert(key);
+            else
+                fields.keys.erase(key);
+        }
+        use_custom->SetValue(true);
+    });
+    search->Bind(wxEVT_TEXT, [&](wxCommandEvent&) { rebuild(); });
+    defaults->Bind(wxEVT_BUTTON, [&](wxCommandEvent&) {
+        fields.keys.clear();
+        for (const auto& item : entries)
+            if (item.second.upstream_simple)
+                fields.keys.insert(item.second.keys.begin(), item.second.keys.end());
+        use_custom->SetValue(false);
+        search->ChangeValue(wxEmptyString);
+        rebuild();
+    });
+    rebuild();
+    dialog.SetSizer(layout);
+    const int display_index = wxDisplay::GetFromWindow(parent);
+    const wxRect work_area = wxDisplay(display_index == wxNOT_FOUND ? 0 : display_index).GetClientArea();
+    const wxSize available(std::max(1, work_area.width - dialog.FromDIP(32)),
+                           std::max(1, work_area.height - dialog.FromDIP(32)));
+    const auto minimum = dialog.FromDIP(wxSize(720, 560));
+    const auto preferred = dialog.FromDIP(wxSize(840, 680));
+    dialog.SetMinSize(wxSize(std::min(minimum.x, available.x), std::min(minimum.y, available.y)));
+    dialog.SetSize(wxSize(std::min(preferred.x, available.x), std::min(preferred.y, available.y)));
+    dialog.CentreOnParent();
+    wxGetApp().UpdateDlgDarkUI(&dialog);
+    if (dialog.ShowModal() != wxID_OK)
+        return;
+
+    // Preserve keys unavailable on the current printer so changing the printer,
+    // or rebasing onto a version that adds the key again, does not lose choices.
+    app_config->set_bool("prefect_simple_fields_enabled", use_custom->GetValue());
+    app_config->set("prefect_simple_fields", fields.serialize());
+    app_config->save();
+    // The application mode has not changed. Refresh fields directly: the global
+    // mode-switch handler also clears object selection and would be surprising here.
+    for (auto* tab : wxGetApp().tabs_list)
+        tab->update_mode();
+    for (auto* tab : wxGetApp().model_tabs_list)
+        tab->update_mode();
+    wxGetApp().sidebar().update_searcher();
 }
 
 //BBS: BBS new parameter list

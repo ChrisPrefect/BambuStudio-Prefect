@@ -485,6 +485,8 @@ public:
         Tab(parent, _(L("Process")), type) {}
 	~TabPrint() {}
 
+    void        configure_simple_fields(wxWindow* parent);
+
 	void		build() override;
 	void		reload_config() override;
 	void		update_description_lines() override;

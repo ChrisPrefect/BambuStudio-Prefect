@@ -285,6 +285,17 @@ protected:
 	virtual void		back_to_sys_value(const std::string& opt_key) {}
 
 public:
+
+    // A single policy is used for lazy page visibility and activated controls.
+    virtual bool is_option_visible(const Option& option, ConfigOptionMode mode) const
+    {
+        return option.opt.mode <= mode;
+    }
+    virtual bool is_line_visible(const Line& line, ConfigOptionMode mode) const
+    {
+        const auto& options = line.get_options();
+        return !options.empty() && is_option_visible(options.front(), mode);
+    }
 	static wxString		get_url(const std::string& path_end);
 	static bool			launch_browser(const std::string& path_end);
 };
@@ -337,6 +348,8 @@ public:
     void        Hide();
     void        Show(const bool show);
     bool        is_visible(ConfigOptionMode mode);
+    bool        is_option_visible(const Option& option, ConfigOptionMode mode) const override;
+    bool        is_line_visible(const Line& line, ConfigOptionMode mode) const override;
     bool        update_visibility(ConfigOptionMode mode);
     void        msw_rescale();
     void        sys_color_changed();
@@ -360,7 +373,7 @@ protected:
     ModelConfig*				m_modelconfig { nullptr };
 	t_opt_map					m_opt_map;
     wxString                    m_config_category;
-    int                         m_config_type;
+    int                         m_config_type { -1 };
 
     // Change an option on m_config, possibly call ModelConfig::touch().
 	void 	change_opt_value(const t_config_option_key& opt_key, const boost::any& value, int opt_index = 0);
