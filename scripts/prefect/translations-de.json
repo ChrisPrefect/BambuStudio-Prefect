@@ -1,0 +1,21 @@
+{
+  "Workflow": "Workflow",
+  "Prefect workflow": "Prefect-Workflow",
+  "Automatically sync filaments from the selected printer": "Filamente automatisch vom ausgewählten Drucker synchronisieren",
+  "Updates project filaments when AMS or external spool information changes. The printer must be connected.": "Übernimmt Änderungen am AMS oder an der externen Spule in die Projektfilamente. Der Drucker muss verbunden sein.",
+  "Keep the printer box collapsed": "Drucker-Box immer eingeklappt halten",
+  "Keeps the printer section compact, including after profile changes. Restart Studio after changing this option.": "Hält den Druckerbereich auch nach Profilwechseln eingeklappt. Studio nach dem Ändern dieser Option neu starten.",
+  "Slice automatically in the background": "Automatisch im Hintergrund slicen",
+  "Slices the current plate after edits using the existing background worker. Print and export still require your action.": "Slicet die aktuelle Platte nach Änderungen automatisch im Hintergrund. Drucken und Exportieren werden weiterhin von dir gestartet.",
+  "Assign clicked filament to selected objects": "Angeklicktes Filament markierten Objekten zuweisen",
+  "Click a filament colour to assign it to the current object selection. Painting tools keep their own behaviour.": "Ein Klick auf ein Filament weist es den markierten Objekten zu. Die Malwerkzeuge behalten ihre eigene Bedienung.",
+  "Always import multiple models as separate objects": "Mehrere Modelle immer als einzelne Objekte importieren",
+  "Skips the multipart-object question during model import. Explicit project imports retain their structure.": "Überspringt die Frage nach einem Objekt mit mehreren Teilen beim Modellimport. Projektimporte behalten ihre Struktur.",
+  "Hide daily tips completely": "Tipps vollständig ausblenden",
+  "Removes the tips panel and its reserved space from slicing notifications and hides the Daily Tips window.": "Entfernt die Tipps und deren Platzbedarf aus der Slice-Anzeige und blendet das separate Tipps-Fenster aus.",
+  "Hide the TPU cold-pull reminder": "TPU-Cold-Pull-Hinweis ausblenden",
+  "Hides only the cold-pull advisory for TPU. Other material warnings and printer restrictions remain enabled.": "Blendet den Cold-Pull-Hinweis für TPU aus. Andere Materialwarnungen und Druckerbeschränkungen bleiben aktiv.",
+  "Set as support interface": "Als Supportinterface festlegen",
+  "Use this filament for the support/raft interface in the global process settings": "Dieses Filament in den globalen Prozesseinstellungen für die Support-/Raft-Kontaktfläche verwenden",
+  "Click to assign this filament to selected objects. Shift-click to pick filament color.": "Klicken, um markierten Objekten dieses Filament zuzuweisen. Umschalt-Klick öffnet die Farbauswahl."
+}
