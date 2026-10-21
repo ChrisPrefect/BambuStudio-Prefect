@@ -3,12 +3,16 @@
 Stand: **21. Oktober 2026**, Zeitzone Europe/Zurich.
 
 Die vier unabhängigen C++-Policytests wurden erfolgreich kompiliert und
-ausgeführt. Alle Assertions waren aktiv. Der aktuelle Quellvergleich ergibt
+ausgeführt. Alle Assertions waren aktiv. Der dokumentierte Quellvergleich ergibt
 keine neu hinzugekommenen Tree-sitter-Syntaxfehlerknoten. Manifestprüfung und
 `git diff --check` waren erfolgreich. Der vollständige Windows-Build des
-Quellstands `ab6b1e83b32e6bffd5d7cc8da6ef8858617baf2a` ist einschließlich
+Quellstands `4b5c3546c7fba94439d9bb0fe69553723b895897` ist einschließlich
 Linken, Installationsverzeichnis und Artefakt erfolgreich. Die lokale
-Laufzeitabnahme wird getrennt erfasst.
+vollständige Standaloneinstallation und der tatsächliche Programmstart sind
+ebenfalls geprüft. Die interaktive Abnahme sämtlicher Bedien- und Hardwarefälle
+ist nicht vollständig belegt; [lokaler Laufzeitbericht](validation/local-windows-runtime.md)
+und [maschinenlesbare Zusammenfassung](validation/local-windows-runtime.json)
+trennen die beobachteten Ergebnisse von diesen Grenzen.
 
 ## Geprüfter Quellstand und Belege
 
@@ -148,6 +152,42 @@ behauptete konfliktfreie Anwendung auf eine unbekannte zukünftige Version.
 
 ## Vollständiger Windows-Build
 
+### Aktueller Stand 4b5c einschließlich F01-Nachholfall
+
+[GitHub-Actions-Lauf 39623913865](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/39623913865)
+ist für den Quellcommit `4b5c3546c7fba94439d9bb0fe69553723b895897`, Tree
+`418524ef74e1e2d49ec1cf9d3fa6e422df072afc`, vollständig **success**.
+Die frische API-Prüfung vom **21.10.2026, 16:45:10 UTC** bestätigt beide Jobs:
+Policy-/Manifestjob **119304237107** sowie Windows-Job **119304581333**.
+Alle Anwendungsquellen wurden kompiliert und gelinkt, das Paket installiert
+und als Artefakt hochgeladen. Auch die beiden Windows-Regressionsskripte sind
+erfolgreich. Dieser Stand enthält den F01-Nachholfall beim erneuten Einschalten.
+
+- Dependency-Normalisierung: **675** Metadaten-Dateien geprüft,
+  **37** Referenzen in **12** Dateien relokiert.
+- Tatsächlicher Linkinput-Preflight: **127** Projekte, **82** vorhandene
+  Dependency-Libraries, Release/x64.
+- Inputmanifest: **40909** Dateien erfasst, **0** instabile Dateien übersprungen.
+- Artefakt **12360594342**, **264.362.107 Bytes**, SHA-256
+  `c2e28e59dba400e6414b208983f50567020dbc37e1a01ff3ae8d446309f874bc`.
+
+Beide Caches meldeten einen **Miss**; es wurde kein Inputmanifest restauriert.
+Die Runner-Imageversion wechselte gegenüber dem früheren Erfolg von
+`20261018.275.1` auf `20261007.264.1`. Die Imageversion ist Bestandteil des
+Toolchain-Fingerprints, daher passte die vorherige Cachefamilie nicht.
+Die Anwendung wurde vollständig neu gebaut; beide neuen Cache-Saves sind
+anschließend ausdrücklich bestätigt. Dieser Run belegt keine inkrementelle
+Wiederverwendung alter Anwendungsobjekte.
+
+[Frische API-Metadaten](validation/cloud-build-4b5c.json) und
+[kurzer authentischer Log-/Cachenachweis](validation/cloud-build-4b5c.md)
+halten die Details ohne Rohlogs oder persönliche Profildaten fest.
+Die **interaktive GUI-Abnahme ist nicht vollständig belegt**; aus dem CI-Erfolg
+wird kein vollständiger Bedien- oder Druckertest abgeleitet. Der tatsächliche lokale
+Programmstart ist inzwischen durch den separaten Laufzeitnachweis unten belegt.
+
+### Früherer vollständiger Stand ab6b
+
 [GitHub-Actions-Lauf 39520066087](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/39520066087)
 hat beide Jobs erfolgreich abgeschlossen. Der Windows-Job umfasst alle
 Anwendungsquellen, das abschließende Linken und CMake-Installieren. Die vier
@@ -167,21 +207,54 @@ Artefakt **12314660106**, **264.361.825 Bytes**, SHA-256
 [API-Metadaten und Zuordnung zum Quellcommit](validation/cloud-build-ab6b.json).
 Dieser Buildnachweis ist von der lokalen Bedien- und Geräteabnahme zu unterscheiden.
 
+## Lokale Standaloneinstallation und tatsächlicher Start
+
+Das finale Artefakt wurde vollständig lokal gespeichert, anhand seiner
+264.362.107 Bytes und seines oben genannten SHA-256 authentifiziert und unter
+`%USERPROFILE%\BambuStudio-Prefect-Windows` installiert. Alle **6.755 eigenen
+Dateikopien**, **274 Ordner** und **600.390.512 unkomprimierten Bytes** wurden
+am tatsächlichen Ziel mit der vollständigen ZIP-Struktur und sämtlichen
+Datei-SHA-256 verglichen. Jede Datei hat NTFS-Linkcount 1; es wurden keine
+Hardlinks, Symlinks oder Ressourcen-Junctions angelegt. ZIP-CRC, sichere Pfade,
+vollständiger Quellmarker und **482 direkte PE-Imports** sind geprüft.
+
+Die eigene EXE startete mit dem isolierten Profil
+`%APPDATA%\BambuStudio-Prefect`: einmal mit zwei STL-Prüfmodellen als Argumenten
+und nachfolgend ohne Modellargumente. Die Desktop-Verknüpfung **BambuStudio
+Prefect** verweist auf diese EXE und das isolierte Profil. Die deutsche
+Accessibility-Struktur zeigte **Felder...**, die eingeklappte Drucker-Box und
+fünf Filamentslots. Die Profilmigration steht auf Revision `1`;
+Hintergrundslicing sowie F01/F03/F05/F07/F08/F09 sind aktiv. Die eigene einfache
+Feldauswahl bleibt mit `prefect_simple_fields_enabled=false` beim Standard.
+
+Ein anfänglicher upstreamseitiger **Tipps**-Modal für einen Filamentswitcher
+war nach Neustart nicht mehr vorhanden. Der dazugehörige bestehende Schlüssel
+`show_fila_switch_tips=false` ist bestätigt. Er betrifft den Ready-Hinweis,
+nicht den separaten Warnpfad eines unkalibrierten Switchers und nicht F09.
+
+Der ausführliche [lokale Laufzeitbericht](validation/local-windows-runtime.md)
+und die [normierte JSON-Zusammenfassung](validation/local-windows-runtime.json)
+benennen die privaten Protokollfingerprints. Personenbezogene Profile,
+Gerätedaten, rohe Accessibility-Bäume und Anwendungslogs werden nicht veröffentlicht.
+
 ## Laufzeit- und Gerätenachweise
 
-| Bereich | Status dieses Protokolls | Erforderlicher Nachweis |
+| Bereich | Tatsächlich belegt | Grenze des Nachweises |
 | --- | --- | --- |
-| Vollständige Bambu-Studio-GUI | Compile und Link für `ab6b1e83` erfolgreich | lokaler Start und Bedienung separat prüfen |
-| Portable Fork-Anwendung | Artefakt 12314660106 gebaut und dem Quellcommit zugeordnet | erfolgreicher Start mit isoliertem Profil |
-| GitHub-CI | Run 39520066087 vollständig erfolgreich | tatsächlicher Workflow-Run und Windows-Artefakt oben verlinkt |
-| F01 Geräteabgleich | keine reale Druckerverbindung im Testlauf | Materialänderung am ausgewählten Gerät, Übernahme ohne Dialog und Wiederholungs-/Offlinefälle |
-| F02/F03/F05/F06/F07/F08/F09 Bedienung | Quellcode/Policies geprüft | jeweilige Detail-Prüftabellen am gebauten Programm, einschließlich Undo/Redo und Neustart |
-| F04 echter Slicer-Worker | Zustands-Policytests bestanden | längeres Modell, Editieren während des Laufs, Plattenwechsel, Slice-All, Export und Skriptwahl |
-| Übersetzung und Profilmigration in der GUI | noch keine GUI-Abnahme | Start auf Deutsch und mit neuem/importiertem isoliertem Profil; persistente Entscheidungen nach Neustart |
+| Vollständige Bambu-Studio-GUI | Compile/Link und lokaler Start für `4b5c3546` erfolgreich | vollständige interaktive Funktionsabnahme nicht abgeschlossen |
+| Standalone-Fork-Anwendung | vollständige eigene Installation, exakte Paket-/Dateihashes, Desktop-Einstieg und isoliertes Profil | keine Behauptung eines realen Drucktests |
+| GitHub-CI | Run 39623913865 vollständig erfolgreich | Build-/Policybeleg, kein Hardwaretest |
+| F01 Geräteabgleich | aktiviertes Profil und fünf sichtbare Filamentslots | physische Spulenänderung, wiederholter Sync und Offline-/Reconnect-Fälle nicht vollständig ausgeführt |
+| F02/F03 | **Felder...** und eingeklappte Drucker-Box sichtbar | Pickerbedienung und gespeicherte eigene Feldauswahl nicht vollständig geprüft |
+| F05/F06/F07/F08/F09 | Quell-/Build-/Policybelege; Start mit zwei STL-Argumenten; Fork-Schalter aktiv | Pointer-/Menüaktionen, Importobjektzahl, TPU-Druck und vollständiges Slicing-Tippslayout nicht vollständig abgenommen |
+| F04 echter Slicer-Worker | Zustands-Policytests bestanden, Profil aktiviert | tatsächlicher automatischer Fortschritt, Editieren, Plattenwechsel, Slice-All/Export und Skriptwahl nicht vollständig interaktiv ausgeführt |
+| Sprache und Profilmigration | deutsche Oberfläche, Revision `1`, isolierter Start und Neustart beobachtet | weitere Profil-/Sprachkombinationen nicht als Laufzeitserie geprüft |
 
-Das Vorhandensein einer Buildanleitung oder eines Workflows wird nicht als
-erstelltes Programm ausgewiesen. Sobald ein tatsächlicher Build oder eine
-interaktive Abnahme erfolgreich abgeschlossen ist, diese Tabelle mit Datum,
-Fork-Commit, Umgebung und konkretem Beleg fortschreiben. Die vollständigen
-Szenarien stehen in den neun Detaildokumenten und
-[UPSTREAM-UPDATES.md](UPSTREAM-UPDATES.md).
+Die native Sky-Aufnahme scheiterte auch beim Datei-Explorer mit **FrameArrived
+timeout**. Accessibility-Text war teilweise lesbar, während Pointergeometrie
+und Elementcache unzuverlässig waren. Die lesende Windows-Sitzungsprüfung
+bestätigte eine aktive, entsperrte Konsole mit sichtbarer Desktopfläche
+1600 × 900; das belegt weder eine funktionierende Capture-Schnittstelle noch
+einen Featuredeadlock. Diese Werkzeuggrenze wird nicht als bestandene
+Bedienprüfung ausgegeben. Die vollständigen Abnahmeszenarien bleiben in den
+neun Detaildokumenten und [UPSTREAM-UPDATES.md](UPSTREAM-UPDATES.md) beschrieben.

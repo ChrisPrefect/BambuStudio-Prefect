@@ -7,10 +7,16 @@ Die gemeinsame Grundlage ist Bambu Studio **v02.08.02.61**, Commit
 `926a7192574bcb9b3a732e1ec59a46d79cb45466`. Das Git-Remote `upstream` zeigt auf
 `https://github.com/bambulab/BambuStudio.git`.
 
-**Auslieferungsstand:** Der vollständige Windows-Build `ab6b1e83` ist einschließlich
-Linken, Paketierung und CI-Tests erfolgreich; ein ausführbares Fork-Paket ist
-als GitHub-Artefakt vorhanden. Die lokale Bedien-/Druckerabnahme wird getrennt
-dokumentiert. Der GitHub-Fork ist angelegt; dessen Remote heißt `origin`.
+**Auslieferungsstand:** Der vollständige Windows-Build `4b5c3546` ist einschließlich
+Linken, Paketierung und CI-Tests erfolgreich. Das finale Paket wurde außerdem
+als vollständige eigene Windows-Installation mit allen 6.755 Dateien geprüft
+und tatsächlich gestartet; eine Desktop-Verknüpfung verwendet das isolierte
+Fork-Profil. Ressourcenlinks zur normalen Installation werden nicht benötigt.
+Der Stand enthält auch das Nachholen des aktuellen Materialstands beim erneuten
+Aktivieren von F01. Die interaktive Abnahme aller Bedien- und Druckerfälle ist
+nicht vollständig belegt. [Lokaler Laufzeitnachweis und genaue Grenzen](validation/local-windows-runtime.md),
+[aktueller CI-Nachweis](validation/cloud-build-4b5c.md).
+Der GitHub-Fork ist angelegt; dessen Remote heißt `origin`.
 Der jeweils aktuelle Nachweis, einschließlich tatsächlich ausgeführter Tests,
 steht in [VALIDATION.md](VALIDATION.md).
 
@@ -58,8 +64,21 @@ die Entscheidung über externe Nachbearbeitungsskripte behalten ihre Bedeutung.
 - **Projektstruktur:** F07 beantwortet die beiden heuristischen
   Zusammenfassungsfragen mit „Nein“. Gespeicherte 3MF-Strukturen und bewusst
   hinzugefügte Teile werden nicht pauschal zerlegt.
+- **Weiterer bestehender Hinweis:** Der einmalige Dialog **Tipps** für einen
+  bereiten Filamentswitcher verwendet den vorhandenen Anwendungsschlüssel
+  `show_fila_switch_tips=false`. Im geprüften Fork-Profil ist er ausgeschaltet;
+  nach Neustart erschien der Dialog nicht mehr. Der Hinweis ist unabhängig
+  von F09/DailyTips. Eine Warnung zu einem nicht kalibrierten Switcher besitzt
+  einen separaten Pfad und bleibt davon unberührt.
 
 ## Eigenes Profil statt Änderungen an der normalen Installation
+
+Auf dem geprüften Windows-System ist die vollständige eigene Anwendung unter
+`%USERPROFILE%\BambuStudio-Prefect-Windows` installiert. Die Desktop-Verknüpfung
+**BambuStudio Prefect** startet deren `bambu-studio.exe` mit
+`--datadir "%APPDATA%\BambuStudio-Prefect"`. ZIP-Hash, sämtliche Datei-Hashes,
+exakte Paketstruktur und fehlende Ressourcen-/Dateilinks sind im
+[lokalen Installationsnachweis](validation/local-windows-runtime.md) festgehalten.
 
 [Start-Prefect.ps1](../../scripts/prefect/Start-Prefect.ps1) ist der Einstieg für
 eine gebaute Fork-Version. Er startet die angegebene `bambu-studio.exe` mit

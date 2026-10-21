@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "documented_at_utc": "2026-10-21T21:01:19Z",
+  "source_commit": "4b5c3546c7fba94439d9bb0fe69553723b895897",
+  "upstream_tag": "v02.08.02.61",
+  "platform": "Windows 10 x64, build 19045",
+  "summary": {
+    "complete_standalone_installation_verified": true,
+    "actual_application_start_verified": true,
+    "complete_interactive_feature_acceptance": false,
+    "automatic_printing_triggered": false
+  },
+  "path_placeholders": {
+    "%USERPROFILE%": "Windows user profile directory",
+    "%APPDATA%": "Windows roaming application-data directory"
+  },
+  "package": {
+    "artifact_id": 12360594342,
+    "workflow_run_id": 39623913865,
+    "workflow_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/39623913865",
+    "artifact_size_bytes": 264362107,
+    "artifact_sha256": "c2e28e59dba400e6414b208983f50567020dbc37e1a01ff3ae8d446309f874bc",
+    "local_archive": "%USERPROFILE%\\BambuStudio-validation\\BambuStudio-Prefect-4b5c-Windows-x64.zip",
+    "destination": "%USERPROFILE%\\BambuStudio-Prefect-Windows",
+    "executable": "%USERPROFILE%\\BambuStudio-Prefect-Windows\\bambu-studio.exe",
+    "unpacked_bytes": 600390512,
+    "files": 6755,
+    "directories": 274,
+    "own_file_copies": 6755,
+    "hardlinks": 0,
+    "symlinks": 0,
+    "directory_junctions": 0,
+    "all_destination_files_link_count": 1,
+    "complete_archive_sha256_before_and_after_installation": true,
+    "all_ZIP_paths_validated": true,
+    "all_ZIP_CRC_and_file_sha256_validated": true,
+    "complete_destination_tree_and_file_sha256_validated": true,
+    "source_commit_marker_verified": true,
+    "checked_direct_PE_imports": 482,
+    "private_installation_proof": {
+      "path": "%USERPROFILE%\\BambuStudio-validation\\standalone-final-install.json",
+      "bytes": 3665222,
+      "sha256": "def1a1188dc2fc253e57e3891643522477ab890650f21fee4b0ee121881ced0c",
+      "published_raw": false
+    }
+  },
+  "desktop_shortcut": {
+    "path": "%USERPROFILE%\\Desktop\\BambuStudio Prefect.lnk",
+    "target": "%USERPROFILE%\\BambuStudio-Prefect-Windows\\bambu-studio.exe",
+    "arguments_normalized": "--datadir \"%APPDATA%\\BambuStudio-Prefect\"",
+    "private_proof_sha256": "92a463bdb0a68bf76963c591259da1b34d60e7ccd8bf7cbbcacb806426c8d8aa"
+  },
+  "isolated_profile": {
+    "path": "%APPDATA%\\BambuStudio-Prefect",
+    "normal_application_profile_untouched": true,
+    "application_keys_read_only_verified": {
+      "language": "de_CH",
+      "background_processing": true,
+      "prefect_workflow_revision": "1",
+      "prefect_auto_sync_filaments": true,
+      "prefect_hide_tips": true,
+      "prefect_printer_collapsed": true,
+      "prefect_click_filament_assigns_selection": true,
+      "prefect_import_separate_objects": true,
+      "prefect_suppress_tpu_cold_pull": true,
+      "prefect_simple_fields_enabled": false,
+      "prefect_simple_fields": null,
+      "show_fila_switch_tips": false
+    },
+    "null_simple_fields_means": "No saved custom field list; upstream simple-mode defaults remain selected"
+  },
+  "actual_runtime_observations": {
+    "starts": [
+      {
+        "command_shape": "own executable, isolated --datadir, two STL fixture arguments",
+        "process_and_application_UI_observed": true,
+        "resulting_import_object_count_verified": false
+      },
+      {
+        "command_shape": "same own executable and isolated --datadir, no model arguments",
+        "process_and_application_UI_observed": true,
+        "main_UI_enabled": true,
+        "startup_filament_switcher_modal_present": false
+      }
+    ],
+    "initial_observed_private_process_memory_approx_MiB": 681,
+    "initial_observed_private_process_memory_approx_decimal_MB": 714,
+    "accessibility_observations": [
+      "German application interface",
+      "Felder... control present beside the mode selection",
+      "upper printer box collapsed",
+      "five filament slots present"
+    ],
+    "startup_modal": {
+      "initial_caption": "Tipps",
+      "kind": "upstream filament-switcher information dialog with HTML content and OK",
+      "source_function": "Sidebar::priv::show_fila_switch_msg",
+      "ready_information_preference": "show_fila_switch_tips=false",
+      "after_restart_absent": true,
+      "separate_from_F09_DailyTips": true,
+      "uncalibrated_switcher_warning_suppressed": false
+    }
+  },
+  "feature_acceptance_limits": {
+    "F01": "Five filament slots observed; physical spool changes, offline/reconnect and repeated resynchronization were not fully exercised",
+    "F02": "Felder... control observed; picker interaction and persistence of a custom choice were not fully exercised",
+    "F03": "Collapsed printer box observed in the running application",
+    "F04": "Enabled profile and policy tests verified; actual automatic-worker progress, editing, plate switching and export were not fully exercised",
+    "F05": "Pointer assignment, selection filters and Undo/Redo were not fully exercised",
+    "F06": "Context-menu selection and actual support-interface parameter change were not fully exercised",
+    "F07": "Application started with two STL arguments; resulting object count and absence of each import prompt were not fully verified",
+    "F08": "Exact warning policy tested; no real TPU print or cold-pull workflow was performed",
+    "F09": "Enabled profile verified; complete slicing-notification layout was not interactively accepted"
+  },
+  "automation_observations": {
+    "native_Sky_capture": "FrameArrived timeout also reproduced on File Explorer",
+    "accessibility_text_reading": "partly available with screenshot disabled",
+    "pointer_geometry_and_element_cache": "unreliable in this session",
+    "evidence_of_a_feature_deadlock": false,
+    "desktop_probe": {
+      "utc": "2026-10-21T20:50:20Z",
+      "session_state": "Active",
+      "session_lock_flag": "UNLOCK",
+      "window_station": "WinSta0",
+      "window_station_visible": true,
+      "input_desktop": "Default",
+      "monitor_count": 1,
+      "monitor_width": 1600,
+      "monitor_height": 900,
+      "remote_session": false,
+      "capture_frame_production_proven_by_desktop_probe": false
+    }
+  },
+  "separate_existing_evidence": [
+    "cloud-build-4b5c.json",
+    "cloud-build-4b5c.md",
+    "msvc-policy-tests.log",
+    "results.json",
+    "patch-replay.json"
+  ],
+  "publication_privacy": {
+    "raw_accessibility_trees_published": false,
+    "personal_profile_or_device_data_published": false,
+    "raw_application_logs_or_signed_transport_URLs_published": false,
+    "local_user_paths_normalized": true
+  }
+}

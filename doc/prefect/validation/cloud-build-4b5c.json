@@ -1,0 +1,285 @@
+{
+  "schema_version": 1,
+  "verified_at_utc": "2026-10-21T16:45:10Z",
+  "repository": "ChrisPrefect/BambuStudio-Prefect",
+  "run_id": 39623913865,
+  "url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/39623913865",
+  "head_sha": "4b5c3546c7fba94439d9bb0fe69553723b895897",
+  "source_tree": "418524ef74e1e2d49ec1cf9d3fa6e422df072afc",
+  "head_branch": "prefect/workflow",
+  "workflow_path": ".github/workflows/prefect-workflow.yml",
+  "status": "completed",
+  "conclusion": "success",
+  "run_attempt": 1,
+  "run_started_at": "2026-10-21T15:15:00Z",
+  "updated_at": "2026-10-21T16:42:08Z",
+  "evidence_api_urls": [
+    "https://api.github.com/repos/ChrisPrefect/BambuStudio-Prefect/actions/runs/39623913865",
+    "https://api.github.com/repos/ChrisPrefect/BambuStudio-Prefect/actions/runs/39623913865/jobs",
+    "https://api.github.com/repos/ChrisPrefect/BambuStudio-Prefect/actions/runs/39623913865/artifacts",
+    "https://api.github.com/repos/ChrisPrefect/BambuStudio-Prefect/git/commits/4b5c3546c7fba94439d9bb0fe69553723b895897"
+  ],
+  "jobs": [
+    {
+      "id": 119304237107,
+      "name": "policy-tests",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/39623913865/job/119304237107",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 3,
+          "name": "Compile and run workflow policy regressions",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 4,
+          "name": "Validate change manifest",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 8,
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 9,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 119304581333,
+      "name": "windows-portable",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/39623913865/job/119304581333",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 3,
+          "name": "Run ilammy/msvc-dev-cmd@v1",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 4,
+          "name": "Select installed Visual Studio generator",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 5,
+          "name": "Verify application cache content and timestamp policy",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 6,
+          "name": "Verify dependency relocation and early linker checks",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 7,
+          "name": "Install upstream build tools",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 8,
+          "name": "Restore compiled upstream dependencies",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 9,
+          "name": "Restore matching official upstream dependencies",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 10,
+          "name": "Build upstream dependencies",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "number": 11,
+          "name": "Save compiled upstream dependencies",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 12,
+          "name": "Identify compatible application build cache",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 13,
+          "name": "Restore compatible application objects and build metadata",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 14,
+          "name": "Restore timestamps of byte-identical build inputs",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 15,
+          "name": "Configure Prefect fork",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 16,
+          "name": "Validate generated dependency link inputs before compiling",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 17,
+          "name": "Compile and package Prefect fork",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 18,
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 19,
+          "name": "Capture verified build-input identities and timestamps",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 20,
+          "name": "Save application objects even after a compiler or linker failure",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 40,
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 41,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "artifact": {
+    "id": 12360594342,
+    "name": "BambuStudio-Prefect-Windows-x64-4b5c3546c7fba94439d9bb0fe69553723b895897",
+    "size_in_bytes": 264362107,
+    "digest": "sha256:c2e28e59dba400e6414b208983f50567020dbc37e1a01ff3ae8d446309f874bc",
+    "url": "https://api.github.com/repos/ChrisPrefect/BambuStudio-Prefect/actions/artifacts/12360594342",
+    "archive_download_url": "https://api.github.com/repos/ChrisPrefect/BambuStudio-Prefect/actions/artifacts/12360594342/zip",
+    "expired": false,
+    "created_at": "2026-10-21T16:36:04Z",
+    "expires_at": "2027-01-19T15:15:00Z",
+    "workflow_run": {
+      "id": 39623913865,
+      "head_branch": "prefect/workflow",
+      "head_sha": "4b5c3546c7fba94439d9bb0fe69553723b895897"
+    }
+  },
+  "runner": {
+    "image": "windows-2025-vs2026",
+    "image_version": "20261007.264.1",
+    "toolchain_fingerprint": "324be78aaec996b432a5d59559d185e65e23927634ded451d55d12b01a80d516",
+    "previous_success_run_id": 39520066087,
+    "previous_image_version": "20261018.275.1",
+    "previous_toolchain_fingerprint": "d004ada544173428a2950ceda91a5daf2740fc184ba842fdbff1961ce14f49a6"
+  },
+  "build_checks": {
+    "policy_and_manifest_job": "success",
+    "windows_cache_regression": "success",
+    "windows_dependency_regression": "success",
+    "dependency_metadata_files_checked": 675,
+    "dependency_references_relocated": 37,
+    "dependency_metadata_files_changed": 12,
+    "link_preflight": {
+      "projects": 127,
+      "response_files": 0,
+      "dependency_libraries": 82,
+      "configuration": "Release",
+      "platform": "x64"
+    },
+    "compile_link_install": "success",
+    "artifact_upload": "success",
+    "captured_input_files": 40909,
+    "unstable_input_files_skipped": 0
+  },
+  "cache": {
+    "dependencies_restore": "miss",
+    "application_restore": "miss",
+    "timestamp_restore": "no_manifest",
+    "dependencies_save": "success",
+    "application_save": "success",
+    "dependencies_saved_key": "prefect-deps-v2-324be78aaec996b432a5d59559d185e65e23927634ded451d55d12b01a80d516-3595b199d56ad7087d9a71befdadd9034cdb4b30f4971d7f1a7b08958733e529",
+    "application_saved_key": "prefect-app-v1-58c9e50c2df2807fce770eaa588463cd6ad44960a16a97faeb11c53817db6937-4b5c3546c7fba94439d9bb0fe69553723b895897-39623913865-1",
+    "dependency_sources_and_restore_helper_hash": "3595b199d56ad7087d9a71befdadd9034cdb4b30f4971d7f1a7b08958733e529",
+    "interpretation": "The runner ImageVersion changed and is explicitly part of the toolchain fingerprint. The prior cache family therefore did not match. This run proves a full rebuild and new cache saves, not incremental object reuse."
+  },
+  "log_evidence": {
+    "job_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/39623913865/job/119304581333",
+    "normalization": "Only the runner build-directory prefix in the manifest line is replaced with $BUILD_DIR; no raw logs, personal profile paths, actor data, or credentials are included.",
+    "lines": [
+      "2026-10-21T15:15:44.6034026Z Image: windows-2025-vs2026",
+      "2026-10-21T15:15:44.6034992Z Version: 20261007.264.1",
+      "2026-10-21T15:16:58.0242983Z Cache not found for input keys: prefect-deps-v2-324be78aaec996b432a5d59559d185e65e23927634ded451d55d12b01a80d516-3595b199d56ad7087d9a71befdadd9034cdb4b30f4971d7f1a7b08958733e529",
+      "2026-10-21T15:17:59.4644154Z Dependency metadata verified: 675 files; 37 references relocated in 12 files.",
+      "2026-10-21T15:18:11.6868432Z Cache saved with key: prefect-deps-v2-324be78aaec996b432a5d59559d185e65e23927634ded451d55d12b01a80d516-3595b199d56ad7087d9a71befdadd9034cdb4b30f4971d7f1a7b08958733e529",
+      "2026-10-21T15:18:13.7598364Z Cache not found for input keys: prefect-app-v1-58c9e50c2df2807fce770eaa588463cd6ad44960a16a97faeb11c53817db6937-4b5c3546c7fba94439d9bb0fe69553723b895897-39623913865-1, prefect-app-v1-58c9e50c2df2807fce770eaa588463cd6ad44960a16a97faeb11c53817db6937-4b5c3546c7fba94439d9bb0fe69553723b895897-, prefect-app-v1-58c9e50c2df2807fce770eaa588463cd6ad44960a16a97faeb11c53817db6937-",
+      "2026-10-21T15:18:14.5067408Z No build input manifest; inputs retain checkout timestamps.",
+      "2026-10-21T15:19:26.5297620Z Dependency link preflight passed: 127 projects, 0 response files, 82 dependency libraries (Release|x64).",
+      "2026-10-21T16:37:33.1213818Z Captured 40909 hashed Git/dependency inputs; unstable files skipped 0. Manifest: $BUILD_DIR/.prefect-build-inputs.json",
+      "2026-10-21T16:42:00.2390190Z Cache saved with key: prefect-app-v1-58c9e50c2df2807fce770eaa588463cd6ad44960a16a97faeb11c53817db6937-4b5c3546c7fba94439d9bb0fe69553723b895897-39623913865-1"
+    ],
+    "previous_success_image_lines": [
+      "2026-10-21T00:14:39.0947043Z Image: windows-2025-vs2026",
+      "2026-10-21T00:14:39.0947777Z Version: 20261018.275.1"
+    ]
+  },
+  "verification_scope": "Fresh GitHub API metadata and selected completed-job log lines prove the source-bound Windows compile/link/install, policy/Windows regression jobs, preflight, artifact upload, cache misses and new saves. Local GUI and real printer acceptance remain separate and are not claimed here."
+}
