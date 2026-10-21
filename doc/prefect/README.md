@@ -7,13 +7,12 @@ Die gemeinsame Grundlage ist Bambu Studio **v02.08.02.61**, Commit
 `926a7192574bcb9b3a732e1ec59a46d79cb45466`. Das Git-Remote `upstream` zeigt auf
 `https://github.com/bambulab/BambuStudio.git`.
 
-**Auslieferungsstand:** Der Quellcode und die nachstehenden Prüfanleitungen sind
-vorbereitet. Ein vollständiger GUI-Build und dessen Bedien-/Druckerabnahme sind
-noch nicht nachgewiesen; derzeit liegt keine neu gebaute ausführbare Fork-Version
-vor. Der GitHub-Fork ist angelegt; dessen Remote heißt `origin`. Der jeweils
-aktuelle Nachweis, einschließlich tatsächlich ausgeführter Tests, steht in
-[VALIDATION.md](VALIDATION.md). Eine vorhandene CI-Datei belegt allein keinen
-erfolgreichen CI-Lauf.
+**Auslieferungsstand:** Der vollständige Windows-Build `ab6b1e83` ist einschließlich
+Linken, Paketierung und CI-Tests erfolgreich; ein ausführbares Fork-Paket ist
+als GitHub-Artefakt vorhanden. Die lokale Bedien-/Druckerabnahme wird getrennt
+dokumentiert. Der GitHub-Fork ist angelegt; dessen Remote heißt `origin`.
+Der jeweils aktuelle Nachweis, einschließlich tatsächlich ausgeführter Tests,
+steht in [VALIDATION.md](VALIDATION.md).
 
 ## Anpassungsliste
 

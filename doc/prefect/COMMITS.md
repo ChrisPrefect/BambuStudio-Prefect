@@ -32,7 +32,10 @@ Ergänzende Commits nach der ersten Feature-Serie:
 | `2b4187439a730f620ffff52c0d828a8f19ad1018` | CI-Compiler automatisch erkennen; nur exakt passende offizielle Abhängigkeiten wiederverwenden; GitHub-Commitzuordnung dokumentieren |
 | `8862ffb3d4f9968c932132e28edc135399603361` | F01/F05/F06 zusätzlich vor Änderungen in reinen G-Code-Ansichten schützen |
 | `aefb764d3a36e05004ec82e20ddf37714ce718a7` | F05 auf tatsächlich zuweisbare Modellzeilen begrenzen, Erfolg zurückmelden und nutzlosen Undo-Eintrag vermeiden; Fork-Startseite und Abhängigkeits-Layoutprüfung |
+| `a10f94e49bb2863135955f37230cf8e099982b3c` | Native Windows-Prüfung der vier Policies und rekonstruierbare Patchserie dokumentieren |
+| `ab6b1e83b32e6bffd5d7cc8da6ef8858617baf2a` | Absolute Bibliothekspfade des offiziellen Dependency-Pakets relokieren und vor dem Compilelauf prüfen; kompatible Zwischenstände mit geprüften Eingangsdaten wiederverwenden; beide Mechanismen unter Windows testen |
+| `4b5c3546c7fba94439d9bb0fe69553723b895897` | F01 beim Wiedereinschalten mit dem frischen Druckerstand nachholen, auch wenn dieser während der ausgeschalteten Option bereits empfangen wurde; vorhandene Timer-Policy beibehalten |
 
-Die vollständigen 17 Stufen dieser Serie wurden sowohl als Rohdiffs als auch
+Die vollständigen 20 Stufen dieser Serie wurden sowohl als Rohdiffs als auch
 als exportierte Format-Patches erneut angewendet. Alle Zwischen- und Endtrees
 stimmen überein: [Nachweis](validation/patch-replay.md).

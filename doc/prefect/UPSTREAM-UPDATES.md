@@ -17,8 +17,8 @@ Aufrufpfade, persistente Schlüssel, Nebenwirkungen und Laufzeitprüfungen.
 Eine Konfliktlösung nach Funktionen und Zuständigkeiten hat Vorrang vor dem
 mechanischen Übernehmen alter Zeilen.
 
-Die Ausgangsserie bis `aefb764d3a36e05004ec82e20ddf37714ce718a7` ist auch
-praktisch geprüft: 17 Rohdiffs und dieselben 17 exportierten Format-Patches
+Die Ausgangsserie bis `4b5c3546c7fba94439d9bb0fe69553723b895897` ist auch
+praktisch geprüft: 20 Rohdiffs und dieselben 20 exportierten Format-Patches
 rekonstruieren jede Commitstufe exakt. [Bericht](validation/patch-replay.md)
 und [Einzelbelege](validation/patch-replay.json). Mit
 [export_and_replay_patches.py](tools/export_and_replay_patches.py) lässt sich

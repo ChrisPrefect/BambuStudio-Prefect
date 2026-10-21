@@ -5,8 +5,10 @@ Stand: **21. Oktober 2026**, Zeitzone Europe/Zurich.
 Die vier unabhängigen C++-Policytests wurden erfolgreich kompiliert und
 ausgeführt. Alle Assertions waren aktiv. Der aktuelle Quellvergleich ergibt
 keine neu hinzugekommenen Tree-sitter-Syntaxfehlerknoten. Manifestprüfung und
-`git diff --check` waren erfolgreich. **Ein vollständiger Build und die
-Laufzeitabnahme der Bambu-Studio-GUI sind damit noch nicht nachgewiesen.**
+`git diff --check` waren erfolgreich. Der vollständige Windows-Build des
+Quellstands `ab6b1e83b32e6bffd5d7cc8da6ef8858617baf2a` ist einschließlich
+Linken, Installationsverzeichnis und Artefakt erfolgreich. Die lokale
+Laufzeitabnahme wird getrennt erfasst.
 
 ## Geprüfter Quellstand und Belege
 
@@ -131,10 +133,11 @@ erneut kompiliert, gelinkt und ausgeführt: jeweils Compiler- und Test-Exitcode
 aktiv. [Originalprotokoll mit Quell-/EXE-/Compiler-Hashes](validation/msvc-policy-tests.log).
 Dieser zusätzliche Lauf ersetzt ebenfalls keinen vollständigen GUI-Build.
 
-Alle **17 Commits** bis zu diesem Stand wurden zweimal auf der unveränderten
+Alle **20 Commits** bis einschließlich `4b5c3546c7fba94439d9bb0fe69553723b895897`
+wurden zweimal auf der unveränderten
 Upstream-Basis rekonstruiert: einmal mit rohen Git-Diffs, einmal mit den
-tatsächlich exportierten Format-Patches. **Alle 34 Treevergleiche bestanden**;
-der Endtree ist `587565647fc3d2f36bf1533b4263d2b23fcad4dd`. Der normale
+tatsächlich exportierten Format-Patches. **Alle 40 Treevergleiche bestanden**;
+der Endtree ist `418524ef74e1e2d49ec1cf9d3fa6e422df072afc`. Der normale
 Repository-Index blieb unverändert. [Prüfbericht](validation/patch-replay.md),
 [maschinenlesbare Einzelbelege](validation/patch-replay.json) und
 [reproduzierbares Werkzeug](tools/export_and_replay_patches.py).
@@ -143,13 +146,34 @@ Maschinenspezifische Pfadpräfixe sind in den veröffentlichten Belegen durch
 bleiben erhalten. Dieser Nachweis betrifft die festgelegte Basis, keine
 behauptete konfliktfreie Anwendung auf eine unbekannte zukünftige Version.
 
-## Noch ausstehende Nachweise
+## Vollständiger Windows-Build
+
+[GitHub-Actions-Lauf 39520066087](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/39520066087)
+hat beide Jobs erfolgreich abgeschlossen. Der Windows-Job umfasst alle
+Anwendungsquellen, das abschließende Linken und CMake-Installieren. Die vier
+Policytests und die Manifestprüfung sind im separaten Linux-Job bestanden.
+Die beiden Windows-Regressionsskripte für Cache-Eingaben sowie Dependency-
+Relokation/Linkprüfung sind ebenfalls erfolgreich.
+
+Der tatsächliche Dependency-Baum wurde vor der Kompilierung normalisiert:
+37 Referenzen in zwölf Metadaten-Dateien; die anschließende Prüfung erfasste
+127 generierte Projekte und 82 vorhandene Dependency-Bibliotheken.
+Der Compile-/Installationsschritt lief am 21.10.2026 von 00:18:33 bis
+01:34:42 UTC erfolgreich. Dependency- und Anwendungscache wurden danach
+erfolgreich gesichert.
+
+Artefakt **12314660106**, **264.361.825 Bytes**, SHA-256
+`70fd163a738b4042cadde0511d3c3c31a4a17fef527e90ec79f95939c92810ea`.
+[API-Metadaten und Zuordnung zum Quellcommit](validation/cloud-build-ab6b.json).
+Dieser Buildnachweis ist von der lokalen Bedien- und Geräteabnahme zu unterscheiden.
+
+## Laufzeit- und Gerätenachweise
 
 | Bereich | Status dieses Protokolls | Erforderlicher Nachweis |
 | --- | --- | --- |
-| Vollständige Bambu-Studio-GUI | noch nicht verifiziert | nativer Build aller geänderten wxWidgets-/ImGui-Übersetzungseinheiten samt Linken und Start |
-| Portable Fork-Anwendung | noch kein gebautes Anwendungsartefakt nachgewiesen | eindeutig dem Fork-Commit zugeordnete EXE/Paket und erfolgreicher Start mit isoliertem Profil |
-| GitHub-CI | Konfiguration vorhanden; hier kein erfolgreicher Remote-Lauf belegt | tatsächlicher Workflow-Run und herunterladbares Windows-Artefakt |
+| Vollständige Bambu-Studio-GUI | Compile und Link für `ab6b1e83` erfolgreich | lokaler Start und Bedienung separat prüfen |
+| Portable Fork-Anwendung | Artefakt 12314660106 gebaut und dem Quellcommit zugeordnet | erfolgreicher Start mit isoliertem Profil |
+| GitHub-CI | Run 39520066087 vollständig erfolgreich | tatsächlicher Workflow-Run und Windows-Artefakt oben verlinkt |
 | F01 Geräteabgleich | keine reale Druckerverbindung im Testlauf | Materialänderung am ausgewählten Gerät, Übernahme ohne Dialog und Wiederholungs-/Offlinefälle |
 | F02/F03/F05/F06/F07/F08/F09 Bedienung | Quellcode/Policies geprüft | jeweilige Detail-Prüftabellen am gebauten Programm, einschließlich Undo/Redo und Neustart |
 | F04 echter Slicer-Worker | Zustands-Policytests bestanden | längeres Modell, Editieren während des Laufs, Plattenwechsel, Slice-All, Export und Skriptwahl |
