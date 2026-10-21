@@ -1,0 +1,39 @@
+name: Finalize verified Prefect release
+
+on:
+  push:
+    branches: [delivery/windows]
+    paths:
+      - .github/workflows/prefect-finalize.yml
+      - delivery/finalization/**
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: prefect-finalize-418968348
+  cancel-in-progress: false
+
+jobs:
+  finalize:
+    if: github.repository == 'ChrisPrefect/BambuStudio-Prefect' && github.ref == 'refs/heads/delivery/windows'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: delivery/finalization
+      - name: Run network-free finalization regression tests
+        run: python3 -m unittest discover -s delivery/finalization -p 'test_*.py' -v
+      - name: Verify pins and publish the existing draft by ID
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 delivery/finalization/finalize_release.py --report final-release-verification.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Prefect-final-release-verification
+          path: final-release-verification.json
+          if-no-files-found: error
+          retention-days: 90
