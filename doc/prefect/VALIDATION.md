@@ -2,6 +2,11 @@
 
 Stand: **21. Oktober 2026**, Zeitzone Europe/Zurich.
 
+Das [Vorabpaket Workflow 1](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.1)
+ist veröffentlicht. Der [frische Veröffentlichungsnachweis](validation/published-release.json)
+bestätigt den tatsächlichen Tag, die drei Assets und den erfolgreichen
+Finalisierungslauf; die unten genannten Grenzen der Bedien-/Hardwaretests gelten weiter.
+
 Die vier unabhängigen C++-Policytests wurden erfolgreich kompiliert und
 ausgeführt. Alle Assertions waren aktiv. Der dokumentierte Quellvergleich ergibt
 keine neu hinzugekommenen Tree-sitter-Syntaxfehlerknoten. Manifestprüfung und

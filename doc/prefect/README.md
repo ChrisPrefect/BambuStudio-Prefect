@@ -17,6 +17,9 @@ Aktivieren von F01. Die interaktive Abnahme aller Bedien- und Druckerfälle ist
 nicht vollständig belegt. [Lokaler Laufzeitnachweis und genaue Grenzen](validation/local-windows-runtime.md),
 [aktueller CI-Nachweis](validation/cloud-build-4b5c.md).
 Der GitHub-Fork ist angelegt; dessen Remote heißt `origin`.
+Das [veröffentlichte Vorabpaket Workflow 1](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.1)
+enthält das vollständige Windows-ZIP, die geprüfte Serie aus 20 Patches und
+`SHA256SUMS.txt`. [Veröffentlichungsnachweis](validation/published-release.json).
 Der jeweils aktuelle Nachweis, einschließlich tatsächlich ausgeführter Tests,
 steht in [VALIDATION.md](VALIDATION.md).
 

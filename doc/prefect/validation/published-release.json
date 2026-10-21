@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "verified_at_utc": "2026-10-21 21:10:41 UTC",
+  "repository": "ChrisPrefect/BambuStudio-Prefect",
+  "source_commit": "4b5c3546c7fba94439d9bb0fe69553723b895897",
+  "source_tree": "418524ef74e1e2d49ec1cf9d3fa6e422df072afc",
+  "release_id": 418968348,
+  "tag": "v02.08.02.61-prefect.1",
+  "draft": false,
+  "prerelease": true,
+  "published_at": "2026-10-21T21:09:36Z",
+  "html_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.1",
+  "source_build_run": 39623913865,
+  "publisher_run": 39625168492,
+  "finalization": {
+    "run_id": 39676451457,
+    "conclusion": "success",
+    "commit": "d75d4372d477daa576e59619957c0ebb3d58143e",
+    "verification_artifact_id": 12381842746,
+    "verification_artifact_digest": "sha256:3f9304ddbb9330a772e5375528496736a3d0f997ca2603802829b832b73cede7"
+  },
+  "assets": [
+    {
+      "id": 663154498,
+      "name": "BambuStudio-Prefect-2.8.2.61-Windows-x64.zip",
+      "size_bytes": 264362107,
+      "sha256": "c2e28e59dba400e6414b208983f50567020dbc37e1a01ff3ae8d446309f874bc",
+      "download_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.1/BambuStudio-Prefect-2.8.2.61-Windows-x64.zip"
+    },
+    {
+      "id": 663155136,
+      "name": "BambuStudio-Prefect-patches-20261021.zip",
+      "size_bytes": 470661,
+      "sha256": "7c5207922f3eec258eb8dfc1595644fc55501f10a69e10334ca770c52ff48025",
+      "download_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.1/BambuStudio-Prefect-patches-20261021.zip"
+    },
+    {
+      "id": 663155220,
+      "name": "SHA256SUMS.txt",
+      "size_bytes": 218,
+      "sha256": "6c4112a32483767a770e4b0e783761b5ebfb33566fe23b6e0240c17a2d6c6eb3",
+      "download_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.1/SHA256SUMS.txt"
+    }
+  ],
+  "full_interactive_and_hardware_acceptance": false
+}

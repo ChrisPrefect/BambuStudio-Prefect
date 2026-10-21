@@ -117,8 +117,23 @@ Skript wartet auf den erfolgreichen Run, prüft dessen Repository und Head,
 GitHub-Artefakt-Digest, ZIP-CRC und `PREFECT-COMMIT.txt`. Erst danach lädt es
 das unveränderte Windows-ZIP, die Patchserie und `SHA256SUMS.txt` hoch.
 Die Digests der hochgeladenen Assets werden erneut mit der API verglichen.
-Ein bereits veröffentlichter Release wird nicht ersetzt. Der Release bleibt
-ein Entwurf, bis die tatsächliche Laufzeitabnahme abgeschlossen ist.
+Ein bereits veröffentlichter Release wird nicht ersetzt. Der Transport allein
+veröffentlicht keinen Entwurf.
+
+**Workflow 1 wurde am 21.10.2026 als Vorabversion veröffentlicht.** Vollständiger
+Windows-Build, Paketinstallation und tatsächlicher Start sind belegt; die
+vollständige interaktive Bedien- und Hardwareabnahme bleibt ausdrücklich offen.
+Diese Grenze steht auch im veröffentlichten Releasetext. Der
+[Veröffentlichungsnachweis](validation/published-release.json) hält Quellstand,
+Tag, Asset-IDs, Größen und SHA-256 sowie den erfolgreichen Finalisierungslauf fest.
+
+Die getrennte `.github/workflows/prefect-finalize.yml` auf `delivery/windows`
+prüft vor dem Veröffentlichen exakt den bestehenden Release, seine drei Assets,
+die heruntergeladenen Prüfsummenbytes, den echten Tag und die erfolgreichen
+Build-/Transportläufe. `delivery/finalization/` enthält dafür den strikt an
+diesen Release gebundenen Code, Releasetext und 13 Regressionstests. Die
+Veröffentlichung ändert keine Tags, Assets oder Anwendungsquellen. Ein bereits
+identisch veröffentlichter Stand wird ohne erneuten Schreibzugriff akzeptiert.
 
 Bei einem Update:
 
