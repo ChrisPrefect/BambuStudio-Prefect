@@ -23,6 +23,8 @@ jobs:
         with:
           sparse-checkout: delivery/windows
           persist-credentials: false
+      - name: Verify draft upload policy without network
+        run: python -m unittest discover -s delivery/windows -p 'test_release_assets.py' -v
       - name: Verify successful Windows build and attach draft release assets
         env:
           GH_TOKEN: ${{ github.token }}

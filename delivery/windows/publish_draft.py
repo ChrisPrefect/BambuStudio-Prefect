@@ -10,12 +10,15 @@ import zipfile
 if not __debug__:
     raise RuntimeError('Release verification requires active assertions; do not use python -O.')
 
+from release_assets import bind_draft, upload_assets_to_draft
+
 root = Path(__file__).resolve().parent
 config = json.loads((root / 'release.json').read_text(encoding='utf-8'))
 repo = os.environ['GITHUB_REPOSITORY']
 source = config['source_commit']
 run_id = config['source_run_id']
 tag = config['tag']
+release_id = config['release_id']
 patch_count = config['patch_count']
 assert isinstance(patch_count, int) and not isinstance(patch_count, bool) and patch_count > 0
 
@@ -25,7 +28,7 @@ def api(path, method='GET', payload=None):
         command += ['--input', '-']
     result = subprocess.run(command, input=None if payload is None else json.dumps(payload).encode(),
                             stdout=subprocess.PIPE, check=True)
-    return json.loads(result.stdout)
+    return json.loads(result.stdout) if result.stdout.strip() else None
 
 def digest(file):
     with file.open('rb') as stream:
@@ -71,24 +74,10 @@ with zipfile.ZipFile(patch) as archive:
 checksums = Path('SHA256SUMS.txt')
 checksums.write_text(f'{portable_sha}  {portable.name}\n{digest(patch)}  {patch.name}\n', encoding='ascii')
 
-releases = api('releases?per_page=100')
-existing = [release for release in releases if release['tag_name'] == tag]
-assert len(existing) <= 1
-if existing:
-    release = existing[0]
-    assert release['draft'], 'Refusing to replace a published release'
-    release = api(f"releases/{release['id']}", 'PATCH', {'target_commitish': source})
-else:
-    release = api('releases', 'POST', {'tag_name': tag, 'target_commitish': source,
-                                      'name': config['title'], 'draft': True, 'prerelease': True})
-subprocess.run(['gh', 'release', 'upload', tag, str(portable), str(patch), str(checksums),
-                '--repo', repo, '--clobber'], check=True)
-release = api(f"releases/{release['id']}")
+release = bind_draft(api, repo, release_id, tag, source, config.get('previous_source_commit'))
 expected = {portable.name: portable_sha, patch.name: digest(patch), checksums.name: digest(checksums)}
-for name, sha in expected.items():
-    assets = [asset for asset in release['assets'] if asset['name'] == name]
-    assert len(assets) == 1 and assets[0]['state'] == 'uploaded'
-    assert assets[0].get('digest') == f'sha256:{sha}', f'Uploaded asset digest mismatch: {name}'
+release = upload_assets_to_draft(api, repo, release_id, tag, source,
+                                 [portable, patch, checksums], expected, os.environ['GH_TOKEN'])
 proof = {'source_commit': source, 'source_tree': config['source_tree'], 'source_run_id': run_id,
          'artifact_id': artifact['id'], 'release_id': release['id'], 'release_url': release['html_url'],
          'draft': release['draft'], 'patch_count': patch_count, 'assets': expected, 'success': True}

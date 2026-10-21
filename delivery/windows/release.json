@@ -1,10 +1,12 @@
 {
-  "source_run_id": 39520066087,
-  "source_commit": "ab6b1e83b32e6bffd5d7cc8da6ef8858617baf2a",
-  "source_tree": "2c88f2a713f94c34a66eeec98e130eac38850b2d",
+  "source_run_id": 39623913865,
+  "source_commit": "4b5c3546c7fba94439d9bb0fe69553723b895897",
+  "source_tree": "418524ef74e1e2d49ec1cf9d3fa6e422df072afc",
+  "previous_source_commit": "ab6b1e83b32e6bffd5d7cc8da6ef8858617baf2a",
   "tag": "v02.08.02.61-prefect.1",
   "title": "Bambu Studio Prefect 2.8.2.61 – Workflow 1",
   "patch_file": "BambuStudio-Prefect-patches-20261021.zip",
-  "patch_count": 19,
-  "patch_sha256": "31a6e2e9d9edfe1e08b7860160dbfbc65071ca96e131f445079ba16799041d6d"
+  "patch_count": 20,
+  "patch_sha256": "7c5207922f3eec258eb8dfc1595644fc55501f10a69e10334ca770c52ff48025",
+  "release_id": 418968348
 }
