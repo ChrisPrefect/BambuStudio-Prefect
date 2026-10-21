@@ -36,6 +36,8 @@ jobs:
     needs: policy-tests
     runs-on: windows-2025
     timeout-minutes: 360
+    env:
+      PREFECT_APP_CMAKE_FLAGS: -DBBL_RELEASE_TO_PUBLIC=1 -DBBL_INTERNAL_TESTING=0 -DCMAKE_BUILD_TYPE=Release
     steps:
       - uses: actions/checkout@v4
         with:
@@ -54,22 +56,57 @@ jobs:
           }
           "PREFECT_GENERATOR=$generator" >> $env:GITHUB_ENV
           "PREFECT_VS_MAJOR=$major" >> $env:GITHUB_ENV
+          $compiler = (Get-Command cl.exe).Source
+          $cmake = (Get-Command cmake.exe).Source
+          $identity = @(
+            $generator
+            $env:VCToolsVersion
+            $env:WindowsSDKVersion
+            $env:ImageOS
+            $env:ImageVersion
+            (Get-FileHash -LiteralPath $compiler -Algorithm SHA256).Hash
+            (Get-FileHash -LiteralPath $cmake -Algorithm SHA256).Hash
+            $env:GITHUB_WORKSPACE.TrimEnd('\', '/').ToLowerInvariant()
+            'x64'
+          ) -join "`n"
+          $fingerprint = [Convert]::ToHexString([Security.Cryptography.SHA256]::HashData([Text.Encoding]::UTF8.GetBytes($identity))).ToLowerInvariant()
+          "PREFECT_TOOLCHAIN_KEY=$fingerprint" >> $env:GITHUB_ENV
+          # CMake TIMESTAMP drives libslic3r_version.h; CI-only edits must not rebuild the PCH.
+          do {
+            $sourceCommit = git log -1 '--format=%H %ct' -- src deps cmake version.inc CMakeLists.txt
+            if ($LASTEXITCODE -ne 0 -or $sourceCommit -notmatch '^([0-9a-f]{40}) (\d+)$') { throw 'Cannot determine application source timestamp.' }
+            $sourceHash, $sourceEpoch = $Matches[1], $Matches[2]
+            $shallowPath = git rev-parse --git-path shallow
+            if ($LASTEXITCODE -ne 0) { throw 'Cannot locate shallow-history boundary.' }
+            $atBoundary = (Test-Path -LiteralPath $shallowPath) -and ((Get-Content -LiteralPath $shallowPath) -contains $sourceHash)
+            if ($atBoundary) {
+              # A shallow boundary appears to change every path; inspect enough history to prove the source date.
+              git fetch --no-tags --deepen=32 origin $env:GITHUB_SHA
+              if ($LASTEXITCODE -ne 0) { throw 'Cannot deepen history for a stable source timestamp.' }
+            }
+          } while ($atBoundary)
+          "SOURCE_DATE_EPOCH=$sourceEpoch" >> $env:GITHUB_ENV
           cmake --version
           cl 2>&1 | Select-Object -First 3
           $global:LASTEXITCODE = 0
+      - name: Verify application cache content and timestamp policy
+        shell: pwsh
+        run: ./tests/prefect/build_cache_inputs_test.ps1
+      - name: Verify dependency relocation and early linker checks
+        shell: pwsh
+        run: ./tests/prefect/dependency_link_inputs_test.ps1
       - name: Install upstream build tools
         shell: pwsh
         run: |
           choco install strawberryperl pkgconfiglite nsis -y --no-progress
           if ($LASTEXITCODE -notin 0, 3010) { exit $LASTEXITCODE }
-      - name: Cache compiled upstream dependencies
+      - name: Restore compiled upstream dependencies
         id: deps
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: out/prefect-deps-stage
-          key: prefect-win2025-vs${{ env.PREFECT_VS_MAJOR }}-${{ hashFiles('deps/**', 'cmake/**') }}
+          key: prefect-deps-v2-${{ env.PREFECT_TOOLCHAIN_KEY }}-${{ hashFiles('deps/**', 'cmake/**', 'scripts/prefect/Restore-UpstreamDependencies.ps1') }}
       - name: Restore matching official upstream dependencies
-        if: steps.deps.outputs.cache-hit != 'true'
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
@@ -82,11 +119,49 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           cmake --build out/prefect-deps --config Release --parallel 2
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-      - name: Compile and package Prefect fork
+      # Save immediately: a later application/link failure must not discard dependencies.
+      - name: Save compiled upstream dependencies
+        if: steps.deps.outputs.cache-hit != 'true'
+        continue-on-error: true
+        uses: actions/cache/save@v4
+        with:
+          path: out/prefect-deps-stage
+          key: ${{ steps.deps.outputs.cache-primary-key }}
+      - name: Identify compatible application build cache
+        id: app-cache-key
+        shell: pwsh
+        env:
+          PREFECT_CMAKE_DEPS_HASH: ${{ hashFiles('CMakeLists.txt', 'src/**/CMakeLists.txt', 'deps/**', 'cmake/**', 'scripts/prefect/Build-CacheInputs.ps1') }}
+        run: |
+          $identity = @($env:PREFECT_TOOLCHAIN_KEY, $env:PREFECT_CMAKE_DEPS_HASH, $env:PREFECT_APP_CMAKE_FLAGS, 'Release|install|x64') -join "`n"
+          $fingerprint = [Convert]::ToHexString([Security.Cryptography.SHA256]::HashData([Text.Encoding]::UTF8.GetBytes($identity))).ToLowerInvariant()
+          "family=prefect-app-v1-$fingerprint" >> $env:GITHUB_OUTPUT
+      - name: Restore compatible application objects and build metadata
+        id: app-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: out/prefect-app
+          key: ${{ steps.app-cache-key.outputs.family }}-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            ${{ steps.app-cache-key.outputs.family }}-${{ github.sha }}-
+            ${{ steps.app-cache-key.outputs.family }}-
+      - name: Restore timestamps of byte-identical build inputs
+        shell: pwsh
+        run: ./scripts/prefect/Build-CacheInputs.ps1 -Mode Restore -Workspace $env:GITHUB_WORKSPACE -BuildDirectory out/prefect-app -DependencyDirectory out/prefect-deps-stage -Fingerprint '${{ steps.app-cache-key.outputs.family }}'
+      - name: Configure Prefect fork
+        id: app-configure
         shell: pwsh
         run: |
-          cmake -S . -B out/prefect-app -G "$env:PREFECT_GENERATOR" -A x64 -DBBL_RELEASE_TO_PUBLIC=1 -DBBL_INTERNAL_TESTING=0 -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$env:GITHUB_WORKSPACE/out/prefect-deps-stage/usr/local" -DCMAKE_INSTALL_PREFIX="$env:GITHUB_WORKSPACE/out/prefect-portable"
+          $appFlags = $env:PREFECT_APP_CMAKE_FLAGS -split ' '
+          cmake -S . -B out/prefect-app -G "$env:PREFECT_GENERATOR" -A x64 @appFlags -DCMAKE_PREFIX_PATH="$env:GITHUB_WORKSPACE/out/prefect-deps-stage/usr/local" -DCMAKE_INSTALL_PREFIX="$env:GITHUB_WORKSPACE/out/prefect-portable"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Validate generated dependency link inputs before compiling
+        shell: pwsh
+        run: ./scripts/prefect/Test-DependencyLinkInputs.ps1 -BuildDirectory out/prefect-app -DependencyPrefix out/prefect-deps-stage/usr/local
+      - name: Compile and package Prefect fork
+        id: app-build
+        shell: pwsh
+        run: |
           cmake --build out/prefect-app --target install --config Release --parallel 2
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           Copy-Item scripts/prefect/Start-Prefect.ps1 out/prefect-portable/
@@ -96,3 +171,16 @@ jobs:
           name: BambuStudio-Prefect-Windows-x64-${{ github.sha }}
           path: out/prefect-portable/
           if-no-files-found: error
+      - name: Capture verified build-input identities and timestamps
+        id: app-cache-inputs
+        if: always() && steps.app-build.outcome != '' && steps.app-build.outcome != 'skipped'
+        continue-on-error: true
+        shell: pwsh
+        run: ./scripts/prefect/Build-CacheInputs.ps1 -Mode Capture -Workspace $env:GITHUB_WORKSPACE -BuildDirectory out/prefect-app -DependencyDirectory out/prefect-deps-stage -Fingerprint '${{ steps.app-cache-key.outputs.family }}'
+      - name: Save application objects even after a compiler or linker failure
+        if: always() && steps.app-cache-inputs.outcome == 'success'
+        continue-on-error: true
+        uses: actions/cache/save@v4
+        with:
+          path: out/prefect-app
+          key: ${{ steps.app-cache.outputs.cache-primary-key }}
