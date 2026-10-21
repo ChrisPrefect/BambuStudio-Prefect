@@ -1,0 +1,60 @@
+name: Restore empty Prefect release draft and source tag
+
+on:
+  push:
+    branches: ['delivery/release-state']
+    paths: ['.github/workflows/prefect-release-state.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  prepare-empty-release:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Verify empty release and restore draft with matching source
+        shell: python
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          import json, os, subprocess
+          from pathlib import Path
+          repo = os.environ['GITHUB_REPOSITORY']
+          old = 'a10f94e49bb2863135955f37230cf8e099982b3c'
+          source = 'ab6b1e83b32e6bffd5d7cc8da6ef8858617baf2a'
+          tag = 'v02.08.02.61-prefect.1'
+          def require(ok, message):
+              if not ok: raise RuntimeError(message)
+          def api(path, method='GET', data=None):
+              args = ['gh', 'api', '--method', method, f'repos/{repo}/{path}']
+              if data is not None: args += ['--input', '-']
+              result = subprocess.run(args, input=None if data is None else json.dumps(data).encode(),
+                                      stdout=subprocess.PIPE, check=True)
+              return json.loads(result.stdout)
+          require(repo.lower() == 'chrisprefect/bambustudio-prefect', 'Wrong repository')
+          release = api('releases/418968348')
+          require(release['tag_name'] == tag and release['prerelease'], 'Unexpected release identity')
+          require(release['assets'] == [], 'Refusing to retract a release containing assets')
+          ref = api('git/ref/tags/' + tag)
+          require(ref['object']['type'] == 'commit' and ref['object']['sha'] in (old, source),
+                  'Unexpected existing tag target')
+          commit = api('git/commits/' + source)
+          require(any(parent['sha'] == old for parent in commit['parents']), 'Source is not the expected direct descendant')
+          api('releases/418968348', 'PATCH', {'draft': True, 'target_commitish': source})
+          if ref['object']['sha'] == old:
+              api('git/refs/tags/' + tag, 'PATCH', {'sha': source, 'force': False})
+          release = api('releases/418968348')
+          ref = api('git/ref/tags/' + tag)
+          require(release['draft'] and release['assets'] == [], 'Draft state not restored')
+          require(ref['object']['sha'] == source, 'Source tag does not match')
+          proof = {'release_id': release['id'], 'tag': tag, 'draft': release['draft'],
+                   'source_commit': ref['object']['sha'], 'empty_assets': True,
+                   'tag_update_forced': False, 'success': True}
+          Path('release-state-proof.json').write_text(json.dumps(proof, indent=2) + chr(10), encoding='utf-8')
+          print(json.dumps(proof, indent=2))
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Prefect-release-state-proof
+          path: release-state-proof.json
+          if-no-files-found: error
