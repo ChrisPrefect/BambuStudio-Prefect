@@ -7,12 +7,17 @@ import subprocess
 import time
 import zipfile
 
+if not __debug__:
+    raise RuntimeError('Release verification requires active assertions; do not use python -O.')
+
 root = Path(__file__).resolve().parent
 config = json.loads((root / 'release.json').read_text(encoding='utf-8'))
 repo = os.environ['GITHUB_REPOSITORY']
 source = config['source_commit']
 run_id = config['source_run_id']
 tag = config['tag']
+patch_count = config['patch_count']
+assert isinstance(patch_count, int) and not isinstance(patch_count, bool) and patch_count > 0
 
 def api(path, method='GET', payload=None):
     command = ['gh', 'api', '--method', method, f'repos/{repo}/{path}']
@@ -62,7 +67,7 @@ patch = root / config['patch_file']
 assert digest(patch) == config['patch_sha256'], 'Patch archive digest mismatch'
 with zipfile.ZipFile(patch) as archive:
     assert archive.testzip() is None
-    assert len([name for name in archive.namelist() if name.endswith('.patch')]) == 17
+    assert len([name for name in archive.namelist() if name.endswith('.patch')]) == patch_count, 'Unexpected patch count'
 checksums = Path('SHA256SUMS.txt')
 checksums.write_text(f'{portable_sha}  {portable.name}\n{digest(patch)}  {patch.name}\n', encoding='ascii')
 
@@ -86,6 +91,6 @@ for name, sha in expected.items():
     assert assets[0].get('digest') == f'sha256:{sha}', f'Uploaded asset digest mismatch: {name}'
 proof = {'source_commit': source, 'source_tree': config['source_tree'], 'source_run_id': run_id,
          'artifact_id': artifact['id'], 'release_id': release['id'], 'release_url': release['html_url'],
-         'draft': release['draft'], 'assets': expected, 'success': True}
+         'draft': release['draft'], 'patch_count': patch_count, 'assets': expected, 'success': True}
 Path('prepared-release.json').write_text(json.dumps(proof, indent=2) + '\n', encoding='utf-8')
 print(json.dumps(proof, indent=2))
