@@ -14,6 +14,14 @@ Sie öffnet weder den Farbzuordnungsassistenten noch die Abschlussbestätigung. 
 manuelle Synchronisierung über die vorhandenen Schaltflächen bleibt verfügbar und
 behält ihre bisherigen Dialoge. Abschalten ist über die Prefect-Einstellungen möglich.
 
+Beim erneuten Einschalten wird der aktuelle Materialstand des ausgewählten Druckers
+noch einmal gelesen und zur automatischen Übernahme vorgemerkt. Das gilt auch, wenn
+Studio die geänderte Liste bereits während der ausgeschalteten Option empfangen hat
+und die nächste MQTT-Meldung dieselben Werte enthält. Dafür ist weder eine weitere
+Materialänderung noch ein Gerätewechsel nötig. Die Übernahme läuft nach dem Schließen
+der Einstellungen über denselben Timer mit denselben Warte- und Stopbedingungen;
+der Checkbox-Callback synchronisiert nicht unmittelbar.
+
 ## Implementierung und stabile Suchanker
 
 Basis: BambuStudio `v02.08.02.61`, Commit
@@ -24,6 +32,8 @@ Basis: BambuStudio `v02.08.02.61`, Commit
 | `src/slic3r/GUI/Plater.hpp` | `m_prefect_filament_sync_timer`, `m_prefect_observed_filaments` | Timer und unveränderte letzte Druckermeldung; kein globaler Zustand |
 | `src/slic3r/GUI/Plater.cpp` | `Sidebar::Sidebar`, `filament_sync_action` | Timer besitzt Sidebar als wx-Owner; GUI-Thread; Stop/Retry/Sync |
 | dieselbe Datei | `Sidebar::load_ams_list` | Erkennt Geräte- und Inhaltsänderungen; startet Timer neu |
+| dieselbe Datei; `Plater.hpp` | `Sidebar::request_auto_filament_sync`, `request_auto_sync=false` | Beim Einschalten frischen Gerätestand einlesen und den Timer auch bei unverändertem Vergleichsstand vormerken; bisherige Aufrufer behalten den Defaultpfad |
+| `src/slic3r/GUI/Preferences.cpp` | `param == "prefect_auto_sync_filaments"` | Nur beim Aktivieren nach dem Speichern der Option den öffentlichen Sidebar-Helper aufrufen |
 | dieselbe Datei | `Sidebar::sync_ams_list` | Zusätzlicher optionaler Parameter `automatic=false`; vorhandene Pipeline weiterverwenden |
 | dieselbe Datei | `Sidebar::~Sidebar` | Timer vor Zerstörung stoppen |
 | `src/slic3r/GUI/PrefectFilamentSyncPolicy.hpp` | `filament_sync_action` | Abhängigkeitenfreie Ablaufentscheidung für Regressionstest |
@@ -76,13 +86,17 @@ anschließend das Slicing-Ergebnis. Eine ScopeGuard setzt die Reentranzsperre zu
    aufgerufen werden und vollständige zusammengeführte Gerätestände erhalten.
 2. `build_filament_ams_list` vergleichen. Neue semantisch relevante Materialfelder
    gehören in die beobachtete Kopie; häufig wechselnde Telemetrie gehört nicht hinein.
-3. Alle Änderungen an `sync_ams_list` und `PresetBundle::sync_ams_list` lesen. Den
+3. Den Enable-Callback und den optionalen `request_auto_sync`-Parameter erhalten:
+   die erzwungene Vormerkung muss vor der frühen Rückkehr wegen identischer
+   `PresetBundle::filament_ams_list` erfolgen. Der Helper liest nur den ausgewählten
+   Gerätestand; er darf nicht direkt synchronisieren oder Projekt-Ladehooks einführen.
+4. Alle Änderungen an `sync_ams_list` und `PresetBundle::sync_ams_list` lesen. Den
    `automatic`-Parameter mit Defaultwert erhalten, damit bisherige Aufrufer manuell bleiben.
-4. Jede neu eingeführte modale Meldung in der Sync-Pipeline auf den automatischen Pfad
+5. Jede neu eingeführte modale Meldung in der Sync-Pipeline auf den automatischen Pfad
    prüfen. Diagnosen ins Log oder in eine passive Statusanzeige leiten.
-5. Die explizite Initialisierung von `SyncResult` und `skip_ext` mit dem neuen
+6. Die explizite Initialisierung von `SyncResult` und `skip_ext` mit dem neuen
    Dialogschema vergleichen. Kein Ergebnis eines früheren Dialogs übernehmen.
-6. Folgende Prüfungen nach einem vollständigen GUI-Build ausführen.
+7. Folgende Prüfungen nach einem vollständigen GUI-Build ausführen.
 
 ## Prüfszenarien
 
@@ -100,7 +114,15 @@ anschließend das Slicing-Ergebnis. Eine ScopeGuard setzt die Reentranzsperre zu
 8. Unbekanntes Material: kein OK-Dialog; Ersatzprofil und Logeintrag kontrollieren.
 9. G-code/geslicte 3MF öffnen: keine automatische Änderung oder Neues-Projekt-Meldung.
 10. Option deaktivieren und Gerät ändern: nur vorhandene manuelle Übernahme möglich.
-11. Manuellen Sync öffnen: Abbrechen, Farbzuordnung und Abschlussdialog weiter nutzbar.
+11. Während ausgeschalteter Option eine Farbe oder ein Material am ausgewählten
+    Drucker ändern und die Meldung von Studio empfangen lassen. Option wieder
+    einschalten, keine weitere Materialänderung und keinen Gerätewechsel auslösen:
+    nach Schließen der Einstellungen muss der aktuelle Stand automatisch erscheinen,
+    auch bei identischer nächster MQTT-Map. Weitere identische Meldungen dürfen keinen
+    zweiten Sync auslösen. Wiederholen, während ein Job läuft: erst danach nachholen.
+12. Ohne ausgewählten Drucker wieder einschalten: kein Dialog und kein Zugriff auf
+    einen fehlenden DeviceManager; normale erste Gerätemeldung später weiter nutzbar.
+13. Manuellen Sync öffnen: Abbrechen, Farbzuordnung und Abschlussdialog weiter nutzbar.
 
 Der reine Policy-Test lässt sich ohne GUI-Abhängigkeiten mit einem C++-Compiler bauen:
 `c++ -std=c++17 tests/prefect/filament_sync_test.cpp -o prefect_filament_sync_policy`

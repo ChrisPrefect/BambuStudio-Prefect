@@ -930,6 +930,9 @@ wxBoxSizer *PreferencesDialog::create_item_checkbox(wxString title, wxWindow *pa
         if (param == "background_processing" && wxGetApp().plater())
             wxGetApp().plater()->schedule_background_process();
 
+        if (param == "prefect_auto_sync_filaments" && checkbox->GetValue() && wxGetApp().plater())
+            wxGetApp().sidebar().request_auto_filament_sync();
+
         if (param == "staff_pick_switch") {
             bool pbool = app_config->get("staff_pick_switch") == "true";
             wxGetApp().switch_staff_pick(pbool);

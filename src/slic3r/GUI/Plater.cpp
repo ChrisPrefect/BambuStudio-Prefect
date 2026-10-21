@@ -4596,7 +4596,13 @@ void Sidebar::enable_purge_mode_btn(bool enable)
     });
 }
 
-void Sidebar::load_ams_list(MachineObject* obj)
+void Sidebar::request_auto_filament_sync()
+{
+    auto *manager = wxGetApp().getDeviceManager();
+    load_ams_list(manager ? manager->get_selected_machine() : nullptr, true);
+}
+
+void Sidebar::load_ams_list(MachineObject* obj, bool request_auto_sync)
 
 {
     std::map<int, DynamicPrintConfig> filament_ams_list = build_filament_ams_list(obj);
@@ -4604,7 +4610,8 @@ void Sidebar::load_ams_list(MachineObject* obj)
     // Compare a pristine device snapshot. sync_ams_list adds transient "filament_changed" fields
     // to PresetBundle::filament_ams_list, so comparing that mutable map would retrigger every message.
     const std::string observed_device = obj ? obj->get_dev_id() : "";
-    if (observed_device != m_prefect_observed_device || filament_ams_list != m_prefect_observed_filaments) {
+    // Re-enabling the preference must also catch up an already observed, unchanged snapshot.
+    if (request_auto_sync || observed_device != m_prefect_observed_device || filament_ams_list != m_prefect_observed_filaments) {
         m_prefect_observed_device = observed_device;
         m_prefect_observed_filaments = filament_ams_list;
         if (obj && !filament_ams_list.empty() && !m_prefect_filament_sync_running &&
