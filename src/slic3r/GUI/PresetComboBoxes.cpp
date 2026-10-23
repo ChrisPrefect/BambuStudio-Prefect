@@ -835,13 +835,23 @@ PlaterPresetComboBox::PlaterPresetComboBox(wxWindow *parent, Preset::Type preset
     if (m_type == Preset::TYPE_FILAMENT)
     {
         // Prefect: the row body assigns; keep the arrow and Shift-click available for preset editing.
-        Bind(wxEVT_LEFT_DOWN, [this](wxMouseEvent &event) {
+        auto assign_on_click = [this](wxMouseEvent &event) {
             if (wxGetApp().app_config->get_bool("prefect_click_filament_assigns_selection") &&
-                !event.ShiftDown() && event.GetX() < GetClientSize().GetWidth() - FromDIP(24) &&
-                wxGetApp().sidebar().assign_filament_to_selection(m_filament_idx))
-                return;
+                !event.ShiftDown() && event.GetX() < GetClientSize().GetWidth() - FromDIP(24)) {
+                // The first click already assigned the material. Swallow the second
+                // half without another assignment/Undo snapshot or opening the dropdown.
+                if (event.LeftDClick() && m_prefect_assignment_click_handled)
+                    return;
+                m_prefect_assignment_click_handled = wxGetApp().sidebar().assign_filament_to_selection(m_filament_idx);
+                if (m_prefect_assignment_click_handled)
+                    return;
+            }
+            m_prefect_assignment_click_handled = false;
             event.Skip();
-        });
+        };
+        Bind(wxEVT_LEFT_DOWN, assign_on_click);
+        // A second click is a different wx event; otherwise it opens the native dropdown.
+        Bind(wxEVT_LEFT_DCLICK, assign_on_click);
         // BBS: not show color picker
 #if 0
         Bind(wxEVT_LEFT_DOWN, [this](wxMouseEvent &event) {

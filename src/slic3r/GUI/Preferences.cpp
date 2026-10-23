@@ -3,6 +3,7 @@
 #include "GUI_App.hpp"
 #include "MainFrame.hpp"
 #include "Plater.hpp"
+#include "Tab.hpp"
 #include "MsgDialog.hpp"
 #include "I18N.hpp"
 #include "UxProgramTermsDialog.hpp"
@@ -930,6 +931,23 @@ wxBoxSizer *PreferencesDialog::create_item_checkbox(wxString title, wxWindow *pa
         if (param == "background_processing" && wxGetApp().plater())
             wxGetApp().plater()->schedule_background_process();
 
+        if ((param == "prefect_arrange_rotation" || param == "prefect_printer_collapsed" || param == "prefect_hide_tips") &&
+            wxGetApp().plater())
+            wxGetApp().plater()->update_ui_from_settings();
+
+        if (param == "prefect_simple_fields_enabled") {
+            if (checkbox->GetValue())
+                if (auto* tab = dynamic_cast<TabPrint*>(wxGetApp().get_tab(Preset::TYPE_PRINT)))
+                    tab->initialize_simple_fields();
+            for (auto* tab : wxGetApp().tabs_list)
+                tab->update_mode();
+            for (auto* tab : wxGetApp().model_tabs_list)
+                tab->update_mode();
+            if (wxGetApp().plater())
+                wxGetApp().sidebar().update_searcher();
+            app_config->save();
+        }
+
         if (param == "prefect_auto_sync_filaments" && checkbox->GetValue() && wxGetApp().plater())
             wxGetApp().sidebar().request_auto_filament_sync();
 
@@ -1374,6 +1392,11 @@ PreferencesDialog::~PreferencesDialog()
 }
 
 void PreferencesDialog::on_dpi_changed(const wxRect &suggested_rect) {
+    if (m_prefect_fields_button) {
+        m_prefect_fields_button->Rescale();
+        m_prefect_fields_button->SetMinSize(wxSize(-1, FromDIP(28)));
+        m_prefect_fields_button->SetCornerRadius(FromDIP(4));
+    }
     for (auto item : m_button_list) {
         item.second->Rescale();
         item.second->SetMinSize(wxSize(FromDIP(BTN_WIDTH), FromDIP(BTN_HEIGHT)));
@@ -1540,13 +1563,37 @@ wxWindow *PreferencesDialog::create_prefect_tab()
                wxSizerFlags().Expand().Border(wxTOP, FromDIP(24)));
     sizer->AddSpacer(FromDIP(8));
     auto add = [&](const wxString &label, const wxString &help, const std::string &key) {
+        const int checkbox_index = static_cast<int>(m_checkbox_list.size());
         sizer->Add(wrap_option_row(scrolled, create_item_checkbox(label, scrolled, help, 50, key)), flags);
+        return m_checkbox_list.at(checkbox_index);
     };
     add(_L("Automatically sync filaments from the selected printer"),
         _L("Updates project filaments when AMS or external spool information changes. The printer must be connected."),
         "prefect_auto_sync_filaments");
+    auto* fields_checkbox = add(_L("Use custom fields in Simple mode"),
+        _L("Shows your selected process fields in Simple mode. Disabling this option keeps your selection and restores the standard Simple fields."),
+        "prefect_simple_fields_enabled");
+    auto* print_tab = dynamic_cast<TabPrint*>(wxGetApp().get_tab(Preset::TYPE_PRINT));
+    fields_checkbox->Enable(print_tab != nullptr);
+    auto* fields_row = new wxBoxSizer(wxHORIZONTAL);
+    fields_row->AddSpacer(FromDIP(ITEM_LEFT_PADDING));
+    auto* fields_button = new Button(scrolled, _L("Choose Simple mode fields..."));
+    m_prefect_fields_button = fields_button;
+    fields_button->SetFont(Label::Body_13);
+    fields_button->SetMinSize(wxSize(-1, FromDIP(28)));
+    fields_button->SetCornerRadius(FromDIP(4));
+    fields_button->Enable(print_tab != nullptr);
+    fields_button->SetToolTip(_L("Choose the process fields shown in Simple mode. Your list is retained when the custom selection is disabled."));
+    fields_row->Add(fields_button, wxSizerFlags().CenterVertical().Border(wxRIGHT, FromDIP(ITEM_RIGHT_PADDING)));
+    fields_button->Bind(wxEVT_BUTTON, [this, fields_checkbox](wxCommandEvent&) {
+        if (auto* tab = dynamic_cast<TabPrint*>(wxGetApp().get_tab(Preset::TYPE_PRINT))) {
+            tab->configure_simple_fields(this);
+            fields_checkbox->SetValue(app_config->get_bool("prefect_simple_fields_enabled"));
+        }
+    });
+    sizer->Add(wrap_option_row(scrolled, fields_row), flags);
     add(_L("Keep the printer box collapsed"),
-        _L("Keeps the printer section compact, including after profile changes. Restart Studio after changing this option."),
+        _L("Keeps the printer section compact, including after profile changes. Disabling this option allows the printer box to expand again immediately."),
         "prefect_printer_collapsed");
     add(_L("Slice automatically in the background"),
         _L("Slices the current plate after edits using the existing background worker. Print and export still require your action."),
@@ -1554,6 +1601,15 @@ wxWindow *PreferencesDialog::create_prefect_tab()
     add(_L("Assign clicked filament to selected objects"),
         _L("Click a filament colour to assign it to the current object selection. Painting tools keep their own behaviour."),
         "prefect_click_filament_assigns_selection");
+    add(_L("Show the support-interface filament action"),
+        _L("Adds Set as support interface to each filament menu. Disabling this option hides the action without changing the current support-interface setting."),
+        "prefect_support_interface_menu");
+    add(_L("Always enable rotation when arranging"),
+        _L("Keeps automatic rotation enabled for manual and automatic arrangement. Disabling this option restores the remembered arrangement rotation choices."),
+        "prefect_arrange_rotation");
+    add(_L("Arrange automatically after importing or pasting multiple objects"),
+        _L("Arranges the current plate after importing or pasting at least two separate model objects. Project imports retain their saved arrangement."),
+        "prefect_arrange_after_import");
     add(_L("Always import multiple models as separate objects"),
         _L("Skips the multipart-object question during model import. Explicit project imports retain their structure."),
         "prefect_import_separate_objects");
@@ -2119,6 +2175,9 @@ void PreferencesDialog::on_reset_preferences()
         "background_processing",
         "prefect_auto_sync_filaments",
         "prefect_click_filament_assigns_selection",
+        "prefect_support_interface_menu",
+        "prefect_arrange_rotation",
+        "prefect_arrange_after_import",
         "prefect_printer_collapsed",
         "prefect_import_separate_objects",
         "prefect_hide_tips",

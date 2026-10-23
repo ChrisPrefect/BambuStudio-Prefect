@@ -3,6 +3,7 @@ No worktree/index modifications, no lazy blob downloads, no compile dependencies
 """
 from __future__ import annotations
 import argparse,hashlib,json,os,subprocess,sys,tempfile
+from datetime import date
 from pathlib import Path
 
 def sha(path):
@@ -13,6 +14,7 @@ def main():
     for name in ('repo','output','base','head','expected-tree'):
         cli.add_argument('--'+name,required=True)
     cli.add_argument('--git',default='git')
+    cli.add_argument('--report-date',default=date.today().isoformat())
     args=cli.parse_args()
     repo=Path(args.repo).resolve(); out=Path(args.output).resolve()
     if out.exists() and any(p.is_file() for p in out.rglob('*')):
@@ -42,7 +44,7 @@ def main():
     real_index=Path(text('rev-parse','--git-path','index'))
     if not real_index.is_absolute(): real_index=repo/real_index
     before=sha(real_index)
-    report={'date':'2026-10-21','timezone':'Europe/Zurich','base_commit':base,
+    report={'date':args.report_date,'timezone':'Europe/Zurich','base_commit':base,
         'head_commit':head,'expected_tree':expected,'commits':[],'format_patch':[],
         'commands':commands,'no_lazy_fetch':True,'success':False}
     with tempfile.TemporaryDirectory(prefix='private-index-',dir=out) as temp:

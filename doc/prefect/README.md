@@ -1,13 +1,13 @@
 # Bambu Studio – Prefect-Workflow-Fork
 
-Dieser Fork bündelt die neun konkret gewünschten Anpassungen am Arbeitsablauf.
+Dieser Fork bündelt elf konkret gewünschte Anpassungen am Arbeitsablauf.
 Der Änderungsstand wird auf dem Branch `prefect/workflow` im eigenen
 [GitHub-Fork](https://github.com/ChrisPrefect/BambuStudio-Prefect) gepflegt.
 Die gemeinsame Grundlage ist Bambu Studio **v02.08.02.61**, Commit
 `926a7192574bcb9b3a732e1ec59a46d79cb45466`. Das Git-Remote `upstream` zeigt auf
 `https://github.com/bambulab/BambuStudio.git`.
 
-**Auslieferungsstand:** Der vollständige Windows-Build `4b5c3546` ist einschließlich
+**Auslieferungsstand Workflow 1:** Der vollständige Windows-Build `4b5c3546` ist einschließlich
 Linken, Paketierung und CI-Tests erfolgreich. Das finale Paket wurde außerdem
 als vollständige eigene Windows-Installation mit allen 6.755 Dateien geprüft
 und tatsächlich gestartet; eine Desktop-Verknüpfung verwendet das isolierte
@@ -32,15 +32,18 @@ steht in [VALIDATION.md](VALIDATION.md).
 | F03 | Die obere Drucker-Box dauerhaft eingeklappt halten; Kopfzeile bleibt sichtbar | `prefect_printer_collapsed=true` | [Drucker-Box](03-printer-collapsed.md) |
 | F04 | Nach Änderungen die aktuelle Platte mit dem vorhandenen Worker automatisch im Hintergrund slicen | `background_processing=true` | [Hintergrundslicing](04-background-slicing.md) |
 | F05 | Markierten Objekten/Teilen durch Klick auf Farbfeld oder Filamentnamen das betreffende Filament zuweisen | `prefect_click_filament_assigns_selection=true` | [Filamentklick](05-click-filament-assignment.md) |
-| F06 | Im Filament-`...`-Menü **Als Supportinterface festlegen** anbieten; setzt das globale Supportinterface-Material | Zusätzlicher Menüeintrag; verwendet bestehenden `support_interface_filament`-Key | [Supportinterface-Menü](06-support-interface-menu.md) |
+| F06 | Im Filament-`...`-Menü **Als Supportinterface festlegen** anbieten; setzt das globale Supportinterface-Material | `prefect_support_interface_menu=true`; verwendet vorhandenen `support_interface_filament`-Key | [Supportinterface-Menü](06-support-interface-menu.md) |
 | F07 | Gemeinsam importierte Modelldateien ohne Zusammenfassungsfrage als einzelne Objekte laden | `prefect_import_separate_objects=true` | [Getrennte Importe](07-separate-imports.md) |
 | F08 | Ausschließlich die wiederkehrende TPU-Cold-Pull-Empfehlung ausblenden | `prefect_suppress_tpu_cold_pull=true` | [TPU-Erinnerung](08-tpu-cold-pull.md) |
 | F09 | Tippsfenster und Tippsbereich der Slicing-Meldung vollständig ausblenden, einschließlich des reservierten Platzes | `prefect_hide_tips=true` | [Tipps abschalten](09-hide-tips.md) |
+| F10 | Automatische Rotation bei manuellem und automatischem Anordnen immer einschalten | `prefect_arrange_rotation=true` | [Anordnungsrotation](10-arrange-rotation.md) |
+| F11 | Nach dem Einfügen mehrerer unabhängiger Objekte automatisch anordnen | `prefect_arrange_after_import=true` | [Automatische Anordnung](11-auto-arrange.md) |
 
-Die schaltbaren Funktionen stehen im neuen Register **Workflow** der
-Anwendungseinstellungen. F02 besitzt einen eigenen Dialog und einen eigenen
-Reset auf die aktuellen Upstream-Standardfelder. F06 ergänzt ein vorhandenes
-Menü und benötigt keinen zusätzlichen Druckparameter.
+Alle elf Funktionen sind unter **Einstellungen → Workflow** einzeln schaltbar.
+Die [vollständige Einstellungsseite](workflow-settings.md) enthält auch den
+Zugang zur eigenen Feldauswahl und einen Schalter für den Supportinterface-
+Menüeintrag. Dieser verwendet `prefect_support_interface_menu=true`; der
+bestehende Druckparameter `support_interface_filament` bleibt erhalten.
 
 Die Änderungen ersetzen gezielt die genannten wiederkehrenden Rückfragen. Es
 wird kein allgemeiner Mechanismus eingeführt, der beliebige unbekannte Dialoge
@@ -117,20 +120,21 @@ Kommunikation mit dem Drucker erforderlich.
 
 ## Standardwerte und einmalige Migration
 
-`AppConfig::set_defaults()` ergänzt fehlende Fork-Schalter. Die sechs
-`prefect_*`-Booleans aus F01/F03/F05/F07/F08/F09 sind standardmäßig `true`.
+`AppConfig::set_defaults()` ergänzt über `PrefectWorkflowPreferences.hpp` fehlende
+Fork-Schalter. Die neun `prefect_*`-Booleans aus F01/F03/F05/F06/F07/F08/F09/F10/F11
+sind standardmäßig `true`.
 Hintergrundslicing ist ebenfalls standardmäßig aktiv. Die eigene einfache
 Feldauswahl bleibt zunächst deaktiviert; ein fehlender `prefect_simple_fields`-
 Wert entspricht einer leeren Liste.
 
 `AppConfig::load()` prüft zusätzlich den **eingelesenen JSON-Inhalt** auf
-`app.prefect_workflow_revision`. Fehlt der Schlüssel, wird beim ersten Laden
-`background_processing=true` und `prefect_workflow_revision="1"` gesetzt und
-die Konfiguration als geändert markiert. Dadurch wird auch ein kopiertes
-Stock-Profil mit explizitem `background_processing=false` einmalig aktiviert.
-Danach bleibt eine vom Benutzer getroffene Entscheidung zum Abschalten erhalten.
-Die Revision wird nicht anhand bereits im Konstruktor gesetzter Standardwerte
-erkannt, da diese sonst die Migration verdecken würden.
+`app.prefect_workflow_revision`. Ein fehlender Schlüssel oder Revision `1`
+wird auf Revision `2` gehoben. Vorhandene Entscheidungen einschließlich
+`background_processing=false` bleiben erhalten. Höhere Revisionen werden
+nicht herabgesetzt. Neue Schlüssel erhalten nur dann den Standard, wenn sie
+fehlen. Die Migration prüft weiterhin das gelesene JSON statt ausschließlich
+der im Konstruktor bereits gesetzten Standardwerte. Die sechs nativen
+Policytests enthalten auch die Fälle für erhaltene Abschaltentscheidungen.
 
 Die vorhandene Funktion **Einstellungen zurücksetzen** entfernt auch die neuen
 Funktionsschalter und die eigene Feldauswahl und setzt die Fork-Standardwerte
@@ -141,7 +145,7 @@ Funktionen erfordert dagegen keinen Profilreset.
 
 Die maschinenlesbare Bestandsliste steht in [changes.json](changes.json).
 Die abgeschlossene Feature-Commitserie ist in [COMMITS.md](COMMITS.md) zugeordnet.
-`scripts/prefect/check_manifest.py` prüft die neun IDs, die Detaildokumente und
+`scripts/prefect/check_manifest.py` prüft die elf IDs, die Detaildokumente und
 die eingetragenen Quellcodeanker. Der Workflow
 [prefect-workflow.yml](../../.github/workflows/prefect-workflow.yml) kompiliert
 die unabhängigen C++-Policytests und beschreibt anschließend einen vollständigen

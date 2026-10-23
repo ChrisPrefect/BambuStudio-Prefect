@@ -51,6 +51,7 @@ private:
 protected:
     PreferenceTabbar *m_tabbar = nullptr;
     wxSimplebook *    m_book   = nullptr;
+    Button*           m_prefect_fields_button = nullptr;
 
     bool m_seq_top_layer_only_changed{false};
     bool m_recreate_GUI{false};

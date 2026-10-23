@@ -8,10 +8,20 @@ markierten Objekten/Teilen zu. Die Zuweisung folgt der aktuellen Auswahl; mehrer
 markierte Objekte werden gemeinsam geändert. Undo verwendet die vorhandenen
 Zuweisungsfunktionen. Die Auswahl wird nicht gelöscht.
 
+Dies gilt auch für die separat dargestellten Misch- und Verlaufsfilamente: Sowohl
+das nummerierte Farbfeld als auch deren Inhaltsfläche weisen den tatsächlichen
+Konfigurationsslot zu. Diese Zeilen verwenden keinen `PlaterPresetComboBox` und
+waren deshalb in Workflow 1 noch nicht vom Filamentklick erfasst. Beim Doppelklick
+auf den Namensbereich einer normalen Filamentzeile öffnet der zweite Klick keine
+Profilauswahl und erzeugt keinen zweiten Zuweisungs-Snapshot.
+
 Ohne Auswahl bleiben die bisherigen Funktionen bestehen. Shift-Klick auf das Farbfeld
 öffnet den Farbwähler auch bei markierten Objekten. Der rechte Dropdown-Pfeil sowie
 Shift-Klick auf den Namen öffnen weiterhin die Profilauswahl. Das `...`-Menü bleibt
 unverändert erreichbar. Bei deaktivierter Option gilt das bisherige Verhalten.
+Bei Misch-/Verlaufsfilamenten öffnet Shift-Klick auf Inhalt oder Farbfeld deren
+Editor. Ohne zuweisbare Auswahl öffnet die Inhaltsfläche weiterhin den Editor.
+Die bei Upstream inaktive Misch-Farbfläche bleibt bei deaktivierter Option inaktiv.
 
 Eine ausschließlich markierte Plattenzeile, eine Einstellungs-/Gruppenzeile oder
 ein Supportblocker/-enforcer gilt nicht als zuweisbare Objektauswahl. Der Klick
@@ -28,12 +38,19 @@ Basis: `v02.08.02.61` / `926a7192574bcb9b3a732e1ec59a46d79cb45466`.
 | --- | --- | --- |
 | `src/slic3r/GUI/PresetComboBoxes.cpp` | `PlaterPresetComboBox::PlaterPresetComboBox`, `Prefect: the row body assigns` | Klick auf Namensbereich abfangen; rechte 24 DIP für Dropdown erhalten |
 | dieselbe Datei | `clr_picker->Bind`, `prefect_click_filament_assigns_selection` | Nummeriertes Farbfeld weist Material zu; Shift erhält Farbwähler |
+| `src/slic3r/GUI/PresetComboBoxes.hpp` und `.cpp` | `m_prefect_assignment_click_handled`, `assign_on_click` | Erfolgreichen ersten Namensklick merken; dessen `wxEVT_LEFT_DCLICK` ohne zweite Zuweisung konsumieren; sonst Ereignis weitergeben |
 | `src/slic3r/GUI/Plater.hpp` | `assign_filament_to_selection` | Öffentliche Sidebar-Methode |
 | `src/slic3r/GUI/Plater.cpp` | `Sidebar::assign_filament_to_selection` | Index validieren, Auswahl prüfen und vorhandenen Zuweisungsweg aufrufen |
+| dieselbe Datei | `Sidebar::update_mixed_filament_list`, `on_mixed_click`, `mixed_swatch` | Misch-/Verlaufsinhalt und nummerierte Farbfelder an denselben Zuweisungsweg anbinden; Shift erhält den Editor |
 | `src/slic3r/GUI/GUI_ObjectList.cpp` | `ObjectList::set_extruder_for_selected_items` | Zwei für Instanz-/Teilzuweisung relevante Upstream-Fehler korrigieren |
 
 UI-Filamentindizes sind nullbasiert; Modell-/Extruderzuweisung ist einsbasiert.
 Deshalb wird ausschließlich an der Schnittstelle `filament_id + 1` übergeben.
+Misch-/Verlaufszeilen verwenden hierfür `cfg_idx` aus
+`mixed_filament_config_indices()`, nicht ihren sichtbaren Zeilenindex `i`.
+Letzterer bleibt ausschließlich der Index für `edit_mixed_filament`.
+Der gemeinsame Sidebar-Einstieg prüft die Option zusätzlich zu den UI-Handlern,
+sodass das Abschalten sofort für beide Darstellungen wirkt.
 In der normalen Ansicht wird `ObjectList::set_extruder_for_selected_items` benutzt.
 In der Montageansicht wird deren eigener Canvas geprüft und
 `Plater::change_extruder_for_assemble_selection` aufgerufen. Die aktive Undo-Stackwahl
@@ -65,6 +82,12 @@ Die Fehlerkorrekturen im vorhandenen ObjectList-Weg sind Teil dieses Features:
    übrig gebliebenen nötigen Teile übernehmen.
 5. Nach Änderungen am Montage-/Undo-System den Canvas-Zweig gegen den aktuellen
    Kontextmenüweg „Filament ändern“ vergleichen.
+6. Separat gezeichnete Misch-/Verlaufszeilen berücksichtigen. Nach Änderungen am
+   Filamentmodell den sichtbaren Editorindex und tatsächlichen Konfigurationsslot
+   weiterhin auseinanderhalten. Neue Farbflächen müssen denselben Handler benutzen.
+7. `ComboBox` behandelt `wxEVT_LEFT_DOWN` und `wxEVT_LEFT_DCLICK` separat. Nach einem
+   erfolgreichen ersten Namensklick den zweiten nur konsumieren; Shift, Pfeilfläche,
+   deaktivierte Option oder ein erster Klick ohne Zuweisung bleiben beim nativen Weg.
 
 ## Prüfszenarien
 
@@ -81,6 +104,16 @@ Die Fehlerkorrekturen im vorhandenen ObjectList-Weg sind Teil dieses Features:
 9. Nur eine Platte, Einstellungs-/Gruppenzeile oder einen Supportblocker auswählen:
    Klick ändert keine Modellkonfiguration und erzeugt keinen Undo-Eintrag.
    Gemischte gültige/ungültige Auswahl: nur zulässige Einträge erhalten das Material.
+10. Mindestens zwei physische sowie mehrere Misch-/Verlaufsfilamente anlegen;
+    nummeriertes Misch-Farbfeld und Inhaltsfläche jeweils separat anklicken.
+    Objekt-/Teilzuweisung und Undo müssen den angezeigten globalen Slot verwenden,
+    auch nachdem vorhergehende physische oder gemischte Zeilen entfernt wurden.
+11. Shift-Klick auf Misch-/Verlaufsfeld und Inhalt: Editor. Option ausschalten:
+    Inhalt öffnet Editor, Misch-Farbfeld weist nichts zu. Ohne Objektauswahl darf
+    ein Klick keinen Zuweisungs-Snapshot erzeugen.
+12. Namensbereich eines physischen Filaments doppelt anklicken: genau die erste
+    Zuweisung, kein Presetmenü und kein zusätzlicher Undo-Snapshot für den zweiten
+    Druck. Shift-Doppelklick und Pfeilfläche behalten ihre normale Profilauswahl.
 
 Diese GUI-Szenarien benötigen einen vollständigen GUI-Build; die lokale Arbeit
 enthält keinen behaupteten Laufzeitnachweis dafür.

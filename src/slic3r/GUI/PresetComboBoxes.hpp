@@ -216,6 +216,7 @@ public:
 private:
     // BBS
     wxColor m_color;
+    bool m_prefect_assignment_click_handled { false };
 };
 
 

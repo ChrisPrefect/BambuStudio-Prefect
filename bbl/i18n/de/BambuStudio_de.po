@@ -22746,3 +22746,51 @@ msgstr "Dieses Filament in den globalen Prozesseinstellungen für die Support-/R
 #. Prefect workflow
 msgid "Click to assign this filament to selected objects. Shift-click to pick filament color."
 msgstr "Klicken, um markierten Objekten dieses Filament zuzuweisen. Umschalt-Klick öffnet die Farbauswahl."
+
+#. Prefect workflow
+msgid "Use custom fields in Simple mode"
+msgstr "Eigene Feldauswahl in der einfachen Ansicht verwenden"
+
+#. Prefect workflow
+msgid "Shows your selected process fields in Simple mode. Disabling this option keeps your selection and restores the standard Simple fields."
+msgstr "Zeigt die ausgewählten Prozessfelder in der einfachen Ansicht. Beim Ausschalten bleibt die Auswahl gespeichert und die Standardfelder werden wieder angezeigt."
+
+#. Prefect workflow
+msgid "Choose Simple mode fields..."
+msgstr "Felder für die einfache Ansicht wählen..."
+
+#. Prefect workflow
+msgid "Choose the process fields shown in Simple mode. Your list is retained when the custom selection is disabled."
+msgstr "Prozessfelder für die einfache Ansicht auswählen. Die Liste bleibt gespeichert, wenn die eigene Feldauswahl ausgeschaltet wird."
+
+#. Prefect workflow
+msgid "Keeps the printer section compact, including after profile changes. Disabling this option allows the printer box to expand again immediately."
+msgstr "Hält den Druckerbereich auch nach Profilwechseln eingeklappt. Nach dem Ausschalten kann die Drucker-Box sofort wieder aufgeklappt werden."
+
+#. Prefect workflow
+msgid "Show the support-interface filament action"
+msgstr "Supportinterface-Eintrag im Filamentmenü anzeigen"
+
+#. Prefect workflow
+msgid "Adds Set as support interface to each filament menu. Disabling this option hides the action without changing the current support-interface setting."
+msgstr "Ergänzt jedes Filamentmenü um Als Supportinterface festlegen. Ausschalten blendet den Eintrag aus und behält das eingestellte Supportinterface-Filament bei."
+
+#. Prefect workflow
+msgid "Always enable rotation when arranging"
+msgstr "Automatische Rotation beim Anordnen immer aktivieren"
+
+#. Prefect workflow
+msgid "Keeps automatic rotation enabled for manual and automatic arrangement. Disabling this option restores the remembered arrangement rotation choices."
+msgstr "Aktiviert die automatische Rotation beim manuellen und automatischen Anordnen dauerhaft. Beim Ausschalten gelten wieder die zuvor gespeicherten Rotationsoptionen."
+
+#. Prefect workflow
+msgid "Arrange automatically after importing or pasting multiple objects"
+msgstr "Mehrere eingefügte Objekte automatisch anordnen"
+
+#. Prefect workflow
+msgid "Arranges the current plate after importing or pasting at least two separate model objects. Project imports retain their saved arrangement."
+msgstr "Ordnet die aktuelle Platte nach dem Import oder Einfügen aus der Zwischenablage von mindestens zwei einzelnen Modellobjekten automatisch an. Projektimporte behalten ihre gespeicherte Anordnung."
+
+#. Prefect workflow
+msgid "Always enabled in Preferences > Prefect workflow. Disable that preference to use this checkbox."
+msgstr "Unter Einstellungen → Workflow immer aktiviert. Deaktiviere dort die Option, um dieses Kontrollkästchen zu verwenden."

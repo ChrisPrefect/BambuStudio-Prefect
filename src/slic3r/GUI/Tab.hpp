@@ -486,6 +486,7 @@ public:
 	~TabPrint() {}
 
     void        configure_simple_fields(wxWindow* parent);
+    void        initialize_simple_fields();
 
 	void		build() override;
 	void		reload_config() override;

@@ -10,6 +10,7 @@
 #include "slic3r/GUI/GUI_App.hpp"
 #include "slic3r/GUI/NotificationManager.hpp"
 #include "slic3r/GUI/format.hpp"
+#include "slic3r/GUI/PrefectArrangePolicy.hpp"
 
 #include "libnest2d/common.hpp"
 
@@ -118,6 +119,20 @@ void ArrangeJob::prepare_selected() {
 
     clear_input();
 
+    if (!m_inserted_object_ids.empty()) {
+        // Match prepare_all(): a plate with a different local print sequence
+        // cannot be used with parameters computed for the global sequence.
+        for (size_t i = 0; i < plate_list.get_plate_count(); ++i) {
+            PartPlate *plate = plate_list.get_plate(i);
+            bool same_as_global_print_seq = true;
+            plate->get_real_print_seq(&same_as_global_print_seq);
+            if (!plate->is_locked() && !same_as_global_print_seq) {
+                plate->lock(true);
+                m_uncompatible_plates.push_back(i);
+            }
+        }
+    }
+
     Model& model = m_plater->model();
     bool selected_is_locked = false;
     //BBS: remove logic for unselected object
@@ -126,9 +141,10 @@ void ArrangeJob::prepare_selected() {
     std::vector<const Selection::InstanceIdxsList*>
         obj_sel(model.objects.size(), nullptr);
 
-    for (auto& s : m_plater->get_selection().get_content())
-        if (s.first < int(obj_sel.size()))
-            obj_sel[size_t(s.first)] = &s.second;
+    if (m_inserted_object_ids.empty())
+        for (auto& s : m_plater->get_selection().get_content())
+            if (s.first >= 0 && s.first < int(obj_sel.size()))
+                obj_sel[size_t(s.first)] = &s.second;
 
     // Go through the objects and check if inside the selection
     for (size_t oidx = 0; oidx < model.objects.size(); ++oidx) {
@@ -137,19 +153,34 @@ void ArrangeJob::prepare_selected() {
 
         std::vector<bool> inst_sel(mo->instances.size(), false);
 
-        if (instlist)
+        if (!m_inserted_object_ids.empty())
+            std::fill(inst_sel.begin(), inst_sel.end(),
+                      std::find(m_inserted_object_ids.begin(), m_inserted_object_ids.end(), mo->id()) != m_inserted_object_ids.end());
+        else if (instlist)
             for (auto inst_id : *instlist)
                 inst_sel[size_t(inst_id)] = true;
 
         for (size_t i = 0; i < inst_sel.size(); ++i) {
             ModelInstance* mi = mo->instances[i];
             ArrangePolygon&& ap = prepare_arrange_polygon(mo->instances[i]);
+            if (!m_inserted_object_ids.empty() && !inst_sel[i]) {
+                // Passthrough items still need upstream bed-stride conversion,
+                // but must retain their explicit sequential-print order.
+                const int original_order = mi->arrange_order;
+                const auto setter = ap.setter;
+                ap.setter = [setter, mi, original_order](const ArrangePolygon &polygon) {
+                    setter(polygon);
+                    mi->arrange_order = original_order;
+                };
+            }
             //BBS: partplate_list preprocess
             //remove the locked plate's instances, neither in selected, nor in un-selected
             bool locked = plate_list.preprocess_arrange_polygon(oidx, i, ap, inst_sel[i]);
             if (!locked)
                 {
-                ArrangePolygons& cont = mo->instances[i]->printable ?
+                // Existing nonprintable instances must also remain fixed for
+                // automatic insertion; only newly inserted instances may move.
+                ArrangePolygons& cont = !m_inserted_object_ids.empty() && !inst_sel[i] ? m_unselected : mo->instances[i]->printable ?
                     (inst_sel[i] ? m_selected :
                         m_unselected) :
                     m_unprintable;
@@ -172,7 +203,7 @@ void ArrangeJob::prepare_selected() {
 
     // If the selection was empty arrange everything
     //if (m_selected.empty()) m_selected.swap(m_unselected);
-    if (m_selected.empty()) {
+    if (m_selected.empty() && m_inserted_object_ids.empty()) {
         if (!selected_is_locked)
             m_selected.swap(m_unselected);
         else {
@@ -554,7 +585,11 @@ void ArrangeJob::prepare()
     Model::setPrintSpeedTable(config, print_config);
 
     int state = m_plater->get_prepare_state();
-    if (state == Job::JobPrepareState::PREPARE_STATE_DEFAULT) {
+    if (!m_inserted_object_ids.empty()) {
+        only_on_partplate = false;
+        prepare_selected();
+    }
+    else if (state == Job::JobPrepareState::PREPARE_STATE_DEFAULT) {
         only_on_partplate = false;
         prepare_all();
     }
@@ -642,6 +677,7 @@ void ArrangeJob::check_unprintable()
 
 void ArrangeJob::on_exception(const std::exception_ptr &eptr)
 {
+    restore_incompatible_plate_locks();
     try {
         if (eptr)
             std::rethrow_exception(eptr);
@@ -821,11 +857,7 @@ void ArrangeJob::finalize()
 
         m_plater->update();
 
-        // unlock the plates we just locked
-        for (int i : m_uncompatible_plates) {
-            PartPlate* plate = plate_list.get_plate(i);
-            if (plate) plate->lock(false);
-        }
+        restore_incompatible_plate_locks();
 
         //BBS: reload all objects due to arrange
         if (only_on_partplate) {
@@ -873,12 +905,22 @@ void ArrangeJob::finalize()
                                                                     _u8L("Arranging done."));
     }
     else {
+        restore_incompatible_plate_locks();
         m_plater->get_notification_manager()->push_notification(NotificationType::ArrangeOngoing,
             NotificationManager::NotificationLevel::RegularNotificationLevel, _u8L("Arranging canceled."));
     }
     Job::finalize();
 
     m_plater->m_arrange_running.store(false);
+}
+
+void ArrangeJob::restore_incompatible_plate_locks()
+{
+    PartPlateList &plate_list = m_plater->get_partplate_list();
+    for (int index : m_uncompatible_plates)
+        if (PartPlate *plate = plate_list.get_plate(index))
+            plate->lock(false);
+    m_uncompatible_plates.clear();
 }
 
 std::optional<arrangement::ArrangePolygon>
@@ -916,12 +958,12 @@ arrangement::ArrangeParams init_arrange_params(Plater *p)
     params.printable_height                    = print_config.printable_height.value;
     params.nozzle_height                       = print.config().nozzle_height.value;
     params.align_center                        = print_config.best_object_pos.value;
-    params.allow_rotations                     = settings.enable_rotation;
+    params.allow_rotations                     = Prefect::arrange_rotation_enabled(wxGetApp().app_config->get_bool("prefect_arrange_rotation"), settings.enable_rotation);
     params.allow_multi_materials_on_same_plate = settings.allow_multi_materials_on_same_plate;
     params.avoid_extrusion_cali_region         = settings.avoid_extrusion_cali_region;
     params.is_seq_print                        = settings.is_seq_print;
     params.min_obj_distance                    = scaled(settings.distance);
-    params.align_to_y_axis                     = settings.align_to_y_axis;
+    params.align_to_y_axis                     = !params.allow_rotations && settings.align_to_y_axis;
 #if !BBL_RELEASE_TO_PUBLIC
     params.save_svg                            = settings.save_svg;
 #endif

@@ -1,6 +1,7 @@
 #include "Plater.hpp"
 #include "PrefectFilamentSyncPolicy.hpp"
 #include "PrefectBackgroundPolicy.hpp"
+#include "PrefectArrangePolicy.hpp"
 #include <array>
 #include <boost/format/format_fwd.hpp>
 #include <cstddef>
@@ -4192,7 +4193,8 @@ void Sidebar::add_filament() {
 
 bool Sidebar::assign_filament_to_selection(size_t filament_id)
 {
-    if (filament_id >= wxGetApp().preset_bundle->filament_presets.size() ||
+    if (!wxGetApp().app_config->get_bool("prefect_click_filament_assigns_selection") ||
+        filament_id >= wxGetApp().preset_bundle->filament_presets.size() ||
         p->plater->only_gcode_mode() || p->plater->using_exported_file())
         return false;
 
@@ -4209,6 +4211,8 @@ bool Sidebar::assign_filament_to_selection(size_t filament_id)
 
 void Sidebar::set_support_interface_filament(size_t filament_id)
 {
+    if (!wxGetApp().app_config->get_bool("prefect_support_interface_menu"))
+        return;
     if (filament_id == static_cast<size_t>(kSidebarContextMenuFilamentId))
         filament_id = p->m_menu_filament_id;
     if (filament_id >= wxGetApp().preset_bundle->filament_presets.size() ||
@@ -5412,6 +5416,14 @@ void Sidebar::update_mixed_filament_list()
             wxColour mix_col(mix_color_str);
             unsigned int mix_num = (unsigned int)(cfg_idx + 1);
 
+            // Mixed and gradient slots do not use PlaterPresetComboBox. Route their
+            // material body clicks through the same assignment/Undo path as physical slots.
+            auto on_mixed_click = [this, cfg_idx, panel_idx = i](wxMouseEvent &event) {
+                if (!event.ShiftDown() && assign_filament_to_selection(cfg_idx))
+                    return;
+                edit_mixed_filament(panel_idx);
+            };
+            wxPanel *mixed_swatch = nullptr;
             if (is_gradient && comp_ids.size() == 2) {
                 unsigned int from_id = (gradient_direction == 0) ? comp_ids[0] : comp_ids[1];
                 unsigned int to_id   = (gradient_direction == 0) ? comp_ids[1] : comp_ids[0];
@@ -5440,10 +5452,19 @@ void Sidebar::update_mixed_filament_list()
                                      (sz.GetHeight() - txt_sz.GetHeight()) / 2);
                 });
                 combo_and_btn_sizer->Add(grad_panel, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, FromDIP(4));
+                mixed_swatch = grad_panel;
             } else {
-                combo_and_btn_sizer->Add(make_swatch_panel(p->m_panel_mixed_content, mix_col, mix_num),
+                mixed_swatch = make_swatch_panel(p->m_panel_mixed_content, mix_col, mix_num);
+                combo_and_btn_sizer->Add(mixed_swatch,
                                          0, wxALIGN_CENTER_VERTICAL | wxRIGHT, FromDIP(4));
             }
+            mixed_swatch->SetCursor(wxCursor(wxCURSOR_HAND));
+            mixed_swatch->Bind(wxEVT_LEFT_UP, [on_mixed_click](wxMouseEvent &event) {
+                if (wxGetApp().app_config->get_bool("prefect_click_filament_assigns_selection"))
+                    on_mixed_click(event);
+                else
+                    event.Skip();
+            });
 
             auto* content_panel = new wxPanel(p->m_panel_mixed_content, wxID_ANY);
             content_panel->SetBackgroundColour(mc_bg);
@@ -5609,7 +5630,7 @@ void Sidebar::update_mixed_filament_list()
 
             content_panel->SetCursor(wxCursor(wxCURSOR_HAND));
             size_t panel_idx = i;
-            content_panel->Bind(wxEVT_LEFT_UP, [this, panel_idx](wxMouseEvent&) { edit_mixed_filament(panel_idx); });
+            content_panel->Bind(wxEVT_LEFT_UP, on_mixed_click);
 
             combo_and_btn_sizer->Add(content_panel, 1, wxALL | wxEXPAND, FromDIP(2))->SetMinSize({-1, FromDIP(30)});
 
@@ -5618,6 +5639,14 @@ void Sidebar::update_mixed_filament_list()
             menu_btn->SetToolTip(is_broken ? _L("Mixed filament has broken component references") : _L("Edit / Delete / Merge"));
             menu_btn->Bind(wxEVT_BUTTON, [this, panel_idx, cfg_idx](wxCommandEvent&) {
                 wxMenu menu;
+
+                if (wxGetApp().app_config->get_bool("prefect_support_interface_menu")) {
+                    auto* support_item = menu.Append(wxID_ANY, _L("Set as support interface"));
+                    support_item->Enable(!p->plater->only_gcode_mode() && !p->plater->using_exported_file());
+                    menu.Bind(wxEVT_MENU, [this, cfg_idx](wxCommandEvent&) {
+                        set_support_interface_filament(cfg_idx);
+                    }, support_item->GetId());
+                }
 
                 auto* edit_item = menu.Append(wxID_ANY, _L("Edit"));
                 menu.Bind(wxEVT_MENU, [this, panel_idx](wxCommandEvent&) {
@@ -6675,6 +6704,7 @@ public:
     {
         priv *m;
         size_t m_arrange_id, m_fill_bed_id, m_rotoptimize_id, m_sla_import_id, m_orient_id;
+        ArrangeJob *m_arrange_job { nullptr };
         std::shared_ptr<NotificationProgressIndicator> m_pri;
         //BBS
         size_t m_print_id;
@@ -6686,7 +6716,9 @@ public:
             m(_m),
             m_pri{std::make_shared<NotificationProgressIndicator>(m->notification_manager.get())}
         {
-            m_arrange_id = add_job(std::make_unique<ArrangeJob>(m_pri, m->q));
+            auto arrange_job = std::make_unique<ArrangeJob>(m_pri, m->q);
+            m_arrange_job = arrange_job.get();
+            m_arrange_id = add_job(std::move(arrange_job));
             m_orient_id = add_job(std::make_unique<OrientJob>(m_pri, m->q));
             m_fill_bed_id = add_job(std::make_unique<FillBedJob>(m_pri, m->q));
             m_rotoptimize_id = add_job(std::make_unique<RotoptimizeJob>(m_pri, m->q));
@@ -6695,9 +6727,10 @@ public:
             m_print_id = add_job(std::make_unique<PrintJob>(m_pri, m->q));
         }
 
-        void arrange()
+        void arrange(const std::vector<ObjectID> &inserted_object_ids = std::vector<ObjectID>())
         {
             m->take_snapshot("Arrange");
+            m_arrange_job->set_inserted_object_ids(inserted_object_ids);
             start(m_arrange_id);
         }
 
@@ -6739,6 +6772,11 @@ public:
     std::string                 delayed_error_message;
 
     wxTimer                     background_process_timer;
+    wxTimer                     prefect_arrange_after_import_timer;
+    std::vector<ObjectID>       prefect_arrange_inserted_ids;
+    std::vector<ObjectID>       prefect_arrange_model_objects;
+    ObjectID                   prefect_arrange_model_id;
+    size_t                     prefect_arrange_undo_time { 0 };
 
     std::string                 label_btn_export;
     std::string                 label_btn_send;
@@ -6880,6 +6918,9 @@ public:
     // BBS: backup & restore
     using LoadProgressCallback = std::function<bool(int, const wxString&)>;
     std::vector<size_t> load_files(const std::vector<fs::path>& input_files, LoadStrategy strategy, bool ask_multi = false);
+    void cancel_prefect_arrange_after_import();
+    void queue_prefect_arrange_after_import(const std::vector<size_t> &inserted_objects, bool preserve_layout = false);
+    void on_prefect_arrange_after_import(wxTimerEvent &event);
     std::vector<size_t> load_model_objects(const ModelObjectPtrs& model_objects, bool allow_negative_z = false,
                                            bool split_object = false, LoadProgressCallback progress_callback = {});
 
@@ -7480,7 +7521,10 @@ Plater::priv::priv(Plater *q, MainFrame *main_frame)
     {
         if (!this->suppressed_backround_processing_update)
             this->update_restart_background_process(false, false);
-    });
+    }, this->background_process_timer.GetId());
+
+    prefect_arrange_after_import_timer.SetOwner(this->q);
+    this->q->Bind(wxEVT_TIMER, &priv::on_prefect_arrange_after_import, this, prefect_arrange_after_import_timer.GetId());
 
     update();
     // Orca: Make sidebar dockable
@@ -7924,6 +7968,8 @@ Plater::priv::priv(Plater *q, MainFrame *main_frame)
 
 Plater::priv::~priv()
 {
+    cancel_prefect_arrange_after_import();
+    q->Unbind(wxEVT_TIMER, &priv::on_prefect_arrange_after_import, this, prefect_arrange_after_import_timer.GetId());
     if (config != nullptr)
         delete config;
     // Saves the database of visited (already shown) hints into hints.ini.
@@ -8373,6 +8419,8 @@ void read_binary_stl(const std::string& filename, std::string& model_id, std::st
 // BBS: backup & restore
 std::vector<size_t> Plater::priv::load_files(const std::vector<fs::path>& input_files, LoadStrategy strategy, bool ask_multi)
 {
+    // A later load (including a project/recovery load) invalidates older work.
+    cancel_prefect_arrange_after_import();
     std::vector<size_t> empty_result;
     bool dlg_cont = true;
     bool is_user_cancel = false;
@@ -8451,6 +8499,7 @@ std::vector<size_t> Plater::priv::load_files(const std::vector<fs::path>& input_
     const float CENTER_AROUND_ORIGIN_RATIO   = 0.8;
     const float LOAD_MODEL_RATIO             = 0.9;
     bool        import_obj_or_stl            = false;
+    bool        preserve_imported_layout     = false;
     for (size_t i = 0; i < input_files.size(); ++i) {
         int file_percent = 0;
 
@@ -9355,6 +9404,7 @@ std::vector<size_t> Plater::priv::load_files(const std::vector<fs::path>& input_
         }
 
         const bool step_subassembly_split = type_step && model.objects.size() > 1;
+        preserve_imported_layout = preserve_imported_layout || step_subassembly_split;
         std::vector<Vec3d> step_object_position_compensations;
         if (step_subassembly_split) {
             BoundingBoxf3 step_assembly_bbox;
@@ -9809,7 +9859,83 @@ std::vector<size_t> Plater::priv::load_files(const std::vector<fs::path>& input_
     }
     q->schedule_background_process(true);
     q->mark_plate_toolbar_image_dirty();
+    // Preserve project/assembly placements and recovery operations. Multipart
+    // imports naturally remain untouched because they yield one ModelObject.
+    const bool preserve_layout = !load_model || silence || (strategy & LoadStrategy::Restore) || preserve_imported_layout ||
+        std::any_of(input_files.begin(), input_files.end(), [](const fs::path &path) {
+            const std::string extension = boost::algorithm::to_lower_copy(path.extension().string());
+            return extension == ".3mf" || extension == ".amf" || extension == ".xml";
+        });
+    queue_prefect_arrange_after_import(obj_idxs, preserve_layout);
     return obj_idxs;
+}
+
+void Plater::priv::cancel_prefect_arrange_after_import()
+{
+    prefect_arrange_after_import_timer.Stop();
+    prefect_arrange_inserted_ids.clear();
+    prefect_arrange_model_objects.clear();
+    prefect_arrange_model_id = ObjectID();
+}
+
+void Plater::priv::queue_prefect_arrange_after_import(const std::vector<size_t> &inserted_objects, bool preserve_layout)
+{
+    cancel_prefect_arrange_after_import();
+    if (!Prefect::auto_arrange_insertion_eligible(
+            wxGetApp().app_config->get_bool("prefect_arrange_after_import"), inserted_objects.size(), preserve_layout))
+        return;
+    for (size_t index : inserted_objects) {
+        if (index >= model.objects.size()) {
+            cancel_prefect_arrange_after_import();
+            return;
+        }
+        const ObjectID id = model.objects[index]->id();
+        if (std::find(prefect_arrange_inserted_ids.begin(), prefect_arrange_inserted_ids.end(), id) == prefect_arrange_inserted_ids.end())
+            prefect_arrange_inserted_ids.push_back(id);
+    }
+    if (prefect_arrange_inserted_ids.size() < 2) {
+        cancel_prefect_arrange_after_import();
+        return;
+    }
+    prefect_arrange_model_id = model.id();
+    for (const ModelObject *object : model.objects)
+        prefect_arrange_model_objects.push_back(object->id());
+    prefect_arrange_undo_time = undo_redo_stack().active_snapshot_time();
+    // Let import dialogs and its snapshot scope unwind before starting a job.
+    prefect_arrange_after_import_timer.StartOnce(500);
+}
+
+void Plater::priv::on_prefect_arrange_after_import(wxTimerEvent &)
+{
+    std::vector<ObjectID> current_objects;
+    for (const ModelObject *object : model.objects)
+        current_objects.push_back(object->id());
+    const auto action = Prefect::pending_arrange_action({
+        wxGetApp().app_config->get_bool("prefect_arrange_after_import"), wxGetApp().is_closing(),
+        printer_technology == ptFFF && !q->only_gcode_mode() && !q->is_gcode_3mf(),
+        model.id() == prefect_arrange_model_id, !prefect_arrange_inserted_ids.empty() && current_objects == prefect_arrange_model_objects,
+        undo_redo_stack().active_snapshot_time() == prefect_arrange_undo_time,
+        !main_frame || !main_frame->IsEnabled() || !q->IsShown() || !is_view3D_shown() || wxIsBusy() ||
+            wxWindow::GetCapture() != nullptr || suppressed_backround_processing_update || m_inside_post_process_script_modal ||
+            m_is_slicing || m_is_publishing || background_process.running() ||
+            background_process.is_export_scheduled() || background_process.is_upload_scheduled() ||
+            m_ui_jobs.is_any_running() || !m_worker.is_idle() || view3D->is_dragging() ||
+            view3D->get_canvas3d()->get_gizmos_manager().is_in_editing_mode() ||
+            background_process.state() == BackgroundSlicingProcess::STATE_FINISHED ||
+            background_process.state() == BackgroundSlicingProcess::STATE_CANCELED });
+    if (action == Prefect::PendingArrangeAction::Stop) {
+        cancel_prefect_arrange_after_import();
+        return;
+    }
+    if (action == Prefect::PendingArrangeAction::Retry) {
+        prefect_arrange_after_import_timer.StartOnce(250);
+        return;
+    }
+    const std::vector<ObjectID> inserted_ids = prefect_arrange_inserted_ids;
+    cancel_prefect_arrange_after_import();
+    q->set_prepare_state(Job::PREPARE_STATE_DEFAULT);
+    // Same exclusive, cancelable job and Undo snapshot as the Arrange button.
+    m_ui_jobs.arrange(inserted_ids);
 }
 
  #define AUTOPLACEMENT_ON_LOAD
@@ -10651,6 +10777,7 @@ void Plater::priv::delete_all_objects_from_model()
 
 void Plater::priv::reset(bool apply_presets_change)
 {
+    cancel_prefect_arrange_after_import();
     Plater::TakeSnapshot snapshot(q, "Reset Project", UndoRedo::SnapshotType::ProjectSeparator);
 
     clear_warnings();
@@ -11374,7 +11501,7 @@ unsigned int Plater::priv::update_restart_background_process(bool force_update_s
     const auto action = Prefect::background_update_action({
         background_processing_enabled(), !q->m_only_gcode && !q->is_gcode_3mf(),
         m_is_slicing, background_process.is_export_scheduled() || background_process.is_upload_scheduled(),
-        m_ui_jobs.is_any_running(), view3D->is_dragging(),
+        m_ui_jobs.is_any_running() || !prefect_arrange_inserted_ids.empty(), view3D->is_dragging(),
         view3D->get_canvas3d()->get_gizmos_manager().is_in_editing_mode(),
         background_process.state() == BackgroundSlicingProcess::STATE_FINISHED ||
             background_process.state() == BackgroundSlicingProcess::STATE_CANCELED,
@@ -19239,6 +19366,7 @@ bool Plater::priv::up_to_date(bool saved, bool backup)
 
 void Plater::priv::undo_redo_to(std::vector<UndoRedo::Snapshot>::const_iterator it_snapshot)
 {
+    cancel_prefect_arrange_after_import();
     // Make sure that no updating function calls take_snapshot until we are done.
     SuppressSnapshots snapshot_supressor(q);
 
@@ -25282,6 +25410,7 @@ int Plater::get_gcode_layers_count()
 
 void Plater::arrange()
 {
+    p->cancel_prefect_arrange_after_import();
     if (!p->m_ui_jobs.is_any_running()) {
         p->m_ui_jobs.arrange();
     }
@@ -25657,12 +25786,20 @@ void Plater::paste_from_clipboard()
         return;
 
     Plater::TakeSnapshot snapshot(this, "Paste From Clipboard");
+    p->cancel_prefect_arrange_after_import();
+    const size_t object_count_before = p->model.objects.size();
 
     // At first try to paste values from the ObjectList's clipboard
     // to check if Settings or Layers were copied
     // and then paste from the 3DCanvas's clipboard if not
     if (!p->sidebar->obj_list()->paste_from_clipboard())
         p->view3D->get_canvas3d()->get_selection().paste_from_clipboard();
+    // Volumes/settings/instances and the explicit Clone workflow do not add
+    // multiple independent objects here and retain their upstream behavior.
+    std::vector<size_t> inserted_objects;
+    for (size_t index = object_count_before; index < p->model.objects.size(); ++index)
+        inserted_objects.push_back(index);
+    p->queue_prefect_arrange_after_import(inserted_objects);
 }
 
 //BBS: add clone

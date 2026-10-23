@@ -21,6 +21,9 @@ class ArrangeJob : public PlaterJob
     ArrangePolygons m_selected, m_unselected, m_unprintable, m_locked;
     std::map<int, ArrangePolygons> m_selected_groups;   // groups of selected items for sequential printing
     std::vector<int> m_uncompatible_plates;  // plate indices with different printing sequence than global
+    // Nonempty only for the deferred insertion workflow: use stable object IDs
+    // without changing the user's current UI selection.
+    std::vector<ObjectID> m_inserted_object_ids;
 
     arrangement::ArrangeParams params;
     int current_plate_index = 0;
@@ -42,6 +45,7 @@ class ArrangeJob : public PlaterJob
     void prepare_outside_plate();
 
     void prepare_wipe_tower(bool select = false);
+    void restore_incompatible_plate_locks();
 
 protected:
 
@@ -57,6 +61,8 @@ public:
     ArrangeJob(std::shared_ptr<ProgressIndicator> pri, Plater *plater)
         : PlaterJob{std::move(pri), plater}
     {}
+
+    void set_inserted_object_ids(const std::vector<ObjectID> &ids) { m_inserted_object_ids = ids; }
 
     int status_range() const override
     {

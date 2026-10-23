@@ -2,6 +2,7 @@
 #include "libslic3r/Utils.hpp"
 #include "libslic3r/MultiNozzleUtils.hpp"
 #include "AppConfig.hpp"
+#include "PrefectWorkflowPreferences.hpp"
 //BBS
 #include "Preset.hpp"
 #include "Exception.hpp"
@@ -97,20 +98,7 @@ void AppConfig::set_defaults()
             set_bool("autocenter", true);
 #endif
 
-        // Prefect workflow: the existing debounced worker is available in all builds.
-        if (get("background_processing").empty())
-            set_bool("background_processing", true);
-
-        for (const char *key : {"prefect_auto_sync_filaments", "prefect_click_filament_assigns_selection",
-                                "prefect_printer_collapsed", "prefect_import_separate_objects",
-                                "prefect_hide_tips", "prefect_suppress_tpu_cold_pull"}) {
-            if (get(key).empty())
-                set_bool(key, true);
-        }
-        if (get("prefect_simple_fields_enabled").empty())
-            set_bool("prefect_simple_fields_enabled", false);
-        if (get("prefect_workflow_revision").empty())
-            set("prefect_workflow_revision", "1");
+        Prefect::set_workflow_defaults(*this);
 
 #ifdef SUPPORT_SHOW_DROP_PROJECT
         if (get("show_drop_project_dialog").empty())
@@ -821,14 +809,11 @@ std::string AppConfig::load()
         }
     }
 
-    // A copied stock profile may explicitly disable the previously unsupported
-    // worker. Enable it once on first load in this fork; later choices survive.
-    // Inspect the file rather than constructor defaults (load merges storage).
-    const bool prefect_migrated = !j.contains("app") || !j["app"].contains("prefect_workflow_revision");
-    if (prefect_migrated) {
-        set_bool("background_processing", true);
-        set("prefect_workflow_revision", "1");
-    }
+    // Load merges file values into constructor defaults. Inspect the file for
+    // migration bookkeeping, and never replace an explicitly saved false value
+    // (including background processing from a stock profile).
+    const bool prefect_migrated = Prefect::migrate_workflow_preferences(
+        *this, j.contains("app") && j["app"].contains("prefect_workflow_revision"));
     // Override missing keys with their defaults.
     this->set_defaults();
     m_dirty = prefect_migrated;

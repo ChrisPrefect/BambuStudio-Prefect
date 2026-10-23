@@ -1514,11 +1514,26 @@ void MenuFactory::create_filament_action_menu(bool init, int active_filament_men
     wxMenu *menu = &m_filament_action_menu;
 
     if (init) {
-        append_menu_item(
-            menu, wxID_ANY, _L("Set as support interface"),
-            _L("Use this filament for the support/raft interface in the global process settings"),
+        // Bind once to a stable ID. The item itself is inserted/removed at each popup,
+        // so changing the Workflow option takes effect without restarting Studio.
+        m_prefect_support_interface_menu_id = wxWindow::NewControlId();
+        menu->Bind(wxEVT_MENU,
             [](wxCommandEvent&) { plater()->sidebar().set_support_interface_filament(kSidebarContextMenuFilamentId); },
-            "", nullptr, []() { return printer_technology() == ptFFF; }, m_parent);
+            m_prefect_support_interface_menu_id);
+    }
+
+    auto *support_interface_item = menu->FindItem(m_prefect_support_interface_menu_id);
+    if (wxGetApp().app_config->get_bool("prefect_support_interface_menu")) {
+        if (!support_interface_item)
+            support_interface_item = menu->Prepend(m_prefect_support_interface_menu_id, _L("Set as support interface"),
+                _L("Use this filament for the support/raft interface in the global process settings"));
+        // MenuFactory is initialized inside the Plater constructor, before
+        // wxGetApp().plater() is published. Resolve its state only at popup time.
+        if (!init)
+            support_interface_item->Enable(printer_technology() == ptFFF &&
+                !plater()->only_gcode_mode() && !plater()->using_exported_file());
+    } else if (support_interface_item) {
+        menu->Destroy(support_interface_item);
     }
 
     if (init) {

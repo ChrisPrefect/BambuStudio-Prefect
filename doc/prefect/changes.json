@@ -110,7 +110,7 @@
       "id": "F06",
       "title": "Filament als Supportinterface festlegen",
       "documentation": "doc/prefect/06-support-interface-menu.md",
-      "configuration": {},
+      "configuration": {"prefect_support_interface_menu": true},
       "anchors": [
         {
           "file": "src/slic3r/GUI/Plater.cpp",
@@ -175,6 +175,28 @@
         }
       ],
       "commit": "159fc3816810124188975ffa8069ffa64000daf9"
+    },
+    {
+      "id": "F10",
+      "title": "Automatische Rotation beim Anordnen",
+      "documentation": "doc/prefect/10-arrange-rotation.md",
+      "configuration": {"prefect_arrange_rotation": true},
+      "anchors": [
+        {"file": "src/slic3r/GUI/PrefectArrangePolicy.hpp", "text": "arrange_rotation_enabled"},
+        {"file": "src/slic3r/GUI/Jobs/ArrangeJob.cpp", "text": "prefect_arrange_rotation"}
+      ],
+      "tests": ["tests/prefect/arrange_test.cpp"]
+    },
+    {
+      "id": "F11",
+      "title": "Nach Mehrfachimport automatisch anordnen",
+      "documentation": "doc/prefect/11-auto-arrange.md",
+      "configuration": {"prefect_arrange_after_import": true},
+      "anchors": [
+        {"file": "src/slic3r/GUI/PrefectArrangePolicy.hpp", "text": "pending_arrange_action"},
+        {"file": "src/slic3r/GUI/Plater.cpp", "text": "prefect_arrange_after_import"}
+      ],
+      "tests": ["tests/prefect/arrange_test.cpp"]
     }
   ],
   "fork_repository": "https://github.com/ChrisPrefect/BambuStudio-Prefect",

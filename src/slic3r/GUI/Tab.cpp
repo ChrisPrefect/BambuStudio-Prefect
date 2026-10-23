@@ -3195,6 +3195,23 @@ void Tab::update_frequently_changed_parameters()
     }
 }
 
+void TabPrint::initialize_simple_fields()
+{
+    auto* app_config = wxGetApp().app_config;
+    // An empty saved selection is intentional. Only a never-configured list
+    // starts from the upstream Simple rows when its workflow switch is enabled.
+    if (app_config->has("prefect_simple_fields"))
+        return;
+    Prefect::SimpleFieldSelection fields;
+    for (const auto& page : m_pages)
+        for (const auto& group : page->m_optgroups)
+            for (const auto& line : group->get_lines())
+                if (!line.get_options().empty() && line.get_options().front().opt.mode <= comSimple)
+                    for (const auto& option : line.get_options())
+                        fields.keys.insert(Prefect::SimpleFieldSelection::base_key(option.opt_id));
+    app_config->set("prefect_simple_fields", fields.serialize());
+}
+
 void TabPrint::configure_simple_fields(wxWindow* parent)
 {
     struct Entry {
@@ -3226,7 +3243,7 @@ void TabPrint::configure_simple_fields(wxWindow* parent)
     auto* app_config = wxGetApp().app_config;
     Prefect::SimpleFieldSelection fields(app_config->get("prefect_simple_fields"));
     const bool enabled = app_config->get_bool("prefect_simple_fields_enabled");
-    if (!enabled && fields.keys.empty())
+    if (!app_config->has("prefect_simple_fields"))
         for (const auto& item : entries)
             if (item.second.upstream_simple)
                 fields.keys.insert(item.second.keys.begin(), item.second.keys.end());

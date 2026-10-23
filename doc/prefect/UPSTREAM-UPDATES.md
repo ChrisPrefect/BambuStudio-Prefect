@@ -232,15 +232,45 @@ Platzberechnung der Slicing-Meldung gemeinsam übertragen. ImGui-Begin/End- und
 Style-Stacks müssen ausgeglichen bleiben. Ausblenden darf den Fortschritt,
 Abbrechen und Ergebnisstatus nicht beseitigen.
 
+### F10/F11: Rotation und Anordnung nach dem Einfügen
+
+`PrefectArrangePolicy.hpp` enthält die gemeinsam benutzte Rotations- und
+Warteentscheidung. `GLCanvas3D` zeigt den wirksamen Rotationswert; `ArrangeJob`
+verwendet dieselbe Entscheidung. Das Aktivieren darf die gespeicherten
+Upstream-Werte der einzelnen Anordnungsmodi nicht überschreiben, damit das
+Abschalten das normale Verhalten wiederherstellt. Die Ausrichtung an der
+Y-Achse darf nicht gleichzeitig eine erzwungene freie Rotation aufheben.
+
+F11 wird an erfolgreichen Mehrfachimport und normales Einfügen aus der
+Zwischenablage angeschlossen. Den vorhandenen Job für die eingefügten
+Objekt-IDs verwenden; vorhandene Objekte bleiben Hindernisse. Gespeicherte
+Projektanordnungen, Einfügen von Teilen/Instanzen und bewusstes Klonen werden
+nicht über denselben Automatismus umgeordnet. Die konkrete Integration,
+Wartebedingungen und Mehrplatten-/Undo-Prüfungen stehen in
+[F11](11-auto-arrange.md); die Rotationssteuerung in [F10](10-arrange-rotation.md).
+
+Bei Updates Importabschluss, Modellidentität, Undo-Position, ID-Gültigkeit,
+Projektwechsel, Busy-/Modalzustand und Jobabbruch gemeinsam prüfen. Ein verspäteter
+Timer darf nach einem neuen Projekt, Undo oder einer geänderten Objektmenge keine
+andere Auswahl anordnen. Beide reinen Policy-Einstiege werden in
+`tests/prefect/arrange_test.cpp` geprüft; echte Geometrie-/Jobfälle separat testen.
+
 ## Konfiguration und Übersetzung nachziehen
 
-Die gemeinsamen Defaults stehen im README und `AppConfig.cpp`. Beim ersten
-Laden eines alten Profils wird das Fehlen von
-`app.prefect_workflow_revision` im tatsächlich gelesenen JSON geprüft. Für
-Revision 1 wird Hintergrundslicing einmalig aktiviert. Bei unveränderter
-Migration darf ein später ausdrücklich ausgeschalteter Wert nicht erneut auf
-`true` gesetzt werden. Künftige Migrationen müssen an eine neue dokumentierte
-Revision gebunden werden und nur die nötigen Werte verändern.
+Die gemeinsamen Defaults stehen in `PrefectWorkflowPreferences.hpp`, aufgerufen
+aus `AppConfig.cpp`. Revision 2 ergänzt fehlende Schalter und behält vorhandene
+Entscheidungen, insbesondere `background_processing=false`, bei. Ein fehlender
+Revisionsschlüssel und Revision 1 werden auf 2 gehoben; eine höhere Revision
+bleibt erhalten. Die Fälle werden mit den tatsächlich verwendeten Defaults- und
+Migrationsfunktionen in `tests/prefect/preferences_test.cpp` geprüft.
+
+`PreferencesDialog::create_prefect_tab` muss weiterhin alle elf Funktionen auf
+einer Seite abbilden, einschließlich eigenem Schalter plus Picker für F02 und
+`prefect_support_interface_menu` für F06. Die gemeinsame
+[Einstellungsdokumentation](workflow-settings.md) benennt alle Schlüssel und
+Standardwerte. F02 unterscheidet eine fehlende von einer absichtlich leeren
+gespeicherten Liste. Sichtbare Checkbox und tatsächlicher Wert müssen auch nach
+Verlassen des Feldauswahldialogs und dessen Reset übereinstimmen.
 
 Die Reset-Liste in `PreferencesDialog::on_reset_preferences` muss die neuen
 UI-Schlüssel kennen. Die private Feldliste gehört zur Anwendung, nicht in
@@ -273,7 +303,7 @@ starten und neue Schalter, Menütexte sowie Tooltips prüfen.
 5. Mit `Start-Prefect.ps1` in einem neuen isolierten Profil starten. Danach
    zusätzlich ein kopiertes vorhandenes Profil prüfen: Revision, Standardwerte,
    individuelle Abschaltentscheidungen und Neustartverhalten kontrollieren.
-6. Die Prüftabellen aller neun Detaildokumente am gebauten Programm durchführen.
+6. Die Prüftabellen aller elf Detaildokumente am gebauten Programm durchführen.
    F01 benötigt einen tatsächlichen Drucker; F04 ein längeres Modell mit
    gleichzeitigem Editieren, Plattenwechsel und manuellem Slice-All. Keine
    Druckauslösung ist für diese Oberflächen-/Slicing-Abnahme erforderlich.

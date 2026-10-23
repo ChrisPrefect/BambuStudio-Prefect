@@ -1,5 +1,6 @@
 #include "libslic3r/libslic3r.h"
 #include "GLCanvas3D.hpp"
+#include "PrefectArrangePolicy.hpp"
 #include "Overview/AssemblyStepsUtils.hpp"
 #include "Overview/OverviewUtils.hpp"
 
@@ -1364,11 +1365,14 @@ void GLCanvas3D::load_arrange_settings()
     std::string dist_sla_str =
         wxGetApp().app_config->get("arrange", "min_object_distance_sla");
 
-    std::string en_rot_fff_str =
-        wxGetApp().app_config->get("arrange", "enable_rotation");
-
-    std::string en_rot_fff_seqp_str =
-        wxGetApp().app_config->get("arrange", "enable_rotation_seq_print");
+    // Popup writes include the mode suffix. Prefer those persisted values,
+    // while continuing to read legacy upstream profiles without that suffix.
+    const auto rotation_setting = [](const char *current_key, const char *legacy_key) {
+        const auto &appcfg = wxGetApp().app_config;
+        return appcfg->has("arrange", current_key) ? appcfg->get("arrange", current_key) : appcfg->get("arrange", legacy_key);
+    };
+    std::string en_rot_fff_str = rotation_setting("enable_rotation_fff", "enable_rotation");
+    std::string en_rot_fff_seqp_str = rotation_setting("enable_rotation_fff_seq_print", "enable_rotation_seq_print");
 
     std::string en_rot_sla_str =
         wxGetApp().app_config->get("arrange", "enable_rotation_sla");
@@ -7436,6 +7440,8 @@ bool GLCanvas3D::_render_arrange_menu(float left, float toolbar_height)
     const float minimal_slider_width = imgui->scaled(4.f);
     float window_width  = minimal_slider_width + 2 * slider_icon_width;
     auto &appcfg = wxGetApp().app_config;
+    const bool force_rotation = appcfg->get_bool("prefect_arrange_rotation");
+    settings.enable_rotation = Prefect::arrange_rotation_enabled(force_rotation, settings.enable_rotation);
     PrinterTechnology ptech = current_printer_technology();
 
     bool settings_changed = false;
@@ -7480,10 +7486,17 @@ bool GLCanvas3D::_render_arrange_menu(float left, float toolbar_height)
         settings_changed = true;
     }
 #endif
+    if (force_rotation)
+        imgui->disabled_begin(true);
     if (imgui->bbl_checkbox(_L("Auto rotate for arrangement"), settings.enable_rotation)) {
         settings_out.enable_rotation = settings.enable_rotation;
         appcfg->set("arrange", rot_key.c_str(), settings_out.enable_rotation? "1" : "0");
         settings_changed = true;
+    }
+    if (force_rotation) {
+        imgui->disabled_end();
+        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled))
+            imgui->tooltip(_L("Always enabled in Preferences > Prefect workflow. Disable that preference to use this checkbox."), imgui->scaled(30.f));
     }
 
     if (imgui->bbl_checkbox(_L("Allow multiple materials on same plate"), settings.allow_multi_materials_on_same_plate)) {
@@ -7507,9 +7520,10 @@ bool GLCanvas3D::_render_arrange_menu(float left, float toolbar_height)
 
     // Align to Y axis. Only enable this option when auto rotation not enabled
     {
-        if (settings_out.enable_rotation) {  // do not allow align to Y axis if rotation is enabled
+        const bool rotation_enabled = Prefect::arrange_rotation_enabled(force_rotation, settings_out.enable_rotation);
+        if (rotation_enabled) {  // do not allow align to Y axis if rotation is enabled
             imgui->disabled_begin(true);
-            settings_out.align_to_y_axis = false;
+            settings.align_to_y_axis = false;
         }
 
         if (imgui->bbl_checkbox(_L("Align to Y axis"), settings.align_to_y_axis)) {
@@ -7518,7 +7532,7 @@ bool GLCanvas3D::_render_arrange_menu(float left, float toolbar_height)
             settings_changed = true;
         }
 
-        if (settings_out.enable_rotation == true) { imgui->disabled_end(); }
+        if (rotation_enabled) { imgui->disabled_end(); }
     }
 
     ImGui::Separator();

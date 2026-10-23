@@ -104,6 +104,7 @@ private:
     MenuWithSeparators m_assemble_part_menu;
 
     wxMenu m_filament_action_menu;
+    int m_prefect_support_interface_menu_id { wxID_NONE };
 
     int object_menu_count{ 0 };
     int part_menu_count{ 0 };
