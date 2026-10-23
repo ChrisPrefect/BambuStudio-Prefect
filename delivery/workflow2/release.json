@@ -1,0 +1,14 @@
+{
+  "source_commit": "9d4fad7292484403f0b026972835035b0a967d20",
+  "source_tree": "b6feae21b1908e493d880297e901b243073585f5",
+  "source_run_id": 39975702857,
+  "artifact_id": 12517035086,
+  "artifact_size": 264370161,
+  "artifact_sha256": "a595b79dd886562f1413259a9313154ab87912f9dbebf5cabbe781384605ae86",
+  "patch_file": "BambuStudio-Prefect-patches-20261023.zip",
+  "patch_size": 809077,
+  "patch_sha256": "1a59f8918bbcfdc5c79c42a5fcbea5735984e01f09222945ce8f6045a21173a5",
+  "patch_count": 24,
+  "notes_sha256": "fe605d2287ce73b628ce32d1545a3e77c43707c79b529927f44cde80a5086e79",
+  "publish": false
+}
