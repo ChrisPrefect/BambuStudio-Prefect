@@ -9,7 +9,7 @@
 | Ausgangstag | `v02.08.02.61` |
 | Zugehöriger Commit | `926a7192574bcb9b3a732e1ec59a46d79cb45466` |
 | Feature-Branch | `prefect/workflow` |
-| Änderungsinventar | `doc/prefect/changes.json` mit F01 bis F09 |
+| Änderungsinventar | `doc/prefect/changes.json` mit F01 bis F11 |
 
 Das Ziel ist eine nachvollziehbare Patchserie über dem neuen Upstream-Release.
 Die Detaildokumente erklären für jede Funktion die Entscheidung, bestehende
@@ -17,7 +17,13 @@ Aufrufpfade, persistente Schlüssel, Nebenwirkungen und Laufzeitprüfungen.
 Eine Konfliktlösung nach Funktionen und Zuständigkeiten hat Vorrang vor dem
 mechanischen Übernehmen alter Zeilen.
 
-Die Ausgangsserie bis `4b5c3546c7fba94439d9bb0fe69553723b895897` ist auch
+Die aktuelle Workflow-2-Serie bis `9d4fad7292484403f0b026972835035b0a967d20`
+enthält **24 Commits**. Alle **48 Zwischenstände** aus Rohdiff- und
+Format-Patch-Replay stimmen exakt mit den Originaltrees überein; der normale
+Repository-Index blieb unverändert. [Aktueller Replaynachweis](validation/patch-replay-workflow2.md)
+und [Einzelbelege](validation/patch-replay-workflow2.json).
+
+Die frühere Workflow-1-Serie bis `4b5c3546c7fba94439d9bb0fe69553723b895897` ist auch
 praktisch geprüft: 20 Rohdiffs und dieselben 20 exportierten Format-Patches
 rekonstruieren jede Commitstufe exakt. [Bericht](validation/patch-replay.md)
 und [Einzelbelege](validation/patch-replay.json). Mit

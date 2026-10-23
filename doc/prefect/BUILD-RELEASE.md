@@ -2,7 +2,7 @@
 
 Der Anwendungsworkflow liegt in
 `.github/workflows/prefect-workflow.yml` auf `prefect/workflow`.
-Er führt zuerst alle vier C++17-Policytests und die Manifestprüfung aus.
+Er führt zuerst alle sechs C++17-Policytests und die Manifestprüfung aus.
 Danach baut er unter Windows die vollständige GUI und das portable
 Installationsverzeichnis. Der tatsächliche Ergebnisnachweis steht in
 [VALIDATION.md](VALIDATION.md); die Existenz des Workflows allein ist kein

@@ -2,7 +2,7 @@
 
 ## Verhalten und Einstellung
 
-`prefect_arrange_rotation: true` aktiviert die Rotation für die Anordnung unabhängig vom zuletzt gespeicherten Häkchen im Anordnungsmenü. Dies ist der neue Fork-Standard. Die Option steht auf der zentralen Seite „Prefect-Arbeitsablauf“ in den Anwendungseinstellungen und wirkt ohne Neustart.
+`prefect_arrange_rotation: true` aktiviert die Rotation für die Anordnung unabhängig vom zuletzt gespeicherten Häkchen im Anordnungsmenü. Dies ist der neue Fork-Standard. Die Option steht unter **Einstellungen → Workflow** und wirkt ohne Neustart.
 
 Das Anordnungsmenü zeigt „Automatische Rotation für die Anordnung“ bei aktiver Einstellung immer angehakt und gesperrt. Der Hinweis am Kontrollkästchen verweist auf die zentrale Einstellungsseite. Dort lässt sich das Verhalten wieder ausschalten. Bei `false` gilt unmittelbar wieder das normale, je Druckmodus gespeicherte Kontrollkästchen. Der Fork überschreibt dessen gespeicherten Wert nicht beim Aktivieren seiner Vorgabe.
 

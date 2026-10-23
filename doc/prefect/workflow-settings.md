@@ -41,8 +41,11 @@ gespeicherte Entscheidungen einschließlich `background_processing=false` bei.
 Die neue Revision verlangt keine Kopie oder Änderung des normalen Studio-Profils.
 
 Stabile Einstiegspunkte für Updates sind `PreferencesDialog::create_prefect_tab`,
-die Workflow-Schlüssel in `AppConfig::set_defaults()` und der Reset-Dialog in
-`Preferences.cpp`. Die Feldliste wird in `TabPrint` initialisiert und bearbeitet.
+`set_workflow_defaults` und `migrate_workflow_preferences` in
+`PrefectWorkflowPreferences.hpp`, deren Aufrufe aus `AppConfig.cpp` sowie der
+Reset-Dialog in `Preferences.cpp`. Die Feldliste wird über
+`TabPrint::initialize_simple_fields` initialisiert und in
+`TabPrint::configure_simple_fields` bearbeitet.
 Die englischen `_L`-Texte stehen samt deutschen Übersetzungen in
 `scripts/prefect/translations-de.json`; das Katalogskript erzeugt PO/MO reproduzierbar.
 

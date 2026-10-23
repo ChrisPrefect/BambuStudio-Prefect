@@ -25,6 +25,7 @@ Die GUI-Anbindung liegt in `src/slic3r/GUI/Plater.cpp`; die tatsächlich verwend
 7. `on_back_slice_begin()` und `MainFrame::update_slice_print_status()` halten Vorschau und Druckfreigabe aktuell. `m_is_slicing` bleibt im automatischen Lauf unverändert, damit die Oberfläche nicht in den manuellen, gesperrten Slice-Modus geht.
 8. `Plater::priv::on_process_completed()` aktualisiert nach Abschluss die Slice-/Druckbuttons, sofern die Funktion aktiv ist.
 9. `Plater::priv::restart_background_process()` lässt nicht erzwungene automatische Starts nur zu, wenn `prefect_background_start_prepared` innerhalb des geprüften Timer-Einstiegs gesetzt ist. Direkte Aufrufer aus Szenen-/Konfigurationsupdates werden ansonsten zum Timer umgeleitet. Ein lokaler RAII-Guard setzt die Markierung auch bei einer Ausnahme zurück. Explizite `FORCE_RESTART`-/`FORCE_EXPORT`-Aufträge bleiben auf ihrem bestehenden Pfad.
+10. Seit F11 zählt auch ein noch wartender automatischer Anordnungsauftrag (`!prefect_arrange_inserted_ids.empty()`) als UI-Job-Sperre. So startet nach dem Import kein neuer automatischer Slice vor der Anordnung. Der vorhandene Hintergrundtimer ist an `background_process_timer.GetId()` gebunden; der separate Anordnungstimer darf nicht denselben generischen Timerhandler auslösen. Die vollständige Ereigniskette und Invalidierung stehen in [F11](11-auto-arrange.md).
 
 `src/libslic3r/AppConfig.cpp` und `src/slic3r/GUI/Preferences.cpp` registrieren Standardwert und Schalter; beim Umschalten ruft der Schalter `plater()->schedule_background_process()` auf.
 
@@ -72,7 +73,7 @@ Diese Schritte benötigen einen vollständigen GUI-Build; eine reine Diff-Prüfu
 
 1. Nach `background_processing_enabled`, `schedule_background_process`, `update_restart_background_process`, `on_process_completed` und `on_action_slice_plate` suchen.
 2. Prüfen, ob Upstream den alten Compile-Schalter oder Configvergleich bereits repariert hat. Dann nur fehlende Teile übernehmen.
-3. Die 500-ms-Timerstruktur und die Worker-Zustände mit Upstream vergleichen. Insbesondere prüfen, ob `running()` weiterhin auch `STATE_FINISHED`/`STATE_CANCELED` einschließt und der Abschluss erst im UI-Handler konsumiert wird.
+3. Die 500-ms-Timerstruktur und die Worker-Zustände mit Upstream vergleichen. Insbesondere prüfen, ob `running()` weiterhin auch `STATE_FINISHED`/`STATE_CANCELED` einschließt und der Abschluss erst im UI-Handler konsumiert wird. Bei Übernahme von F11 die konkrete Timer-ID-Bindung und die Sperre für wartende Anordnungs-IDs gemeinsam erhalten; andernfalls können Timerereignisse falsch zugeordnet werden oder Slicing und Anordnung gleichzeitig starten.
 4. Die Vorbedingungen aus dem manuellen Slice-Einstieg erneut abgleichen: neue Extruder-Vorbereitung, Skriptentscheidung, UI-Jobs und neue Projektmodi auch im automatischen Einstieg berücksichtigen.
 5. Bei geändertem Mehrplattenmodell die Zuordnung `background_process.get_current_plate()` gegenüber `partplate_list.get_curr_plate()` erneut prüfen.
 6. Standardwert, einmalige Migration vorhandener Konfigurationen und Einstellungs-Schalter separat nachtragen. Config ist Anwendungszustand, kein Modell-/Filamentpreset.

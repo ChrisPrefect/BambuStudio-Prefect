@@ -1,6 +1,17 @@
 # Prüfprotokoll des Prefect-Forks
 
-Stand: **21. Oktober 2026**, Zeitzone Europe/Zurich.
+Stand: **23. Oktober 2026**, Zeitzone Europe/Zurich.
+
+## Aktueller Prüfstand Workflow 2
+
+Die Erweiterung ist an Quellcommit `9d4fad7292484403f0b026972835035b0a967d20`
+und Tree `b6feae21b1908e493d880297e901b243073585f5` gebunden.
+Sechs native C++17-Policyprogramme, Manifest und Katalog sind geprüft; die
+24 Patches rekonstruieren alle 48 Zwischenstände exakt. Der vollständige
+neue Windows-Build und die Laufzeitprüfung werden im
+[Workflow-2-Bericht](validation/workflow2.md) getrennt dokumentiert.
+
+## Historische Abnahme Workflow 1 vom 21. Oktober 2026
 
 Das [Vorabpaket Workflow 1](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.1)
 ist veröffentlicht. Der [frische Veröffentlichungsnachweis](validation/published-release.json)

@@ -4,8 +4,12 @@ Eigener Workflow-Fork auf Basis von **v02.08.02.61**: automatische Filamentüber
 eigene Felder in der einfachen Ansicht, eingeklappte Drucker-Box,
 Hintergrundslicing, Filamentzuweisung per Klick, Supportinterface-Menü,
 getrennte Modellimporte sowie ausgeblendete TPU-Cold-Pull-Hinweise und Tipps.
+Workflow 2 ergänzt erzwungene Anordnungsrotation und automatische Anordnung
+nach dem Einfügen mehrerer Objekte. Alle elf Optionen stehen gemeinsam unter
+**Einstellungen → Workflow**; Materialklick unterstützt auch Misch-/Verlaufszeilen.
 
-[Alle neun Anpassungen und Bedienung](doc/prefect/README.md) ·
+[Alle elf Anpassungen und Bedienung](doc/prefect/README.md) ·
+[Gemeinsame Einstellungsseite](doc/prefect/workflow-settings.md) ·
 [Änderungen bei Upstream-Updates nachtragen](doc/prefect/UPSTREAM-UPDATES.md) ·
 [Prüfprotokoll](doc/prefect/VALIDATION.md) ·
 [Windows-Builds](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/workflows/prefect-workflow.yml)

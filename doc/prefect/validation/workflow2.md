@@ -2,6 +2,10 @@
 
 Stand: 23. Oktober 2026, Europe/Zurich.
 
+Quellcommit `9d4fad7292484403f0b026972835035b0a967d20`, Tree
+`b6feae21b1908e493d880297e901b243073585f5`.
+[Vollständiger Windows-CI-Lauf](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/39975702857).
+
 Die Erweiterung umfasst F10/F11, den Materialklick für Misch-/Verlaufszeilen,
 den schaltbaren Supportinterface-Eintrag und die gemeinsame Seite mit elf
 Schaltern. Die Detailabläufe und Nachtraganker stehen in den Featuredokumenten
@@ -40,6 +44,11 @@ Die Manifestprüfung bestätigt alle **elf** Feature-IDs, vorhandene Dokumente,
 Tests und passende Quellanker. Das reproduzierbare deutsche Katalog-Overlay
 liest seinen erzeugten MO-Katalog wieder ein und bestätigt **30** Fork-Texte.
 Der normale `git diff --check` ist bestanden.
+
+Die vollständige [Patchserie](patch-replay-workflow2.md) rekonstruiert 24
+Commits mit 48 exakt passenden Zwischenständen; der Repository-Index blieb
+unverändert. Die ZIP enthält 809.077 Bytes und hat SHA-256
+`1a59f8918bbcfdc5c79c42a5fcbea5735984e01f09222945ce8f6045a21173a5`.
 
 ## Vollständiger Build und Laufzeit
 

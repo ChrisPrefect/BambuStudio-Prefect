@@ -39,3 +39,20 @@ Ergänzende Commits nach der ersten Feature-Serie:
 Die vollständigen 20 Stufen dieser Serie wurden sowohl als Rohdiffs als auch
 als exportierte Format-Patches erneut angewendet. Alle Zwischen- und Endtrees
 stimmen überein: [Nachweis](validation/patch-replay.md).
+
+## Workflow 2
+
+`9d4fad7292484403f0b026972835035b0a967d20` ergänzt F10/F11, die gemeinsame
+Einstellungsseite mit elf Schaltern, erweiterte Materialklickpfade und das
+schaltbare Supportinterface-Menü. Die gemeinsamen Defaults und Migration auf
+Revision 2 stehen in `PrefectWorkflowPreferences.hpp`; die Details werden in
+den jeweiligen Featuredokumenten und [workflow-settings.md](workflow-settings.md)
+mit Datei-/Funktionsankern erklärt.
+
+Die vollständige Serie bis zu diesem Stand enthält **24 Commits**. Ihre
+48 Zwischenstände (Rohdiff und Format-Patch pro Commit) stimmen exakt mit den
+Originaltrees überein. Der normale Index blieb unverändert:
+[neuer Replaynachweis](validation/patch-replay-workflow2.md).
+Der gebaute Quellstand bleibt unabhängig von späteren reinen Dokumentationscommits
+an diesen vollständigen Commit und Tree `b6feae21b1908e493d880297e901b243073585f5`
+gebunden.

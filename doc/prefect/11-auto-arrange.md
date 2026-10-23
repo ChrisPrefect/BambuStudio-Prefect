@@ -2,7 +2,7 @@
 
 ## Verhalten und Einstellung
 
-`prefect_arrange_after_import: true` aktiviert die Anordnung nach dem erfolgreichen Einfügen mehrerer unabhängiger Objekte. Dies ist der Fork-Standard. Die Option steht auf der zentralen Seite „Prefect-Arbeitsablauf“ und wirkt ohne Neustart. Beim Ausschalten wird auch ein noch wartender Auftrag verworfen.
+`prefect_arrange_after_import: true` aktiviert die Anordnung nach dem erfolgreichen Einfügen mehrerer unabhängiger Objekte. Dies ist der Fork-Standard. Die Option steht unter **Einstellungen → Workflow** und wirkt ohne Neustart. Beim Ausschalten wird auch ein noch wartender Auftrag verworfen.
 
 Erfasst werden normale Geometrieimporte über `Plater::priv::load_files(...)`, einschließlich gemeinsam importierter STL/OBJ-Dateien, und normales Einfügen aus der Studio-Zwischenablage über `Plater::paste_from_clipboard()`, wenn dabei mindestens zwei neue `ModelObject`-Wurzeln entstehen. Zwei unabhängige STEP-Dateien mit je einem Objekt sind ebenfalls zulässig. Entscheidend ist die Zahl der tatsächlich eingefügten Objektwurzeln, nicht die Zahl ausgewählter Dateinamen oder Mesh-Inseln.
 

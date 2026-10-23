@@ -7,7 +7,13 @@ Die gemeinsame Grundlage ist Bambu Studio **v02.08.02.61**, Commit
 `926a7192574bcb9b3a732e1ec59a46d79cb45466`. Das Git-Remote `upstream` zeigt auf
 `https://github.com/bambulab/BambuStudio.git`.
 
-**Auslieferungsstand Workflow 1:** Der vollständige Windows-Build `4b5c3546` ist einschließlich
+**Aktueller Quellstand Workflow 2:** `9d4fad7292484403f0b026972835035b0a967d20`
+enthält alle elf Schalter, F10/F11 und die ergänzten Materialklickpfade.
+Die sechs nativen Policytests und der vollständige Replay von 24 Patches mit
+48 identischen Zwischenständen sind bestanden. Der neue vollständige
+Windows-Build läuft; [aktueller Prüfstand](validation/workflow2.md).
+
+**Früherer Auslieferungsstand Workflow 1:** Der vollständige Windows-Build `4b5c3546` ist einschließlich
 Linken, Paketierung und CI-Tests erfolgreich. Das finale Paket wurde außerdem
 als vollständige eigene Windows-Installation mit allen 6.755 Dateien geprüft
 und tatsächlich gestartet; eine Desktop-Verknüpfung verwendet das isolierte
@@ -152,13 +158,17 @@ die unabhängigen C++-Policytests und beschreibt anschließend einen vollständi
 Windows-Build samt portablem Paket. Ob dieser Build tatsächlich ausgeführt
 wurde und erfolgreich war, muss anhand seines Laufs geprüft werden.
 
-Die vier unabhängigen Tests unter `tests/prefect/*_test.cpp` prüfen:
+Die sechs unabhängigen Tests unter `tests/prefect/*_test.cpp` prüfen:
 
 - F01: Stoppen, Warten und Synchronisieren bei Geräte-/Jobzuständen;
 - F02: Feldlisten, Normalisierung, gemeinsame Zeilen und Modusgrenzen;
 - F04: Timer-/Workerentscheidungen, Plattenwechsel und Skriptwahl;
 - F08: exakte Unterdrückung der Cold-Pull-Warnung mit unverändertem Verhalten
-  bei anderen Meldungen und Schweregraden.
+  bei anderen Meldungen und Schweregraden;
+- F10/F11: wirksame Anordnungsrotation, Layoutschutz und Warten beziehungsweise
+  Verwerfen eines aufgeschobenen Anordnungsauftrags;
+- gemeinsame Einstellungen: Standardwerte und Migration mit erhaltenen
+  Abschaltentscheidungen, fehlenden Schlüsseln und bewusst leerer Feldliste.
 
 Sie prüfen keinen vollständigen wxWidgets-Build, kein tatsächliches Slicing und
 keine Druckerverbindung. Die dafür erforderlichen Abnahmeszenarien stehen je

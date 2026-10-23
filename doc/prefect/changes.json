@@ -179,6 +179,7 @@
     {
       "id": "F10",
       "title": "Automatische Rotation beim Anordnen",
+      "commit": "9d4fad7292484403f0b026972835035b0a967d20",
       "documentation": "doc/prefect/10-arrange-rotation.md",
       "configuration": {"prefect_arrange_rotation": true},
       "anchors": [
@@ -190,6 +191,7 @@
     {
       "id": "F11",
       "title": "Nach Mehrfachimport automatisch anordnen",
+      "commit": "9d4fad7292484403f0b026972835035b0a967d20",
       "documentation": "doc/prefect/11-auto-arrange.md",
       "configuration": {"prefect_arrange_after_import": true},
       "anchors": [

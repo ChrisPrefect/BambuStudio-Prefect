@@ -14,6 +14,13 @@ alle Schlüssel dieser Zeile gemeinsam; die bestehende gemeinsame Beschriftung
 und das Layout bleiben erhalten. Die gewöhnlichen Prozessfelder dieses
 Upstream-Stands besitzen jeweils eine eigene Zeile.
 
+Ein weiterer Zugang befindet sich unter **Einstellungen → Workflow**:
+Der Schalter für eigene Felder und **Felder für die einfache Ansicht wählen...**
+verwenden dieselbe gespeicherte Auswahl und denselben Dialog. Beim erstmaligen
+Aktivieren ohne gespeicherte Liste initialisiert `TabPrint::initialize_simple_fields()`
+die Liste aus den aktuellen einfachen Standardfeldern. Eine ausdrücklich
+gespeicherte leere Liste wird dabei nicht ersetzt.
+
 Ein geändertes Feld aktiviert die eigene Auswahl automatisch. Mit dem oberen
 Kontrollkästchen lässt sich die eigene Auswahl deaktivieren, ohne sie zu verlieren.
 **Upstream-Standard wiederherstellen** übernimmt die `comSimple`-Vorgaben des
@@ -75,12 +82,14 @@ Es werden nur persönliche GUI-Einstellungen gespeichert. Druckprofile,
 | `src/slic3r/GUI/ParamsPanel.hpp` | `m_simple_fields_btn` | Lebensdauer des neuen Knopfs |
 | `src/slic3r/GUI/ParamsPanel.cpp` | `Felder...`, `configure_simple_fields`, `delete_subwindows` | Sichtbarer Zugang neben dem Modusschalter, Layout und Freigabe |
 | `src/slic3r/GUI/Tab.hpp` | `configure_simple_fields` | Öffentliche Dialogfunktion des Prozess-Tabs |
-| `src/slic3r/GUI/Tab.cpp` | `TabPrint::configure_simple_fields` | Liste aus `m_pages`/Gruppen/Zeilen erzeugen, Suche, Häkchen, Reset, Speichern, Aktualisieren |
+| `src/slic3r/GUI/Tab.cpp` | `TabPrint::initialize_simple_fields`, `TabPrint::configure_simple_fields` | Fehlende Feldliste initialisieren; Liste aus `m_pages`/Gruppen/Zeilen erzeugen, Suche, Häkchen, Reset, Speichern, Aktualisieren |
 | `src/slic3r/GUI/OptionsGroup.hpp` | `is_option_visible`, `m_config_type` | Gemeinsamer virtueller Sichtbarkeitseinstieg; neutraler Initialwert für Gruppen ohne Tab-Kontext |
 | `src/slic3r/GUI/OptionsGroup.cpp` | `ConfigOptionsGroup::is_visible`, `ConfigOptionsGroup::is_option_visible` | Gleiche Sichtbarkeit für noch nicht aufgebaute Seiten und aktive Eingabezeilen |
 | `src/slic3r/GUI/OG_CustomCtrl.cpp` | `CtrlLine::update_visibility` | Vorhandene Modusabfrage an die Gruppenpolicy delegieren; `toggle_visible` beibehalten |
 | `src/slic3r/GUI/Search.cpp` | `OptionsSearcher::append_options`, `simple_fields.visible` | Sichtbarkeit im Suchindex |
-| `src/libslic3r/AppConfig.cpp` | `prefect_simple_fields_enabled` | Standardwerte, vom gemeinsamen Fork-Konfigurationscommit bereitgestellt |
+| `src/libslic3r/PrefectWorkflowPreferences.hpp` | `set_workflow_defaults`, `prefect_simple_fields_enabled` | Gemeinsame Standardwerte; eine fehlende eigene Feldauswahl ist zunächst deaktiviert |
+| `src/libslic3r/AppConfig.cpp` | `Prefect::set_workflow_defaults`, `Prefect::migrate_workflow_preferences` | Gemeinsame Defaults und Migration beim Laden der Anwendungskonfiguration aufrufen |
+| `src/slic3r/GUI/Preferences.cpp` | `PreferencesDialog::create_prefect_tab`, `initialize_simple_fields` | Zweiter Dialogzugang und eigener Schalter unter Einstellungen → Workflow; Checkbox nach dem Felddialog aktualisieren |
 | `tests/prefect/simple_fields_test.cpp` | `Simple field policy` | Separat ausführbarer C++-Regressionstest |
 
 Die Prozessfelder werden in diesem Upstream-Stand überwiegend als einzelne
@@ -94,8 +103,9 @@ zusammengesetzten Eingabe wird nicht neu eingeführt.
 
 ## Nachziehen auf einen neuen Upstream-Stand
 
-1. Den gesamten Feature-Commit übernehmen; die Konfigurationsstandardwerte aus
-   dem gemeinsamen Fork-Konfigurationscommit ebenfalls übernehmen.
+1. Den gesamten Feature-Commit übernehmen; `PrefectWorkflowPreferences.hpp`
+   mit den gemeinsamen Konfigurationsstandardwerten und die Aufrufe aus
+   `AppConfig.cpp` ebenfalls übernehmen.
 2. Mit `rg -n 'CtrlLine::update_visibility|ConfigOptionsGroup::is_visible|OptionsSearcher::append_options|TabPrint::build' src/slic3r/GUI`
    prüfen, ob Modusfilter, Seitenbaum und Suche noch dieselben Zuständigkeiten
    besitzen. Bei neuen Mehrfachzeilen überprüfen, dass der Dialog alle
@@ -108,7 +118,11 @@ zusammengesetzten Eingabe wird nicht neu eingeführt.
 4. In `ParamsPanel` den Knopf neben den aktuellen Modusschalter setzen und bei
    dessen expliziter Kindfensterfreigabe berücksichtigen. Keine Abhängigkeit von
    der gerade gewählten Seite einführen: Die komplette Auswahl muss auch bei
-   vollständig leerer einfacher Ansicht erreichbar sein.
+   vollständig leerer einfacher Ansicht erreichbar sein. Zusätzlich Zugang und
+   Schalter in `PreferencesDialog::create_prefect_tab` erhalten. Eine fehlende
+   Liste nur über `TabPrint::initialize_simple_fields` initialisieren; eine
+   absichtlich gespeicherte leere Liste erhalten. Nach dem Felddialog die
+   Workflow-Checkbox mit dem tatsächlich gespeicherten Wert abgleichen.
 5. Umbenannte Optionsschlüssel im Upstream auf eine nötige Migration der
    gespeicherten Liste prüfen. Übersetzte Texte oder Seitenpositionen dürfen
    niemals als persistente Identität benutzt werden.

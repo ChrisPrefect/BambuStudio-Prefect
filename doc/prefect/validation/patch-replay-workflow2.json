@@ -1,0 +1,2802 @@
+{
+  "date": "2026-10-23",
+  "timezone": "Europe/Zurich",
+  "base_commit": "926a7192574bcb9b3a732e1ec59a46d79cb45466",
+  "head_commit": "9d4fad7292484403f0b026972835035b0a967d20",
+  "expected_tree": "b6feae21b1908e493d880297e901b243073585f5",
+  "commits": [
+    {
+      "position": 1,
+      "commit": "7a24a42d0db96d22db5dbb7a08699a1a2a8e1443",
+      "parent": "926a7192574bcb9b3a732e1ec59a46d79cb45466",
+      "subject": "Prefect: add workflow preferences and migrate isolated profile defaults",
+      "expected_tree": "5a45ff60607e946cdb53bbd64dec4843a7c851d4",
+      "replayed_tree": "5a45ff60607e946cdb53bbd64dec4843a7c851d4",
+      "match": true,
+      "diff": "replay-diffs/0001-7a24a42d0db9.diff",
+      "diff_bytes": 7600,
+      "diff_sha256": "34bd93fdc93aa3cce7016a1c7316ab60a037e12ee18ef1d0af07d578af9a93cd",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 2,
+      "commit": "7bde42eed27083591b1c26ffedf3441636ff1620",
+      "parent": "7a24a42d0db96d22db5dbb7a08699a1a2a8e1443",
+      "subject": "F01: synchronize project filaments automatically after printer changes",
+      "expected_tree": "e592acfafe266ed9e25d7723eb5441787d10b119",
+      "replayed_tree": "e592acfafe266ed9e25d7723eb5441787d10b119",
+      "match": true,
+      "diff": "replay-diffs/0002-7bde42eed270.diff",
+      "diff_bytes": 24208,
+      "diff_sha256": "483c8a07d0c17ecc728aac12303fe672b05094ddb1f88255501d2c3d69589bad",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 3,
+      "commit": "24ec77e37aa7386a28685b9dc2c4e25eedbceed4",
+      "parent": "7bde42eed27083591b1c26ffedf3441636ff1620",
+      "subject": "F02: let users choose process fields shown in simple mode",
+      "expected_tree": "7b737cd883278ab516224aecf0b4871c87f9502f",
+      "replayed_tree": "7b737cd883278ab516224aecf0b4871c87f9502f",
+      "match": true,
+      "diff": "replay-diffs/0003-24ec77e37aa7.diff",
+      "diff_bytes": 34455,
+      "diff_sha256": "b32d83fdc3fdbac24154a6ce4364bacbb240dec5fbe5bd7a03977d86ad87122f",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 4,
+      "commit": "21a50b6a27492730d65596854120e12d3fca1401",
+      "parent": "24ec77e37aa7386a28685b9dc2c4e25eedbceed4",
+      "subject": "F03: keep the printer section collapsed across sidebar refreshes",
+      "expected_tree": "f0ae4c2cd09e655225f891d8e126559b08253e0b",
+      "replayed_tree": "f0ae4c2cd09e655225f891d8e126559b08253e0b",
+      "match": true,
+      "diff": "replay-diffs/0004-21a50b6a2749.diff",
+      "diff_bytes": 5351,
+      "diff_sha256": "1d80271c155d246cf6f50dc91b3dd80b8ae1ce234b74db9a2952088329d94145",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 5,
+      "commit": "5ff0e5923769afbebb27992cd3ab0bad5668aeac",
+      "parent": "21a50b6a27492730d65596854120e12d3fca1401",
+      "subject": "F04: slice the current plate automatically with guarded background jobs",
+      "expected_tree": "8f643aa19ac4d8c61e6d123bc750d9e756639381",
+      "replayed_tree": "8f643aa19ac4d8c61e6d123bc750d9e756639381",
+      "match": true,
+      "diff": "replay-diffs/0005-5ff0e5923769.diff",
+      "diff_bytes": 24044,
+      "diff_sha256": "25a6c84b064249451332dac534074e28b36d2e340924003871997840ff69cdcc",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 6,
+      "commit": "259a5f96c6124102d6865d8b08b82ebbf62abf76",
+      "parent": "5ff0e5923769afbebb27992cd3ab0bad5668aeac",
+      "subject": "F05: assign clicked filament to selected objects and parts",
+      "expected_tree": "eb8c47952b80b644c81253d84ec59ca748fb4081",
+      "replayed_tree": "eb8c47952b80b644c81253d84ec59ca748fb4081",
+      "match": true,
+      "diff": "replay-diffs/0006-259a5f96c612.diff",
+      "diff_bytes": 11106,
+      "diff_sha256": "90374a2f0b9cdd03b646c2d8d5d75510c834027b88bdd5a1f8402e10dd84cbf0",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 7,
+      "commit": "8e00cd6931e28b38966ffbf502d82b1f5f4546c6",
+      "parent": "259a5f96c6124102d6865d8b08b82ebbf62abf76",
+      "subject": "F06: add filament menu action for the global support interface",
+      "expected_tree": "91bf546bb7dcb58b179320d5f1a379085bf709ab",
+      "replayed_tree": "91bf546bb7dcb58b179320d5f1a379085bf709ab",
+      "match": true,
+      "diff": "replay-diffs/0007-8e00cd6931e2.diff",
+      "diff_bytes": 7230,
+      "diff_sha256": "5c7da91d0590bdb992cb7f0058cece0badedc66500d7b68edd39b4cdfba8dd35",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 8,
+      "commit": "b5cbd93c935b27ae703cfdb67168d7cab51d3e04",
+      "parent": "8e00cd6931e28b38966ffbf502d82b1f5f4546c6",
+      "subject": "F07: import multiple models separately without merge questions",
+      "expected_tree": "8090667543678fd93b2ed8132673d973e9ec64b3",
+      "replayed_tree": "8090667543678fd93b2ed8132673d973e9ec64b3",
+      "match": true,
+      "diff": "replay-diffs/0008-b5cbd93c935b.diff",
+      "diff_bytes": 6440,
+      "diff_sha256": "0a3003f387d5f98c44285c9030347b25b8f5abac74ad7e002a0fb0c2493353bf",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 9,
+      "commit": "9edd36287f0c15ded96232ea4338141d127044a2",
+      "parent": "b5cbd93c935b27ae703cfdb67168d7cab51d3e04",
+      "subject": "F08: suppress only the exact TPU cold-pull advisory",
+      "expected_tree": "b4747fbbd47108a5c52e94f013e081fb47b7a00f",
+      "replayed_tree": "b4747fbbd47108a5c52e94f013e081fb47b7a00f",
+      "match": true,
+      "diff": "replay-diffs/0009-9edd36287f0c.diff",
+      "diff_bytes": 6757,
+      "diff_sha256": "8751da7ea3bbe60e1f98ce8fed5b9b661e6295d49fa206acc820885bcf44d4aa",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 10,
+      "commit": "159fc3816810124188975ffa8069ffa64000daf9",
+      "parent": "9edd36287f0c15ded96232ea4338141d127044a2",
+      "subject": "F09: hide daily tips and remove their slicing notification space",
+      "expected_tree": "79dbad44f2b36ecad6d13712775d634453cf5d88",
+      "replayed_tree": "79dbad44f2b36ecad6d13712775d634453cf5d88",
+      "match": true,
+      "diff": "replay-diffs/0010-159fc3816810.diff",
+      "diff_bytes": 8896,
+      "diff_sha256": "ca963ad408ea0ddb0ae32724b2210f6455a499ad45b3da9da253d2a7535ffee7",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 11,
+      "commit": "443e622d66b2a6d0c8569cedb2d17f934afdc2d9",
+      "parent": "159fc3816810124188975ffa8069ffa64000daf9",
+      "subject": "Prefect: translate workflow controls and support interface action into German",
+      "expected_tree": "86b00a4bf75f98b766b2a80f46b8d1fd86fb7fd5",
+      "replayed_tree": "86b00a4bf75f98b766b2a80f46b8d1fd86fb7fd5",
+      "match": true,
+      "diff": "replay-diffs/0011-443e622d66b2.diff",
+      "diff_bytes": 134729,
+      "diff_sha256": "154a706d53b13dfd6e361e36744a7d253e8e3733cf996e297a9905e13524a0ce",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 12,
+      "commit": "ce7e6b11ca3a02c14e27fad26d4b52a568eb4c07",
+      "parent": "443e622d66b2a6d0c8569cedb2d17f934afdc2d9",
+      "subject": "Prefect: add isolated launcher and reproducible policy and Windows build jobs",
+      "expected_tree": "724c8c472d433790d90b6ef54d06a3dc2fe12c90",
+      "replayed_tree": "724c8c472d433790d90b6ef54d06a3dc2fe12c90",
+      "match": true,
+      "diff": "replay-diffs/0012-ce7e6b11ca3a.diff",
+      "diff_bytes": 7871,
+      "diff_sha256": "b74c3db98e0d547e3c22c1c855d42fdfbb8a9c25a2034a7256e0f16ef72728f7",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 13,
+      "commit": "65f587b1e77853eb84c2aefdacb862da56a2d306",
+      "parent": "ce7e6b11ca3a02c14e27fad26d4b52a568eb4c07",
+      "subject": "Prefect: preserve German catalog additions in a repeatable update script",
+      "expected_tree": "e6da12001aff010d784a1d65e323ede49f338b25",
+      "replayed_tree": "e6da12001aff010d784a1d65e323ede49f338b25",
+      "match": true,
+      "diff": "replay-diffs/0013-65f587b1e778.diff",
+      "diff_bytes": 6313,
+      "diff_sha256": "098a392d2560a948c206b34930ea115c6071a7e62c6f47f13e263c25a0b3124e",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 14,
+      "commit": "f059b366b7ca4e8cb057e4ebf09a59c3dd3b212c",
+      "parent": "65f587b1e77853eb84c2aefdacb862da56a2d306",
+      "subject": "Prefect: document all nine changes, replay commits and executed validation",
+      "expected_tree": "e36274f1920335ce1a6ad9f13b6ff2608edae476",
+      "replayed_tree": "e36274f1920335ce1a6ad9f13b6ff2608edae476",
+      "match": true,
+      "diff": "replay-diffs/0014-f059b366b7ca.diff",
+      "diff_bytes": 63308,
+      "diff_sha256": "128b435c720e1833606f927c11ae2e011c50f5ca25527dd5cb16c7c34dec6e67",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 15,
+      "commit": "2b4187439a730f620ffff52c0d828a8f19ad1018",
+      "parent": "f059b366b7ca4e8cb057e4ebf09a59c3dd3b212c",
+      "subject": "Prefect: adapt Windows CI to installed Visual Studio and verified upstream deps",
+      "expected_tree": "fd63edf77a6e4d9407b6084c9a432ff3f74a8575",
+      "replayed_tree": "fd63edf77a6e4d9407b6084c9a432ff3f74a8575",
+      "match": true,
+      "diff": "replay-diffs/0015-2b4187439a73.diff",
+      "diff_bytes": 16631,
+      "diff_sha256": "987d461a3633250f710da87d3c93cdd7f1d2c79545e4a73e96b303523d91e510",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 16,
+      "commit": "8862ffb3d4f9968c932132e28edc135399603361",
+      "parent": "2b4187439a730f620ffff52c0d828a8f19ad1018",
+      "subject": "Prefect: guard filament actions in plain G-code preview as well as sliced 3MF",
+      "expected_tree": "313f0b9530ea03a068911588834b70c3d127cfb3",
+      "replayed_tree": "313f0b9530ea03a068911588834b70c3d127cfb3",
+      "match": true,
+      "diff": "replay-diffs/0016-8862ffb3d4f9.diff",
+      "diff_bytes": 2959,
+      "diff_sha256": "e484823f1f83cc9226d34d2b2d5dc5236b55f01150e7ae336b388c1288dc33e6",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 17,
+      "commit": "aefb764d3a36e05004ec82e20ddf37714ce718a7",
+      "parent": "8862ffb3d4f9968c932132e28edc135399603361",
+      "subject": "Prefect: assign only editable model selections and describe the fork on its homepage",
+      "expected_tree": "587565647fc3d2f36bf1533b4263d2b23fcad4dd",
+      "replayed_tree": "587565647fc3d2f36bf1533b4263d2b23fcad4dd",
+      "match": true,
+      "diff": "replay-diffs/0017-aefb764d3a36.diff",
+      "diff_bytes": 11324,
+      "diff_sha256": "35eb15c51b8f0be1fc3c11a5ea8a41dc3dceece47a76525f6055c91dbc1aa33e",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 18,
+      "commit": "a10f94e49bb2863135955f37230cf8e099982b3c",
+      "parent": "aefb764d3a36e05004ec82e20ddf37714ce718a7",
+      "subject": "Prefect: record native MSVC tests and exact replay of all seventeen patches",
+      "expected_tree": "ff4db5e53986663cf4f3b492201b52ed8b32daac",
+      "replayed_tree": "ff4db5e53986663cf4f3b492201b52ed8b32daac",
+      "match": true,
+      "diff": "replay-diffs/0018-a10f94e49bb2.diff",
+      "diff_bytes": 72522,
+      "diff_sha256": "8a09e345cf095996ba641f1272dc130990bfe2740509f08eef0cadca9901aa9f",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 19,
+      "commit": "ab6b1e83b32e6bffd5d7cc8da6ef8858617baf2a",
+      "parent": "a10f94e49bb2863135955f37230cf8e099982b3c",
+      "subject": "build: relocate dependency metadata and retain verified Windows objects",
+      "expected_tree": "2c88f2a713f94c34a66eeec98e130eac38850b2d",
+      "replayed_tree": "2c88f2a713f94c34a66eeec98e130eac38850b2d",
+      "match": true,
+      "diff": "replay-diffs/0019-ab6b1e83b32e.diff",
+      "diff_bytes": 46700,
+      "diff_sha256": "86c901d3decfa74b8e3a66e3be33169253ff6d9c361435ad37d77894b8014d26",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 20,
+      "commit": "4b5c3546c7fba94439d9bb0fe69553723b895897",
+      "parent": "ab6b1e83b32e6bffd5d7cc8da6ef8858617baf2a",
+      "subject": "F01: catch up printer filaments when automatic sync is re-enabled",
+      "expected_tree": "418524ef74e1e2d49ec1cf9d3fa6e422df072afc",
+      "replayed_tree": "418524ef74e1e2d49ec1cf9d3fa6e422df072afc",
+      "match": true,
+      "diff": "replay-diffs/0020-4b5c3546c7fb.diff",
+      "diff_bytes": 8655,
+      "diff_sha256": "d5e00bd7f5e437692f9008e948ceec3776da08e7cd2a5d08b1e1d125ce7fea46",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 21,
+      "commit": "c6bab43974e67da787806ab9e9142988ee54aa4e",
+      "parent": "4b5c3546c7fba94439d9bb0fe69553723b895897",
+      "subject": "docs: record full Windows build and twenty-commit replay proof",
+      "expected_tree": "5aa81992271a0f6d23daf459210351a73d039d48",
+      "replayed_tree": "5aa81992271a0f6d23daf459210351a73d039d48",
+      "match": true,
+      "diff": "replay-diffs/0021-c6bab43974e6.diff",
+      "diff_bytes": 65054,
+      "diff_sha256": "a8e550e0a044999f10d23b1c61d7aa9d77241e818549487cc038fb7d0544fc7d",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 22,
+      "commit": "323b65e40fd663b90fe3eef336e068eac3e1ae2d",
+      "parent": "c6bab43974e67da787806ab9e9142988ee54aa4e",
+      "subject": "Document final Windows build and verified standalone installation",
+      "expected_tree": "931c8b3556d6b9a9ac6b303edb7e5eba01c6d944",
+      "replayed_tree": "931c8b3556d6b9a9ac6b303edb7e5eba01c6d944",
+      "match": true,
+      "diff": "replay-diffs/0022-323b65e40fd6.diff",
+      "diff_bytes": 45984,
+      "diff_sha256": "a8236c862123066e566f733901b92024773fa1d4674a6fa612faef41d6745377",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 23,
+      "commit": "66976e6053d149d936385d968aeda8fb17593bcd",
+      "parent": "323b65e40fd663b90fe3eef336e068eac3e1ae2d",
+      "subject": "Record published Workflow 1 prerelease and verified release assets",
+      "expected_tree": "debd2ff978c977ced99f62b89b2dd52938618b88",
+      "replayed_tree": "debd2ff978c977ced99f62b89b2dd52938618b88",
+      "match": true,
+      "diff": "replay-diffs/0023-66976e6053d1.diff",
+      "diff_bytes": 6101,
+      "diff_sha256": "095421dedd2baa1377069d41f054061504a5745caddeb0c074384607300ceddd",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "position": 24,
+      "commit": "9d4fad7292484403f0b026972835035b0a967d20",
+      "parent": "66976e6053d149d936385d968aeda8fb17593bcd",
+      "subject": "Workflow 2: arrange inserted objects with rotation and expose eleven independent options",
+      "expected_tree": "b6feae21b1908e493d880297e901b243073585f5",
+      "replayed_tree": "b6feae21b1908e493d880297e901b243073585f5",
+      "match": true,
+      "diff": "replay-diffs/0024-9d4fad729248.diff",
+      "diff_bytes": 228089,
+      "diff_sha256": "e91d42b6a50f7076c111abb19bcf7575902254b058e81ad9c53d59ad4746c6d7",
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    }
+  ],
+  "format_patch": [
+    {
+      "file": "0001-Prefect-add-workflow-preferences-and-migrate-isolate.patch",
+      "commit": "7a24a42d0db96d22db5dbb7a08699a1a2a8e1443",
+      "bytes": 8103,
+      "sha256": "d665e4fa73039b0dfd0b9b835b84eb1c200f8a9f4095d898efa11f4a00673c5b",
+      "replayed_tree": "5a45ff60607e946cdb53bbd64dec4843a7c851d4",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0002-F01-synchronize-project-filaments-automatically-afte.patch",
+      "commit": "7bde42eed27083591b1c26ffedf3441636ff1620",
+      "bytes": 24993,
+      "sha256": "16fb1b0f1977f08037a29c4dcae839d7c915345962177f8cf0b989b7405f31e0",
+      "replayed_tree": "e592acfafe266ed9e25d7723eb5441787d10b119",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0003-F02-let-users-choose-process-fields-shown-in-simple-.patch",
+      "commit": "24ec77e37aa7386a28685b9dc2c4e25eedbceed4",
+      "bytes": 35485,
+      "sha256": "91b2c49f0ff99e346822e374ccb23f255cb6dce19caa07840eeef2add4a9190f",
+      "replayed_tree": "7b737cd883278ab516224aecf0b4871c87f9502f",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0004-F03-keep-the-printer-section-collapsed-across-sideba.patch",
+      "commit": "21a50b6a27492730d65596854120e12d3fca1401",
+      "bytes": 5843,
+      "sha256": "a30f6f1efc845bb068c48c853b3190db6d325f6bc59061549740a23f47a87b93",
+      "replayed_tree": "f0ae4c2cd09e655225f891d8e126559b08253e0b",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0005-F04-slice-the-current-plate-automatically-with-guard.patch",
+      "commit": "5ff0e5923769afbebb27992cd3ab0bad5668aeac",
+      "bytes": 24772,
+      "sha256": "2dc14091d094fe7414b19c29576addb2b5e881bfff2690cd8cd05ac83ef108ca",
+      "replayed_tree": "8f643aa19ac4d8c61e6d123bc750d9e756639381",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0006-F05-assign-clicked-filament-to-selected-objects-and-.patch",
+      "commit": "259a5f96c6124102d6865d8b08b82ebbf62abf76",
+      "bytes": 11742,
+      "sha256": "055b014207e303deb3519a59b855f44a6f5e33f2b82ec05601af4f325c8b9293",
+      "replayed_tree": "eb8c47952b80b644c81253d84ec59ca748fb4081",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0007-F06-add-filament-menu-action-for-the-global-support-.patch",
+      "commit": "8e00cd6931e28b38966ffbf502d82b1f5f4546c6",
+      "bytes": 7785,
+      "sha256": "60d72e08dfad92451e1676d4903f9cfeec503bc0be9d62bad5b57ac0248e85e2",
+      "replayed_tree": "91bf546bb7dcb58b179320d5f1a379085bf709ab",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0008-F07-import-multiple-models-separately-without-merge-.patch",
+      "commit": "b5cbd93c935b27ae703cfdb67168d7cab51d3e04",
+      "bytes": 6898,
+      "sha256": "0b317c92ebbfbedaa8164387f58ef634026709cd36e28f6875cb98c698db2e96",
+      "replayed_tree": "8090667543678fd93b2ed8132673d973e9ec64b3",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0009-F08-suppress-only-the-exact-TPU-cold-pull-advisory.patch",
+      "commit": "9edd36287f0c15ded96232ea4338141d127044a2",
+      "bytes": 7445,
+      "sha256": "ab497110f84b8900c9f81e5c5fc74e7428762de33aad9f260893978cc5e015db",
+      "replayed_tree": "b4747fbbd47108a5c52e94f013e081fb47b7a00f",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0010-F09-hide-daily-tips-and-remove-their-slicing-notific.patch",
+      "commit": "159fc3816810124188975ffa8069ffa64000daf9",
+      "bytes": 9428,
+      "sha256": "04a554dbc82c5a5d98e318185fa853e0b09317c8e71dfbf622b2dcd63f721ec3",
+      "replayed_tree": "79dbad44f2b36ecad6d13712775d634453cf5d88",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0011-Prefect-translate-workflow-controls-and-support-inte.patch",
+      "commit": "443e622d66b2a6d0c8569cedb2d17f934afdc2d9",
+      "bytes": 135147,
+      "sha256": "6c2483262cfb0149a3bad251ad38c44f93f0792f0f124483cd8694a5d7aae9f4",
+      "replayed_tree": "86b00a4bf75f98b766b2a80f46b8d1fd86fb7fd5",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0012-Prefect-add-isolated-launcher-and-reproducible-polic.patch",
+      "commit": "ce7e6b11ca3a02c14e27fad26d4b52a568eb4c07",
+      "bytes": 8604,
+      "sha256": "9d5ebb5ecb04bfaa91fd86046fd2daf955547e69c0d8745a21acb3aff8d743da",
+      "replayed_tree": "724c8c472d433790d90b6ef54d06a3dc2fe12c90",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0013-Prefect-preserve-German-catalog-additions-in-a-repea.patch",
+      "commit": "65f587b1e77853eb84c2aefdacb862da56a2d306",
+      "bytes": 6837,
+      "sha256": "92bc2dc3e87408dbd73d288b8c275b147202358167b5a6a21685e7cf937e29c1",
+      "replayed_tree": "e6da12001aff010d784a1d65e323ede49f338b25",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0014-Prefect-document-all-nine-changes-replay-commits-and.patch",
+      "commit": "f059b366b7ca4e8cb057e4ebf09a59c3dd3b212c",
+      "bytes": 64440,
+      "sha256": "3228ec95e7b6f496cee1b2faa39eb1d0836b4bd106e95a1331548b8787acb156",
+      "replayed_tree": "e36274f1920335ce1a6ad9f13b6ff2608edae476",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0015-Prefect-adapt-Windows-CI-to-installed-Visual-Studio-.patch",
+      "commit": "2b4187439a730f620ffff52c0d828a8f19ad1018",
+      "bytes": 17362,
+      "sha256": "c5a047145ffb958ed7364b55fa0ae079eb2a9a5fa2499d416b7561746f1de2bf",
+      "replayed_tree": "fd63edf77a6e4d9407b6084c9a432ff3f74a8575",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0016-Prefect-guard-filament-actions-in-plain-G-code-previ.patch",
+      "commit": "8862ffb3d4f9968c932132e28edc135399603361",
+      "bytes": 3355,
+      "sha256": "d71ae315e483bcfe5886ff90f1e40c2c9d9a7ec82118fefe439ba8297b49d534",
+      "replayed_tree": "313f0b9530ea03a068911588834b70c3d127cfb3",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0017-Prefect-assign-only-editable-model-selections-and-de.patch",
+      "commit": "aefb764d3a36e05004ec82e20ddf37714ce718a7",
+      "bytes": 12044,
+      "sha256": "89b4db49fe85d8a1e72fa6e27ccb8842c483536912e2a892980ad32147a04d28",
+      "replayed_tree": "587565647fc3d2f36bf1533b4263d2b23fcad4dd",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0018-Prefect-record-native-MSVC-tests-and-exact-replay-of.patch",
+      "commit": "a10f94e49bb2863135955f37230cf8e099982b3c",
+      "bytes": 73660,
+      "sha256": "6524faba94b2776dbf184655c3abe4aad231ba91ba1a90e63ae8e1017ccc9ecd",
+      "replayed_tree": "ff4db5e53986663cf4f3b492201b52ed8b32daac",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0019-build-relocate-dependency-metadata-and-retain-verifi.patch",
+      "commit": "ab6b1e83b32e6bffd5d7cc8da6ef8858617baf2a",
+      "bytes": 47658,
+      "sha256": "a0f5fad8d98a22bf694c720e0fa98ac241b83fbd5bb27f92f3628ececda4a733",
+      "replayed_tree": "2c88f2a713f94c34a66eeec98e130eac38850b2d",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0020-F01-catch-up-printer-filaments-when-automatic-sync-i.patch",
+      "commit": "4b5c3546c7fba94439d9bb0fe69553723b895897",
+      "bytes": 9162,
+      "sha256": "c4a69c04b6dfd3abb8a94e56ba0564f16be2587763fa337db2327fdb56f6cb4b",
+      "replayed_tree": "418524ef74e1e2d49ec1cf9d3fa6e422df072afc",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0021-docs-record-full-Windows-build-and-twenty-commit-rep.patch",
+      "commit": "c6bab43974e67da787806ab9e9142988ee54aa4e",
+      "bytes": 66387,
+      "sha256": "4daae6a3e6adf1364fb927b076d474869023226b32b017b298247e917a796cdd",
+      "replayed_tree": "5aa81992271a0f6d23daf459210351a73d039d48",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0022-Document-final-Windows-build-and-verified-standalone.patch",
+      "commit": "323b65e40fd663b90fe3eef336e068eac3e1ae2d",
+      "bytes": 46913,
+      "sha256": "88db71bb1517312ab5b30ff8c01b9c60945a3d2b4441c8299baa26d22c2eba7c",
+      "replayed_tree": "931c8b3556d6b9a9ac6b303edb7e5eba01c6d944",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0023-Record-published-Workflow-1-prerelease-and-verified-.patch",
+      "commit": "66976e6053d149d936385d968aeda8fb17593bcd",
+      "bytes": 6698,
+      "sha256": "2a45b1c7f9ffe7f8729f936b2c1083be379f562ea7c9540653f3eed8cf12ab09",
+      "replayed_tree": "debd2ff978c977ced99f62b89b2dd52938618b88",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    },
+    {
+      "file": "0024-Workflow-2-arrange-inserted-objects-with-rotation-an.patch",
+      "commit": "9d4fad7292484403f0b026972835035b0a967d20",
+      "bytes": 230942,
+      "sha256": "92747ec1d3d5171e97f342ef121f5e7cd0baab47fd8e7e77971c2dc31d2b0953",
+      "replayed_tree": "b6feae21b1908e493d880297e901b243073585f5",
+      "match": true,
+      "apply_exit_code": 0,
+      "write_tree_exit_code": 0
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "926a7192574bcb9b3a732e1ec59a46d79cb45466"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "9d4fad7292484403f0b026972835035b0a967d20"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "9d4fad7292484403f0b026972835035b0a967d20^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "--git-path",
+        "index"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "read-tree",
+        "926a7192574bcb9b3a732e1ec59a46d79cb45466"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "926a7192574bcb9b3a732e1ec59a46d79cb45466^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-list",
+        "--reverse",
+        "--first-parent",
+        "926a7192574bcb9b3a732e1ec59a46d79cb45466..9d4fad7292484403f0b026972835035b0a967d20"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "7a24a42d0db96d22db5dbb7a08699a1a2a8e1443"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "7a24a42d0db96d22db5dbb7a08699a1a2a8e1443"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "926a7192574bcb9b3a732e1ec59a46d79cb45466",
+        "7a24a42d0db96d22db5dbb7a08699a1a2a8e1443",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0001-7a24a42d0db9.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "7a24a42d0db96d22db5dbb7a08699a1a2a8e1443^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "7bde42eed27083591b1c26ffedf3441636ff1620"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "7bde42eed27083591b1c26ffedf3441636ff1620"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "7a24a42d0db96d22db5dbb7a08699a1a2a8e1443",
+        "7bde42eed27083591b1c26ffedf3441636ff1620",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0002-7bde42eed270.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "7bde42eed27083591b1c26ffedf3441636ff1620^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "24ec77e37aa7386a28685b9dc2c4e25eedbceed4"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "24ec77e37aa7386a28685b9dc2c4e25eedbceed4"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "7bde42eed27083591b1c26ffedf3441636ff1620",
+        "24ec77e37aa7386a28685b9dc2c4e25eedbceed4",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0003-24ec77e37aa7.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "24ec77e37aa7386a28685b9dc2c4e25eedbceed4^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "21a50b6a27492730d65596854120e12d3fca1401"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "21a50b6a27492730d65596854120e12d3fca1401"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "24ec77e37aa7386a28685b9dc2c4e25eedbceed4",
+        "21a50b6a27492730d65596854120e12d3fca1401",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0004-21a50b6a2749.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "21a50b6a27492730d65596854120e12d3fca1401^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "5ff0e5923769afbebb27992cd3ab0bad5668aeac"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "5ff0e5923769afbebb27992cd3ab0bad5668aeac"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "21a50b6a27492730d65596854120e12d3fca1401",
+        "5ff0e5923769afbebb27992cd3ab0bad5668aeac",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0005-5ff0e5923769.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "5ff0e5923769afbebb27992cd3ab0bad5668aeac^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "259a5f96c6124102d6865d8b08b82ebbf62abf76"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "259a5f96c6124102d6865d8b08b82ebbf62abf76"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "5ff0e5923769afbebb27992cd3ab0bad5668aeac",
+        "259a5f96c6124102d6865d8b08b82ebbf62abf76",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0006-259a5f96c612.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "259a5f96c6124102d6865d8b08b82ebbf62abf76^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "8e00cd6931e28b38966ffbf502d82b1f5f4546c6"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "8e00cd6931e28b38966ffbf502d82b1f5f4546c6"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "259a5f96c6124102d6865d8b08b82ebbf62abf76",
+        "8e00cd6931e28b38966ffbf502d82b1f5f4546c6",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0007-8e00cd6931e2.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "8e00cd6931e28b38966ffbf502d82b1f5f4546c6^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "b5cbd93c935b27ae703cfdb67168d7cab51d3e04"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "b5cbd93c935b27ae703cfdb67168d7cab51d3e04"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "8e00cd6931e28b38966ffbf502d82b1f5f4546c6",
+        "b5cbd93c935b27ae703cfdb67168d7cab51d3e04",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0008-b5cbd93c935b.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "b5cbd93c935b27ae703cfdb67168d7cab51d3e04^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "9edd36287f0c15ded96232ea4338141d127044a2"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "9edd36287f0c15ded96232ea4338141d127044a2"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "b5cbd93c935b27ae703cfdb67168d7cab51d3e04",
+        "9edd36287f0c15ded96232ea4338141d127044a2",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0009-9edd36287f0c.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "9edd36287f0c15ded96232ea4338141d127044a2^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "159fc3816810124188975ffa8069ffa64000daf9"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "159fc3816810124188975ffa8069ffa64000daf9"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "9edd36287f0c15ded96232ea4338141d127044a2",
+        "159fc3816810124188975ffa8069ffa64000daf9",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0010-159fc3816810.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "159fc3816810124188975ffa8069ffa64000daf9^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "443e622d66b2a6d0c8569cedb2d17f934afdc2d9"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "443e622d66b2a6d0c8569cedb2d17f934afdc2d9"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "159fc3816810124188975ffa8069ffa64000daf9",
+        "443e622d66b2a6d0c8569cedb2d17f934afdc2d9",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0011-443e622d66b2.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "443e622d66b2a6d0c8569cedb2d17f934afdc2d9^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "ce7e6b11ca3a02c14e27fad26d4b52a568eb4c07"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "ce7e6b11ca3a02c14e27fad26d4b52a568eb4c07"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "443e622d66b2a6d0c8569cedb2d17f934afdc2d9",
+        "ce7e6b11ca3a02c14e27fad26d4b52a568eb4c07",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0012-ce7e6b11ca3a.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "ce7e6b11ca3a02c14e27fad26d4b52a568eb4c07^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "65f587b1e77853eb84c2aefdacb862da56a2d306"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "65f587b1e77853eb84c2aefdacb862da56a2d306"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "ce7e6b11ca3a02c14e27fad26d4b52a568eb4c07",
+        "65f587b1e77853eb84c2aefdacb862da56a2d306",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0013-65f587b1e778.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "65f587b1e77853eb84c2aefdacb862da56a2d306^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "f059b366b7ca4e8cb057e4ebf09a59c3dd3b212c"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "f059b366b7ca4e8cb057e4ebf09a59c3dd3b212c"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "65f587b1e77853eb84c2aefdacb862da56a2d306",
+        "f059b366b7ca4e8cb057e4ebf09a59c3dd3b212c",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0014-f059b366b7ca.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "f059b366b7ca4e8cb057e4ebf09a59c3dd3b212c^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "2b4187439a730f620ffff52c0d828a8f19ad1018"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "2b4187439a730f620ffff52c0d828a8f19ad1018"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "f059b366b7ca4e8cb057e4ebf09a59c3dd3b212c",
+        "2b4187439a730f620ffff52c0d828a8f19ad1018",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0015-2b4187439a73.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "2b4187439a730f620ffff52c0d828a8f19ad1018^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "8862ffb3d4f9968c932132e28edc135399603361"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "8862ffb3d4f9968c932132e28edc135399603361"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "2b4187439a730f620ffff52c0d828a8f19ad1018",
+        "8862ffb3d4f9968c932132e28edc135399603361",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0016-8862ffb3d4f9.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "8862ffb3d4f9968c932132e28edc135399603361^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "aefb764d3a36e05004ec82e20ddf37714ce718a7"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "aefb764d3a36e05004ec82e20ddf37714ce718a7"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "8862ffb3d4f9968c932132e28edc135399603361",
+        "aefb764d3a36e05004ec82e20ddf37714ce718a7",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0017-aefb764d3a36.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "aefb764d3a36e05004ec82e20ddf37714ce718a7^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "a10f94e49bb2863135955f37230cf8e099982b3c"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "a10f94e49bb2863135955f37230cf8e099982b3c"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "aefb764d3a36e05004ec82e20ddf37714ce718a7",
+        "a10f94e49bb2863135955f37230cf8e099982b3c",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0018-a10f94e49bb2.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "a10f94e49bb2863135955f37230cf8e099982b3c^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "ab6b1e83b32e6bffd5d7cc8da6ef8858617baf2a"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "ab6b1e83b32e6bffd5d7cc8da6ef8858617baf2a"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "a10f94e49bb2863135955f37230cf8e099982b3c",
+        "ab6b1e83b32e6bffd5d7cc8da6ef8858617baf2a",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0019-ab6b1e83b32e.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "ab6b1e83b32e6bffd5d7cc8da6ef8858617baf2a^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "4b5c3546c7fba94439d9bb0fe69553723b895897"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "4b5c3546c7fba94439d9bb0fe69553723b895897"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "ab6b1e83b32e6bffd5d7cc8da6ef8858617baf2a",
+        "4b5c3546c7fba94439d9bb0fe69553723b895897",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0020-4b5c3546c7fb.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "4b5c3546c7fba94439d9bb0fe69553723b895897^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "c6bab43974e67da787806ab9e9142988ee54aa4e"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "c6bab43974e67da787806ab9e9142988ee54aa4e"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "4b5c3546c7fba94439d9bb0fe69553723b895897",
+        "c6bab43974e67da787806ab9e9142988ee54aa4e",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0021-c6bab43974e6.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "c6bab43974e67da787806ab9e9142988ee54aa4e^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "323b65e40fd663b90fe3eef336e068eac3e1ae2d"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "323b65e40fd663b90fe3eef336e068eac3e1ae2d"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "c6bab43974e67da787806ab9e9142988ee54aa4e",
+        "323b65e40fd663b90fe3eef336e068eac3e1ae2d",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0022-323b65e40fd6.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "323b65e40fd663b90fe3eef336e068eac3e1ae2d^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "66976e6053d149d936385d968aeda8fb17593bcd"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "66976e6053d149d936385d968aeda8fb17593bcd"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "323b65e40fd663b90fe3eef336e068eac3e1ae2d",
+        "66976e6053d149d936385d968aeda8fb17593bcd",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0023-66976e6053d1.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "66976e6053d149d936385d968aeda8fb17593bcd^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%P",
+        "9d4fad7292484403f0b026972835035b0a967d20"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%s",
+        "9d4fad7292484403f0b026972835035b0a967d20"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-ext-diff",
+        "--no-textconv",
+        "66976e6053d149d936385d968aeda8fb17593bcd",
+        "9d4fad7292484403f0b026972835035b0a967d20",
+        "--"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\replay-diffs\\0024-9d4fad729248.diff"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "9d4fad7292484403f0b026972835035b0a967d20^{tree}"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "format-patch",
+        "--binary",
+        "--full-index",
+        "--no-renames",
+        "--no-signature",
+        "--output-directory",
+        "$PATCH_DIR",
+        "926a7192574bcb9b3a732e1ec59a46d79cb45466..9d4fad7292484403f0b026972835035b0a967d20"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "read-tree",
+        "926a7192574bcb9b3a732e1ec59a46d79cb45466"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0001-Prefect-add-workflow-preferences-and-migrate-isolate.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0002-F01-synchronize-project-filaments-automatically-afte.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0003-F02-let-users-choose-process-fields-shown-in-simple-.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0004-F03-keep-the-printer-section-collapsed-across-sideba.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0005-F04-slice-the-current-plate-automatically-with-guard.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0006-F05-assign-clicked-filament-to-selected-objects-and-.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0007-F06-add-filament-menu-action-for-the-global-support-.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0008-F07-import-multiple-models-separately-without-merge-.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0009-F08-suppress-only-the-exact-TPU-cold-pull-advisory.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0010-F09-hide-daily-tips-and-remove-their-slicing-notific.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0011-Prefect-translate-workflow-controls-and-support-inte.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0012-Prefect-add-isolated-launcher-and-reproducible-polic.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0013-Prefect-preserve-German-catalog-additions-in-a-repea.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0014-Prefect-document-all-nine-changes-replay-commits-and.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0015-Prefect-adapt-Windows-CI-to-installed-Visual-Studio-.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0016-Prefect-guard-filament-actions-in-plain-G-code-previ.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0017-Prefect-assign-only-editable-model-selections-and-de.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0018-Prefect-record-native-MSVC-tests-and-exact-replay-of.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0019-build-relocate-dependency-metadata-and-retain-verifi.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0020-F01-catch-up-printer-filaments-when-automatic-sync-i.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0021-docs-record-full-Windows-build-and-twenty-commit-rep.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0022-Document-final-Windows-build-and-verified-standalone.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0023-Record-published-Workflow-1-prerelease-and-verified-.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--cached",
+        "--whitespace=nowarn",
+        "$PATCH_DIR\\0024-Workflow-2-arrange-inserted-objects-with-rotation-an.patch"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree",
+        "--missing-ok"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    }
+  ],
+  "no_lazy_fetch": true,
+  "success": true,
+  "replayed_final_tree": "b6feae21b1908e493d880297e901b243073585f5",
+  "mail_replayed_final_tree": "b6feae21b1908e493d880297e901b243073585f5",
+  "normal_index_sha256_before": "e120e6eadb93f3a97e2fc138b9dddd0875064086d893de0448e25a84df076705",
+  "normal_index_sha256_after": "e120e6eadb93f3a97e2fc138b9dddd0875064086d893de0448e25a84df076705",
+  "normal_index_unchanged": true,
+  "path_normalization": "Only machine-specific checkout/output prefixes replaced by $CHECKOUT/$PATCH_DIR; hashes, trees, commands and exit codes retained."
+}
