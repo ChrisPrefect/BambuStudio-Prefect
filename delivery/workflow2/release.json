@@ -10,5 +10,5 @@
   "patch_sha256": "1a59f8918bbcfdc5c79c42a5fcbea5735984e01f09222945ce8f6045a21173a5",
   "patch_count": 24,
   "notes_sha256": "fe605d2287ce73b628ce32d1545a3e77c43707c79b529927f44cde80a5086e79",
-  "publish": false
+  "publish": true
 }
