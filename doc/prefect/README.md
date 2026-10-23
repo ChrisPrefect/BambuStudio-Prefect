@@ -11,7 +11,15 @@ Die gemeinsame Grundlage ist Bambu Studio **v02.08.02.61**, Commit
 enthält alle elf Schalter, F10/F11 und die ergänzten Materialklickpfade.
 Die sechs nativen Policytests und der vollständige Replay von 24 Patches mit
 48 identischen Zwischenständen sind bestanden. Der neue vollständige
-Windows-Build läuft; [aktueller Prüfstand](validation/workflow2.md).
+Windows-GUI-Build ist kompiliert, gelinkt und paketiert; alle 6.755 Dateien
+der eigenen lokalen Installation sind mit dem Artefakt verglichen.
+Drei echte GUI-Neustarts bestätigen Anordnung mit Rotation, ausgeschaltete
+Anordnung und Anordnung ohne Rotation; automatisches Hintergrundslicing
+ist im eingeschalteten Fall bis zum erfolgreichen Abschluss belegt.
+[Paketnachweis, Laufzeitbelege und Grenzen](validation/workflow2.md).
+Die [veröffentlichte Vorabversion Workflow 2](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.2)
+enthält das vollständige Windows-Paket, die geprüfte Serie aus 24 Patches und
+`SHA256SUMS.txt`. [Frischer Veröffentlichungsnachweis](validation/published-release-workflow2.json).
 
 **Früherer Auslieferungsstand Workflow 1:** Der vollständige Windows-Build `4b5c3546` ist einschließlich
 Linken, Paketierung und CI-Tests erfolgreich. Das finale Paket wurde außerdem
@@ -85,12 +93,19 @@ die Entscheidung über externe Nachbearbeitungsskripte behalten ihre Bedeutung.
 
 ## Eigenes Profil statt Änderungen an der normalen Installation
 
-Auf dem geprüften Windows-System ist die vollständige eigene Anwendung unter
-`%USERPROFILE%\BambuStudio-Prefect-Windows` installiert. Die Desktop-Verknüpfung
-**BambuStudio Prefect** startet deren `bambu-studio.exe` mit
-`--datadir "%APPDATA%\BambuStudio-Prefect"`. ZIP-Hash, sämtliche Datei-Hashes,
-exakte Paketstruktur und fehlende Ressourcen-/Dateilinks sind im
-[lokalen Installationsnachweis](validation/local-windows-runtime.md) festgehalten.
+Auf dem geprüften Windows-System liegt Workflow 2 vollständig unter
+`%USERPROFILE%\BambuStudio-Prefect-Windows-v2`; die vorherige Workflow-1-
+Installation bleibt erhalten. ZIP-Hash, sämtliche Datei-Hashes, exakte
+Paketstruktur und fehlende Ressourcen-/Dateilinks sind im
+[Workflow-2-Prüfbericht](validation/workflow2.md) festgehalten.
+Die neue Laufzeitprüfung verwendet ein separates Profil mit ausschließlich
+synthetischen Prüfmodellen. Das bestehende normale Fork-Profil wird dabei
+nicht gestartet oder verändert.
+Die bestehende Desktop-Verknüpfung **BambuStudio Prefect patched** zeigt nach
+geprüfter Aktualisierung auf die neue EXE; ihr bisheriges
+`--datadir "%APPDATA%\BambuStudio-Prefect"` bleibt identisch.
+Der nächste reguläre Start ergänzt dort die neuen Standards über die
+Revision-2-Migration und erhält die schon gespeicherten Entscheidungen.
 
 [Start-Prefect.ps1](../../scripts/prefect/Start-Prefect.ps1) ist der Einstieg für
 eine gebaute Fork-Version. Er startet die angegebene `bambu-studio.exe` mit
@@ -130,8 +145,9 @@ Kommunikation mit dem Drucker erforderlich.
 Fork-Schalter. Die neun `prefect_*`-Booleans aus F01/F03/F05/F06/F07/F08/F09/F10/F11
 sind standardmäßig `true`.
 Hintergrundslicing ist ebenfalls standardmäßig aktiv. Die eigene einfache
-Feldauswahl bleibt zunächst deaktiviert; ein fehlender `prefect_simple_fields`-
-Wert entspricht einer leeren Liste.
+Feldauswahl bleibt zunächst deaktiviert. Beim erstmaligen Aktivieren ohne
+`prefect_simple_fields` initialisiert `TabPrint` die Liste mit den aktuellen einfachen Standardfeldern.
+Eine ausdrücklich gespeicherte leere Liste bleibt dagegen leer.
 
 `AppConfig::load()` prüft zusätzlich den **eingelesenen JSON-Inhalt** auf
 `app.prefect_workflow_revision`. Ein fehlender Schlüssel oder Revision `1`

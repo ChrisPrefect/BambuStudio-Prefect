@@ -1,0 +1,103 @@
+{
+  "schema": "prefect-workflow2-install-runtime-index-v1",
+  "source_commit": "9d4fad7292484403f0b026972835035b0a967d20",
+  "source_tree": "b6feae21b1908e493d880297e901b243073585f5",
+  "release": {
+    "id": 422086779,
+    "tag": "v02.08.02.61-prefect.2",
+    "source_commit": "9d4fad7292484403f0b026972835035b0a967d20",
+    "draft": false,
+    "prerelease": true,
+    "published_at": "2026-10-23T16:48:01Z",
+    "html_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.2",
+    "publication_run_id": 39989717566,
+    "publication_conclusion": "success",
+    "verification_document": "published-release-workflow2.json"
+  },
+  "ci": {
+    "workflow_run_id": 39975702857,
+    "workflow_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/39975702857",
+    "conclusion": "success",
+    "status": "completed",
+    "updated_utc": "2026-10-23T16:41:10Z",
+    "windows_job_id": 120489881313,
+    "policy_job_id": 120489587988,
+    "compile_link_install_upload_and_final_cache_steps": "success"
+  },
+  "artifact": {
+    "id": 12517035086,
+    "bytes": 264370161,
+    "sha256": "a595b79dd886562f1413259a9313154ab87912f9dbebf5cabbe781384605ae86"
+  },
+  "local_installation": {
+    "target_relative_to_userprofile": "BambuStudio-Prefect-Windows-v2",
+    "own_file_count": 6755,
+    "directory_count": 274,
+    "unpacked_bytes": 600422844,
+    "direct_pe_imports_checked": 482,
+    "zip_crc_and_all_file_sha256_verified": true,
+    "all_file_link_counts_one": true,
+    "hardlinks": 0,
+    "symlinks": 0,
+    "junctions": 0,
+    "private_full_install_proof_sha256": "4758e2873e8bbf7b0501519d679b4749c23beaa3a2d1a2d3090233f3d54d5f98"
+  },
+  "desktop_shortcut": {
+    "updated_and_read_back": true,
+    "target_relative_to_userprofile": "BambuStudio-Prefect-Windows-v2/bambu-studio.exe",
+    "normal_fork_profile_argument_unchanged": true,
+    "sha256_after": "fac0a1be60e5d1c13b95cf341d1c36d0ecaab9fa29ec7aeba1f1781da542fd5b",
+    "normal_fork_profile_changed": false,
+    "normal_fork_profile_launched_for_this_qa": false
+  },
+  "runtime_cases": [
+    {
+      "case": "defaults-on",
+      "public_proof": "runtime-workflow2/defaults-on.json",
+      "public_proof_sha256": "8679aa279617068ac0641f10a66a42798d182d6c8d66a5015182f911450635e9",
+      "arrange_job_count": 1,
+      "allow_rotations": true,
+      "model_object_count": 2,
+      "build_instance_count": 2,
+      "xy_aabbs_separated": true,
+      "background_processing_enabled": true,
+      "post_arrangement_slice_verified": true,
+      "workflow_revision": 2,
+      "all_remembered_rotation_settings_false": true
+    },
+    {
+      "case": "both-off",
+      "public_proof": "runtime-workflow2/both-off.json",
+      "public_proof_sha256": "03094ecd770568ffd8fc2d1ae3a2aa0467d833fc98d14c055e89552d2d1d699e",
+      "arrange_job_count": 0,
+      "allow_rotations": null,
+      "model_object_count": 2,
+      "build_instance_count": 2,
+      "xy_aabbs_separated": false,
+      "background_processing_enabled": false,
+      "post_arrangement_slice_verified": false,
+      "workflow_revision": 2,
+      "all_remembered_rotation_settings_false": true
+    },
+    {
+      "case": "rotation-off-arrange-on",
+      "public_proof": "runtime-workflow2/rotation-off-arrange-on.json",
+      "public_proof_sha256": "8d426da15021bb6abb5a56ed625ffe3241666d5837d18629a6ce85a50a8dffaf",
+      "arrange_job_count": 1,
+      "allow_rotations": false,
+      "model_object_count": 2,
+      "build_instance_count": 2,
+      "xy_aabbs_separated": true,
+      "background_processing_enabled": false,
+      "post_arrangement_slice_verified": false,
+      "workflow_revision": 2,
+      "all_remembered_rotation_settings_false": true
+    }
+  ],
+  "private_config_values_or_raw_logs_published": false,
+  "physical_printer_tests": false,
+  "physical_print_actions": 0,
+  "user_stock_processes_stopped": 0,
+  "SMB_access": false,
+  "limits": "Three actual GUI launches with synthetic STL arguments, stable automatic-backup geometry and PID-bound logs. Complete pointer/menu, filament-device synchronization and hardware printing acceptance is not claimed."
+}

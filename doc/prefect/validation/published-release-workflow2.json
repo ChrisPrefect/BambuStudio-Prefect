@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "verified_at_utc": "2026-10-23 16:49:56 UTC",
+  "verification": "Fresh GitHub REST reads of release, direct tag ref and publication run",
+  "repository": "ChrisPrefect/BambuStudio-Prefect",
+  "source_commit": "9d4fad7292484403f0b026972835035b0a967d20",
+  "source_tree": "b6feae21b1908e493d880297e901b243073585f5",
+  "release_id": 422086779,
+  "tag": "v02.08.02.61-prefect.2",
+  "tag_object_type": "commit",
+  "draft": false,
+  "prerelease": true,
+  "published_at": "2026-10-23T16:48:01Z",
+  "html_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.2",
+  "source_build_run": 39975702857,
+  "publication": {
+    "run_id": 39989717566,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "65b3d1fb17645abf4a4984e371fc93dfe2142be1",
+    "updated_at": "2026-10-23T16:48:06Z",
+    "verification_artifact_id": 12517920467,
+    "verification_artifact_archive_bytes": 1412,
+    "verification_artifact_archive_sha256": "3861de148a28a48297477e15e89f948b335ab11217841d4c558f8296c35949a1"
+  },
+  "assets": [
+    {
+      "id": 669745438,
+      "name": "BambuStudio-Prefect-2.8.2.61-Workflow2-Windows-x64.zip",
+      "size_bytes": 264370161,
+      "sha256": "a595b79dd886562f1413259a9313154ab87912f9dbebf5cabbe781384605ae86",
+      "download_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.2/BambuStudio-Prefect-2.8.2.61-Workflow2-Windows-x64.zip"
+    },
+    {
+      "id": 669746100,
+      "name": "BambuStudio-Prefect-patches-20261023.zip",
+      "size_bytes": 809077,
+      "sha256": "1a59f8918bbcfdc5c79c42a5fcbea5735984e01f09222945ce8f6045a21173a5",
+      "download_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.2/BambuStudio-Prefect-patches-20261023.zip"
+    },
+    {
+      "id": 669746155,
+      "name": "SHA256SUMS.txt",
+      "size_bytes": 228,
+      "sha256": "51f13ae2ee582a3f1967ea2bbe11f52c8867ecafd0d2b70f25dc6cbb5c0bef08",
+      "download_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.2/SHA256SUMS.txt"
+    }
+  ],
+  "complete_pointer_and_hardware_acceptance": false
+}

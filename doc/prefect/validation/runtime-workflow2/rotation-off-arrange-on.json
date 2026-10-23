@@ -1,0 +1,273 @@
+{
+  "SMB_access": false,
+  "activity_scope": "Top-level activity counters describe the read-only inspection helper only; the actual separately launched GUI is bound by process_binding and source_and_binary_binding.",
+  "app_launches": 0,
+  "assertions": {
+    "all_case_assertions_passed": true,
+    "background_slice_evidence": {
+      "automatic_slice_start_count": 0,
+      "background_processing_enabled": false,
+      "post_arrangement_slice_verified": false
+    },
+    "expected_allow_rotations": false,
+    "expected_arrange_job_count": 1,
+    "expected_xy_aabbs_separated": true,
+    "observed_arrange_job_count": 1
+  },
+  "backup_binding": {
+    "input_sha256": "7570f651da72ece2fe0cbfe8e91cb9c07297f4a5c0d2d1a2a723fce6d61b4f4a",
+    "snapshot_sha256": "f08c23d7fad088d563f47e290a515e5d310fa33a5cf46ce2caa9fe059a2d455d",
+    "source_files_stable": true
+  },
+  "case": "rotation-off-arrange-on",
+  "configuration": {
+    "booleans": {
+      "background_processing": false,
+      "prefect_arrange_after_import": true,
+      "prefect_arrange_rotation": false,
+      "prefect_auto_sync_filaments": true,
+      "prefect_click_filament_assigns_selection": true,
+      "prefect_hide_tips": true,
+      "prefect_import_separate_objects": true,
+      "prefect_printer_collapsed": true,
+      "prefect_simple_fields_enabled": false,
+      "prefect_support_interface_menu": true,
+      "prefect_suppress_tpu_cold_pull": true
+    },
+    "config_md5_valid": true,
+    "remembered_rotation_booleans": {
+      "enable_rotation": false,
+      "enable_rotation_fff": false,
+      "enable_rotation_fff_seq_print": false,
+      "enable_rotation_seq_print": false,
+      "enable_rotation_sla": false
+    },
+    "single_instance": false,
+    "workflow_revision": 2
+  },
+  "configuration_sha256": "7002886c9090fd75eb1e9d5f0acb6bd08b5c6750d00831010037810327f04506",
+  "evidence_written": true,
+  "geometry": {
+    "bambu_model_object_count": 2,
+    "build_instance_count": 2,
+    "consumed_xml_parts": [
+      "3D/3dmodel.model",
+      "3D/Objects/object_1.model",
+      "3D/Objects/object_2.model"
+    ],
+    "distinct_built_object_count": 2,
+    "instances": [
+      {
+        "index": 0,
+        "model_part": "3D/3dmodel.model",
+        "object_id": "1",
+        "printable": true,
+        "transform_3mf": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          93.65001,
+          135.0,
+          4.0
+        ],
+        "transformed_vertex_count": 8,
+        "world_aabb_mm": {
+          "max": [
+            103.65001,
+            150.0,
+            8.0
+          ],
+          "min": [
+            83.65001,
+            120.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "index": 1,
+        "model_part": "3D/3dmodel.model",
+        "object_id": "2",
+        "printable": true,
+        "transform_3mf": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          91.14999,
+          112.00003,
+          5.0
+        ],
+        "transformed_vertex_count": 8,
+        "world_aabb_mm": {
+          "max": [
+            103.64999,
+            118.00003,
+            10.0
+          ],
+          "min": [
+            78.64999,
+            106.00003,
+            0.0
+          ]
+        }
+      }
+    ],
+    "limitations": "XY AABB overlap is conservative; touching edges are separated at 1e-6 mm tolerance. No triangle intersection or printability claim.",
+    "root_resource_object_count": 2,
+    "schema": "prefect-workflow2-geometry-v1",
+    "units_normalized_to": "millimeter",
+    "xy_aabb_overlapping_pair_count": 0,
+    "xy_aabb_overlaps": [],
+    "xy_aabbs_separated": true
+  },
+  "input_writes": 0,
+  "launch_proof_sha256": "5bc00a44a8f4781bc9cf4be0e5cca59369cc153a0175b57c0580725d3188a5e0",
+  "limitations": "Actual GUI executable importing synthetic STLs; stable automatic backup plus runtime logs. Conservative XY AABB checks, no pointer-click, physical-printer, or printability claim.",
+  "network_calls": 0,
+  "process_binding": {
+    "creation_time_matches_launch": true,
+    "exact_fixture_command_line_verified": true,
+    "live_process_identity_verified": true,
+    "pid": 12588,
+    "stopped_by_root": false
+  },
+  "processes_stopped": 0,
+  "profile_writes": 0,
+  "runtime_logs": [
+    {
+      "arrange_runs": [
+        {
+          "allow_rotations": false,
+          "fixture_transforms_after": [
+            {
+              "bed_index": 0,
+              "fixture": "block_20x30x8",
+              "rotation_radians": 0.0,
+              "translation_xy_mm": [
+                93.65,
+                135.0
+              ]
+            },
+            {
+              "bed_index": 0,
+              "fixture": "block_25x12x10",
+              "rotation_radians": 0.0,
+              "translation_xy_mm": [
+                91.15,
+                112.0
+              ]
+            }
+          ],
+          "fixture_transforms_before": [
+            {
+              "bed_index": 0,
+              "fixture": "block_20x30x8",
+              "rotation_radians": 0.0,
+              "translation_xy_mm": [
+                128.0,
+                128.0
+              ]
+            },
+            {
+              "bed_index": 0,
+              "fixture": "block_25x12x10",
+              "rotation_radians": 0.0,
+              "translation_xy_mm": [
+                128.0,
+                128.0
+              ]
+            }
+          ],
+          "numeric_parameters": {
+            "accuracy": 1.0,
+            "allow_multi_materials_on_same_plate": 1.0,
+            "allow_rotations": 0.0,
+            "avoid_extrusion_cali_region": 1.0,
+            "bed_shrink_x": 0.0,
+            "bed_shrink_y": 0.0,
+            "brim_skirt_distance": 0.0,
+            "clearance_height_to_lid": 133.0,
+            "clearance_height_to_rod": 32.799999,
+            "cleareance_radius": 60.0,
+            "do_final_align": 1.0,
+            "is_seq_print": 0.0,
+            "min_obj_distance": 0.0,
+            "parallel": 1.0,
+            "printable_height": 261.0
+          },
+          "record_line": 8922,
+          "selected_after_count": 2,
+          "selected_after_record_line": 8945,
+          "selected_before_count": 2,
+          "selected_before_record_line": 8923
+        }
+      ],
+      "background_events": [],
+      "background_marker_counts": {
+        "background_validation_invalid": 0,
+        "slice_finished_event": 0,
+        "slice_gcode_finished": 0,
+        "slice_process_complete": 0,
+        "slice_start": 0,
+        "slice_worker_finished": 0
+      },
+      "decoded_bytes": 1719101,
+      "decoded_nonwhitespace_control_codepoints": [
+        2
+      ],
+      "decoded_sha256": "2d50670121b5f2a7cb9041378f2fb5682c5a475b622b887daff7587910798dcd",
+      "decoded_utf8_valid": true,
+      "encrypted_log_bytes": 1719440,
+      "encrypted_log_sha256": "513efc3791bf350c95b1be9acd9d88eaeb7f7119f3cd660384a40ce747085c26",
+      "formatted_log_record_count": 9106,
+      "header_app_build_time": "20261023-150827",
+      "header_app_version": "02.08.02.61",
+      "input_unchanged": true,
+      "public_local_default": "US_1",
+      "qa_log_name": "studio_Fri_Oct_23_18_40_48_12588_enc_dc.log.0",
+      "startup_markers": {
+        "finished initializing": 0,
+        "finished load_current_presets": 0,
+        "finished run wizard": 0,
+        "finished the gui app init": 1
+      },
+      "synthetic_fixture_names_seen": [
+        "block_20x30x8",
+        "block_25x12x10"
+      ],
+      "trailing_incomplete_ciphertext_bytes": 0
+    }
+  ],
+  "schema": "prefect-workflow2-actual-gui-case-v1",
+  "source_and_binary_binding": {
+    "application_dll_sha256": "66ba6886590121875ba65f93db9fd1a36d662b0c916c8fa28a72317cc012447d",
+    "artifact_id": 12517035086,
+    "artifact_sha256": "a595b79dd886562f1413259a9313154ab87912f9dbebf5cabbe781384605ae86",
+    "background_marker_source_sha256": {
+      "BackgroundSlicingProcess.cpp": "4fd78fe3ae2b91e4e78ca8f118ee48c0c2385d4c3ade82071ebe33dfc7c9da1d",
+      "BackgroundSlicingProcess.hpp": "ca6986a106713bd290348392121095c7989b27f9819f35d6f28ae25dfabbeabf"
+    },
+    "installer_proof_sha256": "4758e2873e8bbf7b0501519d679b4749c23beaa3a2d1a2d3090233f3d54d5f98",
+    "launcher_sha256": "0e812bc13daf85fa8af49db838d6cc135d88d46de485f2c1bc37617d8d635ca1",
+    "source_commit": "9d4fad7292484403f0b026972835035b0a967d20",
+    "source_marker_sha256": "5ed69326f6c1a2ae93f09d623362b936f7ac710fb0734c72c9fe9ead7a3acd56",
+    "workflow_run_id": 39975702857
+  },
+  "synthetic_fixture_sha256": {
+    "block_20x30x8.stl": "ee822941463ed6df66e34544a95f32079ad2b8a43c233553c3301cd285daec7d",
+    "block_25x12x10.stl": "91d88ec0a3c6acaa8095c2e49835d868477102be0c6881e8308e4f703292524c"
+  },
+  "utc": "2026-10-23T16:41:11.046428+00:00"
+}

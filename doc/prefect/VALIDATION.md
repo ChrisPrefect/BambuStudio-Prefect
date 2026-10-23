@@ -7,9 +7,27 @@ Stand: **23. Oktober 2026**, Zeitzone Europe/Zurich.
 Die Erweiterung ist an Quellcommit `9d4fad7292484403f0b026972835035b0a967d20`
 und Tree `b6feae21b1908e493d880297e901b243073585f5` gebunden.
 Sechs native C++17-Policyprogramme, Manifest und Katalog sind geprüft; die
-24 Patches rekonstruieren alle 48 Zwischenstände exakt. Der vollständige
-neue Windows-Build und die Laufzeitprüfung werden im
-[Workflow-2-Bericht](validation/workflow2.md) getrennt dokumentiert.
+24 Patches rekonstruieren alle 48 Zwischenstände exakt. Der neue Windows-
+GUI-Build ist einschließlich Compile, Link, Installation, Paketierung und
+Artefakt-Upload erfolgreich. Das Artefakt `12517035086` wurde vollständig
+lokal installiert und anhand seiner 6.755 Datei-Hashes geprüft. Paket-SHA-256:
+`a595b79dd886562f1413259a9313154ab87912f9dbebf5cabbe781384605ae86`.
+Die tatsächlichen GUI-Fälle mit synthetischen Modellen und deren Grenzen
+stehen getrennt im [Workflow-2-Bericht](validation/workflow2.md).
+Der gesamte Actions-Lauf ist **completed / success**, einschließlich der
+abschließenden Cache-Schritte. Drei echte GUI-Neustarts bestätigen
+Anordnung mit Rotation, vollständig ausgeschaltete Anordnung und Anordnung
+ohne Rotation. Im eingeschalteten Fall ist außerdem automatisches Slicing
+nach der Anordnung bis Finished-Status `0` belegt.
+[Kompakter Installations-/QA-Index](validation/workflow2-results.json).
+Die [Vorabversion Workflow 2](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.2)
+ist am 23.10.2026 um **16:48:01 UTC** veröffentlicht. Frische REST-Abfragen
+bestätigen `draft=false`, den direkten Quelltag und alle drei Asset-IDs,
+Größen und SHA-256-Werte sowie den erfolgreichen Publikationslauf:
+[Veröffentlichungsnachweis](validation/published-release-workflow2.json).
+
+Die folgenden Abschnitte dokumentieren den historischen Workflow-1-Stand.
+Sie sind keine pauschale Aussage über die Abnahme neuer Workflow-2-Funktionen.
 
 ## Historische Abnahme Workflow 1 vom 21. Oktober 2026
 

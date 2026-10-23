@@ -8,6 +8,9 @@ Workflow 2 ergänzt erzwungene Anordnungsrotation und automatische Anordnung
 nach dem Einfügen mehrerer Objekte. Alle elf Optionen stehen gemeinsam unter
 **Einstellungen → Workflow**; Materialklick unterstützt auch Misch-/Verlaufszeilen.
 
+[**Windows-Vorabversion Workflow 2 herunterladen**](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.2)
+enthält das vollständige Windows-Paket, die 24 geprüften Patches und SHA-256-Prüfsummen.
+
 [Alle elf Anpassungen und Bedienung](doc/prefect/README.md) ·
 [Gemeinsame Einstellungsseite](doc/prefect/workflow-settings.md) ·
 [Änderungen bei Upstream-Updates nachtragen](doc/prefect/UPSTREAM-UPDATES.md) ·
@@ -15,7 +18,12 @@ nach dem Einfügen mehrerer Objekte. Alle elf Optionen stehen gemeinsam unter
 [Windows-Builds](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/workflows/prefect-workflow.yml)
 
 Die Fork-Version startet mit einem eigenen Profil über `Start-Prefect.ps1`.
-Ausführbare Builds und deren tatsächlichen Prüfstand nennt das Prüfprotokoll.
+Der vollständige Windows-Build von Workflow 2 ist kompiliert und gelinkt;
+das lokale Paket ist mit allen 6.755 Dateien geprüft.
+Anordnung mit/ohne Rotation, ausgeschaltete Anordnung und automatisches
+Hintergrundslicing sind mit tatsächlichen GUI-Starts geprüft.
+[Paketbeleg und tatsächliche GUI-Laufzeitprüfungen](doc/prefect/validation/workflow2.md)
+benennen den Quellstand und die Grenzen der Abnahme.
 
 ---
 

@@ -1,0 +1,18 @@
+# GitHub Actions policy job 120489587988
+# Source: 9d4fad7292484403f0b026972835035b0a967d20
+# Run: https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/39975702857
+# Job conclusion: success. The filament test has no stdout; the six-program loop exited successfully.
+# Extracted compiler/test/manifest lines; terminal colour escape sequences removed.
+2026-10-23T15:09:00.2106701Z ##[group]Run mkdir -p out/prefect-tests
+2026-10-23T15:09:00.2107034Z mkdir -p out/prefect-tests
+2026-10-23T15:09:00.2107235Z for test in tests/prefect/*_test.cpp; do
+2026-10-23T15:09:00.2107460Z   binary="out/prefect-tests/$(basename "$test" .cpp)"
+2026-10-23T15:09:00.2107745Z   g++ -std=c++17 -Wall -Wextra -Werror -pedantic "$test" -o "$binary"
+2026-10-23T15:09:00.2108028Z   "$binary"
+2026-10-23T15:09:00.2108152Z done
+2026-10-23T15:09:02.3588780Z Arrange preference and deferred insertion policy: all regression checks passed
+2026-10-23T15:09:02.7286373Z Background slicing lifecycle policy: all regression checks passed
+2026-10-23T15:09:03.2535051Z Workflow preference migration: all regression checks passed
+2026-10-23T15:09:03.6808895Z Simple field policy: all regression checks passed
+2026-10-23T15:09:03.8748815Z Cold-pull reminder policy: all regression checks passed
+2026-10-23T15:09:03.9532395Z Manifest: all 11 features have documentation and matching source anchors
