@@ -349,6 +349,21 @@ class ReleaseTests(unittest.TestCase):
         self.api.artifact.update(size_in_bytes=len(payload), digest=f"sha256:{self.c['artifact_sha256']}")
         self.reject_without_writes()
 
+    def test_download_accept_matches_artifact_and_release_endpoints(self):
+        api = r.GithubAPI("fixture-token", self.c)
+        with mock.patch.object(r.subprocess, "run", return_value=mock.Mock(returncode=0)) as process:
+            api.download("actions/artifacts/456/zip", self.work / "artifact-download.zip")
+            self.assertIn("Accept: application/vnd.github+json", process.call_args.args[0])
+            api.download("releases/assets/101", self.work / "release-download.zip")
+            self.assertIn("Accept: application/octet-stream", process.call_args.args[0])
+
+    def test_download_error_reports_only_http_status_without_signed_urls(self):
+        api = r.GithubAPI("fixture-token", self.c)
+        response = mock.Mock(returncode=1, stderr=b"gh: Unsupported Accept (HTTP 415) https://example.invalid/?signed=secret")
+        with mock.patch.object(r.subprocess, "run", return_value=response), self.assertRaises(r.VerificationError) as caught:
+            api.download("actions/artifacts/456/zip", self.work / "artifact-download.zip")
+        self.assertEqual(str(caught.exception), "GitHub binary download failed (HTTP 415)")
+
 
 if __name__ == "__main__":
     unittest.main()

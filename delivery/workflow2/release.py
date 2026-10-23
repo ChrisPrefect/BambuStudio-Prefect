@@ -116,11 +116,19 @@ class GithubAPI:
                 "Unexpected binary download endpoint")
         # gh handles the GitHub-controlled artifact redirect. Tokens are never
         # passed as arguments or forwarded by our own cross-host redirect code.
+        # The Actions ZIP route uses the normal REST Accept header; only release
+        # asset content negotiation requires application/octet-stream.
+        accept = "application/vnd.github+json" if path.startswith("actions/artifacts/") else "application/octet-stream"
         with Path(destination).open("wb") as output:
             result = subprocess.run(["gh", "api", "--hostname", "github.com", PREFIX + path,
-                                     "-H", "Accept: application/octet-stream"], stdout=output,
+                                     "-H", "Accept: " + accept], stdout=output,
                                     stderr=subprocess.PIPE, timeout=1800, check=False)
-        require(result.returncode == 0, "GitHub binary download failed")
+        if result.returncode != 0:
+            # Report only the status, never redirect URLs, signed queries, or auth.
+            error = result.stderr.decode("utf-8", errors="replace")
+            status = re.search(r"HTTP (\d{3})", error)
+            detail = f"HTTP {status.group(1)}" if status else f"exit {result.returncode}"
+            raise VerificationError(f"GitHub binary download failed ({detail})")
 
     def create_tag(self):
         return self._json(PREFIX + "git/refs", "POST",
