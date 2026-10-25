@@ -98,11 +98,36 @@ Zeitstempel. Das Werkzeug verändert keine Dateiinhalte oder Git-Indexeinträge.
 Das zugehörige Windows-Testskript weist mit echtem MSBuild nach, dass identische
 Eingaben übersprungen und geänderte Eingaben erneut gebaut werden.
 
-Zusätzlich wird `SOURCE_DATE_EPOCH` auf den letzten tatsächlichen Commit der
-Anwendungs-/CMake-Quellen gesetzt. CMake verwendet ihn für `SLIC3R_BUILD_TIME`;
-ein reiner Workflowfix ändert dadurch nicht den Versionsheader und sämtliche
-PCH-Abhängigkeiten. Bei einem flachen Checkout wird die Historie nur so weit
-vertieft, bis der Sourcecommit sicher vor der Shallow-Grenze liegt.
+`version_metadata_epoch.py` bestimmt `VERSION_METADATA_EPOCH` aus dem letzten
+Commit, der eine der tatsächlichen Versions-/Brandingdateien berührt:
+`version.inc`, `src/libslic3r/libslic3r.h`,
+`src/libslic3r/libslic3r_version.h.in` oder `src/libslic3r/CMakeLists.txt`.
+Der letzte Pfad enthält die Erzeugung des Versionsheaders und des Zeitwerts.
+Die CI setzt `SOURCE_DATE_EPOCH` auf genau diesen Wert. Bei einem flachen
+Checkout wird nur so weit vertieft, bis der Metadatencommit vor der
+Shallow-Grenze nachgewiesen ist; ein nicht belegbarer oder lokal veränderter
+Metadatenstand bricht ab. Es gibt keinen festgeschriebenen Commit oder Ersatzwert.
+
+**`SLIC3R_BUILD_TIME` bezeichnet in diesem reproduzierbaren Build das Datum
+der Versions-/Brandingmetadaten, nicht die Uhrzeit der Kompilierung oder der
+letzten beliebigen Quelländerung.** Dies gilt auch für die vorhandene Anzeige
+„Build Time“ im Über-Dialog und für die entsprechenden Logfelder. Ein reiner
+GUI-Funktionsnachtrag, Workflow- oder Dokumentationsfix ändert dadurch nicht
+allein wegen seines Datums den gemeinsam eingebundenen Versionsheader und
+sämtliche PCH-Abhängigkeiten. Eine Änderung der genannten Metadaten ändert
+den Wert weiterhin. Public-Builds verwenden `BBL_RELEASE_TO_PUBLIC=1` und
+lassen `SLIC3R_COMPILE_VERSION` wie bisher leer; interne Builds erhalten
+weiterhin ihre normale zusätzliche Git-SHA-Abhängigkeit.
+
+Die echte Quellidentität bleibt unverändert der aktuelle `GITHUB_SHA`, der
+Artefaktname und `PREFECT-COMMIT.txt`. Geänderte C++-Bytes/Git-Blobs werden
+weiterhin vom unveränderten Input-Manifest erkannt und neu gebaut; die
+Epochregel setzt selbst keine Datei-Zeitstempel zurück und schwächt weder
+die Toolchain-/CMake-/Flag-Familie noch den tatsächlichen Compile/Link ab.
+Tests verwenden getrennte synthetische Git-Historien, prüfen GUI- gegen
+Metadatenänderungen, flache Historie und die reale CMake-Headererzeugung.
+Der bestehende native MSBuild-Cachetest prüft zusätzlich, dass geänderte
+Eingaben trotz wiederverwendeter Umgebung tatsächlich erneut gebaut werden.
 
 ## Paketinhalt und Profil
 

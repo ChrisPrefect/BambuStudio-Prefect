@@ -30,6 +30,7 @@
 #include <regex>
 #include <thread>
 #include <string_view>
+#include <memory>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/format.hpp>
@@ -64,6 +65,8 @@
 #include <wx/splash.h>
 #include <wx/fontutil.h>
 #include <wx/glcanvas.h>
+#include <wx/thread.h>
+#include <wx/timer.h>
 
 #include "libslic3r/Utils.hpp"
 #include "libslic3r/Debounce.hpp"
@@ -138,6 +141,13 @@
 #ifdef __WXMSW__
 #include <dbt.h>
 #include <shlobj.h>
+#if __has_include("windows.ui.shell.h")
+#define PREFECT_HAS_TASKBAR_WINRT 1
+#include <roapi.h>
+// Unprefixed SDK/winrt ABI header, not cppwinrt/winrt's projection header.
+#include <windows.ui.shell.h>
+#include <wrl/client.h>
+#endif
 
 #ifdef __WINDOWS__
 #ifdef _MSW_DARK_MODE
@@ -186,6 +196,349 @@ namespace Slic3r {
 namespace GUI {
 
 class MainFrame;
+
+#ifdef PREFECT_HAS_TASKBAR_WINRT
+namespace {
+
+// QA-only, genuine in-process TaskbarManager integration. The launcher merely
+// opts in; only a subsequent foreground F8/menu action can request a pin.
+class PrefectTaskbarPin : public wxEvtHandler, public std::enable_shared_from_this<PrefectTaskbarPin>
+{
+    using TaskbarManager = ABI::Windows::UI::Shell::ITaskbarManager;
+    using TaskbarStatics = ABI::Windows::UI::Shell::ITaskbarManagerStatics;
+    // WinRT projects Boolean as bool here; GetResults still takes ABI boolean*.
+    using BoolOperation = ABI::Windows::Foundation::IAsyncOperation<bool>;
+    using AsyncInfo = ABI::Windows::Foundation::IAsyncInfo;
+    template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+    using RoInitializeFn = HRESULT (WINAPI*)(RO_INIT_TYPE);
+    using RoUninitializeFn = void (WINAPI*)();
+    using CreateStringFn = HRESULT (WINAPI*)(PCNZWCH, UINT32, HSTRING*);
+    using DeleteStringFn = HRESULT (WINAPI*)(HSTRING);
+    using GetFactoryFn = HRESULT (WINAPI*)(HSTRING, REFIID, void**);
+    enum class Phase { Checking, Ready, Requesting, Finished, Unavailable, Closed };
+
+    wxWeakRef<MainFrame> m_frame;
+    wxMenuItem* m_menu_item;
+    wxTimer m_timer;
+    Phase m_phase { Phase::Checking };
+    HMODULE m_combase { nullptr };
+    RoUninitializeFn m_uninitialize { nullptr };
+    bool m_apartment_initialized { false };
+    bool m_check_started { false };
+    bool m_request_attempted { false };
+    ComPtr<TaskbarManager> m_manager;
+    ComPtr<BoolOperation> m_operation;
+    ComPtr<AsyncInfo> m_async_info;
+
+    static void record(const char* stage, HRESULT result = S_OK, int value = -1)
+    {
+        // Existing application logging stays in the launcher's isolated local
+        // QA profile. No extra file path, credential, HWND or PID is recorded.
+        BOOST_LOG_TRIVIAL(info) << "PrefectTaskbarPin "
+            << nlohmann::json({{"stage", stage}, {"hresult", static_cast<long>(result)}, {"value", value}}).dump();
+    }
+
+    bool alive() const
+    {
+        const MainFrame* frame = m_frame.get();
+        return m_phase != Phase::Closed && frame && !frame->IsBeingDeleted();
+    }
+
+    bool foreground() const
+    {
+        const MainFrame* frame = m_frame.get();
+        return wxIsMainThread() && alive()
+            && frame->IsShownOnScreen() && !frame->IsIconized()
+            && ::GetForegroundWindow() == reinterpret_cast<HWND>(frame->GetHandle());
+    }
+
+    void unavailable(const char* stage, HRESULT result)
+    {
+        if (m_phase == Phase::Closed) return;
+        m_timer.Stop();
+        m_phase = Phase::Unavailable;
+        if (alive()) {
+            m_menu_item->SetItemLabel(wxString::FromUTF8("Taskleistenanheften nicht verfügbar\tF8"));
+            m_menu_item->Enable(false);
+        }
+        record(stage, result);
+        ComPtr<AsyncInfo> info = std::move(m_async_info);
+        m_operation.Reset();
+        if (info) info->Cancel();
+    }
+
+    // Apply Microsoft's documented exact-value test, without reading a token
+    // or trying to unlock a feature. Unexpected access/type failures stop QA.
+    static HRESULT laf_requirement(bool& required)
+    {
+        required = false;
+        HKEY key = nullptr;
+        LSTATUS status = ::RegOpenKeyExW(HKEY_LOCAL_MACHINE,
+            L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModel\\LimitedAccessFeatures\\com.microsoft.windows.taskbar.pin",
+            0, KEY_QUERY_VALUE, &key);
+        if (status == ERROR_FILE_NOT_FOUND) return S_OK;
+        if (status != ERROR_SUCCESS) return HRESULT_FROM_WIN32(status);
+        DWORD value = 0, kind = 0, bytes = sizeof(value);
+        status = ::RegQueryValueExW(key,
+            L"4096B239A7295B635C090E647E867B5707DA6AB6CB78340B01FE4E0C8F4953D4",
+            nullptr, &kind, reinterpret_cast<BYTE*>(&value), &bytes);
+        ::RegCloseKey(key);
+        if (status == ERROR_FILE_NOT_FOUND) return S_OK;
+        if (status != ERROR_SUCCESS) return HRESULT_FROM_WIN32(status);
+        if (kind != REG_DWORD || bytes != sizeof(value)) return HRESULT_FROM_WIN32(ERROR_INVALID_DATA);
+        required = value != 0;
+        return S_OK;
+    }
+
+    HRESULT observe_operation()
+    {
+        const ComPtr<BoolOperation> operation = m_operation;
+        if (!operation) return E_POINTER;
+        ComPtr<AsyncInfo> info;
+        HRESULT result = operation.As(&info);
+        if (FAILED(result)) return result;
+        if (!alive()) return E_ABORT;
+        m_async_info = std::move(info);
+        if (!m_timer.Start(100)) return E_FAIL;
+        return S_OK;
+    }
+
+    void poll(wxTimerEvent&)
+    {
+        const auto keep_alive = weak_from_this().lock();
+        if (!keep_alive) return;
+        if (m_phase != Phase::Checking && m_phase != Phase::Requesting) return;
+        if (!alive()) { shutdown(); return; }
+        const ComPtr<AsyncInfo> info = m_async_info;
+        const ComPtr<BoolOperation> operation = m_operation;
+        AsyncStatus status = AsyncStatus::Started;
+        HRESULT result = info->get_Status(&status);
+        if (!alive()) { shutdown(); return; }
+        if (FAILED(result)) { unavailable("async_status_failed", result); return; }
+        if (status == AsyncStatus::Started) return;
+        m_timer.Stop();
+        if (status != AsyncStatus::Completed) {
+            HRESULT error = E_ABORT;
+            if (status == AsyncStatus::Error) info->get_ErrorCode(&error);
+            unavailable("async_not_completed", error);
+            return;
+        }
+        boolean pinned = false;
+        result = operation->GetResults(&pinned);
+        info->Close();
+        if (!alive()) { shutdown(); return; }
+        m_async_info.Reset();
+        m_operation.Reset();
+        if (FAILED(result)) { unavailable("async_result_failed", result); return; }
+        if (m_phase == Phase::Checking && !pinned) {
+            m_phase = Phase::Ready;
+            record("current_app_not_pinned");
+            refresh_allowed();
+        } else {
+            const bool requested = m_phase == Phase::Requesting;
+            m_phase = Phase::Finished;
+            m_menu_item->SetItemLabel(pinned ? "An Taskleiste angeheftet" : "Nicht angeheftet");
+            m_menu_item->Enable(false);
+            record(requested ? "pin_result" : "already_pinned", S_OK, pinned ? 1 : 0);
+        }
+        // This timer only observes an operation; it never initiates a request.
+    }
+
+public:
+    PrefectTaskbarPin(MainFrame* frame, wxMenuItem* item)
+        : m_frame(frame), m_menu_item(item), m_timer(this)
+    {
+        Bind(wxEVT_TIMER, &PrefectTaskbarPin::poll, this, m_timer.GetId());
+    }
+
+    ~PrefectTaskbarPin() override
+    {
+        shutdown();
+        // Event callbacks hold the state locally. A reentrant frame close can
+        // cancel work, but cannot tear down the apartment under an active call.
+        m_async_info.Reset();
+        m_operation.Reset();
+        m_manager.Reset();
+        if (m_apartment_initialized) m_uninitialize();
+        if (m_combase) ::FreeLibrary(m_combase);
+    }
+
+    void check_if_foreground()
+    {
+        if (m_phase != Phase::Checking || m_check_started || !foreground()) return;
+        m_check_started = true;
+        start_check();
+    }
+
+    void start_check()
+    {
+        record("qa_enabled");
+        if (!wxIsMainThread()) { unavailable("not_ui_thread", E_UNEXPECTED); return; }
+        PWSTR aumid = nullptr;
+        HRESULT result = ::GetCurrentProcessExplicitAppUserModelID(&aumid);
+        const bool own_identity = SUCCEEDED(result) && aumid && std::wstring_view(aumid) == L"ChrisPrefect.BambuStudio";
+        ::CoTaskMemFree(aumid);
+        if (!own_identity) { unavailable("own_aumid_required", FAILED(result) ? result : E_UNEXPECTED); return; }
+        bool token_required = false;
+        result = laf_requirement(token_required);
+        if (FAILED(result)) { unavailable("laf_check_failed", result); return; }
+        record("laf_token_required", S_OK, token_required ? 1 : 0);
+        if (token_required) { unavailable("laf_authorization_required", E_ACCESSDENIED); return; }
+
+        m_combase = ::LoadLibraryExW(L"combase.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
+        if (!m_combase) { unavailable("combase_unavailable", HRESULT_FROM_WIN32(::GetLastError())); return; }
+        const auto initialize = reinterpret_cast<RoInitializeFn>(::GetProcAddress(m_combase, "RoInitialize"));
+        m_uninitialize = reinterpret_cast<RoUninitializeFn>(::GetProcAddress(m_combase, "RoUninitialize"));
+        const auto create_string = reinterpret_cast<CreateStringFn>(::GetProcAddress(m_combase, "WindowsCreateString"));
+        const auto delete_string = reinterpret_cast<DeleteStringFn>(::GetProcAddress(m_combase, "WindowsDeleteString"));
+        const auto get_factory = reinterpret_cast<GetFactoryFn>(::GetProcAddress(m_combase, "RoGetActivationFactory"));
+        if (!initialize || !m_uninitialize || !create_string || !delete_string || !get_factory) {
+            unavailable("winrt_exports_missing", E_NOINTERFACE); return;
+        }
+        result = initialize(RO_INIT_SINGLETHREADED);
+        if (FAILED(result)) { unavailable("winrt_apartment_failed", result); return; }
+        m_apartment_initialized = true; // S_OK and S_FALSE both need balancing.
+        if (!alive()) { shutdown(); return; }
+        constexpr wchar_t runtime_class[] = L"Windows.UI.Shell.TaskbarManager";
+        HSTRING class_name = nullptr;
+        result = create_string(runtime_class, static_cast<UINT32>(std::size(runtime_class) - 1), &class_name);
+        if (FAILED(result)) { unavailable("class_name_failed", result); return; }
+        ComPtr<TaskbarStatics> factory;
+        result = get_factory(class_name, __uuidof(TaskbarStatics), reinterpret_cast<void**>(factory.GetAddressOf()));
+        delete_string(class_name);
+        if (!alive()) { shutdown(); return; }
+        if (FAILED(result)) { unavailable("activation_factory_failed", result); return; }
+        // Documented marker, queried without depending on a newer SDK typedef.
+        constexpr IID desktop_support = {0xcdfefd63, 0xe879, 0x4134, {0xb9, 0xa7, 0x82, 0x83, 0xf0, 0x5f, 0x94, 0x80}};
+        ComPtr<IInspectable> marker;
+        result = factory->QueryInterface(desktop_support, reinterpret_cast<void**>(marker.GetAddressOf()));
+        if (!alive()) { shutdown(); return; }
+        if (FAILED(result)) { unavailable("desktop_support_missing", result); return; }
+        record("desktop_support_present");
+        ComPtr<TaskbarManager> manager;
+        result = factory->GetDefault(manager.GetAddressOf());
+        if (!alive()) { shutdown(); return; }
+        if (FAILED(result)) { unavailable("get_default_failed", result); return; }
+        boolean supported = false;
+        result = manager->get_IsSupported(&supported);
+        if (!alive()) { shutdown(); return; }
+        if (FAILED(result) || !supported) { unavailable("taskbar_not_supported", FAILED(result) ? result : S_FALSE); return; }
+        ComPtr<BoolOperation> operation;
+        result = manager->IsCurrentAppPinnedAsync(operation.GetAddressOf());
+        if (!alive()) { shutdown(); return; }
+        if (FAILED(result)) { unavailable("pinned_check_failed", result); return; }
+        m_manager = std::move(manager);
+        m_operation = std::move(operation);
+        result = observe_operation();
+        if (FAILED(result)) unavailable("pinned_observer_failed", result);
+    }
+
+    void refresh_allowed()
+    {
+        if (m_phase != Phase::Ready) return;
+        if (!alive()) { shutdown(); return; }
+        boolean allowed = false;
+        const ComPtr<TaskbarManager> manager = m_manager;
+        const HRESULT result = manager->get_IsPinningAllowed(&allowed);
+        if (!alive()) { shutdown(); return; }
+        if (FAILED(result)) { unavailable("pinning_allowed_failed", result); return; }
+        m_menu_item->SetItemLabel("An Taskleiste anheften\tF8");
+        m_menu_item->Enable(allowed && foreground());
+        record("pinning_allowed", S_OK, allowed ? 1 : 0);
+    }
+
+    void user_action()
+    {
+        // A background launch may not have run its read-only preflight yet.
+        // In that case this key only checks; pinning needs a later user action.
+        if (m_phase == Phase::Checking && !m_check_started) { check_if_foreground(); return; }
+        if (m_phase != Phase::Ready || m_request_attempted) { record("action_not_ready"); return; }
+        if (!foreground()) { record("foreground_ui_required", E_ACCESSDENIED); return; }
+        boolean allowed = false;
+        const ComPtr<TaskbarManager> manager = m_manager;
+        HRESULT result = manager->get_IsPinningAllowed(&allowed);
+        if (!alive()) { shutdown(); return; }
+        if (FAILED(result)) { unavailable("pinning_allowed_failed", result); return; }
+        if (!allowed) { record("pinning_not_allowed", S_FALSE); m_menu_item->Enable(false); return; }
+        if (!foreground()) { record("foreground_changed", E_ACCESSDENIED); return; }
+        // This is the only pin request site. Called directly from the actual
+        // F8/menu event, never from launch, activation, an installer or a timer.
+        m_request_attempted = true;
+        m_phase = Phase::Requesting;
+        m_menu_item->Enable(false);
+        record("request_from_foreground_user_action");
+        ComPtr<BoolOperation> operation;
+        result = manager->RequestPinCurrentAppAsync(operation.GetAddressOf());
+        if (!alive()) {
+            ComPtr<AsyncInfo> info;
+            if (operation && SUCCEEDED(operation.As(&info))) info->Cancel();
+            shutdown();
+            return;
+        }
+        if (FAILED(result)) { unavailable("pin_request_failed", result); return; }
+        m_operation = std::move(operation);
+        result = observe_operation();
+        if (FAILED(result)) unavailable("pin_observer_failed", result);
+    }
+
+    void shutdown()
+    {
+        if (m_phase == Phase::Closed) return;
+        m_phase = Phase::Closed;
+        m_timer.Stop();
+        m_frame = nullptr;
+        ComPtr<AsyncInfo> info = std::move(m_async_info);
+        m_operation.Reset();
+        m_manager.Reset();
+        if (info) info->Cancel();
+    }
+};
+
+void install_prefect_taskbar_pin_ui(MainFrame* frame)
+{
+    wxString enabled;
+    if (!wxGetEnv("PREFECT_QA_TASKBAR_PIN", &enabled) || enabled != "1" || !frame || !frame->topbar()) return;
+    wxMenu* menu = frame->topbar()->GetTopMenu();
+    static const int action_id = wxWindow::NewControlId();
+    if (!menu || menu->FindItem(action_id)) return; // Idempotent per real frame.
+    menu->AppendSeparator();
+    auto* item = menu->Append(action_id, wxString::FromUTF8("Taskleistenstatus wird geprüft\tF8"),
+        wxString::FromUTF8("Prefect Bambu Studio nach Windows-Bestätigung an die Taskleiste anheften"));
+    item->Enable(false);
+    auto state = std::make_shared<PrefectTaskbarPin>(frame, item);
+    menu->Bind(wxEVT_MENU, [state](wxCommandEvent&) { const auto keep_alive = state; keep_alive->user_action(); }, action_id);
+    frame->Bind(wxEVT_CHAR_HOOK, [state](wxKeyEvent& event) {
+        const auto keep_alive = state;
+        if (event.GetKeyCode() == WXK_F8 && !event.HasAnyModifiers()) keep_alive->user_action();
+        else event.Skip();
+    });
+    frame->Bind(wxEVT_ACTIVATE, [state](wxActivateEvent& event) {
+        const auto keep_alive = state;
+        if (event.GetActive()) {
+            keep_alive->check_if_foreground();
+            keep_alive->refresh_allowed();
+        }
+        event.Skip();
+    });
+    frame->Bind(wxEVT_DESTROY, [state, frame](wxWindowDestroyEvent& event) {
+        const auto keep_alive = state;
+        if (event.GetEventObject() == frame) keep_alive->shutdown();
+        event.Skip();
+    });
+    state->check_if_foreground();
+}
+
+} // namespace
+#elif defined(__WXMSW__)
+namespace {
+void install_prefect_taskbar_pin_ui(MainFrame*)
+{
+    wxString enabled;
+    if (wxGetEnv("PREFECT_QA_TASKBAR_PIN", &enabled) && enabled == "1")
+        BOOST_LOG_TRIVIAL(error) << "PrefectTaskbarPin {\"stage\":\"sdk_headers_missing\"}";
+}
+} // namespace
+#endif // PREFECT_HAS_TASKBAR_WINRT
 
 void start_ping_test()
 {
@@ -3546,6 +3899,9 @@ bool GUI_App::on_init_inner()
     mainframe->topbar()->SaveNormalRect();
 #endif
     mainframe->Show(true);
+#ifdef __WXMSW__
+    install_prefect_taskbar_pin_ui(mainframe);
+#endif
     BOOST_LOG_TRIVIAL(info) << "main frame firstly shown";
     perf_mark("Main window shown");
 
@@ -4329,6 +4685,9 @@ void GUI_App::recreate_GUI(const wxString &msg_name)
     m_printhost_job_queue.reset(new PrintHostJobQueue(mainframe->printhost_queue_dlg()));
     load_current_presets();
     mainframe->Show(true);
+#ifdef __WXMSW__
+    install_prefect_taskbar_pin_ui(mainframe);
+#endif
     //mainframe->refresh_plugin_tips();
 
     dlg.Update(90, _L("Loading a mode view") + dots);

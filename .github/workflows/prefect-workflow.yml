@@ -33,6 +33,8 @@ jobs:
         run: python scripts/prefect/check_manifest.py
       - name: Test DeviceWeb cached-output repair and packaging guard
         run: python -B tests/prefect/device_web_assets_test.py
+      - name: Test version metadata epoch and source identity independence
+        run: python -B tests/prefect/version_metadata_epoch_test.py
 
   windows-portable:
     needs: policy-tests
@@ -73,21 +75,9 @@ jobs:
           ) -join "`n"
           $fingerprint = [Convert]::ToHexString([Security.Cryptography.SHA256]::HashData([Text.Encoding]::UTF8.GetBytes($identity))).ToLowerInvariant()
           "PREFECT_TOOLCHAIN_KEY=$fingerprint" >> $env:GITHUB_ENV
-          # CMake TIMESTAMP drives libslic3r_version.h; CI-only edits must not rebuild the PCH.
-          do {
-            $sourceCommit = git log -1 '--format=%H %ct' -- src deps cmake version.inc CMakeLists.txt
-            if ($LASTEXITCODE -ne 0 -or $sourceCommit -notmatch '^([0-9a-f]{40}) (\d+)$') { throw 'Cannot determine application source timestamp.' }
-            $sourceHash, $sourceEpoch = $Matches[1], $Matches[2]
-            $shallowPath = git rev-parse --git-path shallow
-            if ($LASTEXITCODE -ne 0) { throw 'Cannot locate shallow-history boundary.' }
-            $atBoundary = (Test-Path -LiteralPath $shallowPath) -and ((Get-Content -LiteralPath $shallowPath) -contains $sourceHash)
-            if ($atBoundary) {
-              # A shallow boundary appears to change every path; inspect enough history to prove the source date.
-              git fetch --no-tags --deepen=32 origin $env:GITHUB_SHA
-              if ($LASTEXITCODE -ne 0) { throw 'Cannot deepen history for a stable source timestamp.' }
-            }
-          } while ($atBoundary)
-          "SOURCE_DATE_EPOCH=$sourceEpoch" >> $env:GITHUB_ENV
+          # Reproducible version/branding metadata date; actual provenance remains GITHUB_SHA.
+          python -B scripts/prefect/version_metadata_epoch.py --workspace "$env:GITHUB_WORKSPACE" --revision "$env:GITHUB_SHA" --deepen --github-env "$env:GITHUB_ENV"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           cmake --version
           cl 2>&1 | Select-Object -First 3
           $global:LASTEXITCODE = 0
