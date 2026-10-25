@@ -193,6 +193,10 @@ struct StaticBambuLib
 };
 
 namespace Slic3r {
+#ifdef PREFECT_HAS_TASKBAR_WINRT
+// Existing sink, declared here so QA logging does not change common headers/PCH.
+extern boost::shared_ptr<LogSink> g_log_sink;
+#endif
 namespace GUI {
 
 class MainFrame;
@@ -225,6 +229,8 @@ class PrefectTaskbarPin : public wxEvtHandler, public std::enable_shared_from_th
     RoUninitializeFn m_uninitialize { nullptr };
     bool m_apartment_initialized { false };
     bool m_check_started { false };
+    bool m_check_queued { false };
+    bool m_request_queued { false };
     bool m_request_attempted { false };
     ComPtr<TaskbarManager> m_manager;
     ComPtr<BoolOperation> m_operation;
@@ -349,6 +355,7 @@ public:
         : m_frame(frame), m_menu_item(item), m_timer(this)
     {
         Bind(wxEVT_TIMER, &PrefectTaskbarPin::poll, this, m_timer.GetId());
+        record("ui_installed");
     }
 
     ~PrefectTaskbarPin() override
@@ -361,6 +368,25 @@ public:
         m_manager.Reset();
         if (m_apartment_initialized) m_uninitialize();
         if (m_combase) ::FreeLibrary(m_combase);
+    }
+
+    void defer_foreground_check(int reason)
+    {
+        if (!alive() || m_check_queued
+            || (m_phase != Phase::Ready && (m_phase != Phase::Checking || m_check_started))) return;
+        m_check_queued = true;
+        record("preflight_deferred", S_OK, reason); // 1: install, 2: activate, 4: F8/menu.
+        const auto weak = weak_from_this();
+        const wxWeakRef<MainFrame> frame = m_frame;
+        // Activation can be dispatched inside SendMessage/input synchronization,
+        // where outgoing COM calls fail with RPC_E_CANTCALLOUT_ININPUTSYNCCALL.
+        frame->CallAfter([weak, frame] {
+            const auto state = weak.lock();
+            if (!state || !frame || !state->alive()) return;
+            state->m_check_queued = false;
+            state->check_if_foreground();
+            state->refresh_allowed();
+        });
     }
 
     void check_if_foreground()
@@ -443,7 +469,7 @@ public:
         if (!alive()) { shutdown(); return; }
         if (FAILED(result)) { unavailable("pinning_allowed_failed", result); return; }
         m_menu_item->SetItemLabel("An Taskleiste anheften\tF8");
-        m_menu_item->Enable(allowed && foreground());
+        m_menu_item->Enable(allowed && foreground() && !m_request_queued);
         record("pinning_allowed", S_OK, allowed ? 1 : 0);
     }
 
@@ -451,7 +477,27 @@ public:
     {
         // A background launch may not have run its read-only preflight yet.
         // In that case this key only checks; pinning needs a later user action.
-        if (m_phase == Phase::Checking && !m_check_started) { check_if_foreground(); return; }
+        if (m_phase == Phase::Checking && !m_check_started) { defer_foreground_check(4); return; }
+        if (m_phase != Phase::Ready || m_request_attempted || m_request_queued) { record("action_not_ready"); return; }
+        if (!foreground()) { record("foreground_ui_required", E_ACCESSDENIED); return; }
+        m_request_queued = true;
+        m_menu_item->Enable(false);
+        record("user_action_deferred");
+        const auto weak = weak_from_this();
+        const wxWeakRef<MainFrame> frame = m_frame;
+        // Only this real F8/menu intent can queue a request. Activation and the
+        // observer timer never call this continuation or initiate pinning.
+        frame->CallAfter([weak, frame] {
+            const auto state = weak.lock();
+            if (!state || !frame || !state->alive()) return;
+            state->request_from_user_action();
+            // Keep the intent claimed while COM may pump/reenter UI messages.
+            state->m_request_queued = false;
+        });
+    }
+
+    void request_from_user_action()
+    {
         if (m_phase != Phase::Ready || m_request_attempted) { record("action_not_ready"); return; }
         if (!foreground()) { record("foreground_ui_required", E_ACCESSDENIED); return; }
         boolean allowed = false;
@@ -461,8 +507,8 @@ public:
         if (FAILED(result)) { unavailable("pinning_allowed_failed", result); return; }
         if (!allowed) { record("pinning_not_allowed", S_FALSE); m_menu_item->Enable(false); return; }
         if (!foreground()) { record("foreground_changed", E_ACCESSDENIED); return; }
-        // This is the only pin request site. Called directly from the actual
-        // F8/menu event, never from launch, activation, an installer or a timer.
+        // This is the only pin request site, deferred from one actual F8/menu
+        // event, never from launch, activation, an installer or a timer.
         m_request_attempted = true;
         m_phase = Phase::Requesting;
         m_menu_item->Enable(false);
@@ -486,6 +532,8 @@ public:
         if (m_phase == Phase::Closed) return;
         m_phase = Phase::Closed;
         m_timer.Stop();
+        m_check_queued = false;
+        m_request_queued = false;
         m_frame = nullptr;
         ComPtr<AsyncInfo> info = std::move(m_async_info);
         m_operation.Reset();
@@ -498,6 +546,10 @@ void install_prefect_taskbar_pin_ui(MainFrame* frame)
 {
     wxString enabled;
     if (!wxGetEnv("PREFECT_QA_TASKBAR_PIN", &enabled) || enabled != "1" || !frame || !frame->topbar()) return;
+    // Flush the existing encrypted QA log as records are written. Release the
+    // backend lock before any BOOST_LOG call can try to acquire the same sink.
+    if (const auto sink = Slic3r::g_log_sink)
+        sink->locked_backend()->auto_flush(true);
     wxMenu* menu = frame->topbar()->GetTopMenu();
     static const int action_id = wxWindow::NewControlId();
     if (!menu || menu->FindItem(action_id)) return; // Idempotent per real frame.
@@ -514,10 +566,7 @@ void install_prefect_taskbar_pin_ui(MainFrame* frame)
     });
     frame->Bind(wxEVT_ACTIVATE, [state](wxActivateEvent& event) {
         const auto keep_alive = state;
-        if (event.GetActive()) {
-            keep_alive->check_if_foreground();
-            keep_alive->refresh_allowed();
-        }
+        if (event.GetActive()) keep_alive->defer_foreground_check(2);
         event.Skip();
     });
     frame->Bind(wxEVT_DESTROY, [state, frame](wxWindowDestroyEvent& event) {
@@ -525,7 +574,7 @@ void install_prefect_taskbar_pin_ui(MainFrame* frame)
         if (event.GetEventObject() == frame) keep_alive->shutdown();
         event.Skip();
     });
-    state->check_if_foreground();
+    state->defer_foreground_check(1);
 }
 
 } // namespace

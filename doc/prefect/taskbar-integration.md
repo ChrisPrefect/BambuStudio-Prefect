@@ -53,11 +53,24 @@ COM-Objekte ausgeglichen. Die dokumentierte Desktop-Marker-IID wird abgefragt,
 danach folgen `GetDefault`, die Verfügbarkeitsprüfung und die lesende
 `IsCurrentAppPinnedAsync`-Abfrage.
 
-Der aktive Benutzerhandler prüft den Vordergrund und `IsPinningAllowed`
-erneut. Nur dieser Handler ruft `RequestPinCurrentAppAsync` auf. Nach Beginn
-einer Anfrage ist ein zweiter Versuch in derselben Instanz gesperrt.
+Ein tatsächlicher Benutzerhandler stellt einen einmaligen Intent in die
+UI-Ereignisschleife. Dessen `CallAfter`-Fortsetzung prüft den Vordergrund und
+`IsPinningAllowed` erneut und ruft erst dann `RequestPinCurrentAppAsync` auf.
+Der Pending-Guard bleibt über die gesamte reentrante COM-Fortsetzung gesetzt;
+nach Beginn einer Anfrage ist ein zweiter Versuch in derselben Instanz gesperrt.
 Der wx-Timer liest lediglich den asynchronen Zustand und das Ergebnis. Eine
 Windows-Ablehnung oder ein Fehler wird unverändert als solcher protokolliert.
+
+Auch die lesenden Initialisierungs-/Aktivierungsprüfungen laufen über
+`CallAfter`. Der erste reale Lauf zeigte beim direkten Aufruf aus dem
+Aktivierungsereignis `0x8001010D` (`RPC_E_CANTCALLOUT_ININPUTSYNCCALL`).
+COM kann während eines eingabesynchronen Aufrufs keinen solchen ausgehenden
+Aufruf beginnen. Die Fortsetzung kehrt deshalb zuerst aus diesem Windows-
+Eingabestack zurück. Sie bleibt auf dem UI-Thread und hält die übrigen
+Vordergrund-/Berechtigungsprüfungen bei. Aktivierung, Initialisierung und Timer
+erzeugen weiterhin keinen Pinintent. Der beobachtete Fehler ist keine
+Berechtigungsablehnung. [Microsofts Fehlercodebeschreibung](https://learn.microsoft.com/en-us/windows/win32/com/com-error-codes-3),
+[COM-Aufrufsynchronisation](https://learn.microsoft.com/en-us/windows/win32/com/call-synchronization).
 
 Sichtbare Menüzustände und Aufräumlogik sind an den echten Frame gebunden.
 Schwache Frame-/State-Referenzen, lokale starke Callback-/COM-Referenzen und
@@ -69,7 +82,14 @@ währenddessen geschlossen wird. Beim Schließen endet die Timerbeobachtung.
 
 Die vorhandene Anwendungsprotokollierung erhält Einträge mit dem Präfix
 `PrefectTaskbarPin` und den Feldern `stage`, `hresult` und `value`. Für die
-Abnahme wird ein getrenntes lokales Prüfprofil verwendet. Diese Einträge
+Abnahme wird ein getrenntes lokales Prüfprofil verwendet. Nur im eingeschalteten
+QA-Pfad wird am bestehenden Sink `auto_flush(true)` unter dessen Backendlock
+gesetzt; der Lock endet vor einem Logaufruf. Damit sind auch kleine Statusfolgen
+sofort im vorhandenen verschlüsselten Profil-Log lesbar. Der erste Lauf hatte
+sie erst beim regulären Schließen auf die Platte geschrieben. Es entsteht kein
+zusätzlicher Klartextlog. `ui_installed`, `preflight_deferred` und
+`user_action_deferred` machen Installation und Fortsetzungen unterscheidbar.
+Diese Einträge
 belegen einen API-Zustand; sie ersetzen die Kontrolle des tatsächlichen
 Windows-Pins nicht.
 
