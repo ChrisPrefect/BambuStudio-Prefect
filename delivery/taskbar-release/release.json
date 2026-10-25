@@ -1,0 +1,17 @@
+{
+  "source_commit": "3cb50caedececb98a21d2792f41c044ee596f759",
+  "source_tree": "ca2cd51f1d335f7c5172bad8152b1b727cc0f2fe",
+  "source_run_id": 40222805625,
+  "artifact_id": 12610262804,
+  "artifact_size": 264422804,
+  "artifact_sha256": "def117ac577b143386f226fce6be1189b5a533acc8aa62bb7e97e9bcd4f19ab9",
+  "patch_file": "Prefect-BambuStudio-patches-20261025-taskbar-v5.zip",
+  "patch_size": 1114689,
+  "patch_sha256": "437aa4098bd914d9894260ef264f0c70f35b13242690aab51ea1fd94d865d142",
+  "patch_count": 31,
+  "notes_sha256": "e5e8a9eb0083bdc32b9466d5e738278b3f0ac3a76812ecc1e5dd527ee6c9a032",
+  "icon_file": "PrefectBambuStudio.ico",
+  "icon_sha256": "db77286997a999fb0f8e06d7522f3c4f843ed61ea0d8718284d942211e1bf5a8",
+  "icon_size": 14411,
+  "publish": false
+}
