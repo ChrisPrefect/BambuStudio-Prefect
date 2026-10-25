@@ -481,7 +481,7 @@ private:
         void init(wxFont init_font)
         {
             // title
-            title = wxGetApp().is_editor() ? SLIC3R_APP_FULL_NAME : GCODEVIEWER_APP_NAME;
+            title = wxGetApp().is_editor() ? SLIC3R_APP_FULL_NAME : GCODEVIEWER_APP_FULL_NAME;
 
             // dynamically get the version to display
             version = _L("V") + " " + GUI_App::format_display_version();
@@ -649,7 +649,7 @@ private:
         void init(wxFont init_font)
         {
             // title
-            title = wxGetApp().is_editor() ? SLIC3R_APP_FULL_NAME : GCODEVIEWER_APP_NAME;
+            title = wxGetApp().is_editor() ? SLIC3R_APP_FULL_NAME : GCODEVIEWER_APP_FULL_NAME;
 
             // dynamically get the version to display
             auto version_text = GUI_App::format_display_version();
@@ -1454,10 +1454,19 @@ GUI_App::GUI_App()
 	, m_removable_drive_manager(std::make_unique<RemovableDriveManager>())
 	, m_other_instance_message_handler(std::make_unique<OtherInstanceMessageHandler>())
 {
+#ifdef __WXMSW__
+    // An explicit fork ID keeps our windows separate from the upstream taskbar group.
+    // The installed shortcut must use the same System.AppUserModel.ID.
+    const HRESULT app_id_result = ::SetCurrentProcessExplicitAppUserModelID(L"ChrisPrefect.BambuStudio");
+#endif
     perf_mark("Application started");
 
 	//app config initializes early becasuse it is used in instance checking in BambuStudio.cpp
     this->init_app_config();
+#ifdef __WXMSW__
+    if (FAILED(app_id_result))
+        BOOST_LOG_TRIVIAL(warning) << "Prefect taskbar application ID could not be set, HRESULT=" << app_id_result;
+#endif
     if (app_config) {
         ::Label::initSysFont(app_config->get_language_code(), false);
     }
@@ -2564,7 +2573,7 @@ void GUI_App::init_app_config()
     SetAppName(SLIC3R_APP_KEY);
 //	SetAppName(SLIC3R_APP_KEY "-alpha");
 //  SetAppName(SLIC3R_APP_KEY "-beta");
-//	SetAppDisplayName(SLIC3R_APP_NAME);
+    SetAppDisplayName(is_editor() ? SLIC3R_APP_FULL_NAME : GCODEVIEWER_APP_FULL_NAME);
 
 	// Set the Slic3r data directory at the Slic3r XS module.
 	// Unix: ~/ .Slic3r
@@ -7532,7 +7541,7 @@ bool GUI_App::check_print_host_queue()
     //wxMessageDialog dialog(mainframe,
     MessageDialog dialog(mainframe,
         message,
-        wxString(SLIC3R_APP_NAME) + " - " + _(L("Ongoing uploads")),
+        wxString(SLIC3R_APP_FULL_NAME) + " - " + _(L("Ongoing uploads")),
         wxICON_QUESTION | wxYES_NO | wxNO_DEFAULT);
     if (dialog.ShowModal() == wxID_YES)
         return true;

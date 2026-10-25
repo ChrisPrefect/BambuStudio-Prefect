@@ -215,7 +215,7 @@ static const wxString ctrl = _L("Ctrl+");
 #endif
 
 MainFrame::MainFrame() :
-DPIFrame(NULL, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, BORDERLESS_FRAME_STYLE, "mainframe")
+DPIFrame(NULL, wxID_ANY, wxGetApp().is_editor() ? SLIC3R_APP_FULL_NAME : GCODEVIEWER_APP_FULL_NAME, wxDefaultPosition, wxDefaultSize, BORDERLESS_FRAME_STYLE, "mainframe")
     , m_printhost_queue_dlg(new PrintHostQueueDialog(this))
     // BBS
     , m_recent_projects(18)
@@ -304,7 +304,7 @@ DPIFrame(NULL, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, BORDERLESS_FRAME_
     default:
     case GUI_App::EAppMode::Editor:
         m_taskbar_icon = std::make_unique<BambuStudioTaskBarIcon>(wxTBI_DOCK);
-        m_taskbar_icon->SetIcon(wxIcon(Slic3r::var("BambuStudio-mac_256px.ico"), wxBITMAP_TYPE_ICO), "BambuStudio");
+        m_taskbar_icon->SetIcon(wxIcon(Slic3r::var("BambuStudio-mac_256px.ico"), wxBITMAP_TYPE_ICO), SLIC3R_APP_FULL_NAME);
         break;
     case GUI_App::EAppMode::GCodeViewer:
         break;
@@ -1190,26 +1190,24 @@ void MainFrame::update_title()
 {
     if (!m_plater)
         return;
-    // Prepend "* " while the project has unsaved changes (#9987), on top of the project name
-    // that is already shown: in the custom topbar on Windows, and in the native window title
-    // on macOS/Linux (both set by Plater::priv::set_project_name).
-    const wxString name  = m_plater->get_project_name();
-    const wxString title = (m_plater->is_project_dirty() && !name.IsEmpty()) ? ("* " + name) : name;
+    // Keep the fork name first in the taskbar/window list and the project name visible.
+    // The dirty marker belongs to the project, not to the application name.
+    const wxString name = m_plater->get_project_name();
+    const wxString project_title = m_plater->is_project_dirty() ? (name.IsEmpty() ? wxString("*") : "* " + name) : name;
+    wxString title = wxGetApp().is_editor() ? SLIC3R_APP_FULL_NAME : GCODEVIEWER_APP_FULL_NAME;
+    if (!project_title.IsEmpty())
+        title += " - " + project_title;
     if (title == m_title_cache)
         return;
     m_title_cache = title;
 #ifdef __WINDOWS__
     if (m_topbar)
         m_topbar->SetTitle(title);
-    // Also reflect the "*" in the window/taskbar title, which set_project_name builds
-    // as "<name> - BambuStudio".
-    SetTitle(title + " - BambuStudio");
-#else
+#endif
     SetTitle(title);
 #ifdef __APPLE__
     if (!title.IsEmpty())
         update_title_colour_after_set_title();
-#endif
 #endif
 }
 
@@ -4688,7 +4686,7 @@ std::string MainFrame::get_dir_name(const wxString &full_name) const
 // ----------------------------------------------------------------------------
 
 SettingsDialog::SettingsDialog(MainFrame* mainframe)
-:DPIDialog(NULL, wxID_ANY, wxString(SLIC3R_APP_NAME) + " - " + _L("Settings"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, "settings_dialog"),
+:DPIDialog(NULL, wxID_ANY, wxString(SLIC3R_APP_FULL_NAME) + " - " + _L("Settings"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, "settings_dialog"),
 //: DPIDialog(mainframe, wxID_ANY, wxString(SLIC3R_APP_NAME) + " - " + _L("Settings"), wxDefaultPosition, wxDefaultSize,
 //        wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxMINIMIZE_BOX | wxMAXIMIZE_BOX, "settings_dialog"),
     m_main_frame(mainframe)

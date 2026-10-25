@@ -37,6 +37,16 @@ enthält das vollständige Windows-ZIP, die geprüfte Serie aus 20 Patches und
 Der jeweils aktuelle Nachweis, einschließlich tatsächlich ausgeführter Tests,
 steht in [VALIDATION.md](VALIDATION.md).
 
+## Zusätzlicher Identitätsnachtrag
+
+Der Quellnachtrag vom 25.10.2026 gibt dem Fork den sichtbaren Namen
+**Prefect Bambu Studio**, setzt ihn vor den Projektnamen im Fenstertitel
+und trennt seine Windows-Taskleistengruppe über `ChrisPrefect.BambuStudio`.
+Details, betroffene Quellstellen, technische Abgrenzung und die Anleitung
+zum Nachtragen bei Upstream-Updates stehen in [12-branding.md](12-branding.md).
+Der Nachtrag gehört noch nicht zum oben dokumentierten Workflow-2-Binärpaket;
+sein neuer Build-/Installationsnachweis folgt im Auslieferungslauf.
+
 ## Anpassungsliste
 
 | ID | Anpassung und Bedienung | Schalter / Standard | Detaildokumentation |

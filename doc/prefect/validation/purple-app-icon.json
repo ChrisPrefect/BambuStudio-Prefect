@@ -1,0 +1,207 @@
+{
+  "schema": "prefect-violet-app-icon-v1",
+  "colour": "#7C3AED",
+  "base_upstream": "v02.08.02.61",
+  "sources": {
+    "BambuStudio.svg_green_sha256": "0ab1a121fc86598746a165d94eead0052e0c8815dbefdd6c637429145f511df9",
+    "BambuStudioBlack.svg_sha256": "ed23118524d6c45dada57336f167a9fd8ad00e02d49a6f01a5874022f4607116"
+  },
+  "renderer": {
+    "resvg_py": "0.5.0",
+    "resvg": "0.48.1",
+    "pillow_read_only_checker": "12.3.0",
+    "system_fonts_used": false
+  },
+  "vector_path_data_unchanged": true,
+  "raster_recolouring_used": false,
+  "ico_frame_sizes": [
+    16,
+    20,
+    24,
+    32,
+    40,
+    48,
+    64,
+    128,
+    154,
+    192,
+    256
+  ],
+  "svg_colour_alpha_checks": [
+    {
+      "kind": "tile",
+      "pixels": 16,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "da1a5ec199df23b00f4e88125d3aca938e007b875c3defe94e2d3b4a40d4c999"
+    },
+    {
+      "kind": "tile",
+      "pixels": 20,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "1c97ee500e68fc7562155a7ff26684417453928f4250df98283c4a3f00d426a8"
+    },
+    {
+      "kind": "tile",
+      "pixels": 24,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "e73f5d5283696f653553fdd722147c09f80b58724400dd733587ee7121c4caab"
+    },
+    {
+      "kind": "tile",
+      "pixels": 32,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "3850c6723a353571df74ca4c0f4bec64c4cd816081c535df0fd6060660cd57ce"
+    },
+    {
+      "kind": "tile",
+      "pixels": 40,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "638971ac06786ce7e701f11ced6bccbb20d1f478ca855667a26c87e149f7c74d"
+    },
+    {
+      "kind": "tile",
+      "pixels": 48,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "98171e785bbcffc4696b94ed945f1f73cfb1c102c63c6e70b0fe9b04338de263"
+    },
+    {
+      "kind": "tile",
+      "pixels": 64,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "9b045dd3a19befbf035bcf02bd283093b17ecfaad9f3d10ed81237cbe1e3ea10"
+    },
+    {
+      "kind": "tile",
+      "pixels": 128,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "1bc0ca71cc16e405dc3747f0e0ffbeaeac638fc23baae7f78377c5023a9415b0"
+    },
+    {
+      "kind": "tile",
+      "pixels": 154,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "25a88db3c0e421ca958b52345a2ce026c70bad9b566c964e42eef631c847c702"
+    },
+    {
+      "kind": "tile",
+      "pixels": 192,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "ca86d2a594ade6d11a447140ae3ec93b35423f1476b6f47f4bf71d1d3eb2048a"
+    },
+    {
+      "kind": "tile",
+      "pixels": 256,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "096a90e472b8a0f199d05c5cccebb5be161dd6779dab0b7c50cc801b5333a0f6"
+    },
+    {
+      "kind": "title",
+      "pixels": 16,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "16eb1585a9ad63d5278b957316b060162075209196c9216afccb4833b82b9f3b"
+    },
+    {
+      "kind": "title",
+      "pixels": 20,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "12e47e2100cc124e45004957a910140b0c48733ee3a4327d9ddfd94932570599"
+    },
+    {
+      "kind": "title",
+      "pixels": 24,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "7205837093146bad2834e518b3aa0a0c040ae91bfff0e45288b9e4f105f66607"
+    },
+    {
+      "kind": "title",
+      "pixels": 32,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "7d4fda5f88acca204e95bd97aece4005b50f910f6160238889abcd7c2aeaebef"
+    },
+    {
+      "kind": "title",
+      "pixels": 40,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "5d99bd340f13dbd4d0ac0872c02bd26798df234fc407b8f7a43a9c9cd32f2339"
+    },
+    {
+      "kind": "title",
+      "pixels": 48,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "0172029ffcaba3fda0ebd2590d8ebaaff62dcce6326f871c63a0af1947598089"
+    },
+    {
+      "kind": "title",
+      "pixels": 64,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "a16f33a103243908f4194c9eb0e7c444a62d5f47d5c4dbd3a2fd5240f0ab5d60"
+    },
+    {
+      "kind": "title",
+      "pixels": 128,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "f8658b57a7b11f24ba0c2f2ed2fad26791ea6979ead03c6cdfcd5dac728ba912"
+    },
+    {
+      "kind": "title",
+      "pixels": 154,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "52f42250a15c004faa7c56a2d1c32095cdde20ef4c5f3f207bbc5e579f07fbb6"
+    },
+    {
+      "kind": "title",
+      "pixels": 192,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "7de984a3d30b1aae3341b60abb9286704298fb1cb09bc88c236494477f8c8592"
+    },
+    {
+      "kind": "title",
+      "pixels": 256,
+      "alpha_identical_to_green_svg_render": true,
+      "alpha_sha256": "81844c426fd4fd8cf3c264276c24bc401c3c3cc9983ac5f81388e8ed95a2fe80"
+    }
+  ],
+  "assets": [
+    {
+      "file": "resources/images/BambuStudio.ico",
+      "bytes": 14411,
+      "sha256": "db77286997a999fb0f8e06d7522f3c4f843ed61ea0d8718284d942211e1bf5a8"
+    },
+    {
+      "file": "resources/images/BambuStudio.png",
+      "bytes": 2209,
+      "sha256": "1f5d697c1f4d6c24edc748d5791980a6b9a4b27542129acbcc5209053230bbab"
+    },
+    {
+      "file": "resources/images/BambuStudio.svg",
+      "bytes": 644,
+      "sha256": "2b9a06ac606ebc3c3229bb7e5325f0f9f1268a07cc04ea750f93e15e03bc7e54"
+    },
+    {
+      "file": "resources/images/BambuStudioTitle.ico",
+      "bytes": 10168,
+      "sha256": "88d75cf573e1603ad741a08018d7a309f936f22c1d0a91895022897ecd2081ae"
+    },
+    {
+      "file": "resources/images/BambuStudioTitle.svg",
+      "bytes": 566,
+      "sha256": "8a8fb49d7de8f3ba0e2945be9064f7bba14a45d07f02ca625f6710144c8ac303"
+    },
+    {
+      "file": "resources/images/BambuStudio_128px.png",
+      "bytes": 1867,
+      "sha256": "62cf22a14db9bd816f7c101d8adf298df957c294750972ced0ea61f8d5719982"
+    },
+    {
+      "file": "resources/images/BambuStudio_192px.png",
+      "bytes": 2609,
+      "sha256": "11a5896dca7bb08302046c3cd30cf1ec0bda6445a16715e0b287c18e00bc5a8c"
+    },
+    {
+      "file": "resources/images/BambuStudio_32px.png",
+      "bytes": 581,
+      "sha256": "d34811a28db57aa2b194b41e7e0e29902a7034a57de0aff368612b80033cd2e8"
+    }
+  ],
+  "limits": "Identical SVG path geometry and identical alpha between green/violet renders using the same renderer. Legacy vendor raster antialiasing is not claimed byte-identical; macOS ICNS and About artwork are unchanged."
+}
