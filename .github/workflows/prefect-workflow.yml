@@ -31,6 +31,8 @@ jobs:
           done
       - name: Validate change manifest
         run: python scripts/prefect/check_manifest.py
+      - name: Test DeviceWeb cached-output repair and packaging guard
+        run: python -B tests/prefect/device_web_assets_test.py
 
   windows-portable:
     needs: policy-tests
@@ -158,6 +160,15 @@ jobs:
       - name: Validate generated dependency link inputs before compiling
         shell: pwsh
         run: ./scripts/prefect/Test-DependencyLinkInputs.ps1 -BuildDirectory out/prefect-app -DependencyPrefix out/prefect-deps-stage/usr/local
+      - name: Restore missing DeviceWeb runtime bundle from original build target
+        shell: pwsh
+        run: |
+          python -B scripts/prefect/device_web_assets.py repair --workspace "$env:GITHUB_WORKSPACE"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cmake --build out/prefect-app --target device_page_build --config Release --parallel 2
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python -B scripts/prefect/device_web_assets.py verify --workspace "$env:GITHUB_WORKSPACE"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Compile and package Prefect fork
         id: app-build
         shell: pwsh
@@ -166,6 +177,8 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           Copy-Item scripts/prefect/Start-Prefect.ps1 out/prefect-portable/
           git rev-parse HEAD | Set-Content out/prefect-portable/PREFECT-COMMIT.txt
+          python -B scripts/prefect/device_web_assets.py verify --workspace "$env:GITHUB_WORKSPACE" --install-directory out/prefect-portable
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - uses: actions/upload-artifact@v4
         with:
           name: BambuStudio-Prefect-Windows-x64-${{ github.sha }}
