@@ -1,0 +1,62 @@
+{
+  "schema": "prefect-v5-shell-taskbar-state-public-v1",
+  "utc": "2026-10-25T22:23:38.5639719Z",
+  "source_commit": "3cb50caedececb98a21d2792f41c044ee596f759",
+  "original_report_sha256": "3430c9064a9a11184d03ae0bd53037a046bccb95f95e216e6a11049db73f5e87",
+  "normal_and_pinned_links": [
+    {
+      "role": "Desktop",
+      "present": false,
+      "taskbar_verbs": [],
+      "queried": false
+    },
+    {
+      "role": "StartMenu",
+      "present": true,
+      "link_sha256": "ddb223bc2ce09d313f9b580b449c70bfb75946bc45d8db7f76cebe668663179b",
+      "taskbar_verbs": [
+        "Von &Taskleiste lösen"
+      ],
+      "link_unchanged": true,
+      "queried": true
+    },
+    {
+      "role": "ActualTaskBarLink",
+      "present": true,
+      "link_sha256": "ab0c6ad6f7dc0f947dcd77df67b75891cad620d3f14705d145194518d6a62f8b",
+      "taskbar_verbs": [
+        "Von &Taskleiste lösen"
+      ],
+      "link_unchanged": true,
+      "queried": true
+    }
+  ],
+  "taskbar_links": [
+    {
+      "name": "Bambu Studio.lnk",
+      "sha256": "307867e6b319caf8315affac82be77a618d9767c66ce58952e3236ac53136986"
+    },
+    {
+      "name": "File Explorer.lnk",
+      "sha256": "cf116b33831de9f80847abdb2a0d92ab3d3f956a8e209ec95d35d986eea8c7b5"
+    },
+    {
+      "name": "Google Chrome.lnk",
+      "sha256": "7535b5714a2d725bf9ea0a40118157e5e6d110633a51d8a1b1e73aa86080e58d"
+    },
+    {
+      "name": "Prefect Bambu Studio.lnk",
+      "sha256": "ab0c6ad6f7dc0f947dcd77df67b75891cad620d3f14705d145194518d6a62f8b"
+    }
+  ],
+  "all_link_bytes_unchanged": true,
+  "activity_scope": "Counters describe this read-only verification helper only.",
+  "activity": {
+    "invoke_calls": 0,
+    "app_starts": 0,
+    "ui_actions": 0,
+    "registry_writes": 0,
+    "SMB_access": false
+  },
+  "pin_action_origin": "not_determined"
+}

@@ -1,6 +1,6 @@
 {
   "schema": "prefect-taskbar-v5-public-results-v1",
-  "status": "RELEASED_WITH_OS_PIN_PENDING",
+  "status": "RELEASED_WITH_OS_PIN_VERIFIED",
   "source_commit": "3cb50caedececb98a21d2792f41c044ee596f759",
   "source_tree": "ca2cd51f1d335f7c5172bad8152b1b727cc0f2fe",
   "upstream_tag": "v02.08.02.61",
@@ -55,9 +55,9 @@
     "foreground_user_intent_observed": false,
     "pin_request_count": 0,
     "pin_result": null,
-    "actual_os_pin_verified": false,
-    "pin_metadata_and_original_pins_verified": null,
-    "normal_profile_relaunch_arguments_verified": null,
+    "actual_os_pin_verified": true,
+    "pin_metadata_and_original_pins_verified": true,
+    "normal_profile_relaunch_arguments_verified": true,
     "get_default_hresult": -2147024891,
     "get_default_hresult_hex": "0x80070005",
     "prior_v4_hresult": -2147417843,
@@ -67,13 +67,18 @@
     "exe_sha256": "e113e57c2e6db449de57c438ccab52555d659bfa94b7a0f88b899c419708469c",
     "dll_sha256": "83414316f9988d26451b04b974d584b27a0d2325b2cfad1bf0f6d414ad6d6f34",
     "launch_proof_sha256": "de2f44aeb703813edc4337c4968f0f7d32acf0775edcd80000178ae8d6cb5c2b",
-    "observation_scope": "Own live GUI preflight snapshot; subsequent separate normal Windows pin flow is not yet established by this report.",
-    "current_taskbar_inventory": "taskbar-v5-pin-remaining.json",
-    "current_taskbar_inventory_sha256": "62e86e2480162a213bf9e1f0e29cae911b6b80fa7d2f013e33e24c85c2b19351",
-    "current_taskbar_inventory_utc": "2026-10-25T19:24:20.502420+00:00",
+    "observation_scope": "Native GUI fields describe the historical own live preflight snapshot only. The separately verified current OS pin state is bound by os_pin below.",
     "original_three_pin_files_unchanged": true,
-    "normal_desktop_and_start_menu_shortcuts_verified": true,
-    "shortcut_proof": "taskbar-v5-shortcuts.json"
+    "actual_relaunch_via_pin_tested": false,
+    "relaunch_arguments_verification_scope": "Actual pinned shortcut metadata readback; no app relaunch was performed by the current read-only verification.",
+    "historical_taskbar_inventory": "taskbar-v5-pin-remaining.json",
+    "historical_taskbar_inventory_sha256": "62e86e2480162a213bf9e1f0e29cae911b6b80fa7d2f013e33e24c85c2b19351",
+    "historical_taskbar_inventory_utc": "2026-10-25T19:24:20.502420+00:00",
+    "historical_desktop_and_start_menu_shortcuts_verified": true,
+    "historical_shortcut_proof": "taskbar-v5-shortcuts.json",
+    "current_taskbar_inventory": "taskbar-v5-pin-verified-final.json",
+    "current_taskbar_inventory_utc": "2026-10-25T22:23:09.276474+00:00",
+    "current_taskbar_inventory_sha256": "4d47954446078cbe19ad47dbe3e5d623d4de3f0d2ca48dd7ff9c4585f17ca12e"
   },
   "qa_preparation": {
     "status": "PASS",
@@ -135,8 +140,9 @@
     "workflow2_matrix_retested_on_this_source": false
   },
   "limitations": [
-    "No actual OS taskbar pin is established by this preparation report.",
-    "A native API result alone does not establish the desired Windows shortcut arguments or visible pin.",
+    "Current OS pin state is established by public Windows Shell unpin verbs plus actual link metadata; origin and time of the pin action were not determined.",
+    "The earlier native TaskbarManager.GetDefault E_ACCESSDENIED and zero native pin requests remain historical observations; the current pin state does not claim that API request succeeded.",
+    "The actual pinned shortcut arguments are verified; an app relaunch through the pin and a pixel check of the visible Windows icon cache are not claimed.",
     "Historical .3 title/icon and Workflow-2 geometry proofs retain their original source/binary bindings."
   ],
   "privacy": {
@@ -167,6 +173,32 @@
     "taskbar-v5-pin-remaining.json": "62e86e2480162a213bf9e1f0e29cae911b6b80fa7d2f013e33e24c85c2b19351",
     "published-release-taskbar-v5.json": "bc5615ef64da3b91e0d0554338b6b9adc538f461b8fe64990debb1206a92ebb6",
     "runtime-taskbar-v5/preflight.json": "83685ab75ee505e3c17abf07da67cbe9cae7b960c68c998eca5859c471c1cb78",
-    "patch-replay-taskbar-v5.json": "ace60be8dd155f2d2faaf2daab35a943f5d99d6dd75181b58108e37ca5690d7c"
+    "patch-replay-taskbar-v5.json": "ace60be8dd155f2d2faaf2daab35a943f5d99d6dd75181b58108e37ca5690d7c",
+    "taskbar-v5-pin-verified-final.json": "4d47954446078cbe19ad47dbe3e5d623d4de3f0d2ca48dd7ff9c4585f17ca12e",
+    "taskbar-v5-shell-pin-state.json": "1b9bc774d9423cd1d7c3ec1727da75125bf322d235ea94b4d4cdfe5fcb6bf591",
+    "taskbar-v5-pin-current-public-summary.json": "7579975a7c45780793f8397c4b5926206e868f1e53eccc6d2ccd4491ceeb36b4"
+  },
+  "os_pin": {
+    "status": "VERIFIED_PINNED_BY_PUBLIC_WINDOWS_SHELL_AND_ACTUAL_LINK_METADATA",
+    "proof": "taskbar-v5-pin-current-public-summary.json",
+    "metadata_proof": "taskbar-v5-pin-verified-final.json",
+    "shell_state_proof": "taskbar-v5-shell-pin-state.json",
+    "utc": "2026-10-25T22:24:22.074949+00:00",
+    "observed_shell_verb_verbatim": "Von &Taskleiste lösen",
+    "shell_verb_observed_at": [
+      "StartMenu",
+      "ActualTaskBarLink"
+    ],
+    "taskbar_link_sha256": "ab0c6ad6f7dc0f947dcd77df67b75891cad620d3f14705d145194518d6a62f8b",
+    "normal_start_menu_link_present": true,
+    "normal_desktop_link_currently_present": false,
+    "normal_fork_profile_arguments_verified": true,
+    "app_user_model_id": "ChrisPrefect.BambuStudio",
+    "original_three_pin_files_unchanged": true,
+    "pin_action_origin": "not_determined",
+    "pin_action_observed_by_verification": false,
+    "native_get_default_access_denied_remains_separate": true,
+    "actual_app_relaunch_via_pin_tested": false,
+    "visible_icon_cache_pixel_tested": false
   }
 }

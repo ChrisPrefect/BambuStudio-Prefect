@@ -1,6 +1,6 @@
 # Prefect Bambu Studio .4: Auslieferung und Taskleistenprüfung
 
-Die [Vorabversion .4](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.4) ist veröffentlicht und lokal installiert. Build, Paketbytes, alle Installationsdateien, violette EXE-Ressourcen, normale Verknüpfungen und ein eigener tatsächlicher GUI-Lauf sind geprüft. **Der tatsächliche Windows-Taskleistenpin bleibt offen.** Die native Vorprüfung liefert ein respektiertes `E_ACCESSDENIED`; kein Pinrequest wurde ausgeführt.
+Die [Vorabversion .4](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.4) ist veröffentlicht und lokal installiert. Build, Paketbytes, alle Installationsdateien, violette EXE-Ressourcen, normale Verknüpfungen und ein eigener tatsächlicher GUI-Lauf sind geprüft. **Der tatsächliche Windows-Taskleistenpin ist inzwischen nachgewiesen.** Die öffentliche Shell bietet beim Startmenü- und tatsächlichen Taskleistenlink „Von &Taskleiste lösen“ an; Metadaten und unveränderte Originalpins sind geprüft. Der frühere native `E_ACCESSDENIED`-Befund bleibt getrennt erhalten; in jenem GUI-Lauf wurde kein Pinrequest ausgeführt.
 
 | Bindung | Wert |
 | --- | --- |
@@ -21,7 +21,7 @@ Alle **6.756 eigenen Dateien** in **274 Verzeichnissen** mit **600.216.856 entpa
 
 Die tatsächliche EXE trägt den Anzeigenamen **Prefect Bambu Studio** und elf violette Icon-Größen, deren Bytes exakt den Quellassets entsprechen. Alle 13 DeviceWeb-Ressourcen entsprechen ebenfalls dem Installer. Die sechs neuen Taskbar-Diagnosemarker sind in der tatsächlichen DLL nachgewiesen. [PE-/Ressourcenprüfung](taskbar-v5-resources.json). Die unveränderte Vektorquelle und Ableitung sind in [purple-app-icon-assets.md](../purple-app-icon-assets.md) beschrieben; ein Screenshot des Windows-Symbolcaches wird damit nicht behauptet.
 
-Desktop und Startmenü verwenden **Prefect Bambu Studio**, die eigene Windows-v5-Installation und `ChrisPrefect.BambuStudio`. Arbeitsverzeichnis, EXE-Icon 0 und dieselben normalen Fork-`--datadir`-Argumente sind geprüft; die vorherigen Links sind gesichert. Die Prüfung las keine normalen Profildaten. [Verknüpfungsbeleg](taskbar-v5-shortcuts.json). Diese Links sind kein Taskleistenpin.
+Die frühere Prüfung von 19 Uhr bestätigte Desktop- und Startmenülinks mit **Prefect Bambu Studio**, eigener Windows-v5-Installation und `ChrisPrefect.BambuStudio`. Arbeitsverzeichnis, EXE-Icon 0 und dieselben normalen Fork-`--datadir`-Argumente waren geprüft; die vorherigen Links sind gesichert. Die Prüfung las keine normalen Profildaten. [Historischer Verknüpfungsbeleg](taskbar-v5-shortcuts.json). Aktuell sind Startmenü- und tatsächlicher Taskleistenlink vorhanden und geprüft; der Desktoplink ist nicht vorhanden. Ein Wiederherstellen wurde nicht vorgenommen.
 
 ## Nachgetragene COM-Ereignisgrenze
 
@@ -43,7 +43,15 @@ Dieser Lauf zeigt den vorherigen Eingabe-Sync-Fehler an dieser Stelle nicht mehr
 
 Der aktuelle offizielle Windows-Client lieferte bei den geprüften Capture-/Modalpfaden weiterhin `FrameArrived`-/Capture-Timeouts beziehungsweise nicht im Cache verfügbare verschachtelte Modalelemente. Diese konkreten Fehlschläge sind keine allgemeine Unmöglichkeitsaussage. Es wurden keine Sicherheits-/Datenschutzeinstellungen, Token, private Protokolle oder Taskband-Registrydaten verändert.
 
-Die aktuelle Dateiprüfung vom **25.10.2026, 19:24:20 UTC** findet genau die drei ursprünglichen TaskBar-Links mit unveränderten SHA256 und keinen Prefect-Link. **Ein tatsächlicher OS-Pin und seine Relaunchargumente sind damit nicht nachgewiesen.** [Aktuelles Restpin-Inventar](taskbar-v5-pin-remaining.json). Ein vorbereiteter Link, ein API-Marker oder eine in den Pinordner kopierte Datei wird nicht als OS-Anheftung ausgegeben.
+Die damalige Dateiprüfung vom **25.10.2026, 19:24:20 UTC** fand genau die drei ursprünglichen TaskBar-Links und keinen Prefect-Link. Sie bleibt als [historisches Inventar](taskbar-v5-pin-remaining.json) unverändert erhalten.
+
+## Aktuell nachgewiesener Windows-Pinzustand
+
+Die neue lesende Prüfung vom **25.10.2026, 22:23 UTC** bestätigt vier tatsächliche TaskBar-Links. `Prefect Bambu Studio.lnk` hat SHA256 `ab0c6ad6f7dc0f947dcd77df67b75891cad620d3f14705d145194518d6a62f8b` und zeigt auf die oben gebundene v5-EXE. Installerbeleg, Quellenmarker und EXE-/DLL-Hashes wurden erneut geprüft. Ziel, Arbeitsverzeichnis, normale Fork-`--datadir`-Argumente, EXE-Icon 0 und `ChrisPrefect.BambuStudio` sind über den normalen COM-PropertyStore zurückgelesen. Alle drei bisherigen TaskBar-Dateien bleiben SHA-identisch. [Vollständiger bereinigter Metadatenbeleg](taskbar-v5-pin-verified-final.json).
+
+Die öffentliche Windows-Shell bietet sowohl am normalen Startmenülink als auch am tatsächlichen Taskleistenlink exakt **„Von &Taskleiste lösen“** an. Damit ist der aktuelle angeheftete OS-Zustand zusätzlich zur vorhandenen Linkdatei nachgewiesen. Die Prüfung rief kein Verb auf, startete keine App und änderte weder Pin noch Profil. [Bereinigter Shellzustand](taskbar-v5-shell-pin-state.json), [kombinierter öffentlicher Ergebnisbeleg](taskbar-v5-pin-current-public-summary.json). Der Shellbeleg enthält ausschließlich die Taskleistenverben und bindet den vollständigen ursprünglichen Prüfbericht per SHA256.
+
+Der Desktoplink ist aktuell nicht vorhanden. Herkunft und Zeitpunkt der Pinaktion sowie des Desktoplink-Wegfalls wurden nicht ermittelt. Es wird weder ein beobachteter eigener Pin-Klick noch eine erfolgreiche `TaskbarManager`-Anfrage behauptet. Der frühere native `E_ACCESSDENIED`-Befund bleibt gültig. Die Startargumente sind anhand der tatsächlichen angehefteten Verknüpfung geprüft; ein neuer Appstart über den Pin und eine Pixelprüfung des sichtbaren Symbolcaches sind damit nicht behauptet.
 
 ## Veröffentlichung und historische Abgrenzung
 

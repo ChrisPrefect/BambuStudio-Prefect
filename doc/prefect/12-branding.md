@@ -55,16 +55,23 @@ Microsoft verlangt die Prozesskennung früh vor dem Erzeugen von UI und denselbe
 Quelle `3cb50caedececb98a21d2792f41c044ee596f759` ist vollständig gebaut,
 veröffentlicht und als eigene v5-Installation mit allen 6.756 Dateien geprüft.
 Elf violette Icon-Größen und der Anzeigename entsprechen den tatsächlichen
-EXE-Ressourcen. Desktop-/Startmenülinks verwenden v5 und das normale Fork-Profil.
+EXE-Ressourcen. Aktuell verwenden Startmenü- und Taskleistenlink v5 und das
+normale Fork-Profil; der Desktoplink ist aktuell nicht vorhanden.
 [Beleg und aktuelle Downloads](validation/taskbar-v5.md).
 
 Die optionale native Taskleistenintegration verschiebt COM-Aufrufe aus
 Aktivierungsereignissen und tatsächlichen F8-/Menüintents in `CallAfter`.
 Der neue eigene GUI-Lauf bestätigt diese Vorprüfung sowie live lesbare
 verschlüsselte QA-Logs. Die Windows-API lehnt `GetDefault` tatsächlich mit
-`E_ACCESSDENIED` ab; es wird kein Pinrequest ausgeführt. **Der tatsächliche
-Windows-Pin bleibt offen.** Das aktuelle [TaskBar-Inventar](validation/taskbar-v5-pin-remaining.json)
-enthält weiterhin nur die drei unveränderten ursprünglichen Links.
+`E_ACCESSDENIED` ab; in diesem Lauf wurde kein Pinrequest ausgeführt.
+**Der tatsächliche Windows-Pinzustand ist inzwischen separat nachgewiesen.**
+Die öffentliche Shell bietet beim normalen Startmenü- und tatsächlichen
+Taskleistenlink „Von &Taskleiste lösen“ an. Der lesende Metadatenvergleich
+bestätigt v5, normales Fork-Profil, Icon 0 und `ChrisPrefect.BambuStudio`;
+die drei ursprünglichen Pins bleiben unverändert.
+[Aktueller Pinbeleg](validation/taskbar-v5-pin-current-public-summary.json).
+Die Herkunft der Pinaktion ist nicht ermittelt. Das [Inventar von 19:24 UTC](validation/taskbar-v5-pin-remaining.json)
+bleibt als damaliger Stand ohne Prefect-Pin erhalten.
 [Quellanker, F8-Semantik und Updatehinweise](taskbar-integration.md).
 Die nachfolgende Drei-Fälle-Titelprüfung bleibt historisch an .3 gebunden.
 
@@ -82,6 +89,6 @@ Drei frische Starts des installierten Programms mit einem separaten Prüfprofil 
 
 Die Titelbeobachtung stammt aus der nativen Fensterliste und ist jeweils an den eigenen Prozess, seine exakte Startzeile, Startidentität und die geprüften EXE-/DLL-Bytes gebunden. Damit wird kein Screenshot- oder Pixelnachweis der benutzerdefinierten Topbar behauptet.
 
-Desktop- und Startmenüverknüpfung heißen **Prefect Bambu Studio**; Ziel, Arbeitsverzeichnis, Profilargumente, Icon und gemeinsame AppUserModelID sind zurückgelesen und geprüft. **Das tatsächliche Anheften an die Windows-Taskleiste bleibt offen.** Eine vorbereitete Verknüpfung und eingebettete Icon-Frames belegen weder einen OS-Pin noch den sichtbaren Windows-Symbolcache.
+Desktop- und Startmenüverknüpfung hießen zu diesem Prüfzeitpunkt **Prefect Bambu Studio**; Ziel, Arbeitsverzeichnis, Profilargumente, Icon und gemeinsame AppUserModelID waren zurückgelesen und geprüft. **Ein tatsächlicher Taskleistenpin war damals noch nicht nachgewiesen.** Eine vorbereitete Verknüpfung und eingebettete Icon-Frames belegen weder einen OS-Pin noch den sichtbaren Windows-Symbolcache.
 
 Die [veröffentlichte Vorabversion .3](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.3) einschließlich aller drei öffentlichen Downloads ist geprüft. [Gesamter Auslieferungsbericht und Grenzen](validation/branding.md). Die DeviceWeb-Paketkorrektur und ihre Update-Anker stehen in [device-web-packaging.md](device-web-packaging.md).

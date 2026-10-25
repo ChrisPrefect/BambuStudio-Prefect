@@ -111,11 +111,18 @@ Windows 10/Build 19045 nicht; Microsofts [Desktopbeispiel](https://github.com/mi
 benannte ursprünglich SDK und Windows ab Insider-Build 23516. Daraus wird
 keine zusätzliche konkrete Ursache und keine Empfehlung für erhöhte Rechte abgeleitet.
 
-**Der tatsächliche OS-Pin bleibt offen.** Das frische
-[TaskBar-Inventar](validation/taskbar-v5-pin-remaining.json) enthält nur die drei
-ursprünglichen, SHA-identischen Links und keinen Prefect-Link. Die aktuellen
-Capture-/Modalcacheversuche des offiziellen Clients lieferten konkrete Fehler;
-sie werden nicht als allgemeine Unmöglichkeit oder als Pin-Erfolg ausgegeben.
+**Der tatsächliche OS-Pinzustand ist inzwischen separat geprüft.** Am
+25.10.2026 um 22:23 UTC zeigt die öffentliche Windows-Shell bei normalem
+Startmenülink und tatsächlichem Prefect-Taskleistenlink jeweils
+„Von &Taskleiste lösen“. Der lesende Linkvergleich bestätigt v5, normales
+Fork-Profil, Arbeitsverzeichnis, EXE-Icon 0 und `ChrisPrefect.BambuStudio`;
+die drei ursprünglichen Pins sind unverändert. Der Desktoplink ist aktuell
+nicht vorhanden. [Aktueller Pin-/Shellnachweis](validation/taskbar-v5-pin-current-public-summary.json).
+Die Herkunft der Pinaktion wurde nicht ermittelt und wird keiner API-Anfrage
+oder Agentaktion zugeschrieben. Der frühere `E_ACCESSDENIED`-Befund bleibt
+erhalten. Das [Inventar von 19:24 UTC](validation/taskbar-v5-pin-remaining.json)
+belegt den damaligen Stand ohne Prefect-Pin. Die damaligen Capture-/Modalcache-
+Fehler des offiziellen Clients werden nicht als allgemeine Unmöglichkeit ausgegeben.
 [Auslieferungsbericht und Grenzen](validation/taskbar-v5.md),
 [gebundener nativer Laufzeitbeleg](validation/runtime-taskbar-v5/preflight.json).
 

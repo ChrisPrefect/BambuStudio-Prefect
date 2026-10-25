@@ -10,18 +10,26 @@ Quelle `3cb50caedececb98a21d2792f41c044ee596f759`, Tree
 ist **completed / success**. Artefakt `12610262804`, 264.422.804 Byte, SHA256
 `def117ac577b143386f226fce6be1189b5a533acc8aa62bb7e97e9bcd4f19ab9`.
 Alle 6.756 eigenen Dateien, 13 DeviceWeb-Ressourcen, elf violetten Icon-Größen
-und die aktualisierten normalen Desktop-/Startmenülinks sind geprüft.
+sind geprüft. Die früheren Desktop-/Startmenülink-Prüfungen bleiben zeitlich
+gebunden; aktuell sind Startmenü und tatsächlicher Taskleistenlink geprüft.
 Die 31 Patches rekonstruieren 62 Zwischenstände exakt.
 
 Der tatsächliche eigene GUI-Lauf belegt `CallAfter`-Vorprüfung und live lesbare
 verschlüsselte QA-Logs. Der frühere `0x8001010D` tritt an dieser Stelle im neuen
 Lauf nicht mehr auf. `GetDefault` liefert nun ein echtes **`0x80070005` /
 `E_ACCESSDENIED`**; die Anwendung respektiert dies und führt keinen Pinrequest aus.
-Die aktuellen offiziellen Capture-/Modalcachepfade lieferten weitere konkrete
-Werkzeugfehler. **Ein tatsächlicher OS-Pin bleibt offen**: Das aktuelle Inventar
-vom 25.10.2026, 19:24:20 UTC enthält weiterhin nur die drei ursprünglichen,
-SHA-identischen Pins und keinen Prefect-Link. Keine Token-, Registry-, Sicherheits-
-oder Datenschutzumgehung wurde dafür vorgenommen.
+Die damaligen offiziellen Capture-/Modalcachepfade lieferten weitere konkrete
+Werkzeugfehler. **Der tatsächliche OS-Pin ist jetzt nachgewiesen**: Die lesende
+Prüfung vom **25.10.2026, 22:23 UTC** findet den echten Prefect-Taskleistenlink
+mit korrekter v5-Installation, normalem Fork-Profil, EXE-Icon 0 und AUMID.
+Die öffentliche Shell meldet bei Startmenü- und Taskleistenlink
+„Von &Taskleiste lösen“; die drei ursprünglichen Pins bleiben SHA-identisch.
+[Aktueller Zustand und Metadaten](validation/taskbar-v5-pin-current-public-summary.json).
+Der Desktoplink ist aktuell nicht vorhanden. Herkunft und Zeitpunkt der
+Pinaktion wurden nicht ermittelt; die Prüfung löste keine Pinaktion aus.
+Der [frühere Stand ohne Prefect-Pin um 19:24:20 UTC](validation/taskbar-v5-pin-remaining.json)
+und der native API-Fehler bleiben historische Befunde. Keine Token-, Registry-,
+Sicherheits- oder Datenschutzumgehung wurde dafür vorgenommen.
 
 Die [Vorabversion .4](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.4)
 ist seit **25.10.2026, 19:18:03 UTC** veröffentlicht. Quelle und alle drei anonymen
@@ -40,8 +48,8 @@ ist **completed / success**. Artefakt `12600886554`, alle 6.756 installierten
 Dateien, die 13 DeviceWeb-Ressourcen und elf eingebetteten violetten
 Icon-Größen sind geprüft. Drei tatsächliche GUI-Starts bestätigen den
 Prefect-Präfix, einen benannten Projekttitel und den Änderungsstern.
-Desktop- und Startmenülinks sind geprüft; **der tatsächliche OS-Taskleistenpin
-ist weiterhin offen**. Die neue Titelprüfung wiederholt keine vollständige
+Desktop- und Startmenülinks waren geprüft; **ein tatsächlicher OS-Taskleistenpin
+war zu diesem historischen Prüfzeitpunkt noch nicht nachgewiesen**. Die neue Titelprüfung wiederholt keine vollständige
 Workflow-/Hardwarematrix.
 
 Die Serie aus 28 Patches rekonstruiert alle 56 Zwischenstände beider

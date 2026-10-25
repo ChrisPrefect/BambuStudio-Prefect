@@ -1,0 +1,66 @@
+{
+  "schema": "prefect-native-taskbar-link-verification-v1",
+  "evidence_scope": "actual-taskbar-link-files",
+  "utc": "2026-10-25T22:23:09.276474+00:00",
+  "verification_status": "passed",
+  "source_commit": "3cb50caedececb98a21d2792f41c044ee596f759",
+  "source_tree": "ca2cd51f1d335f7c5172bad8152b1b727cc0f2fe",
+  "installation_binding": {
+    "installer_private_proof_sha256": "633060585b6c69798a360b51a657e9fb83844acbfb3d66ea28a92a1c847b0bb0",
+    "source_marker_sha256": "307223b534e2293e558a5d31caf075287bc316cf980fad42fc21647f3d688dca",
+    "exe_sha256": "e113e57c2e6db449de57c438ccab52555d659bfa94b7a0f88b899c419708469c",
+    "dll_sha256": "83414316f9988d26451b04b974d584b27a0d2325b2cfad1bf0f6d414ad6d6f34",
+    "installed_own_file_count": 6756
+  },
+  "new_taskbar_link": {
+    "name": "Prefect Bambu Studio.lnk",
+    "location_role": "Current-user pinned TaskBar folder",
+    "sha256": "ab0c6ad6f7dc0f947dcd77df67b75891cad620d3f14705d145194518d6a62f8b",
+    "bytes": 2329,
+    "links": 1,
+    "target_relative_to_userprofile": "BambuStudio-Prefect-Windows-v5/bambu-studio.exe",
+    "working_directory_role": "Own verified Windows-v5 installation",
+    "normal_fork_profile_argument_preserved": true,
+    "app_user_model_id": "ChrisPrefect.BambuStudio",
+    "icon_role": "Exact verified v5 executable, icon index 0",
+    "icon_index": 0,
+    "icon_reference_matches_verified_executable": true,
+    "metadata_reopened_through_standard_COM": true
+  },
+  "original_pins": [
+    {
+      "name": "Bambu Studio.lnk",
+      "sha256": "307867e6b319caf8315affac82be77a618d9767c66ce58952e3236ac53136986",
+      "unchanged": true
+    },
+    {
+      "name": "File Explorer.lnk",
+      "sha256": "cf116b33831de9f80847abdb2a0d92ab3d3f956a8e209ec95d35d986eea8c7b5",
+      "unchanged": true
+    },
+    {
+      "name": "Google Chrome.lnk",
+      "sha256": "7535b5714a2d725bf9ea0a40118157e5e6d110633a51d8a1b1e73aa86080e58d",
+      "unchanged": true
+    }
+  ],
+  "original_pin_count_preserved": 3,
+  "observed_taskbar_lnk_file_count": 4,
+  "taskbar_link_files_unchanged_by_verification": true,
+  "activity": {
+    "scope": "This read-only verification helper only.",
+    "os_pin_writes": 0,
+    "pin_requests": 0,
+    "ui_actions": 0,
+    "app_launches": 0,
+    "profile_reads": 0,
+    "profile_writes": 0,
+    "registry_writes": 0,
+    "SMB_access": false
+  },
+  "limitations": [
+    "This helper neither performs nor observes the pin action; separate OS-state evidence is required.",
+    "This proof verifies the actual TaskBar-folder link and metadata; it does not inspect Taskband registry state or visible UI.",
+    "The icon is bound to the exact v5 executable; actual embedded violet frames require the separate PE-resource proof."
+  ]
+}

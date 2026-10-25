@@ -17,8 +17,12 @@ Patches und `SHA256SUMS.txt`. Alle 62 Replay-Zwischenstände und die drei
 öffentlichen Downloads sind geprüft. [Aktueller Auslieferungsbericht](validation/taskbar-v5.md)
 und [Veröffentlichungsbeleg](validation/published-release-taskbar-v5.json).
 Der eigene GUI-Lauf bestätigt die verzögerte COM-Vorprüfung und Live-QA-Logs;
-die native API lehnt `GetDefault` mit `E_ACCESSDENIED` ab. Das tatsächliche
-OS-Anheften bleibt offen. Desktop und Startmenü sind auf v5 umgestellt.
+die native API lehnte `GetDefault` mit `E_ACCESSDENIED` ab. Dieser frühere
+Befund bleibt erhalten. **Der tatsächliche OS-Pin ist inzwischen geprüft**:
+Startmenü und Taskleistenlink führen zu v5 mit normalem Fork-Profil und
+passender AUMID; die Windows-Shell bietet „Von &Taskleiste lösen“ an.
+Die bisherigen drei Pins sind unverändert. Der Desktoplink ist aktuell
+nicht vorhanden. [Aktueller lesender Nachweis](validation/taskbar-v5-pin-current-public-summary.json).
 
 Der [historische Auslieferungsbericht .3](validation/branding.md) behält
 seinen damaligen Build 40198926718, seine 28/56-Patchbelege und drei Titelprüfungen.

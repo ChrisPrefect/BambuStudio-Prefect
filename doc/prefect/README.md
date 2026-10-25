@@ -16,9 +16,12 @@ ist erfolgreich. Alle 6.756 eigenen Installationsdateien, 13 DeviceWeb-Dateien
 und elf eingebetteten Icon-Größen sind geprüft. Ein neuer eigener GUI-Lauf
 bestätigt die verzögerte COM-Vorprüfung und lesbare Live-QA-Logs; `GetDefault`
 liefert danach ein echtes, respektiertes `0x80070005`/`E_ACCESSDENIED`.
-**Der tatsächliche Windows-Taskleistenpin bleibt offen.** Die drei vorhandenen
-Pins sind unverändert, ein Prefect-Pin ist im aktuellen Inventar nicht vorhanden.
-Desktop und Startmenü sind bereits auf die eigene v5-Installation umgestellt.
+**Der tatsächliche Windows-Taskleistenpin ist jetzt nachgewiesen.** Startmenü
+und echter Taskleistenlink zeigen auf v5, verwenden dasselbe normale Fork-Profil,
+EXE-Icon 0 und `ChrisPrefect.BambuStudio`. Die öffentliche Shell bietet bei beiden
+„Von &Taskleiste lösen“ an; alle drei ursprünglichen Pins sind SHA-identisch.
+Der Desktoplink ist aktuell nicht vorhanden. Der [aktuelle Pinbeleg](validation/taskbar-v5-pin-current-public-summary.json)
+dokumentiert den Zustand; die Herkunft der Pinaktion wurde nicht ermittelt.
 Die [veröffentlichte Vorabversion .4](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.4)
 enthält Windows-ZIP, die 31-Commit-Patchserie mit 62 identischen Zwischenständen
 und Prüfsummen; alle drei öffentlichen Downloads sind vollständig anonym geprüft.
@@ -37,8 +40,8 @@ exakt. Die [veröffentlichte Vorabversion .3](https://github.com/ChrisPrefect/Ba
 enthält Windows-ZIP, Patchserie und Prüfsummen; alle drei öffentlichen
 Downloads sind unabhängig nachgeprüft.
 [Damals geprüfter Paket-, Laufzeit- und Veröffentlichungsnachweis](validation/branding.md).
-Desktop- und Startmenülinks sind aktualisiert; das tatsächliche Anheften an
-die Windows-Taskleiste bleibt offen.
+Desktop- und Startmenülinks waren zu diesem Prüfzeitpunkt aktualisiert;
+ein tatsächlicher Taskleistenpin war damals noch nicht nachgewiesen.
 
 **Historischer Prüfstand Workflow 2:** `9d4fad7292484403f0b026972835035b0a967d20`
 enthält alle elf Schalter, F10/F11 und die ergänzten Materialklickpfade.
@@ -81,8 +84,9 @@ Er wurde mit Paket `.3` eingeführt und ist in `.4` erhalten; die violetten Vekt
 sind in [purple-app-icon-assets.md](purple-app-icon-assets.md) beschrieben.
 Die drei damaligen Fenstertitel sind an der veröffentlichten `.3`-Quelle geprüft.
 Der aktuelle Taskleisten-Nachtrag ist in [taskbar-integration.md](taskbar-integration.md) dokumentiert.
-Die Prozesskennung und geprüfte Verknüpfungen allein belegen kein Anheften;
-dieser lokale OS-Schritt ist weiterhin offen.
+Der aktuelle Windows-Pinzustand und die Metadaten des tatsächlichen
+Taskleistenlinks sind getrennt von der früheren nativen API-Ablehnung
+[nachgewiesen](validation/taskbar-v5-pin-current-public-summary.json).
 
 ## Anpassungsliste
 

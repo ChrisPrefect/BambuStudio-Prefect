@@ -22,14 +22,15 @@ enthält das vollständige Windows-Paket, 31 geprüfte Patches und SHA-256-Prüf
 
 Der aktuelle Windows-Build für Quelle `3cb50cae` ist vollständig erfolgreich.
 Alle 6.756 eigenen Installationsdateien, 13 DeviceWeb-Ressourcen und elf
-violetten Icon-Größen sind geprüft. Desktop und Startmenü verweisen auf die
-eigene Installation und das normale Fork-Profil. Ein tatsächlicher eigener
-GUI-Lauf bestätigt die verzögerte Taskleistenprüfung und Live-QA-Logs;
-deren native Vorprüfung liefert ein respektiertes `E_ACCESSDENIED`.
-**Das tatsächliche Anheften an die Windows-Taskleiste ist weiterhin offen.**
-[Aktueller Paket-, Laufzeit- und Veröffentlichungsnachweis](doc/prefect/validation/taskbar-v5.md)
-und [aktuelles Pin-Inventar](doc/prefect/validation/taskbar-v5-pin-remaining.json)
-benennen den genauen Stand. Die drei früheren
+violetten Icon-Größen sind geprüft. **Prefect Bambu Studio ist an der
+Windows-Taskleiste angeheftet.** Startmenü und Taskleistenlink verwenden die
+eigene v5-Installation, das normale Fork-Profil und `ChrisPrefect.BambuStudio`;
+die drei bisherigen Pins sind unverändert. Der öffentliche Windows-Shellzustand
+und sämtliche Linkmetadaten sind [aktuell geprüft](doc/prefect/validation/taskbar-v5-pin-current-public-summary.json).
+Der frühere eigene GUI-Lauf bestätigte die verzögerte Taskleistenprüfung und
+Live-QA-Logs; sein natives `E_ACCESSDENIED` bleibt als getrennter Befund erhalten.
+[Paket-, Laufzeit- und Veröffentlichungsnachweis](doc/prefect/validation/taskbar-v5.md)
+benennt den genauen Stand. Die drei früheren
 [Titelprüfungen der Ausgabe .3](doc/prefect/validation/branding.md) und die
 [Workflow-2-Laufzeitprüfungen](doc/prefect/validation/workflow2.md) behalten
 ihre eigenen geprüften Quellstände.
