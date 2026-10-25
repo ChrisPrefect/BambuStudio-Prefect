@@ -50,7 +50,25 @@ Microsoft verlangt die Prozesskennung früh vor dem Erzeugen von UI und denselbe
 5. Die sichtbaren Windows-Ressourcen aktualisieren. Eingebettetes Icon und Startmenü-/Taskleisten-Verknüpfung gehören zur separaten Icon-/Installationsänderung; ihre AppUserModelID muss exakt mit dem Prozess übereinstimmen.
 6. Den nativen Windows-Build kompilieren/linken, anschließend EXE-Dateibeschreibung, leeres Fenster, benanntes und geändertes Projekt sowie Taskleisten-Gruppe und Start über die angeheftete Verknüpfung am installierten Paket prüfen. Ein Neustart darf das Profil nicht wechseln oder eine zweite Fork-Taskleistengruppe erzeugen.
 
-## Prüfstand des veröffentlichten Pakets
+## Aktueller Nachtrag .4: Taskleistenprüfung
+
+Quelle `3cb50caedececb98a21d2792f41c044ee596f759` ist vollständig gebaut,
+veröffentlicht und als eigene v5-Installation mit allen 6.756 Dateien geprüft.
+Elf violette Icon-Größen und der Anzeigename entsprechen den tatsächlichen
+EXE-Ressourcen. Desktop-/Startmenülinks verwenden v5 und das normale Fork-Profil.
+[Beleg und aktuelle Downloads](validation/taskbar-v5.md).
+
+Die optionale native Taskleistenintegration verschiebt COM-Aufrufe aus
+Aktivierungsereignissen und tatsächlichen F8-/Menüintents in `CallAfter`.
+Der neue eigene GUI-Lauf bestätigt diese Vorprüfung sowie live lesbare
+verschlüsselte QA-Logs. Die Windows-API lehnt `GetDefault` tatsächlich mit
+`E_ACCESSDENIED` ab; es wird kein Pinrequest ausgeführt. **Der tatsächliche
+Windows-Pin bleibt offen.** Das aktuelle [TaskBar-Inventar](validation/taskbar-v5-pin-remaining.json)
+enthält weiterhin nur die drei unveränderten ursprünglichen Links.
+[Quellanker, F8-Semantik und Updatehinweise](taskbar-integration.md).
+Die nachfolgende Drei-Fälle-Titelprüfung bleibt historisch an .3 gebunden.
+
+## Historischer Prüfstand des veröffentlichten Pakets .3
 
 Der vollständige [Windows-Build 40198926718](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40198926718) für `aef480ca62cfc9ce86a065e2769efe199d7450d1` ist erfolgreich. Alle 6.756 Dateien der lokalen Installation sind anhand der Paketbytes geprüft. Die tatsächliche EXE enthält den Anzeigenamen und elf Icon-Größen, deren Bytes den violetten Quellassets entsprechen. [Vektorquelle und reproduzierbare Ableitung](purple-app-icon-assets.md), [PE-Nachweis](validation/branding-pe-icon.json).
 

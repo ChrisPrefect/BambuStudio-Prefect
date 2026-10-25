@@ -1,0 +1,29 @@
+{
+  "schema": "prefect-current-taskbar-pin-inventory-v1",
+  "utc": "2026-10-25T19:24:20.502420+00:00",
+  "source_commit": "3cb50caedececb98a21d2792f41c044ee596f759",
+  "source_tree": "ca2cd51f1d335f7c5172bad8152b1b727cc0f2fe",
+  "actual_prefect_taskbar_link_present": false,
+  "actual_os_pin_verified": false,
+  "observed_pin_count": 3,
+  "original_pins": [
+    {
+      "name": "Bambu Studio.lnk",
+      "sha256": "307867e6b319caf8315affac82be77a618d9767c66ce58952e3236ac53136986",
+      "unchanged": true
+    },
+    {
+      "name": "File Explorer.lnk",
+      "sha256": "cf116b33831de9f80847abdb2a0d92ab3d3f956a8e209ec95d35d986eea8c7b5",
+      "unchanged": true
+    },
+    {
+      "name": "Google Chrome.lnk",
+      "sha256": "7535b5714a2d725bf9ea0a40118157e5e6d110633a51d8a1b1e73aa86080e58d",
+      "unchanged": true
+    }
+  ],
+  "no_new_pin_file_created_by_check": true,
+  "scope": "Current-user pinned TaskBar link inventory; no Taskband registry or UI inspection",
+  "SMB_access": false
+}

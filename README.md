@@ -11,8 +11,8 @@ nach dem Einfügen mehrerer Objekte. Alle elf Optionen stehen gemeinsam unter
 Der Fork trägt ein violettes Programmsymbol und zeigt **Prefect Bambu Studio**
 vor dem Projektnamen im Fenstertitel, einschließlich des Änderungssterns.
 
-[**Windows-Vorabversion .3 herunterladen**](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.3)
-enthält das vollständige Windows-Paket, die 28 geprüften Patches und SHA-256-Prüfsummen.
+[**Windows-Vorabversion .4 herunterladen**](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.4)
+enthält das vollständige Windows-Paket, 31 geprüfte Patches und SHA-256-Prüfsummen.
 
 [Alle elf Anpassungen und Bedienung](doc/prefect/README.md) ·
 [Gemeinsame Einstellungsseite](doc/prefect/workflow-settings.md) ·
@@ -20,17 +20,19 @@ enthält das vollständige Windows-Paket, die 28 geprüften Patches und SHA-256-
 [Prüfprotokoll](doc/prefect/VALIDATION.md) ·
 [Windows-Builds](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/workflows/prefect-workflow.yml)
 
-Die Fork-Version startet mit einem eigenen Profil über `Start-Prefect.ps1`.
-Der aktuelle Windows-Build ist kompiliert und gelinkt; alle 6.756 Dateien der
-lokalen Installation, die 13 DeviceWeb-Ressourcen und die elf eingebetteten
-Icon-Größen sind geprüft. Drei echte GUI-Starts bestätigen die Titel für ein
-neues, ein benanntes und ein geändertes Projekt. Desktop- und Startmenülink
-verwenden den neuen Namen und dieselbe AppUserModelID wie die Anwendung.
-Das tatsächliche Anheften an die Windows-Taskleiste ist noch offen.
-[Aktueller Auslieferungs- und Laufzeitnachweis](doc/prefect/validation/branding.md)
-nennt Quellstand, öffentliche Downloads und Prüfgrenzen. Die früheren
-[Workflow-2-Laufzeitprüfungen](doc/prefect/validation/workflow2.md) für Anordnung
-und Hintergrundslicing behalten ihren eigenen geprüften Quellstand.
+Der aktuelle Windows-Build für Quelle `3cb50cae` ist vollständig erfolgreich.
+Alle 6.756 eigenen Installationsdateien, 13 DeviceWeb-Ressourcen und elf
+violetten Icon-Größen sind geprüft. Desktop und Startmenü verweisen auf die
+eigene Installation und das normale Fork-Profil. Ein tatsächlicher eigener
+GUI-Lauf bestätigt die verzögerte Taskleistenprüfung und Live-QA-Logs;
+deren native Vorprüfung liefert ein respektiertes `E_ACCESSDENIED`.
+**Das tatsächliche Anheften an die Windows-Taskleiste ist weiterhin offen.**
+[Aktueller Paket-, Laufzeit- und Veröffentlichungsnachweis](doc/prefect/validation/taskbar-v5.md)
+und [aktuelles Pin-Inventar](doc/prefect/validation/taskbar-v5-pin-remaining.json)
+benennen den genauen Stand. Die drei früheren
+[Titelprüfungen der Ausgabe .3](doc/prefect/validation/branding.md) und die
+[Workflow-2-Laufzeitprüfungen](doc/prefect/validation/workflow2.md) behalten
+ihre eigenen geprüften Quellstände.
 
 ---
 

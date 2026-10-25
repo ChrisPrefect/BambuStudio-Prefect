@@ -1,0 +1,21 @@
+{
+  "schema": "prefect-taskbar-v5-patch-replay-summary-v1",
+  "status": "PASS",
+  "source_commit": "3cb50caedececb98a21d2792f41c044ee596f759",
+  "source_tree": "ca2cd51f1d335f7c5172bad8152b1b727cc0f2fe",
+  "upstream_tag": "v02.08.02.61",
+  "upstream_commit": "926a7192574bcb9b3a732e1ec59a46d79cb45466",
+  "commit_count": 31,
+  "replay_checks": 62,
+  "methods": [
+    "raw-diff",
+    "format-patch"
+  ],
+  "all_intermediate_trees_identical": true,
+  "replay_evidence_origin": "Independent replay reported by Root; archive bytes/SHA independently rechecked during documentation staging.",
+  "archive": {
+    "filename": "Prefect-BambuStudio-patches-20261025-taskbar-v5.zip",
+    "bytes": 1114689,
+    "sha256": "437aa4098bd914d9894260ef264f0c70f35b13242690aab51ea1fd94d865d142"
+  }
+}

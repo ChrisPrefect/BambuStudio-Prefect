@@ -17,16 +17,25 @@ Aufrufpfade, persistente Schlüssel, Nebenwirkungen und Laufzeitprüfungen.
 Eine Konfliktlösung nach Funktionen und Zuständigkeiten hat Vorrang vor dem
 mechanischen Übernehmen alter Zeilen.
 
-Die aktuelle Serie bis `aef480ca62cfc9ce86a065e2769efe199d7450d1`
-enthält **28 Commits**. Alle **56 Zwischenstände** aus Rohdiff- und
-Format-Patch-Replay stimmen exakt mit den Originaltrees überein; der normale
-Repository-Index blieb unverändert. [Aktueller Replaynachweis](validation/patch-replay-branding.md)
-und [Einzelbelege](validation/patch-replay-branding.json).
+Die aktuelle Serie bis `3cb50caedececb98a21d2792f41c044ee596f759`
+enthält **31 Commits**. Alle **62 Zwischenstände** aus Rohdiff- und
+Format-Patch-Replay stimmen exakt mit den Originaltrees überein.
+[Aktueller Replaynachweis](validation/patch-replay-taskbar-v5.md) und
+[maschinenlesbarer Überblick](validation/patch-replay-taskbar-v5.json).
 Die Serie enthält zusätzlich zum Workflow den
 [Anzeigenamen und die Windows-Appkennung](12-branding.md),
-[reproduzierbare violette App-Icons](purple-app-icon-assets.md) und die
-[DeviceWeb-Paketkorrektur](device-web-packaging.md). Bei Updates deren
-Quellanker und getrennte Build-/Installationsprüfungen ebenfalls übernehmen.
+[reproduzierbare violette App-Icons](purple-app-icon-assets.md), die
+[DeviceWeb-Paketkorrektur](device-web-packaging.md) und die
+[explizite native Taskleistenintegration](taskbar-integration.md).
+Bei Updates deren Quellanker und getrennte Build-/Installationsprüfungen
+übernehmen. Insbesondere COM-Arbeit aus Aktivierungs-/Inputsync-Handlern
+per `CallAfter` auf die UI-Schleife verschieben, einen Benutzerintent über
+die ganze reentrante Fortsetzung sperren und reale Berechtigungsfehler respektieren.
+Die vorhandene LogSink-Auto-Flush-Änderung bleibt ausschließlich QA-gebunden.
+
+Die [historische Brandingserie .3](validation/patch-replay-branding.md) bis
+`aef480ca62cfc9ce86a065e2769efe199d7450d1` behält ihre damals geprüften
+28 Commits und 56 Zwischenstände.
 
 Der historische Workflow-2-Stand `9d4fad7292484403f0b026972835035b0a967d20`
 enthält 24 Commits und 48 geprüfte Zwischenstände:
@@ -155,6 +164,7 @@ Patchexport ermitteln.
 | Modellimporte einzeln behalten | F07 | `Plater::priv::load_files`, `looks_like_multipart_object`, `ask_multi` |
 | TPU-Cold-Pull-Empfehlung abwählen | F08 | `DevFilaBlackList::check_filaments`, `suppress_tpu_cold_pull`, unveränderter englischer Meldungstext |
 | Tipps vollständig verbergen | F09 | `DailyTipsPanel::render`, `DailyTipsWindow::open/render`, `SlicingProgressNotification::render` |
+| Eindeutige Identität, violette Assets und expliziter Taskleistenintent | Branding/Taskbar | `MainFrame::update_title`, AppUserModelID, `PrefectTaskbarPin::defer_foreground_check`, `user_action`, `request_from_user_action`, Weakref-/Closed-Guards und QA-only `locked_backend()->auto_flush(true)` |
 | Dokumentation, Übersetzung und überprüfbarer Build | alle | `changes.json`, Tests, Übersetzungs-Overlay, eigener Workflow, Profilstarter |
 
 Gemeinsame Voraussetzungen zuerst prüfen; die tatsächliche Commitserie kann

@@ -2,7 +2,36 @@
 
 Stand: **25. Oktober 2026**, Zeitzone Europe/Zurich.
 
-## Aktueller Prüfstand Prefect Bambu Studio .3
+## Aktueller Prüfstand Prefect Bambu Studio .4
+
+Quelle `3cb50caedececb98a21d2792f41c044ee596f759`, Tree
+`ca2cd51f1d335f7c5172bad8152b1b727cc0f2fe`. Der vollständige
+[Windows-Lauf 40222805625](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40222805625)
+ist **completed / success**. Artefakt `12610262804`, 264.422.804 Byte, SHA256
+`def117ac577b143386f226fce6be1189b5a533acc8aa62bb7e97e9bcd4f19ab9`.
+Alle 6.756 eigenen Dateien, 13 DeviceWeb-Ressourcen, elf violetten Icon-Größen
+und die aktualisierten normalen Desktop-/Startmenülinks sind geprüft.
+Die 31 Patches rekonstruieren 62 Zwischenstände exakt.
+
+Der tatsächliche eigene GUI-Lauf belegt `CallAfter`-Vorprüfung und live lesbare
+verschlüsselte QA-Logs. Der frühere `0x8001010D` tritt an dieser Stelle im neuen
+Lauf nicht mehr auf. `GetDefault` liefert nun ein echtes **`0x80070005` /
+`E_ACCESSDENIED`**; die Anwendung respektiert dies und führt keinen Pinrequest aus.
+Die aktuellen offiziellen Capture-/Modalcachepfade lieferten weitere konkrete
+Werkzeugfehler. **Ein tatsächlicher OS-Pin bleibt offen**: Das aktuelle Inventar
+vom 25.10.2026, 19:24:20 UTC enthält weiterhin nur die drei ursprünglichen,
+SHA-identischen Pins und keinen Prefect-Link. Keine Token-, Registry-, Sicherheits-
+oder Datenschutzumgehung wurde dafür vorgenommen.
+
+Die [Vorabversion .4](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.4)
+ist seit **25.10.2026, 19:18:03 UTC** veröffentlicht. Quelle und alle drei anonymen
+HTTP-200-Downloads sind vollständig anhand der SHA256 geprüft; .1/.2/.3 blieben
+unverändert. [Aktueller Bericht](validation/taskbar-v5.md),
+[Ergebnisindex](validation/taskbar-v5-results.json),
+[Veröffentlichung](validation/published-release-taskbar-v5.json).
+Die neue Prüfung wiederholt keine vollständige Workflow-, Drucker- oder Titelmatrix.
+
+## Historischer Prüfstand Prefect Bambu Studio .3
 
 Geprüfter Quellcommit: `aef480ca62cfc9ce86a065e2769efe199d7450d1`, Tree
 `aecda9a6db6ebdd470c65228f65c1fae69e8ec22`. Der vollständige

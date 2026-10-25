@@ -1,0 +1,16 @@
+{
+  "schema": "prefect-taskbar-v5-source-ci-v1",
+  "id": 40222805625,
+  "status": "completed",
+  "conclusion": "success",
+  "head_sha": "3cb50caedececb98a21d2792f41c044ee596f759",
+  "html_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40222805625",
+  "updated_at": "2026-10-25T18:59:01Z",
+  "original_report_sha256": "e843c53650d01a4baa53ca2ecd79fed217c62475c5f4f85cf3525202b68628cf",
+  "artifact": {
+    "id": 12610262804,
+    "name": "BambuStudio-Prefect-Windows-x64-3cb50caedececb98a21d2792f41c044ee596f759",
+    "size_in_bytes": 264422804,
+    "digest": "sha256:def117ac577b143386f226fce6be1189b5a533acc8aa62bb7e97e9bcd4f19ab9"
+  }
+}

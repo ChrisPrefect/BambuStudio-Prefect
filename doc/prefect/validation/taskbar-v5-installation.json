@@ -1,0 +1,21 @@
+{
+  "schema": "prefect-taskbar-v5-public-installation-v1",
+  "source_commit": "3cb50caedececb98a21d2792f41c044ee596f759",
+  "workflow_run_id": 40222805625,
+  "artifact_id": 12610262804,
+  "artifact_bytes": 264422804,
+  "artifact_sha256": "def117ac577b143386f226fce6be1189b5a533acc8aa62bb7e97e9bcd4f19ab9",
+  "original_installation_proof_sha256": "633060585b6c69798a360b51a657e9fb83844acbfb3d66ea28a92a1c847b0bb0",
+  "files": 6756,
+  "directories": 274,
+  "unpacked_bytes": 600216856,
+  "checked_direct_imports": 482,
+  "all_file_sha256_and_crc_verified": true,
+  "hardlinks": 0,
+  "symlinks": 0,
+  "junctions": 0,
+  "application_role": "Own standalone Prefect Windows v5 installation",
+  "normal_or_stock_profile_access_by_installer": false,
+  "app_actions_by_installer": false,
+  "installer_counter_scope": "Installer only; separately launched own GUI is bound by runtime proof."
+}

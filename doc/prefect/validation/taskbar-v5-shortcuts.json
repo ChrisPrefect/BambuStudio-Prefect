@@ -1,0 +1,30 @@
+{
+  "schema": "prefect-taskbar-v5-normal-shortcuts-v1",
+  "source_commit": "3cb50caedececb98a21d2792f41c044ee596f759",
+  "original_proof_sha256": "621f2dd3f298f195c0769c1bb65b1a40312ad44fef296ad2b2f2cef9605a935e",
+  "display_name": "Prefect Bambu Studio",
+  "app_user_model_id": "ChrisPrefect.BambuStudio",
+  "target_role": "Own Windows-v5 executable",
+  "normal_fork_datadir_arguments_verified": true,
+  "working_directory_and_exe_icon_0_verified": true,
+  "original_links_backed_up": true,
+  "original_pin_files_unchanged": true,
+  "original_taskbar_pin_sha256": {
+    "Bambu Studio.lnk": "307867e6b319caf8315affac82be77a618d9767c66ce58952e3236ac53136986",
+    "File Explorer.lnk": "cf116b33831de9f80847abdb2a0d92ab3d3f956a8e209ec95d35d986eea8c7b5",
+    "Google Chrome.lnk": "7535b5714a2d725bf9ea0a40118157e5e6d110633a51d8a1b1e73aa86080e58d"
+  },
+  "links": [
+    {
+      "role": "desktop",
+      "sha256": "ab0c6ad6f7dc0f947dcd77df67b75891cad620d3f14705d145194518d6a62f8b"
+    },
+    {
+      "role": "start-menu",
+      "sha256": "ddb223bc2ce09d313f9b580b449c70bfb75946bc45d8db7f76cebe668663179b"
+    }
+  ],
+  "taskbar_pin_written_by_shortcut_helper": false,
+  "app_started_by_shortcut_helper": false,
+  "counter_scope": "Shortcut metadata helper only; own GUI runtime measured separately."
+}

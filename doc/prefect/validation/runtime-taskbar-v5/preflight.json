@@ -1,0 +1,60 @@
+{
+  "schema": "prefect-taskbar-v5-own-log-summary-v1",
+  "utc": "2026-10-25T19:00:58.737747+00:00",
+  "source_commit": "3cb50caedececb98a21d2792f41c044ee596f759",
+  "source_tree": "ca2cd51f1d335f7c5172bad8152b1b727cc0f2fe",
+  "source_run_id": 40222805625,
+  "launch_proof_sha256": "de2f44aeb703813edc4337c4968f0f7d32acf0775edcd80000178ae8d6cb5c2b",
+  "exe_sha256": "e113e57c2e6db449de57c438ccab52555d659bfa94b7a0f88b899c419708469c",
+  "dll_sha256": "83414316f9988d26451b04b974d584b27a0d2325b2cfad1bf0f6d414ad6d6f34",
+  "own_process_creation_and_exact_cli_verified": true,
+  "logs": [
+    {
+      "log_sha256": "42c8fa2a0082b5060ca9c6118d3d6eedf53f3825205ac43500556ce6863d164d",
+      "log_bytes": 1421408,
+      "encoding": "reviewed-public-local-default-only",
+      "decoded_sha256": "10ea80239c1d90ccc76859961225ef986a98b2b9572189a46c2ddeac6e852519",
+      "trailing_incomplete_ciphertext_bytes": 0,
+      "events": [
+        {
+          "record_line": 6836,
+          "hresult": 0,
+          "stage": "ui_installed",
+          "value": -1
+        },
+        {
+          "record_line": 6837,
+          "hresult": 0,
+          "stage": "preflight_deferred",
+          "value": 1
+        },
+        {
+          "record_line": 6843,
+          "hresult": 0,
+          "stage": "qa_enabled",
+          "value": -1
+        },
+        {
+          "record_line": 6844,
+          "hresult": 0,
+          "stage": "laf_token_required",
+          "value": 0
+        },
+        {
+          "record_line": 6845,
+          "hresult": 0,
+          "stage": "desktop_support_present",
+          "value": -1
+        },
+        {
+          "record_line": 6846,
+          "hresult": -2147024891,
+          "stage": "get_default_failed",
+          "value": -1
+        }
+      ]
+    }
+  ],
+  "actual_os_taskbar_pin_verified": false,
+  "activity_scope": "Read-only own bound QA process logs only; no app launch, stop, pin, UI, network or profile mutation."
+}

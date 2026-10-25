@@ -100,10 +100,24 @@ ein während der Prüfung verwendetes Profil nicht versehentlich zum normalen
 Startprofil der angehefteten Verknüpfung werden. Eine vorbereitete oder nur
 in den TaskBar-Ordner kopierte Datei ist kein erfolgreicher OS-Pin.
 
-Dieser Quellnachtrag wartet beim Erstellen dieses Dokuments noch auf die
-native Kompilierung und tatsächliche Laufzeitabnahme. Der aktuelle
-[Auslieferungsbericht](validation/branding.md) benennt den jeweils belegten
-Stand. Ein SDK- oder API-Check allein wird dort nicht als Pin-Erfolg gewertet.
+Der Nachtrag ist mit Quelle `3cb50caedececb98a21d2792f41c044ee596f759`
+nativ kompiliert und in [Vorabversion .4](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.4)
+veröffentlicht. Ein tatsächlicher eigener GUI-Lauf bestätigt die verzögerte
+Vorprüfung und live lesbare verschlüsselte Logs. Nach Desktopmarker und
+LAF-Anforderung 0 liefert `GetDefault` nun tatsächlich `0x80070005`/
+`E_ACCESSDENIED`; diese Ablehnung wird respektiert, ohne Pinrequest.
+Der vorhandene Marker allein garantiert die Desktop-API-Verwendbarkeit auf
+Windows 10/Build 19045 nicht; Microsofts [Desktopbeispiel](https://github.com/microsoft/Windows-classic-samples/blob/main/Samples/TaskbarManager/README.md)
+benannte ursprünglich SDK und Windows ab Insider-Build 23516. Daraus wird
+keine zusätzliche konkrete Ursache und keine Empfehlung für erhöhte Rechte abgeleitet.
+
+**Der tatsächliche OS-Pin bleibt offen.** Das frische
+[TaskBar-Inventar](validation/taskbar-v5-pin-remaining.json) enthält nur die drei
+ursprünglichen, SHA-identischen Links und keinen Prefect-Link. Die aktuellen
+Capture-/Modalcacheversuche des offiziellen Clients lieferten konkrete Fehler;
+sie werden nicht als allgemeine Unmöglichkeit oder als Pin-Erfolg ausgegeben.
+[Auslieferungsbericht und Grenzen](validation/taskbar-v5.md),
+[gebundener nativer Laufzeitbeleg](validation/runtime-taskbar-v5/preflight.json).
 
 ## Primärquellen
 

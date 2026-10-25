@@ -1,0 +1,63 @@
+{
+  "success": true,
+  "repository": "ChrisPrefect/BambuStudio-Prefect",
+  "tag": "v02.08.02.61-prefect.4",
+  "release_id": 423604332,
+  "release_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.4",
+  "draft": false,
+  "prerelease": true,
+  "published_at": "2026-10-25T19:18:03Z",
+  "source_commit": "3cb50caedececb98a21d2792f41c044ee596f759",
+  "source_tree": "ca2cd51f1d335f7c5172bad8152b1b727cc0f2fe",
+  "source_run_id": 40222805625,
+  "source_run_status": "completed",
+  "source_run_conclusion": "success",
+  "publication_delivery_commit": "89a707e477d2965dbb71aff900e3012621352a7e",
+  "publication_delivery_tree": "78d3190564300c58258a4210e3c7e890240f6568",
+  "publication_run_id": 40225345075,
+  "publication_run_status": "completed",
+  "publication_run_conclusion": "success",
+  "artifact_id": 12610262804,
+  "patch_count": 31,
+  "patch_intermediate_tree_matches": 62,
+  "all_three_public_anonymous_http200_downloads_full_sha256_verified": true,
+  "assets": [
+    {
+      "id": 675876469,
+      "name": "Prefect-Bambu-Studio-2.8.2.61-Windows-x64.zip",
+      "bytes": 264422804,
+      "sha256": "def117ac577b143386f226fce6be1189b5a533acc8aa62bb7e97e9bcd4f19ab9",
+      "public_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.4/Prefect-Bambu-Studio-2.8.2.61-Windows-x64.zip"
+    },
+    {
+      "id": 675876811,
+      "name": "Prefect-BambuStudio-patches-20261025-taskbar-v5.zip",
+      "bytes": 1114689,
+      "sha256": "437aa4098bd914d9894260ef264f0c70f35b13242690aab51ea1fd94d865d142",
+      "public_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.4/Prefect-BambuStudio-patches-20261025-taskbar-v5.zip"
+    },
+    {
+      "id": 675876853,
+      "name": "SHA256SUMS.txt",
+      "bytes": 230,
+      "sha256": "e15d5d4a26ac092331604c6409ea7e6fa58c457c4dc615a062060b8d4b3561f5",
+      "public_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.4/SHA256SUMS.txt"
+    }
+  ],
+  "notes_sha256": "e5e8a9eb0083bdc32b9466d5e738278b3f0ac3a76812ecc1e5dd527ee6c9a032",
+  "verification_artifact_id": 12610892194,
+  "verification_artifact_sha256": "1be3955115d3b723129b9dfbe030cc7ec2c4200c5361eda194ff0aff9eb1ea4c",
+  "verification_report_sha256": "6524f1c535c8f4f66aef04096a2919f72b76e60e9c5991f72dbf01981dbe5827",
+  "verification_artifact_crc": "passed",
+  "windows_zip_crc": "passed",
+  "windows_file_count": 6756,
+  "protected_older_release_ids_unchanged": [
+    418968348,
+    422086779,
+    423441312
+  ],
+  "all_four_direct_tag_sources_verified": true,
+  "taskbar_pin_success_claimed": false,
+  "remote_mutations_performed_by_this_verifier": false,
+  "scope": "Published package and provenance verified; no claim of actual Windows OS-pin success or physical printer acceptance."
+}

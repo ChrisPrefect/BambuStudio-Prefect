@@ -1,0 +1,172 @@
+{
+  "schema": "prefect-taskbar-v5-public-results-v1",
+  "status": "RELEASED_WITH_OS_PIN_PENDING",
+  "source_commit": "3cb50caedececb98a21d2792f41c044ee596f759",
+  "source_tree": "ca2cd51f1d335f7c5172bad8152b1b727cc0f2fe",
+  "upstream_tag": "v02.08.02.61",
+  "build": {
+    "workflow_run_id": 40222805625,
+    "url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40222805625",
+    "status": "SUCCESS",
+    "artifact_id": 12610262804,
+    "artifact_bytes": 264422804,
+    "artifact_sha256": "def117ac577b143386f226fce6be1189b5a533acc8aa62bb7e97e9bcd4f19ab9",
+    "updated_at": "2026-10-25T18:59:01Z",
+    "proof": "taskbar-v5-ci.json",
+    "original_report_sha256": "e843c53650d01a4baa53ca2ecd79fed217c62475c5f4f85cf3525202b68628cf"
+  },
+  "patches": {
+    "schema": "prefect-taskbar-v5-patch-replay-summary-v1",
+    "status": "PASS",
+    "source_commit": "3cb50caedececb98a21d2792f41c044ee596f759",
+    "source_tree": "ca2cd51f1d335f7c5172bad8152b1b727cc0f2fe",
+    "upstream_tag": "v02.08.02.61",
+    "upstream_commit": "926a7192574bcb9b3a732e1ec59a46d79cb45466",
+    "commit_count": 31,
+    "replay_checks": 62,
+    "methods": [
+      "raw-diff",
+      "format-patch"
+    ],
+    "all_intermediate_trees_identical": true,
+    "replay_evidence_origin": "Independent replay reported by Root; archive bytes/SHA independently rechecked during documentation staging.",
+    "archive": {
+      "filename": "Prefect-BambuStudio-patches-20261025-taskbar-v5.zip",
+      "bytes": 1114689,
+      "sha256": "437aa4098bd914d9894260ef264f0c70f35b13242690aab51ea1fd94d865d142"
+    }
+  },
+  "installation": {
+    "status": "PASS",
+    "application_role": "Own standalone Prefect Windows v5 installation",
+    "files": 6756,
+    "directories": 274,
+    "unpacked_bytes": 600216856,
+    "all_file_sha256_verified": true,
+    "own_file_links": 0,
+    "proof": "taskbar-v5-installation.json"
+  },
+  "runtime": {
+    "status": "PRECHECK_E_ACCESSDENIED",
+    "source_bound_gui_start_verified": true,
+    "qa_auto_flush_observed": true,
+    "deferred_preflight_observed": true,
+    "read_only_pinned_state": null,
+    "foreground_user_intent_observed": false,
+    "pin_request_count": 0,
+    "pin_result": null,
+    "actual_os_pin_verified": false,
+    "pin_metadata_and_original_pins_verified": null,
+    "normal_profile_relaunch_arguments_verified": null,
+    "get_default_hresult": -2147024891,
+    "get_default_hresult_hex": "0x80070005",
+    "prior_v4_hresult": -2147417843,
+    "prior_v4_hresult_hex": "0x8001010D",
+    "source_bound_preflight_proof": "runtime-taskbar-v5/preflight.json",
+    "preflight_proof_sha256": "83685ab75ee505e3c17abf07da67cbe9cae7b960c68c998eca5859c471c1cb78",
+    "exe_sha256": "e113e57c2e6db449de57c438ccab52555d659bfa94b7a0f88b899c419708469c",
+    "dll_sha256": "83414316f9988d26451b04b974d584b27a0d2325b2cfad1bf0f6d414ad6d6f34",
+    "launch_proof_sha256": "de2f44aeb703813edc4337c4968f0f7d32acf0775edcd80000178ae8d6cb5c2b",
+    "observation_scope": "Own live GUI preflight snapshot; subsequent separate normal Windows pin flow is not yet established by this report.",
+    "current_taskbar_inventory": "taskbar-v5-pin-remaining.json",
+    "current_taskbar_inventory_sha256": "62e86e2480162a213bf9e1f0e29cae911b6b80fa7d2f013e33e24c85c2b19351",
+    "current_taskbar_inventory_utc": "2026-10-25T19:24:20.502420+00:00",
+    "original_three_pin_files_unchanged": true,
+    "normal_desktop_and_start_menu_shortcuts_verified": true,
+    "shortcut_proof": "taskbar-v5-shortcuts.json"
+  },
+  "qa_preparation": {
+    "status": "PASS",
+    "profile_copied_preset_files": 2517,
+    "config_md5_verified": true,
+    "wrapper_sha256": "556ebd5f3d9af2c6c183352a0d6d24d6c8dc658d508fa3417d135e4fd91afe6e",
+    "unsafe_diagnostic_payloads_rejected": 14,
+    "app_launches": 0,
+    "counter_scope": "Preparation/self-test helper only; these are not measurements of a separately launched GUI."
+  },
+  "release": {
+    "status": "PUBLISHED_AND_PUBLIC_DOWNLOADS_VERIFIED",
+    "id": 423604332,
+    "tag": "v02.08.02.61-prefect.4",
+    "url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.4",
+    "draft": false,
+    "prerelease": true,
+    "published_at": "2026-10-25T19:18:03Z",
+    "publication_run_id": 40225345075,
+    "publication_commit": "89a707e477d2965dbb71aff900e3012621352a7e",
+    "publication_tree": "78d3190564300c58258a4210e3c7e890240f6568",
+    "all_three_public_anonymous_http200_downloads_full_sha256_verified": true,
+    "protected_older_release_ids_unchanged": [
+      418968348,
+      422086779,
+      423441312
+    ],
+    "assets": [
+      {
+        "id": 675876469,
+        "name": "Prefect-Bambu-Studio-2.8.2.61-Windows-x64.zip",
+        "bytes": 264422804,
+        "sha256": "def117ac577b143386f226fce6be1189b5a533acc8aa62bb7e97e9bcd4f19ab9",
+        "public_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.4/Prefect-Bambu-Studio-2.8.2.61-Windows-x64.zip"
+      },
+      {
+        "id": 675876811,
+        "name": "Prefect-BambuStudio-patches-20261025-taskbar-v5.zip",
+        "bytes": 1114689,
+        "sha256": "437aa4098bd914d9894260ef264f0c70f35b13242690aab51ea1fd94d865d142",
+        "public_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.4/Prefect-BambuStudio-patches-20261025-taskbar-v5.zip"
+      },
+      {
+        "id": 675876853,
+        "name": "SHA256SUMS.txt",
+        "bytes": 230,
+        "sha256": "e15d5d4a26ac092331604c6409ea7e6fa58c457c4dc615a062060b8d4b3561f5",
+        "public_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.4/SHA256SUMS.txt"
+      }
+    ],
+    "proof": "published-release-taskbar-v5.json"
+  },
+  "historical_proofs": {
+    "release_3": "branding.md",
+    "release_3_source": "aef480ca62cfc9ce86a065e2769efe199d7450d1",
+    "release_3_title_cases_retested_on_this_source": false,
+    "workflow2": "workflow2.md",
+    "workflow2_source": "9d4fad7292484403f0b026972835035b0a967d20",
+    "workflow2_matrix_retested_on_this_source": false
+  },
+  "limitations": [
+    "No actual OS taskbar pin is established by this preparation report.",
+    "A native API result alone does not establish the desired Windows shortcut arguments or visible pin.",
+    "Historical .3 title/icon and Workflow-2 geometry proofs retain their original source/binary bindings."
+  ],
+  "privacy": {
+    "raw_logs_included": false,
+    "raw_config_included": false,
+    "absolute_user_paths_included": false,
+    "device_or_account_data_included": false
+  },
+  "resources": {
+    "proof": "taskbar-v5-resources.json",
+    "display_name": "Prefect Bambu Studio",
+    "embedded_violet_icon_frames": 11,
+    "all_embedded_frame_bytes_match": true,
+    "device_web_files": 13,
+    "all_device_web_bytes_match_installer": true
+  },
+  "current_native_tool_observations": {
+    "window_capture": "FrameArrived/windowcapture timeouts observed with current official client and fresh window bindings.",
+    "modal_accessibility_cache": "Observed nested modal elements were not available in the cached app state; no general inability inferred.",
+    "security_or_privacy_changes_performed": false,
+    "no_private_protocol_or_registry_bypass": true
+  },
+  "public_proof_sha256": {
+    "taskbar-v5-ci.json": "3c1952680e8c04e5481f942e622492ad24dcb013768ce894b1b957e8c4b8e836",
+    "taskbar-v5-installation.json": "b6f0cef9336b0a0b392f3b382b8985dd413f4d03c3d04433e3a92b936a2ff805",
+    "taskbar-v5-resources.json": "0adad54414e60c6e2849929e37ed3040e1fca12faff392afc6540986b2a74e88",
+    "taskbar-v5-shortcuts.json": "06363a46eef2da5a0ea8974347556a516c80e4fd4a159b8217d3cd8f50622093",
+    "taskbar-v5-pin-remaining.json": "62e86e2480162a213bf9e1f0e29cae911b6b80fa7d2f013e33e24c85c2b19351",
+    "published-release-taskbar-v5.json": "bc5615ef64da3b91e0d0554338b6b9adc538f461b8fe64990debb1206a92ebb6",
+    "runtime-taskbar-v5/preflight.json": "83685ab75ee505e3c17abf07da67cbe9cae7b960c68c998eca5859c471c1cb78",
+    "patch-replay-taskbar-v5.json": "ace60be8dd155f2d2faaf2daab35a943f5d99d6dd75181b58108e37ca5690d7c"
+  }
+}

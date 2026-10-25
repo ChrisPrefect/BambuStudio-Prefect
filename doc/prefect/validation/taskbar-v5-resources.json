@@ -1,0 +1,85 @@
+{
+  "source_commit": "3cb50caedececb98a21d2792f41c044ee596f759",
+  "source_tree": "ca2cd51f1d335f7c5172bad8152b1b727cc0f2fe",
+  "installation_binding": {
+    "source_commit": "3cb50caedececb98a21d2792f41c044ee596f759",
+    "installer_proof_sha256": "633060585b6c69798a360b51a657e9fb83844acbfb3d66ea28a92a1c847b0bb0",
+    "binaries": {
+      "bambu-studio.exe": {
+        "sha256": "e113e57c2e6db449de57c438ccab52555d659bfa94b7a0f88b899c419708469c",
+        "bytes": 95744,
+        "links": 1
+      },
+      "BambuStudio.dll": {
+        "sha256": "83414316f9988d26451b04b974d584b27a0d2325b2cfad1bf0f6d414ad6d6f34",
+        "bytes": 139277824,
+        "links": 1
+      }
+    },
+    "installed_own_file_count": 6756,
+    "source_marker_sha256": "307223b534e2293e558a5d31caf075287bc316cf980fad42fc21647f3d688dca",
+    "source_tree": "ca2cd51f1d335f7c5172bad8152b1b727cc0f2fe",
+    "artifact_id": 12610262804,
+    "workflow_run_id": 40222805625
+  },
+  "branding": {
+    "display_name": "Prefect Bambu Studio",
+    "version_resource_id": 1,
+    "group_icon_resource_id": 2,
+    "embedded_icon_frames": 11,
+    "icon_sha256": "db77286997a999fb0f8e06d7522f3c4f843ed61ea0d8718284d942211e1bf5a8",
+    "frame_sizes": [
+      [
+        16,
+        16
+      ],
+      [
+        20,
+        20
+      ],
+      [
+        24,
+        24
+      ],
+      [
+        32,
+        32
+      ],
+      [
+        40,
+        40
+      ],
+      [
+        48,
+        48
+      ],
+      [
+        64,
+        64
+      ],
+      [
+        128,
+        128
+      ],
+      [
+        154,
+        154
+      ],
+      [
+        192,
+        192
+      ],
+      [
+        256,
+        256
+      ]
+    ],
+    "all_embedded_frame_bytes_match": true
+  },
+  "device_web_runtime_files": 13,
+  "all_device_web_bytes_match_installer": true,
+  "application_launched": false,
+  "taskbar_pin_verified": false,
+  "original_proof_sha256": "f38841db9af79acbf1e471c44088fe01c695a095ff11aa8ed14ad75f8aa045b7",
+  "activity_scope": "Resource/installation verification helper only; own GUI runtime is measured separately."
+}

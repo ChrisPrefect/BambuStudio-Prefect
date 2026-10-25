@@ -7,7 +7,25 @@ Die gemeinsame Grundlage ist Bambu Studio **v02.08.02.61**, Commit
 `926a7192574bcb9b3a732e1ec59a46d79cb45466`. Das Git-Remote `upstream` zeigt auf
 `https://github.com/bambulab/BambuStudio.git`.
 
-**Aktueller Auslieferungsstand vom 25.10.2026:**
+**Aktueller Auslieferungsstand .4 vom 25.10.2026:**
+`3cb50caedececb98a21d2792f41c044ee596f759`, Tree
+`ca2cd51f1d335f7c5172bad8152b1b727cc0f2fe`, enthält alle elf Funktionen,
+Namen, violettes Icon, DeviceWeb-Paketprüfung und den Taskleisten-Nachtrag.
+Der vollständige [Windows-Build 40222805625](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40222805625)
+ist erfolgreich. Alle 6.756 eigenen Installationsdateien, 13 DeviceWeb-Dateien
+und elf eingebetteten Icon-Größen sind geprüft. Ein neuer eigener GUI-Lauf
+bestätigt die verzögerte COM-Vorprüfung und lesbare Live-QA-Logs; `GetDefault`
+liefert danach ein echtes, respektiertes `0x80070005`/`E_ACCESSDENIED`.
+**Der tatsächliche Windows-Taskleistenpin bleibt offen.** Die drei vorhandenen
+Pins sind unverändert, ein Prefect-Pin ist im aktuellen Inventar nicht vorhanden.
+Desktop und Startmenü sind bereits auf die eigene v5-Installation umgestellt.
+Die [veröffentlichte Vorabversion .4](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.4)
+enthält Windows-ZIP, die 31-Commit-Patchserie mit 62 identischen Zwischenständen
+und Prüfsummen; alle drei öffentlichen Downloads sind vollständig anonym geprüft.
+[Aktueller Auslieferungs-/Laufzeitbericht](validation/taskbar-v5.md),
+[Ergebnisindex](validation/taskbar-v5-results.json).
+
+**Historischer Auslieferungsstand .3 vom 25.10.2026:**
 `aef480ca62cfc9ce86a065e2769efe199d7450d1`, Tree
 `aecda9a6db6ebdd470c65228f65c1fae69e8ec22`, enthält alle elf Funktionen,
 den Namen **Prefect Bambu Studio**, das violette Icon und die Paketprüfung
@@ -18,7 +36,7 @@ Drei echte GUI-Starts bestätigen neue, benannte und geänderte Projekttitel.
 exakt. Die [veröffentlichte Vorabversion .3](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.3)
 enthält Windows-ZIP, Patchserie und Prüfsummen; alle drei öffentlichen
 Downloads sind unabhängig nachgeprüft.
-[Aktueller Paket-, Laufzeit- und Veröffentlichungsnachweis](validation/branding.md).
+[Damals geprüfter Paket-, Laufzeit- und Veröffentlichungsnachweis](validation/branding.md).
 Desktop- und Startmenülinks sind aktualisiert; das tatsächliche Anheften an
 die Windows-Taskleiste bleibt offen.
 
@@ -59,9 +77,10 @@ Der Nachtrag vom 25.10.2026 gibt dem Fork den sichtbaren Namen
 und trennt seine Windows-Taskleistengruppe über `ChrisPrefect.BambuStudio`.
 Details, betroffene Quellstellen, technische Abgrenzung und die Anleitung
 zum Nachtragen bei Upstream-Updates stehen in [12-branding.md](12-branding.md).
-Er gehört zum aktuellen Paket `.3`; die violetten Vektor- und Rasterassets
+Er wurde mit Paket `.3` eingeführt und ist in `.4` erhalten; die violetten Vektor- und Rasterassets
 sind in [purple-app-icon-assets.md](purple-app-icon-assets.md) beschrieben.
-Die drei Fenstertitel sind am tatsächlich installierten Programm geprüft.
+Die drei damaligen Fenstertitel sind an der veröffentlichten `.3`-Quelle geprüft.
+Der aktuelle Taskleisten-Nachtrag ist in [taskbar-integration.md](taskbar-integration.md) dokumentiert.
 Die Prozesskennung und geprüfte Verknüpfungen allein belegen kein Anheften;
 dieser lokale OS-Schritt ist weiterhin offen.
 
@@ -122,9 +141,9 @@ die Entscheidung über externe Nachbearbeitungsskripte behalten ihre Bedeutung.
 ## Eigenes Profil statt Änderungen an der normalen Installation
 
 Auf dem geprüften Windows-System liegt das aktuelle Paket vollständig unter
-`%USERPROFILE%\BambuStudio-Prefect-Windows-v3`. ZIP-Hash, sämtliche Datei-Hashes,
+`%USERPROFILE%\BambuStudio-Prefect-Windows-v5`. ZIP-Hash, sämtliche Datei-Hashes,
 exakte Paketstruktur und fehlende Ressourcen-/Dateilinks sind im
-[aktuellen Prüfbericht](validation/branding.md) festgehalten.
+[aktuellen Prüfbericht](validation/taskbar-v5.md) festgehalten.
 Die Laufzeitprüfung verwendet ein separates Profil mit ausschließlich
 synthetischen Prüfmodellen. Das bestehende normale Fork-Profil wird dabei
 nicht gestartet oder verändert.

@@ -9,13 +9,20 @@ Installationsverzeichnis. Der tatsächliche Ergebnisnachweis steht in
 Buildnachweis.
 
 Der aktuelle vollständige Windows-Build
-[40198926718](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40198926718)
-für `aef480ca62cfc9ce86a065e2769efe199d7450d1` ist erfolgreich. Die
-[veröffentlichte Vorabversion .3](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.3)
-enthält das geprüfte Windows-Paket mit 6.756 Dateien, die Serie aus 28
-Patches und `SHA256SUMS.txt`. Installation, tatsächliche GUI-Titel und alle
-drei öffentlichen Downloads sind im [Auslieferungsbericht](validation/branding.md)
-belegt. Das tatsächliche OS-Anheften an die Taskleiste ist weiterhin offen.
+[40222805625](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40222805625)
+für `3cb50caedececb98a21d2792f41c044ee596f759` ist erfolgreich. Die
+[veröffentlichte Vorabversion .4](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.4)
+enthält das geprüfte Windows-Paket mit 6.756 Dateien, die Serie aus 31
+Patches und `SHA256SUMS.txt`. Alle 62 Replay-Zwischenstände und die drei
+öffentlichen Downloads sind geprüft. [Aktueller Auslieferungsbericht](validation/taskbar-v5.md)
+und [Veröffentlichungsbeleg](validation/published-release-taskbar-v5.json).
+Der eigene GUI-Lauf bestätigt die verzögerte COM-Vorprüfung und Live-QA-Logs;
+die native API lehnt `GetDefault` mit `E_ACCESSDENIED` ab. Das tatsächliche
+OS-Anheften bleibt offen. Desktop und Startmenü sind auf v5 umgestellt.
+
+Der [historische Auslieferungsbericht .3](validation/branding.md) behält
+seinen damaligen Build 40198926718, seine 28/56-Patchbelege und drei Titelprüfungen.
+Diese werden nicht als neue Tests am v5-Binärstand ausgegeben.
 
 ## Compiler und Abhängigkeiten
 
