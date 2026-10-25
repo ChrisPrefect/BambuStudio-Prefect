@@ -8,6 +8,15 @@ Installationsverzeichnis. Der tatsächliche Ergebnisnachweis steht in
 [VALIDATION.md](VALIDATION.md); die Existenz des Workflows allein ist kein
 Buildnachweis.
 
+Der aktuelle vollständige Windows-Build
+[40198926718](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40198926718)
+für `aef480ca62cfc9ce86a065e2769efe199d7450d1` ist erfolgreich. Die
+[veröffentlichte Vorabversion .3](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.3)
+enthält das geprüfte Windows-Paket mit 6.756 Dateien, die Serie aus 28
+Patches und `SHA256SUMS.txt`. Installation, tatsächliche GUI-Titel und alle
+drei öffentlichen Downloads sind im [Auslieferungsbericht](validation/branding.md)
+belegt. Das tatsächliche OS-Anheften an die Taskleiste ist weiterhin offen.
+
 ## Compiler und Abhängigkeiten
 
 Der Workflow übernimmt die vom MSVC-Setup tatsächlich ausgewählte
@@ -102,6 +111,14 @@ Das Windows-Artefakt enthält das CMake-Installationsverzeichnis,
 tatsächlich gebauten Quellcommit. Das neue Laufzeitprofil wird über `--datadir`
 getrennt geführt; [Bedienung und Profilimport](README.md).
 Persönliche Profile und Druckerzugänge gehören nicht ins veröffentlichte ZIP.
+
+Der DeviceWeb-Bau benötigt zusätzlich die generierten Dateien außerhalb des
+Anwendungscaches. Ein wiederhergestellter aktueller Stamp allein garantiert
+deren Existenz nicht. Der Workflow repariert bei fehlenden Ausgaben gezielt
+den Stamp, baut das vorhandene `device_page_build`-Target und vergleicht
+generierte, Ressourcen- und installierte Bäume vor dem Upload. Der finale
+Build enthält alle 13 Dateien. [Ursache, Prüfungen und Update-Anker](device-web-packaging.md),
+[Paketnachweis](validation/branding-deviceweb.json).
 
 ## Separater Release-Transport
 

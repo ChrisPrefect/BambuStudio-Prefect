@@ -88,6 +88,19 @@ Viewer-SVG liegt in dieser Upstream-Basis nicht im Git-Baum. Hier wurde kein
 nicht vorhandenes Viewer-Symbol neu gestaltet. `gcode.icns` gehört zum
 separaten macOS-Umfang.
 
+## Prüfung der tatsächlichen Windows-EXE
+
+Der finale Quellstand `aef480ca62cfc9ce86a065e2769efe199d7450d1` wurde im
+vollständigen Windows-Lauf `40198926718` gebaut und als
+[Vorabversion .3](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.3)
+veröffentlicht. Die tatsächlich installierte EXE enthält alle elf ICO-Größen;
+ihre Frame-Bytes stimmen vollständig mit dem eingecheckten violetten ICO
+überein. [Öffentlicher PE-/Icon-Beleg](validation/branding-pe-icon.json).
+Die drei realen Fenstertitel und Verknüpfungen sind getrennt im
+[Auslieferungsbericht](validation/branding.md) belegt. Das tatsächliche
+Anheften an die OS-Taskleiste und deren sichtbarer Symbolcache sind weiterhin
+kein durch diesen Bytevergleich bestätigter Prüfschritt.
+
 ## Bei einem Upstream-Update nachtragen
 
 1. Die Pfade der Windows-RC-Ressource, `main_frame_icon`, der App-PNG-Aufrufer

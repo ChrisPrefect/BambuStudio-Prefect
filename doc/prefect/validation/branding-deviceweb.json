@@ -1,0 +1,30 @@
+{
+  "source_commit": "aef480ca62cfc9ce86a065e2769efe199d7450d1",
+  "source_tree": "aecda9a6db6ebdd470c65228f65c1fae69e8ec22",
+  "source_run_id": 40198926718,
+  "artifact_id": 12600886554,
+  "artifact_bytes": 264400383,
+  "artifact_sha256": "0ec260a2f8ffdec491d92a1cd27995c3d6f1c67b651e129e76faebc894104d24",
+  "zip_crc": "passed",
+  "zip_commit_marker": "passed",
+  "device_web_runtime": "passed",
+  "device_web_files": 13,
+  "runtime_asset_sha256": {
+    "index.html": "4cfa71255b7a0329c985190a0c0f708000ed6695d3753c891685ff5c6dc1bbd5",
+    "assets/index.css": "46c95f3210c4ccb66d53d76e09389db32780741794773e3c8628f111c87c23d9",
+    "assets/index.js": "04e51a643a256ba05aca48438d49805b36ad1486812286aa2d0b42cbf0d51589",
+    "assets/index.js.map": "9642f7712d4d87a5c246decc133c92cec006cb0bdf6401501d838b7fcb396107",
+    "img/assistant.svg": "d0fe56922178a27e1c7bbc3b9aaef31ce784fccf5ef6d6703b7a1264b6dffe7f",
+    "img/device_add.svg": "63e59a33f2699cf13503d2a3e89ef731351ce50cbf748392d711566fdda31c48",
+    "img/device_layout.svg": "cf00f0b0717d82612b0b2cbc637f81beaf1f2fae23a8d854a4e4d6c17ff7967d",
+    "img/device_query.svg": "ea0ba9287a0a786ac56d5c4470cf48e0ce48f9e9300e2e030ccedd48c2195a04",
+    "img/edit_icon.svg": "a90400260ff4f94b05598eee28e2154af6936a2d063aad056750667c7472e6e9",
+    "img/machine_icon.svg": "f448343a80670044481c25d3b5de56d36e9afcbed4445c37bd8fc9eb2a387234",
+    "img/slot_icon.svg": "a3bc4cf423df4d44cac2fc79df58e2181cea7100d5d1e2478e3557618a0646a6",
+    "img/vite.svg": "4a748afd443918bb16591c834c401dae33e87861ab5dbad0811c3a3b4a9214fb",
+    "img/wifi.svg": "f85c4654555be731378fabad9f7b3d2745a2c07ab6aec0f3ae89096edf8e959d"
+  },
+  "network_access": false,
+  "application_launched": false,
+  "activity_scope": "Read-only ZIP/runtime-asset inspection only; no claim about printer connection or hardware behavior."
+}

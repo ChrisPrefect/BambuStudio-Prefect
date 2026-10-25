@@ -1,0 +1,32 @@
+{
+  "schema": "prefect-branding-actual-gui-title-v1",
+  "utc": "2026-10-25T14:11:03.771073+00:00",
+  "case": "dirty",
+  "source_commit": "aef480ca62cfc9ce86a065e2769efe199d7450d1",
+  "source_tree": "aecda9a6db6ebdd470c65228f65c1fae69e8ec22",
+  "binary_sha256": "e113e57c2e6db449de57c438ccab52555d659bfa94b7a0f88b899c419708469c",
+  "dll_sha256": "a800ec6db80a6b816d0594201c13766bc46700d5b05933a1d5189e050b841e84",
+  "installer_proof_sha256": "3031a68cbfb088cf381f7029457c5a0623a272949e06519cc55b2d40b033f8aa",
+  "launch_proof_sha256": "243cc546b4ad02a3d118005cdf93920466b3cdd8a97342d99a6609669f1a5a7d",
+  "observed_title": "Prefect Bambu Studio - * Unbenannt",
+  "title_assertions": {
+    "prefect_prefix_first": true,
+    "project_part_present": true,
+    "dirty_marker": true,
+    "named_fixture_title_exact": false
+  },
+  "exact_process_command_verified": true,
+  "process_creation_identity_verified": true,
+  "external_skyax_window_handle_bound_to_own_pid": true,
+  "observation_source": "Title supplied by root from SkyAX list_windows; helper queried only HWND-to-PID.",
+  "synthetic_fixture_sha256": {
+    "block_20x30x8.stl": "ee822941463ed6df66e34544a95f32079ad2b8a43c233553c3301cd285daec7d",
+    "block_25x12x10.stl": "91d88ec0a3c6acaa8095c2e49835d868477102be0c6881e8308e4f703292524c"
+  },
+  "app_launches": 0,
+  "processes_stopped": 0,
+  "profile_writes": 0,
+  "SMB_access": false,
+  "counter_scope": "Read-only capture helper only; launch/stop measured separately.",
+  "limitations": "Actual application title and process identity only; no icon pixel, taskbar pin, printer or workflow-matrix claim."
+}

@@ -6,11 +6,13 @@ Der sichtbare Name dieses Forks lautet **Prefect Bambu Studio**. Damit steht „
 
 | Zustand | Nativer Fenster-/Taskleisten-Titel |
 | --- | --- |
-| Leeres, unverändertes Projekt | `Prefect Bambu Studio` |
-| Unbenanntes Projekt mit Änderungen | `Prefect Bambu Studio - *` |
+| Tatsächlich leerer Projektname, ohne Änderungen | `Prefect Bambu Studio` |
+| Tatsächlich leerer Projektname, mit Änderungen | `Prefect Bambu Studio - *` |
 | Projekt `Gehäuse` unverändert | `Prefect Bambu Studio - Gehäuse` |
 | Projekt `Gehäuse` geändert | `Prefect Bambu Studio - * Gehäuse` |
 | Separater G-code-Viewer, falls dieser Modus verwendet wird | `Prefect Bambu Studio G-code Viewer - <Dateiname>` |
+
+Die Tabelle beschreibt die Titelbildung für den jeweiligen Projekttext. Ein frischer deutscher GUI-Start setzt tatsächlich den Projekttext `Unbenannt`; sein beobachteter Titel ist deshalb `Prefect Bambu Studio - Unbenannt`. Die tatsächlichen drei Laufzeitfälle sind unten aufgeführt.
 
 Bereits der Konstruktor setzt den neuen Namen, bevor ein Projekt geladen ist. Der Titelcache speichert den vollständigen zusammengesetzten Text. Deshalb erhält auch ein zunächst leerer Projektname beim ersten Update den vollständigen Topbar-Titel. Über-/Copyright-Fenster, Splash-Anzeigen und die vom gemeinsamen Anzeigenamen abgeleiteten Dialogtitel verwenden ebenfalls den neuen Namen. Der vorhandene Einstellungsdialog und der Rückfragedialog für laufende Uploads verwenden nun ausdrücklich diesen Anzeigenamen.
 
@@ -48,6 +50,20 @@ Microsoft verlangt die Prozesskennung früh vor dem Erzeugen von UI und denselbe
 5. Die sichtbaren Windows-Ressourcen aktualisieren. Eingebettetes Icon und Startmenü-/Taskleisten-Verknüpfung gehören zur separaten Icon-/Installationsänderung; ihre AppUserModelID muss exakt mit dem Prozess übereinstimmen.
 6. Den nativen Windows-Build kompilieren/linken, anschließend EXE-Dateibeschreibung, leeres Fenster, benanntes und geändertes Projekt sowie Taskleisten-Gruppe und Start über die angeheftete Verknüpfung am installierten Paket prüfen. Ein Neustart darf das Profil nicht wechseln oder eine zweite Fork-Taskleistengruppe erzeugen.
 
-## Prüfstand dieses Quellnachtrags
+## Prüfstand des veröffentlichten Pakets
 
-Der Nachtrag vom 25.10.2026 wurde lokal im Source-Diff geprüft. `git diff --check` und die bestehende Manifestprüfung sind die lokalen Integritätsprüfungen; sie belegen keine native Windows-Kompilierung und kein erfolgreiches Anheften. Der gebündelte CI-Build und die tatsächliche lokale Installations-/Taskleistenabnahme folgen durch den Auslieferungslauf. Hier wird dafür kein vorweggenommener Erfolg behauptet.
+Der vollständige [Windows-Build 40198926718](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40198926718) für `aef480ca62cfc9ce86a065e2769efe199d7450d1` ist erfolgreich. Alle 6.756 Dateien der lokalen Installation sind anhand der Paketbytes geprüft. Die tatsächliche EXE enthält den Anzeigenamen und elf Icon-Größen, deren Bytes den violetten Quellassets entsprechen. [Vektorquelle und reproduzierbare Ableitung](purple-app-icon-assets.md), [PE-Nachweis](validation/branding-pe-icon.json).
+
+Drei frische Starts des installierten Programms mit einem separaten Prüfprofil ergaben:
+
+| Fall | Tatsächlich beobachteter Fenstertitel | Beleg |
+| --- | --- | --- |
+| Neu, unverändert | `Prefect Bambu Studio - Unbenannt` | [clean](validation/runtime-branding/clean.json) |
+| Synthetisches benanntes 3MF | `Prefect Bambu Studio - Prefect-Branding-QA` | [named](validation/runtime-branding/named.json) |
+| Zwei synthetische STL-Objekte, ungespeichert | `Prefect Bambu Studio - * Unbenannt` | [dirty](validation/runtime-branding/dirty.json) |
+
+Die Titelbeobachtung stammt aus der nativen Fensterliste und ist jeweils an den eigenen Prozess, seine exakte Startzeile, Startidentität und die geprüften EXE-/DLL-Bytes gebunden. Damit wird kein Screenshot- oder Pixelnachweis der benutzerdefinierten Topbar behauptet.
+
+Desktop- und Startmenüverknüpfung heißen **Prefect Bambu Studio**; Ziel, Arbeitsverzeichnis, Profilargumente, Icon und gemeinsame AppUserModelID sind zurückgelesen und geprüft. **Das tatsächliche Anheften an die Windows-Taskleiste bleibt offen.** Eine vorbereitete Verknüpfung und eingebettete Icon-Frames belegen weder einen OS-Pin noch den sichtbaren Windows-Symbolcache.
+
+Die [veröffentlichte Vorabversion .3](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.3) einschließlich aller drei öffentlichen Downloads ist geprüft. [Gesamter Auslieferungsbericht und Grenzen](validation/branding.md). Die DeviceWeb-Paketkorrektur und ihre Update-Anker stehen in [device-web-packaging.md](device-web-packaging.md).

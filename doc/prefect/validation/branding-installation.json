@@ -1,0 +1,32 @@
+{
+  "schema": "prefect-branding-public-installation-v1",
+  "source_commit": "aef480ca62cfc9ce86a065e2769efe199d7450d1",
+  "source_tree": "aecda9a6db6ebdd470c65228f65c1fae69e8ec22",
+  "source_run_id": 40198926718,
+  "artifact_id": 12600886554,
+  "archive_bytes": 264400383,
+  "archive_sha256": "0ec260a2f8ffdec491d92a1cd27995c3d6f1c67b651e129e76faebc894104d24",
+  "installation_performed": true,
+  "destination_relative_to_userprofile": "BambuStudio-Prefect-Windows-v3",
+  "file_count": 6756,
+  "directory_count": 274,
+  "unpacked_bytes": 600169752,
+  "all_file_sha256_verified": true,
+  "zip_crc_verified": true,
+  "junctions": 0,
+  "symlinks": 0,
+  "hardlinks": 0,
+  "binaries": {
+    "bambu-studio.exe": {
+      "bytes": 95744,
+      "sha256": "e113e57c2e6db449de57c438ccab52555d659bfa94b7a0f88b899c419708469c"
+    },
+    "BambuStudio.dll": {
+      "bytes": 139230720,
+      "sha256": "a800ec6db80a6b816d0594201c13766bc46700d5b05933a1d5189e050b841e84"
+    }
+  },
+  "installer_private_proof_sha256": "3031a68cbfb088cf381f7029457c5a0623a272949e06519cc55b2d40b033f8aa",
+  "redaction": "Allowlisted counts, roles and hashes only; raw paths, inode/device IDs, timestamps and full private file inventory omitted.",
+  "activity_scope": "Complete-copy installer only; separate actual GUI starts are documented by runtime-branding/*.json."
+}

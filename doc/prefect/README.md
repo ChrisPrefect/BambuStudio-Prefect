@@ -1,4 +1,4 @@
-# Bambu Studio – Prefect-Workflow-Fork
+# Prefect Bambu Studio – Workflow-Fork
 
 Dieser Fork bündelt elf konkret gewünschte Anpassungen am Arbeitsablauf.
 Der Änderungsstand wird auf dem Branch `prefect/workflow` im eigenen
@@ -7,7 +7,22 @@ Die gemeinsame Grundlage ist Bambu Studio **v02.08.02.61**, Commit
 `926a7192574bcb9b3a732e1ec59a46d79cb45466`. Das Git-Remote `upstream` zeigt auf
 `https://github.com/bambulab/BambuStudio.git`.
 
-**Aktueller Quellstand Workflow 2:** `9d4fad7292484403f0b026972835035b0a967d20`
+**Aktueller Auslieferungsstand vom 25.10.2026:**
+`aef480ca62cfc9ce86a065e2769efe199d7450d1`, Tree
+`aecda9a6db6ebdd470c65228f65c1fae69e8ec22`, enthält alle elf Funktionen,
+den Namen **Prefect Bambu Studio**, das violette Icon und die Paketprüfung
+für die DeviceWeb-Ressourcen. Der vollständige Windows-Build ist erfolgreich;
+alle 6.756 installierten Dateien und 13 DeviceWeb-Dateien sind geprüft.
+Drei echte GUI-Starts bestätigen neue, benannte und geänderte Projekttitel.
+28 Patches rekonstruieren alle 56 Zwischenstände beider Replaydarstellungen
+exakt. Die [veröffentlichte Vorabversion .3](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.3)
+enthält Windows-ZIP, Patchserie und Prüfsummen; alle drei öffentlichen
+Downloads sind unabhängig nachgeprüft.
+[Aktueller Paket-, Laufzeit- und Veröffentlichungsnachweis](validation/branding.md).
+Desktop- und Startmenülinks sind aktualisiert; das tatsächliche Anheften an
+die Windows-Taskleiste bleibt offen.
+
+**Historischer Prüfstand Workflow 2:** `9d4fad7292484403f0b026972835035b0a967d20`
 enthält alle elf Schalter, F10/F11 und die ergänzten Materialklickpfade.
 Die sechs nativen Policytests und der vollständige Replay von 24 Patches mit
 48 identischen Zwischenständen sind bestanden. Der neue vollständige
@@ -29,7 +44,7 @@ Fork-Profil. Ressourcenlinks zur normalen Installation werden nicht benötigt.
 Der Stand enthält auch das Nachholen des aktuellen Materialstands beim erneuten
 Aktivieren von F01. Die interaktive Abnahme aller Bedien- und Druckerfälle ist
 nicht vollständig belegt. [Lokaler Laufzeitnachweis und genaue Grenzen](validation/local-windows-runtime.md),
-[aktueller CI-Nachweis](validation/cloud-build-4b5c.md).
+[damaliger CI-Nachweis](validation/cloud-build-4b5c.md).
 Der GitHub-Fork ist angelegt; dessen Remote heißt `origin`.
 Das [veröffentlichte Vorabpaket Workflow 1](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.1)
 enthält das vollständige Windows-ZIP, die geprüfte Serie aus 20 Patches und
@@ -39,13 +54,16 @@ steht in [VALIDATION.md](VALIDATION.md).
 
 ## Zusätzlicher Identitätsnachtrag
 
-Der Quellnachtrag vom 25.10.2026 gibt dem Fork den sichtbaren Namen
+Der Nachtrag vom 25.10.2026 gibt dem Fork den sichtbaren Namen
 **Prefect Bambu Studio**, setzt ihn vor den Projektnamen im Fenstertitel
 und trennt seine Windows-Taskleistengruppe über `ChrisPrefect.BambuStudio`.
 Details, betroffene Quellstellen, technische Abgrenzung und die Anleitung
 zum Nachtragen bei Upstream-Updates stehen in [12-branding.md](12-branding.md).
-Der Nachtrag gehört noch nicht zum oben dokumentierten Workflow-2-Binärpaket;
-sein neuer Build-/Installationsnachweis folgt im Auslieferungslauf.
+Er gehört zum aktuellen Paket `.3`; die violetten Vektor- und Rasterassets
+sind in [purple-app-icon-assets.md](purple-app-icon-assets.md) beschrieben.
+Die drei Fenstertitel sind am tatsächlich installierten Programm geprüft.
+Die Prozesskennung und geprüfte Verknüpfungen allein belegen kein Anheften;
+dieser lokale OS-Schritt ist weiterhin offen.
 
 ## Anpassungsliste
 
@@ -103,17 +121,18 @@ die Entscheidung über externe Nachbearbeitungsskripte behalten ihre Bedeutung.
 
 ## Eigenes Profil statt Änderungen an der normalen Installation
 
-Auf dem geprüften Windows-System liegt Workflow 2 vollständig unter
-`%USERPROFILE%\BambuStudio-Prefect-Windows-v2`; die vorherige Workflow-1-
-Installation bleibt erhalten. ZIP-Hash, sämtliche Datei-Hashes, exakte
-Paketstruktur und fehlende Ressourcen-/Dateilinks sind im
-[Workflow-2-Prüfbericht](validation/workflow2.md) festgehalten.
-Die neue Laufzeitprüfung verwendet ein separates Profil mit ausschließlich
+Auf dem geprüften Windows-System liegt das aktuelle Paket vollständig unter
+`%USERPROFILE%\BambuStudio-Prefect-Windows-v3`. ZIP-Hash, sämtliche Datei-Hashes,
+exakte Paketstruktur und fehlende Ressourcen-/Dateilinks sind im
+[aktuellen Prüfbericht](validation/branding.md) festgehalten.
+Die Laufzeitprüfung verwendet ein separates Profil mit ausschließlich
 synthetischen Prüfmodellen. Das bestehende normale Fork-Profil wird dabei
 nicht gestartet oder verändert.
-Die bestehende Desktop-Verknüpfung **BambuStudio Prefect patched** zeigt nach
-geprüfter Aktualisierung auf die neue EXE; ihr bisheriges
-`--datadir "%APPDATA%\BambuStudio-Prefect"` bleibt identisch.
+Desktop und Startmenü enthalten **Prefect Bambu Studio** mit geprüftem Ziel,
+Arbeitsverzeichnis, Icon und `ChrisPrefect.BambuStudio`. Der bisherige
+Desktoplink **BambuStudio Prefect patched** wurde bytegenau gesichert und
+erst nach Prüfung beider neuen Links umbenannt. Die bisherige
+`--datadir "%APPDATA%\BambuStudio-Prefect"`-Angabe bleibt identisch.
 Der nächste reguläre Start ergänzt dort die neuen Standards über die
 Revision-2-Migration und erhält die schon gespeicherten Entscheidungen.
 

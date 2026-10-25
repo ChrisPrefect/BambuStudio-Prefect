@@ -42,6 +42,20 @@ application source timestamp calculation remain unchanged. Cache compatibility
 still depends on the existing toolchain/dependency fingerprint; reuse must be
 confirmed from each actual build, not assumed.
 
+## Verified final delivery
+
+Source `aef480ca62cfc9ce86a065e2769efe199d7450d1`, tree
+`aecda9a6db6ebdd470c65228f65c1fae69e8ec22`, passed the complete
+[Windows build 40198926718](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40198926718).
+Artifact `12600886554` and the independently downloaded public `.3` ZIP both
+contain all **13 DeviceWeb files**, with CRC, source marker, runtime dependencies
+and public-asset hashes verified. All **6,756 installed files** match the final
+package. [Public resource proof](validation/branding-deviceweb.json),
+[delivery and actual title checks](validation/branding.md).
+This establishes package completeness, not interactive Filament Manager or
+printer communication acceptance. The earlier `ac0` failure above remains a
+historical reproduction and is superseded by this final build.
+
 ## Updating upstream
 
 Review the `DEVICE_PAGE_BUILD_STAMP`, `DEVICE_PAGE_DIST_DIR`,

@@ -1,0 +1,23 @@
+{
+  "schema": "prefect-branding-public-shortcuts-v1",
+  "utc": "2026-10-25T13:55:55.101992+00:00",
+  "source_commit": "aef480ca62cfc9ce86a065e2769efe199d7450d1",
+  "source_tree": "aecda9a6db6ebdd470c65228f65c1fae69e8ec22",
+  "installer_private_proof_sha256": "3031a68cbfb088cf381f7029457c5a0623a272949e06519cc55b2d40b033f8aa",
+  "shortcut_private_proof_sha256": "149193c85bc76c54a5c9a69440883fd59ed9bd847834f56dfbb9dbecb01e2e41",
+  "desktop_name": "Prefect Bambu Studio.lnk",
+  "start_menu_name": "Prefect Bambu Studio.lnk",
+  "additional_ui_pin_copy_role": "Private local preparation copy; not an OS taskbar pin",
+  "target_relative_to_userprofile": "BambuStudio-Prefect-Windows-v3/bambu-studio.exe",
+  "shortcut_sha256": "6cf4ef9acae013d92b981ba7f827852a1947022d70ec0b63b56ad18ababc5070",
+  "app_user_model_id": "ChrisPrefect.BambuStudio",
+  "normal_fork_profile_argument_preserved": true,
+  "working_directory_is_verified_v3_installation": true,
+  "icon_uses_new_executable_index_0": true,
+  "metadata_reopened_through_standard_COM": true,
+  "old_desktop_exact_bytes_backed_up": true,
+  "existing_taskbar_link_files_unchanged_at_shortcut_creation": true,
+  "actual_os_taskbar_pin": "pending",
+  "activity_scope": "Productive shortcut creation/readback only; actual taskbar pinning is a separate pending action.",
+  "old_desktop_name_retired_after_both_new_links_verified": true
+}

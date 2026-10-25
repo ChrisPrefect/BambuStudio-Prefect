@@ -1,0 +1,138 @@
+{
+  "schema": "prefect-branding-delivery-index-v1",
+  "document_state": "verified-final-build-installation-titles-and-publication; os-taskbar-pin-pending",
+  "verified_utc": "2026-10-25T14:18:05.220190+00:00",
+  "source": {
+    "commit": "aef480ca62cfc9ce86a065e2769efe199d7450d1",
+    "tree": "aecda9a6db6ebdd470c65228f65c1fae69e8ec22",
+    "upstream_base_commit": "926a7192574bcb9b3a732e1ec59a46d79cb45466"
+  },
+  "branding": {
+    "display_name": "Prefect Bambu Studio",
+    "app_user_model_id": "ChrisPrefect.BambuStudio",
+    "icon_rgb": "#7C3AED",
+    "source_icon_asset_proof": {
+      "path": "purple-app-icon.json",
+      "sha256": "478cea4321a09f1e91f8160d973c0a46844ee6c5e116a1c9f1091dcbb76c0084",
+      "vector_geometry_preserved": true,
+      "green_vs_violet_same_source_alpha_checks": 22
+    }
+  },
+  "ci": {
+    "status": "completed",
+    "conclusion": "success",
+    "run_id": 40198926718,
+    "public_proof": {
+      "path": "branding-ci.json",
+      "sha256": "902540e3c69a6fe5831d4540d69ecc4abf71912e611646d7191da9ef48ca5804"
+    }
+  },
+  "patch_replay": {
+    "status": "passed",
+    "patch_count": 28,
+    "intermediate_tree_matches": 56,
+    "archive_name": "Prefect-BambuStudio-patches-20261025-devicewebfix.zip",
+    "archive_bytes": 1015207,
+    "archive_sha256": "391cbc28d22d4312a1bcd036e9a8faee12868d4f98653033cbca58ee7dcc300e",
+    "normal_index_unchanged": true,
+    "public_proof": "patch-replay-branding-verification.json"
+  },
+  "local_installation": {
+    "status": "passed",
+    "file_count": 6756,
+    "directory_count": 274,
+    "all_file_sha256_verified": true,
+    "junctions": 0,
+    "symlinks": 0,
+    "hardlinks": 0,
+    "public_proof": {
+      "path": "branding-installation.json",
+      "sha256": "d76f6f2f2715b7501314b6d696800dbb0ffd6732d66b454267c7433f665b808d"
+    }
+  },
+  "device_web_runtime_assets": {
+    "status": "passed",
+    "file_count": 13,
+    "public_proof": {
+      "path": "branding-deviceweb.json",
+      "sha256": "0d626c0d8ec93e4fe12b12678fe3d1d6248ae44cf4ce97786516b071022ba572"
+    }
+  },
+  "built_pe_and_icon_validation": {
+    "status": "passed",
+    "embedded_ico_frame_count": 11,
+    "embedded_frames_match_source": true,
+    "public_proof": {
+      "path": "branding-pe-icon.json",
+      "sha256": "06bb5c7e7a01d0bea3fd678874edccb846cce3d94db43734a91f516441248162"
+    }
+  },
+  "actual_gui_cases": [
+    {
+      "case": "clean",
+      "status": "passed",
+      "observed_title": "Prefect Bambu Studio - Unbenannt",
+      "source_and_binary_binding_verified": true,
+      "process_creation_and_command_verified": true,
+      "public_proof": "runtime-branding/clean.json",
+      "public_proof_sha256": "8052296dd9d8c4deb9a327a57ed57f1cf5b891d389c1691c42583d88b18c9150"
+    },
+    {
+      "case": "named",
+      "status": "passed",
+      "observed_title": "Prefect Bambu Studio - Prefect-Branding-QA",
+      "source_and_binary_binding_verified": true,
+      "process_creation_and_command_verified": true,
+      "public_proof": "runtime-branding/named.json",
+      "public_proof_sha256": "1daef2ced5a2749b4bf4dda9799960b2c9d86f9d2f73f1af59ceb2c6e63ddf5a"
+    },
+    {
+      "case": "dirty",
+      "status": "passed",
+      "observed_title": "Prefect Bambu Studio - * Unbenannt",
+      "source_and_binary_binding_verified": true,
+      "process_creation_and_command_verified": true,
+      "public_proof": "runtime-branding/dirty.json",
+      "public_proof_sha256": "512bb63bc45b5728bedf088c6402e4ab28d937710433fcac8c6002bfd17c43e0"
+    }
+  ],
+  "shortcuts": {
+    "status": "passed",
+    "desktop_and_start_menu": true,
+    "app_user_model_id": "ChrisPrefect.BambuStudio",
+    "public_proof": {
+      "path": "branding-shortcuts.json",
+      "sha256": "2e1316483f083df2740469aa6106a078a50fc70f5ae11e9bcfb551999d993d55"
+    }
+  },
+  "actual_os_taskbar_pin": {
+    "status": "pending",
+    "os_family": "Windows 10 Home",
+    "os_build": "19045.7807",
+    "new_pin_present": null,
+    "new_pin_metadata_verified": null,
+    "public_proof": null,
+    "scope": "Prepared/installed shortcuts and the process AUMID do not prove actual OS taskbar pinning."
+  },
+  "publication": {
+    "status": "published",
+    "published": true,
+    "public_release_id": 423441312,
+    "actual_tag": "v02.08.02.61-prefect.3",
+    "public_release_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.3",
+    "publication_run_id": 40201186272,
+    "public_proof": {
+      "path": "published-release-branding.json",
+      "sha256": "07e38527429e8581676bbab158bf803625dc8e8c232e4d9ac537db0697c86ff0"
+    },
+    "all_three_public_downloads_independently_size_and_sha256_verified": true
+  },
+  "scope_and_limits": [
+    "Actual window titles were supplied from root SkyAX list_windows observations and independently bound to own process identity; no screenshot/pixel proof is implied.",
+    "Embedded icon frame bytes were checked in the actual installed EXE; visible taskbar icon caching and actual pinning are separate.",
+    "GUI-title capture activity counters describe the read-only capture helper only; the three actual launches are separately launch-bound.",
+    "This branding delivery does not repeat the complete eleven-option or printer/hardware matrix; earlier Workflow 2 runtime evidence keeps its original source binding.",
+    "No raw profiles/logs, credentials, private projects, absolute machine paths, numeric PIDs/HWNDs or inode/device IDs are included in these new public summaries."
+  ],
+  "public_proof_sha256_convention": "SHA-256 of the public UTF-8 Git blob bytes with LF newlines. Working-tree CRLF conversion must be normalized before comparison. Private-proof and binary/archive hashes retain their original byte convention."
+}

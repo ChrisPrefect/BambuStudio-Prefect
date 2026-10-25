@@ -1,0 +1,31 @@
+{
+  "schema": "prefect-branding-actual-gui-title-v1",
+  "utc": "2026-10-25T14:04:22.853191+00:00",
+  "case": "named",
+  "source_commit": "aef480ca62cfc9ce86a065e2769efe199d7450d1",
+  "source_tree": "aecda9a6db6ebdd470c65228f65c1fae69e8ec22",
+  "binary_sha256": "e113e57c2e6db449de57c438ccab52555d659bfa94b7a0f88b899c419708469c",
+  "dll_sha256": "a800ec6db80a6b816d0594201c13766bc46700d5b05933a1d5189e050b841e84",
+  "installer_proof_sha256": "3031a68cbfb088cf381f7029457c5a0623a272949e06519cc55b2d40b033f8aa",
+  "launch_proof_sha256": "4ddacfe9851baf563114a9c1782fec8cee328efc06063797c538c92aece9343a",
+  "observed_title": "Prefect Bambu Studio - Prefect-Branding-QA",
+  "title_assertions": {
+    "prefect_prefix_first": true,
+    "project_part_present": true,
+    "dirty_marker": false,
+    "named_fixture_title_exact": true
+  },
+  "exact_process_command_verified": true,
+  "process_creation_identity_verified": true,
+  "external_skyax_window_handle_bound_to_own_pid": true,
+  "observation_source": "Title supplied by root from SkyAX list_windows; helper queried only HWND-to-PID.",
+  "synthetic_fixture_sha256": {
+    "Prefect-Branding-QA.3mf": "88c2638800ef0dbcec8d54888938f4d193e01f017a8994d490e16095f01325af"
+  },
+  "app_launches": 0,
+  "processes_stopped": 0,
+  "profile_writes": 0,
+  "SMB_access": false,
+  "counter_scope": "Read-only capture helper only; launch/stop measured separately.",
+  "limitations": "Actual application title and process identity only; no icon pixel, taskbar pin, printer or workflow-matrix claim."
+}

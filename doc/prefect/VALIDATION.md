@@ -1,8 +1,34 @@
 # Prüfprotokoll des Prefect-Forks
 
-Stand: **23. Oktober 2026**, Zeitzone Europe/Zurich.
+Stand: **25. Oktober 2026**, Zeitzone Europe/Zurich.
 
-## Aktueller Prüfstand Workflow 2
+## Aktueller Prüfstand Prefect Bambu Studio .3
+
+Geprüfter Quellcommit: `aef480ca62cfc9ce86a065e2769efe199d7450d1`, Tree
+`aecda9a6db6ebdd470c65228f65c1fae69e8ec22`. Der vollständige
+[Windows-Build 40198926718](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40198926718)
+ist **completed / success**. Artefakt `12600886554`, alle 6.756 installierten
+Dateien, die 13 DeviceWeb-Ressourcen und elf eingebetteten violetten
+Icon-Größen sind geprüft. Drei tatsächliche GUI-Starts bestätigen den
+Prefect-Präfix, einen benannten Projekttitel und den Änderungsstern.
+Desktop- und Startmenülinks sind geprüft; **der tatsächliche OS-Taskleistenpin
+ist weiterhin offen**. Die neue Titelprüfung wiederholt keine vollständige
+Workflow-/Hardwarematrix.
+
+Die Serie aus 28 Patches rekonstruiert alle 56 Zwischenstände beider
+Darstellungen exakt. Die [Vorabversion .3](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.3)
+ist seit **25.10.2026, 14:13:20 UTC** veröffentlicht; der direkte Quelltag,
+erfolgreiche Veröffentlichungslauf und alle drei anonym frisch geladenen
+öffentlichen Assets stimmen mit den erwarteten Größen und SHA-256 überein.
+[Aktueller Bericht](validation/branding.md),
+[maschinenlesbarer Index](validation/branding-results.json),
+[Veröffentlichung und öffentliche Downloads](validation/published-release-branding.json).
+
+Die folgenden Workflow-2- und Workflow-1-Belege behalten ihre ursprünglichen
+Quellstände. Sie werden durch die Branding-Prüfung nicht als erneut am
+aktuellen Binärstand ausgeführte Tests ausgegeben.
+
+## Historischer Prüfstand Workflow 2 vom 23. Oktober 2026
 
 Die Erweiterung ist an Quellcommit `9d4fad7292484403f0b026972835035b0a967d20`
 und Tree `b6feae21b1908e493d880297e901b243073585f5` gebunden.

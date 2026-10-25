@@ -1,0 +1,63 @@
+{
+  "display_name": "Prefect Bambu Studio",
+  "version_resource_id": 1,
+  "group_icon_resource_id": 2,
+  "embedded_icon_frames": 11,
+  "icon_sha256": "db77286997a999fb0f8e06d7522f3c4f843ed61ea0d8718284d942211e1bf5a8",
+  "frame_sizes": [
+    [
+      16,
+      16
+    ],
+    [
+      20,
+      20
+    ],
+    [
+      24,
+      24
+    ],
+    [
+      32,
+      32
+    ],
+    [
+      40,
+      40
+    ],
+    [
+      48,
+      48
+    ],
+    [
+      64,
+      64
+    ],
+    [
+      128,
+      128
+    ],
+    [
+      154,
+      154
+    ],
+    [
+      192,
+      192
+    ],
+    [
+      256,
+      256
+    ]
+  ],
+  "all_embedded_frame_bytes_match": true,
+  "source_commit": "aef480ca62cfc9ce86a065e2769efe199d7450d1",
+  "exe_sha256": "e113e57c2e6db449de57c438ccab52555d659bfa94b7a0f88b899c419708469c",
+  "executable_launched": false,
+  "taskbar_pin_verified": false,
+  "source_tree": "aecda9a6db6ebdd470c65228f65c1fae69e8ec22",
+  "installation_role": "Own verified Windows-v3 standalone installation",
+  "private_pe_proof_sha256": "4b5ead0d9855203910a133e7cfdeb3210e36b8834aaaec66ed7fa51dd020dd5a",
+  "redaction": "Machine-specific installation directory omitted; PE identity and icon comparison results retained.",
+  "activity_scope": "Read-only PE-resource inspection before the separate GUI cases; executable_launched=false describes only this inspector."
+}

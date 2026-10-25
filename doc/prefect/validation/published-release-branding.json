@@ -1,0 +1,80 @@
+{
+  "repository": "ChrisPrefect/BambuStudio-Prefect",
+  "tag": "v02.08.02.61-prefect.3",
+  "release_id": 423441312,
+  "release_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.3",
+  "draft": false,
+  "prerelease": true,
+  "published_at": "2026-10-25T14:13:20Z",
+  "source_commit": "aef480ca62cfc9ce86a065e2769efe199d7450d1",
+  "source_tree": "aecda9a6db6ebdd470c65228f65c1fae69e8ec22",
+  "source_run_id": 40198926718,
+  "source_run_status": "completed",
+  "source_run_conclusion": "success",
+  "source_run_updated_at": "2026-10-25T13:59:39Z",
+  "publication_delivery_commit": "43664f9a95012d6ae76412144dc1fb670214ac91",
+  "publication_delivery_tree": "b0b4a410927ab4b8b8314a0533705d67da6e880e",
+  "publication_run_id": 40201186272,
+  "publication_run_status": "completed",
+  "publication_run_conclusion": "success",
+  "publication_run_updated_at": "2026-10-25T14:13:24Z",
+  "publication_report_artifact": {
+    "id": 12601953852,
+    "bytes": 1649,
+    "sha256": "c03194488f2eef8e20b49a2324743ec2c298520c963d631b462f4609964371a9"
+  },
+  "public_download_verification": {
+    "method": "Fresh anonymous downloads from every canonical public release URL, streamed locally and independently hashed",
+    "http_status": 200,
+    "all_three_sizes_and_sha256_match_pins": true
+  },
+  "assets": [
+    {
+      "id": 675202019,
+      "name": "Prefect-Bambu-Studio-2.8.2.61-Windows-x64.zip",
+      "bytes": 264400383,
+      "sha256": "0ec260a2f8ffdec491d92a1cd27995c3d6f1c67b651e129e76faebc894104d24",
+      "public_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.3/Prefect-Bambu-Studio-2.8.2.61-Windows-x64.zip"
+    },
+    {
+      "id": 675202354,
+      "name": "Prefect-BambuStudio-patches-20261025-devicewebfix.zip",
+      "bytes": 1015207,
+      "sha256": "391cbc28d22d4312a1bcd036e9a8faee12868d4f98653033cbca58ee7dcc300e",
+      "public_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.3/Prefect-BambuStudio-patches-20261025-devicewebfix.zip"
+    },
+    {
+      "id": 675202414,
+      "name": "SHA256SUMS.txt",
+      "bytes": 232,
+      "sha256": "12dc112abb67c78b94e0cdeed4782d0eaa3f60535a91083c60c9d90c2e4ff3a6",
+      "public_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.3/SHA256SUMS.txt"
+    }
+  ],
+  "windows_zip_checks": {
+    "crc": "passed",
+    "source_marker": "passed",
+    "device_web_runtime": "passed",
+    "device_web_files": 13,
+    "source_public_assets_byte_identical": true
+  },
+  "branding": {
+    "display_name": "Prefect Bambu Studio",
+    "embedded_icon_frames": 11,
+    "all_embedded_frame_bytes_match": true,
+    "actual_clean_named_dirty_titles_passed": true,
+    "installation_files_verified": 6756
+  },
+  "patch_replay": {
+    "commits": 28,
+    "matching_intermediate_trees": 56,
+    "base_commit": "926a7192574bcb9b3a732e1ec59a46d79cb45466"
+  },
+  "tag_direct_commit_verified": true,
+  "protected_older_release_ids_unchanged": [
+    418968348,
+    422086779
+  ],
+  "taskbar_pin_success_claimed": false,
+  "scope": "Release, downloads, package branding and actual GUI acceptance verified. Per-machine operating-system taskbar pin remains a separate local task."
+}

@@ -17,11 +17,21 @@ Aufrufpfade, persistente Schlüssel, Nebenwirkungen und Laufzeitprüfungen.
 Eine Konfliktlösung nach Funktionen und Zuständigkeiten hat Vorrang vor dem
 mechanischen Übernehmen alter Zeilen.
 
-Die aktuelle Workflow-2-Serie bis `9d4fad7292484403f0b026972835035b0a967d20`
-enthält **24 Commits**. Alle **48 Zwischenstände** aus Rohdiff- und
+Die aktuelle Serie bis `aef480ca62cfc9ce86a065e2769efe199d7450d1`
+enthält **28 Commits**. Alle **56 Zwischenstände** aus Rohdiff- und
 Format-Patch-Replay stimmen exakt mit den Originaltrees überein; der normale
-Repository-Index blieb unverändert. [Aktueller Replaynachweis](validation/patch-replay-workflow2.md)
-und [Einzelbelege](validation/patch-replay-workflow2.json).
+Repository-Index blieb unverändert. [Aktueller Replaynachweis](validation/patch-replay-branding.md)
+und [Einzelbelege](validation/patch-replay-branding.json).
+Die Serie enthält zusätzlich zum Workflow den
+[Anzeigenamen und die Windows-Appkennung](12-branding.md),
+[reproduzierbare violette App-Icons](purple-app-icon-assets.md) und die
+[DeviceWeb-Paketkorrektur](device-web-packaging.md). Bei Updates deren
+Quellanker und getrennte Build-/Installationsprüfungen ebenfalls übernehmen.
+
+Der historische Workflow-2-Stand `9d4fad7292484403f0b026972835035b0a967d20`
+enthält 24 Commits und 48 geprüfte Zwischenstände:
+[damaliger Bericht](validation/patch-replay-workflow2.md),
+[damalige Einzelbelege](validation/patch-replay-workflow2.json).
 
 Die frühere Workflow-1-Serie bis `4b5c3546c7fba94439d9bb0fe69553723b895897` ist auch
 praktisch geprüft: 20 Rohdiffs und dieselben 20 exportierten Format-Patches

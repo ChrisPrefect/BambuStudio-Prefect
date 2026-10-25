@@ -52,7 +52,28 @@ mit Datei-/Funktionsankern erklärt.
 Die vollständige Serie bis zu diesem Stand enthält **24 Commits**. Ihre
 48 Zwischenstände (Rohdiff und Format-Patch pro Commit) stimmen exakt mit den
 Originaltrees überein. Der normale Index blieb unverändert:
-[neuer Replaynachweis](validation/patch-replay-workflow2.md).
+[damaliger Replaynachweis](validation/patch-replay-workflow2.md).
 Der gebaute Quellstand bleibt unabhängig von späteren reinen Dokumentationscommits
 an diesen vollständigen Commit und Tree `b6feae21b1908e493d880297e901b243073585f5`
 gebunden.
+
+## Branding und vollständiges DeviceWeb-Paket
+
+Der aktuelle Auslieferungsstand endet bei
+`aef480ca62cfc9ce86a065e2769efe199d7450d1`, Tree
+`aecda9a6db6ebdd470c65228f65c1fae69e8ec22`. Die vier zusätzlichen Stufen
+über Workflow 2 sind:
+
+| Commit | Bedeutung beim Nachtragen |
+| --- | --- |
+| `1b158e9ec8d7b9cd9ec5274e348520ed6c0c075f` | Elf Workflow-Schalter, F10/F11 und den geprüften Workflow-2-Patchreplay dokumentieren |
+| `7bc9b7949f94a59b9cf2058d9f12d63bf468ad8c` | Tatsächliche Workflow-2-Laufzeitprüfungen und damalige Veröffentlichung dokumentieren |
+| `ac0d8686993821d3feb521c9f27ffe1c22eaeba9` | Sichtbaren Namen, zentrale Titelbildung, Windows-Appkennung und violette App-Icons umsetzen; reproduzierbare Asset-Ableitung dokumentieren |
+| `aef480ca62cfc9ce86a065e2769efe199d7450d1` | Fehlende generierte DeviceWeb-Ausgaben bei wiederverwendetem Anwendungscache gezielt neu bauen und vor Paketupload prüfen |
+
+Die vollständige Serie enthält **28 Commits**, deren **56 Zwischenstände**
+aus Rohdiff- und Format-Patch-Replay exakt mit den Originaltrees übereinstimmen.
+[Aktueller Replaynachweis](validation/patch-replay-branding.md),
+[aktueller Build-/Installations-/Veröffentlichungsstand](validation/branding.md).
+Spätere reine Dokumentationscommits verändern diese Bindung des tatsächlich
+gebauten Binärpakets nicht.

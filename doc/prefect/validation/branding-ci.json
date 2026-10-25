@@ -1,0 +1,17 @@
+{
+  "schema": "prefect-branding-public-ci-v1",
+  "verified_utc": "2026-10-25T14:18:05.220190+00:00",
+  "id": 40198926718,
+  "head_sha": "aef480ca62cfc9ce86a065e2769efe199d7450d1",
+  "status": "completed",
+  "conclusion": "success",
+  "html_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40198926718",
+  "created_at": "2026-10-25T13:43:34Z",
+  "updated_at": "2026-10-25T13:59:39Z",
+  "artifact": {
+    "id": 12600886554,
+    "bytes": 264400383,
+    "sha256": "0ec260a2f8ffdec491d92a1cd27995c3d6f1c67b651e129e76faebc894104d24"
+  },
+  "verification_source": "Fresh unauthenticated GitHub REST run metadata plus independently verified local artifact/install proofs."
+}
