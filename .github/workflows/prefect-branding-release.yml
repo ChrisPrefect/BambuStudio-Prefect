@@ -1,0 +1,39 @@
+name: Prepare or publish verified Prefect Branding
+
+on:
+  push:
+    branches: [delivery/windows]
+    paths:
+      - .github/workflows/prefect-branding-release.yml
+      - delivery/branding/**
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: prefect-branding-release
+  cancel-in-progress: false
+
+jobs:
+  deliver:
+    if: github.repository == 'ChrisPrefect/BambuStudio-Prefect' && github.ref == 'refs/heads/delivery/windows'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: delivery/branding
+      - name: Run network-free release regression tests
+        run: python3 -m unittest discover -s delivery/branding -p 'test_*.py' -v
+      - name: Verify pinned inputs and prepare draft or publish prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 delivery/branding/release.py --report branding-release-verification.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Prefect-Branding-release-verification
+          path: branding-release-verification.json
+          if-no-files-found: error
+          retention-days: 90

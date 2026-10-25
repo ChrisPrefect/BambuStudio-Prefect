@@ -1,0 +1,17 @@
+{
+  "source_commit": "aef480ca62cfc9ce86a065e2769efe199d7450d1",
+  "source_tree": "aecda9a6db6ebdd470c65228f65c1fae69e8ec22",
+  "source_run_id": 40198926718,
+  "artifact_id": 12600886554,
+  "artifact_size": 264400383,
+  "artifact_sha256": "0ec260a2f8ffdec491d92a1cd27995c3d6f1c67b651e129e76faebc894104d24",
+  "patch_file": "Prefect-BambuStudio-patches-20261025-devicewebfix.zip",
+  "patch_size": 1015207,
+  "patch_sha256": "391cbc28d22d4312a1bcd036e9a8faee12868d4f98653033cbca58ee7dcc300e",
+  "patch_count": 28,
+  "notes_sha256": "beb814ae8f18a868b3c3fd20ea2c144482aeb197d7f128696a4fac1514e25bf3",
+  "icon_file": "PrefectBambuStudio.ico",
+  "icon_sha256": "db77286997a999fb0f8e06d7522f3c4f843ed61ea0d8718284d942211e1bf5a8",
+  "icon_size": 14411,
+  "publish": false
+}
