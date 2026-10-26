@@ -1,6 +1,6 @@
 # Prefect Bambu Studio – Workflow-Fork
 
-Dieser Fork bündelt elf konkret gewünschte Anpassungen am Arbeitsablauf.
+Dieser Fork bündelt dreizehn konkret gewünschte Anpassungen am Arbeitsablauf.
 Der Änderungsstand wird auf dem Branch `prefect/workflow` im eigenen
 [GitHub-Fork](https://github.com/ChrisPrefect/BambuStudio-Prefect) gepflegt.
 Die gemeinsame Grundlage ist Bambu Studio **v02.08.02.61**, Commit
@@ -100,11 +100,13 @@ Taskleistenlinks sind getrennt von der früheren nativen API-Ablehnung
 | F06 | Im Filament-`...`-Menü **Als Supportinterface festlegen** anbieten; setzt das globale Supportinterface-Material | `prefect_support_interface_menu=true`; verwendet vorhandenen `support_interface_filament`-Key | [Supportinterface-Menü](06-support-interface-menu.md) |
 | F07 | Gemeinsam importierte Modelldateien ohne Zusammenfassungsfrage als einzelne Objekte laden | `prefect_import_separate_objects=true` | [Getrennte Importe](07-separate-imports.md) |
 | F08 | Ausschließlich die wiederkehrende TPU-Cold-Pull-Empfehlung ausblenden | `prefect_suppress_tpu_cold_pull=true` | [TPU-Erinnerung](08-tpu-cold-pull.md) |
-| F09 | Tippsfenster und Tippsbereich der Slicing-Meldung vollständig ausblenden, einschließlich des reservierten Platzes | `prefect_hide_tips=true` | [Tipps abschalten](09-hide-tips.md) |
+| F09 | Tippsfenster, Slicing-Tipps und typisierte Tipps/Vorschläge ausblenden, einschließlich Kurvenplanungs-Hinweis und reserviertem Platz | `prefect_hide_tips=true` | [Tipps abschalten](09-hide-tips.md) |
 | F10 | Automatische Rotation bei manuellem und automatischem Anordnen immer einschalten | `prefect_arrange_rotation=true` | [Anordnungsrotation](10-arrange-rotation.md) |
 | F11 | Nach dem Einfügen mehrerer unabhängiger Objekte automatisch anordnen | `prefect_arrange_after_import=true` | [Automatische Anordnung](11-auto-arrange.md) |
+| F12 | Beim ersten Toolbar-Klick sofort anordnen; Optionspopup für den nächsten Lauf offen halten | `prefect_arrange_on_click=true` | [Sofort anordnen](arrange-on-click.md) |
+| F13 | Helio-Additive-Werbung und Aktivierungsaufforderungen ausblenden | `prefect_hide_helio_ads=true` | [Helio-Werbung](hide-helio-advertising.md) |
 
-Alle elf Funktionen sind unter **Einstellungen → Workflow** einzeln schaltbar.
+Alle dreizehn Funktionen sind unter **Einstellungen → Workflow** einzeln schaltbar.
 Die [vollständige Einstellungsseite](workflow-settings.md) enthält auch den
 Zugang zur eigenen Feldauswahl und einen Schalter für den Supportinterface-
 Menüeintrag. Dieser verwendet `prefect_support_interface_menu=true`; der
@@ -135,12 +137,7 @@ die Entscheidung über externe Nachbearbeitungsskripte behalten ihre Bedeutung.
 - **Projektstruktur:** F07 beantwortet die beiden heuristischen
   Zusammenfassungsfragen mit „Nein“. Gespeicherte 3MF-Strukturen und bewusst
   hinzugefügte Teile werden nicht pauschal zerlegt.
-- **Weiterer bestehender Hinweis:** Der einmalige Dialog **Tipps** für einen
-  bereiten Filamentswitcher verwendet den vorhandenen Anwendungsschlüssel
-  `show_fila_switch_tips=false`. Im geprüften Fork-Profil ist er ausgeschaltet;
-  nach Neustart erschien der Dialog nicht mehr. Der Hinweis ist unabhängig
-  von F09/DailyTips. Eine Warnung zu einem nicht kalibrierten Switcher besitzt
-  einen separaten Pfad und bleibt davon unberührt.
+- **Weitere Tippsmeldungen:** F09 erfasst auch den Kurvenplanungs-/Bogenanpassungshinweis und automatische Filamentswitcher-Erstnutzungstipps. Druck-/Kalibrierwarnungen bleiben erhalten. Die unabhängige Helio-Werbeoption F13 gilt auch dann, wenn allgemeine Tipps zugelassen sind.
 
 ## Eigenes Profil statt Änderungen an der normalen Installation
 

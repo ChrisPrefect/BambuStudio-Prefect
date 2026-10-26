@@ -64,6 +64,7 @@
 #include "ConfigWizard.hpp"
 #include "Widgets/WebView.hpp"
 #include "DailyTips.hpp"
+#include "PrefectHelioAdsPolicy.hpp"
 #include "FilamentGroupPopup.hpp"
 #include "FilamentMapDialog.hpp"
 
@@ -1280,6 +1281,7 @@ void MainFrame::show_option(bool show)
             m_print_option_btn->Show();
             split_line_icon->Show();
             expand_program_holder->Show();
+            update_helio_button_state();
             Layout();
         }
     }
@@ -1967,22 +1969,12 @@ wxBoxSizer* MainFrame::create_side_tools()
         }
 
         if (e.GetInt() == expand_program_id) {
+            if (Slic3r::Prefect::hide_helio_ads(wxGetApp().app_config->get("prefect_hide_helio_ads")))
+                return;
             ExpandCenterDialog dlg;
             dlg.ShowModal();
         }
         });
-
-    if (wxGetApp().app_config->get("helio_enable") == "true") {
-        expand_program_holder->ShowExpandButton(expand_helio_id, true);
-    }
-    else {
-        expand_program_holder->ShowExpandButton(expand_helio_id, false);
-    }
-
-    // Set tooltip for Helio expand button
-    expand_program_holder->SetExpandButtonRichTooltip(expand_helio_id, "monitor_speed", _L("Unlock faster, more reliable, warp-free prints with Helio Additive."));
-    // Set tooltip for program expand button (same tooltip as Helio for consistency)
-    expand_program_holder->SetExpandButtonRichTooltip(expand_program_id, "monitor_speed", _L("Unlock faster, more reliable, warp-free prints with Helio Additive."));
 
     /*slice*/
     m_slice_select = eSlicePlate;
@@ -2401,6 +2393,8 @@ wxBoxSizer* MainFrame::create_side_tools()
     */
     // sizer->Add(FromDIP(19), 0, 0, 0, 0);
 
+    // All side controls now exist. The frame installs this sizer after return.
+    update_helio_button_state();
     return sizer;
 }
 
@@ -2628,6 +2622,34 @@ void MainFrame::update_helio_button_state()
     if (!expand_program_holder)
         return;
 
+    const bool hide_ads = Slic3r::Prefect::hide_helio_ads(wxGetApp().app_config->get("prefect_hide_helio_ads"));
+    const auto visibility = Slic3r::Prefect::helio_toolbar_visibility(
+        hide_ads, wxGetApp().app_config->get("helio_enable") == "true");
+    bool visibility_changed = false;
+    for (const auto& entry : { std::pair<wxWindowID, bool>{expand_program_id, visibility.activation_offer},
+                              std::pair<wxWindowID, bool>{expand_helio_id, visibility.enabled_analysis} }) {
+        if (auto* button = expand_program_holder->FindWindow(entry.first)) {
+            if (button->IsShown() != entry.second) {
+                expand_program_holder->ShowExpandButton(entry.first, entry.second);
+                visibility_changed = true;
+            }
+        }
+    }
+    const bool controls_shown = m_slice_btn == nullptr || m_slice_btn->IsShown();
+    const bool show_holder = visibility.any() && controls_shown;
+    if (expand_program_holder->IsShown() != show_holder) {
+        expand_program_holder->Show(show_holder);
+        visibility_changed = true;
+    }
+    if (split_line_icon && split_line_icon->IsShown() != show_holder) {
+        split_line_icon->Show(show_holder);
+        visibility_changed = true;
+    }
+    // The enabled analysis action stays available without the promotional pitch.
+    const wxString promotion = hide_ads ? wxEmptyString : _L("Unlock faster, more reliable, warp-free prints with Helio Additive.");
+    expand_program_holder->SetExpandButtonRichTooltip(expand_program_id, "monitor_speed", promotion);
+    expand_program_holder->SetExpandButtonRichTooltip(expand_helio_id, "monitor_speed", hide_ads ? _L("Helio Additive") : promotion);
+
     const PartPlate* current_plate = m_plater != nullptr ? m_plater->get_partplate_list().get_curr_plate() : nullptr;
     const bool helio_enabled = m_plater != nullptr && !m_plater->only_gcode_mode() &&
                                !m_plater->using_exported_file() && current_plate != nullptr &&
@@ -2636,6 +2658,8 @@ void MainFrame::update_helio_button_state()
                                !m_plater->is_background_process_slicing();
     expand_program_holder->updateExpandButtonBitmap(expand_helio_id, helio_enabled ? "helio_icon_topbar" : "helio_icon_topbar_disable");
     expand_program_holder->EnableExpandButton(expand_helio_id, helio_enabled);
+    if (visibility_changed && m_side_tools != nullptr)
+        Layout();
 }
 
 

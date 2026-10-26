@@ -2,6 +2,8 @@
 #include "PrefectFilamentSyncPolicy.hpp"
 #include "PrefectBackgroundPolicy.hpp"
 #include "PrefectArrangePolicy.hpp"
+#include "PrefectTipPolicy.hpp"
+#include "PrefectHelioAdsPolicy.hpp"
 #include <array>
 #include <boost/format/format_fwd.hpp>
 #include <cstddef>
@@ -904,7 +906,9 @@ void Sidebar::priv::flush_printer_sync(bool restart)
 void Sidebar::priv::show_filament_switcher_dialog(bool is_ready, bool is_manual)
 {
     if (is_ready) {
-        if (wxGetApp().app_config->get("show_fila_switch_tips") == "true") {
+        if (Slic3r::Prefect::show_automatic_filament_switch_tip(
+                wxGetApp().app_config->get_bool("prefect_hide_tips"),
+                wxGetApp().app_config->get("show_fila_switch_tips") == "true")) {
             wxGetApp().app_config->set("show_fila_switch_tips", "false");
             show_fila_switch_msg(true);
         }
@@ -13287,7 +13291,8 @@ void Plater::priv::on_process_completed(SlicingProcessCompletedEvent &evt)
 
         // Show tutorial popup after successful slicing (if Helio is enabled and tutorial is active)
         if (!has_error && !evt.cancelled() && evt.success() && is_finished) {
-            if (wxGetApp().app_config->get("helio_enable") == "true" &&
+            if (!Slic3r::Prefect::hide_helio_ads(wxGetApp().app_config->get("prefect_hide_helio_ads")) &&
+                wxGetApp().app_config->get("helio_enable") == "true" &&
                 wxGetApp().app_config->get("helio_first_time_tutorial") == "active") {
                 wxString tutorial_msg = _L("Great! Now click the Helio button to start optimization.");
                 notification_manager->push_notification(
@@ -15720,7 +15725,8 @@ void Plater::priv::on_helio_process(const PartPlate* expected_plate)
         }
 
         // Show tutorial popup when HelioInputDialog is shown (if tutorial is active)
-        if (wxGetApp().app_config->get("helio_first_time_tutorial") == "active") {
+        if (!Slic3r::Prefect::hide_helio_ads(wxGetApp().app_config->get("prefect_hide_helio_ads")) &&
+            wxGetApp().app_config->get("helio_first_time_tutorial") == "active") {
             wxString tutorial_msg = _L("Click the Optimize/Enhance button to start your first optimization.");
             notification_manager->push_notification(
                 NotificationType::CustomNotification,

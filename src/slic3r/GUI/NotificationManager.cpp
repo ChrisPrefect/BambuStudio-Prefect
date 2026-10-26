@@ -1,4 +1,6 @@
 #include "NotificationManager.hpp"
+#include "PrefectTipPolicy.hpp"
+#include "PrefectHelioAdsPolicy.hpp"
 
 #include "HintNotification.hpp"
 #include "SlicingProgressNotification.hpp"
@@ -46,6 +48,32 @@ wxDEFINE_EVENT(EVT_PRESET_UPDATE_AVAILABLE_CLICKED, PresetUpdateAvailableClicked
 wxDEFINE_EVENT(EVT_PRINTER_CONFIG_UPDATE_AVAILABLE_CLICKED, PrinterConfigUpdateAvailableClickedEvent);
 
 namespace {
+    bool prefect_hide_tips()
+    {
+        return wxGetApp().app_config && wxGetApp().app_config->get_bool("prefect_hide_tips");
+    }
+
+    bool prefect_suppress_helio_tip(const NotificationManager::NotificationData& data)
+    {
+        const auto& config = wxGetApp().app_config;
+        if (!config || data.type != NotificationType::CustomNotification ||
+            data.level != NotificationManager::NotificationLevel::HintNotificationLevel ||
+            !Slic3r::Prefect::hide_helio_ads(config->get("prefect_hide_helio_ads")))
+            return false;
+        // Exact source texts from HelioStatementDialog and Plater tutorials;
+        // these are the only legacy Custom+Hint promotions discarded live.
+        return Slic3r::Prefect::suppress_helio_tutorial(
+            true, data.type, data.level, data.text1,
+            _u8L("Add an object to the build plate, select a material and printer that Helio supports, then slice.") + "\n\n",
+            _u8L("Great! Now click the Helio button to start optimization."),
+            _u8L("Click the Optimize/Enhance button to start your first optimization."));
+    }
+
+    bool prefect_suppress_tip(const NotificationManager::NotificationData& data)
+    {
+        return Slic3r::Prefect::suppress_tip_notification(prefect_hide_tips(), data.type, data.level) ||
+               prefect_suppress_helio_tip(data);
+    }
 	/* // not used?
 	ImFont* add_default_font(float pixel_size)
 	{
@@ -2519,6 +2547,8 @@ bool NotificationManager::push_notification_data(const NotificationData& notific
 }
 bool NotificationManager::push_notification_data(std::unique_ptr<NotificationManager::PopNotification> notification, int timestamp)
 {
+    if (!notification || prefect_suppress_tip(notification->get_data()))
+        return false;
 	// if timestamped notif, push only new one
 	if (timestamp != 0) {
 		if (m_used_timestamps.find(timestamp) == m_used_timestamps.end()) {
@@ -2559,9 +2589,14 @@ void NotificationManager::push_delayed_notification_data(std::unique_ptr<Notific
                                                          int64_t                                               initial_delay,
                                                          int64_t                                               delay_interval)
 {
+    // Filter before the condition callback and before transferring ownership.
+    if (!notification || prefect_suppress_tip(notification->get_data()))
+        return;
 	if (initial_delay == 0 && condition_callback()) {
-		if( push_notification_data(std::move(notification), 0))
-			return;
+        // push consumes the pointer even when it updates an existing message or
+        // suppresses it after a preference change inside the callback.
+        push_notification_data(std::move(notification), 0);
+        return;
 	}
 	m_waiting_notifications.emplace_back(std::move(notification), condition_callback, initial_delay == 0 ? delay_interval : initial_delay, delay_interval);
 	wxGetApp().plater()->get_current_canvas3D()->schedule_extra_frame(initial_delay == 0 ? delay_interval : initial_delay);
@@ -2581,6 +2616,8 @@ void NotificationManager::stop_delayed_notifications_of_type(const NotificationT
 
 void NotificationManager::render_notifications(GLCanvas3D &canvas, float overlay_width, float bottom_margin, float right_margin)
 {
+    Slic3r::Prefect::discard_suppressed_tips(m_pop_notifications, m_waiting_notifications,
+                                    m_to_delete_after_finish_render, prefect_hide_tips(), prefect_suppress_helio_tip);
 	sort_notifications();
 
 	float bottom_up_last_y = bottom_margin * m_scale;
@@ -2633,6 +2670,8 @@ void NotificationManager::render_notifications(GLCanvas3D &canvas, float overlay
 
 bool NotificationManager::update_notifications(GLCanvas3D& canvas)
 {
+    const bool tips_removed = Slic3r::Prefect::discard_suppressed_tips(
+        m_pop_notifications, m_waiting_notifications, m_to_delete_after_finish_render, prefect_hide_tips(), prefect_suppress_helio_tip);
 	// no update if not top window
 	wxWindow* p = dynamic_cast<wxWindow*>(wxGetApp().plater());
 	while (p->GetParent() != nullptr)
@@ -2645,7 +2684,7 @@ bool NotificationManager::update_notifications(GLCanvas3D& canvas)
 	const int64_t max = std::numeric_limits<int64_t>::max();
 	int64_t       next_render = max;
 	const int64_t time_since_render = GLCanvas3D::timestamp_now() - m_last_render;
-	bool		  request_render = false;
+	bool		  request_render = tips_removed;
 	// During render, each notification detects if its currently hovered and changes its state to EState::Hovered
 	// If any notification is hovered, all restarts its countdown
 	bool          hover = false;

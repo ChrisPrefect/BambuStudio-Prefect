@@ -1,5 +1,6 @@
 #include "HelioReleaseNote.hpp"
 #include "HelioHistoryDialog.hpp"
+#include "PrefectHelioAdsPolicy.hpp"
 #include "I18N.hpp"
 
 #include "libslic3r/Utils.hpp"
@@ -183,7 +184,7 @@ void HelioStatementDialog::on_confirm(wxMouseEvent& e)
 
     /*show helio on main windows*/
     if (wxGetApp().mainframe->expand_program_holder) {
-        wxGetApp().mainframe->expand_program_holder->ShowExpandButton(wxGetApp().mainframe->expand_helio_id, true);
+        wxGetApp().mainframe->update_helio_button_state();
         wxGetApp().mainframe->Layout();
     }
 
@@ -644,7 +645,8 @@ void HelioStatementDialog::create_pat_page()
         EndModal(wxID_OK);
         
         // Show first tutorial popup (don't open Helio dialog immediately - let user follow tutorial steps)
-        if (wxGetApp().plater() && wxGetApp().plater()->get_notification_manager()) {
+        if (!Slic3r::Prefect::hide_helio_ads(wxGetApp().app_config->get("prefect_hide_helio_ads")) &&
+            wxGetApp().plater() && wxGetApp().plater()->get_notification_manager()) {
             wxString tutorial_msg = _L("Add an object to the build plate, select a material and printer that Helio supports, then slice.");
             tutorial_msg += "\n\n";
             wxString hypertext = _L("Supported printers and materials");
@@ -1769,7 +1771,10 @@ void HelioInputDialog::update_mode_card_styling(int selected_action)
     wxStaticBitmap* panel_pay_loading_icon = new wxStaticBitmap(panel_pay_optimization, wxID_ANY, create_scaled_bitmap("helio_loading", panel_pay_optimization, 109), wxDefaultPosition,
         wxSize(FromDIP(136), FromDIP(109)));
 
-    Label* pay_sub = new Label(panel_pay_optimization, _L("Helio's advanced feature for power users: available post purchase on its official website."));
+    Label* pay_sub = new Label(panel_pay_optimization,
+        Slic3r::Prefect::hide_helio_ads(wxGetApp().app_config->get("prefect_hide_helio_ads"))
+            ? _L("Optimization requires an eligible Helio subscription.")
+            : _L("Helio's advanced feature for power users: available post purchase on its official website."));
     pay_sub->SetForegroundColour(theme.muted);
     pay_sub->SetSize(wxSize(FromDIP(440), -1));
     pay_sub->Wrap(FromDIP(440));
@@ -1872,6 +1877,8 @@ void HelioInputDialog::update_mode_card_styling(int selected_action)
     buy_now_button->SetCornerRadius(FromDIP(12));
     buy_now_button->SetToolTip(_L("Loading..."));
     buy_now_button->Bind(wxEVT_LEFT_DOWN, [this](wxMouseEvent& e) {
+        if (Slic3r::Prefect::hide_helio_ads(wxGetApp().app_config->get("prefect_hide_helio_ads")))
+            return;
         std::string helio_api_key = Slic3r::HelioQuery::get_helio_pat();
         if (!helio_api_key.empty()) {
             wxString link_url;
@@ -2309,6 +2316,8 @@ void HelioInputDialog::update_action(int action)
                             buy_now_button->SetLabel(_L("Plans / Upgrades"));
                             buy_now_button->SetToolTip(_L("Go to our storefront to purchase more enhancements"));
                         }
+                        buy_now_button->Show(!Slic3r::Prefect::hide_helio_ads(
+                            wxGetApp().app_config->get("prefect_hide_helio_ads")));
                     }
                     
                     // Update subscription label based on free trial state and subscription name
@@ -2350,6 +2359,10 @@ void HelioInputDialog::update_action(int action)
                             m_label_subscription->SetToolTip("");
                             m_label_subscription->SetCursor(wxCURSOR_ARROW);
                         }
+                        if (Slic3r::Prefect::hide_helio_ads(wxGetApp().app_config->get("prefect_hide_helio_ads"))) {
+                            m_label_subscription->SetToolTip("");
+                            m_label_subscription->SetCursor(wxCURSOR_ARROW);
+                        }
                     }
                     
                     if (m_label_monthly_quota) {
@@ -2384,7 +2397,7 @@ void HelioInputDialog::update_action(int action)
         togglebutton_optimize->SetIsSelected(true);
         panel_simulation->Hide();
         buy_now_link->Show();
-        buy_now_button->Show();
+        buy_now_button->Show(!Slic3r::Prefect::hide_helio_ads(wxGetApp().app_config->get("prefect_hide_helio_ads")));
         helio_wiki_link->setLinkUrl(wxGetApp().app_config->get("language") == "zh_CN" ? "https://wiki.helioadditive.com/zh/optimization/quick-start" : "https://wiki.helioadditive.com/en/optimization/quick-start");
 
         if (support_optimization == 0) {

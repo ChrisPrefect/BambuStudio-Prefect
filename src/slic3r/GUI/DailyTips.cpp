@@ -1,4 +1,5 @@
 #include "DailyTips.hpp"
+#include "PrefectHelioAdsPolicy.hpp"
 
 #ifndef IMGUI_DEFINE_MATH_OPERATORS
 #define IMGUI_DEFINE_MATH_OPERATORS
@@ -279,8 +280,16 @@ ImVec2 DailyTipsPanel::get_size()
 
 void DailyTipsPanel::render()
 {
-    if (wxGetApp().app_config->get_bool("prefect_hide_tips"))
+    const auto source = Slic3r::Prefect::daily_tip_source(
+        wxGetApp().app_config->get_bool("prefect_hide_tips"),
+        Slic3r::Prefect::hide_helio_ads(wxGetApp().app_config->get("prefect_hide_helio_ads")), m_is_helio);
+    if (source == Slic3r::Prefect::DailyTipSource::None)
         return;
+    const bool helio_hints = source == Slic3r::Prefect::DailyTipSource::Helio;
+    if (m_active_helio_hints != helio_hints) {
+        m_active_helio_hints = helio_hints;
+        m_first_enter = false;
+    }
     ImGuiWrapper& imgui = *wxGetApp().imgui();
     float scale = imgui.get_font_size() / 15.0f;
 
@@ -335,7 +344,9 @@ void DailyTipsPanel::render()
 
 void DailyTipsPanel::retrieve_data_from_hint_database(HintDataNavigation nav)
 {
-    HintData* hint_data = HintDatabase::get_instance().get_hint(nav, m_is_helio);
+    const bool helio_hints = m_is_helio &&
+        !Slic3r::Prefect::hide_helio_ads(wxGetApp().app_config->get("prefect_hide_helio_ads"));
+    HintData* hint_data = HintDatabase::get_instance().get_hint(nav, helio_hints);
     if (hint_data != nullptr)
     {
         DailyTipsData data{ hint_data->text,
@@ -346,6 +357,11 @@ void DailyTipsPanel::retrieve_data_from_hint_database(HintDataNavigation nav)
                             hint_data->callback
         };
         m_dailytips_renderer->update_data(data);
+    }
+    else {
+        // A failed source switch must not retain the previous Helio ad, image,
+        // hyperlink or callback when no general replacement is available.
+        m_dailytips_renderer->update_data(DailyTipsData{});
     }
 }
 
@@ -417,6 +433,8 @@ bool DailyTipsPanel::is_expanded()
 
 void DailyTipsPanel::set_is_helio(bool is_helio)
 {
+    if (m_is_helio != is_helio)
+        m_first_enter = false;
     m_is_helio = is_helio;
 }
 
@@ -529,8 +547,8 @@ void DailyTipsPanel::render_controller_buttons(const ImVec2& pos, const ImVec2& 
         }
 
         // page index
-        m_page_index = HintDatabase::get_instance().get_index(m_is_helio) + 1;
-        m_pages_count = HintDatabase::get_instance().get_count(m_is_helio);
+        m_page_index = HintDatabase::get_instance().get_index(m_active_helio_hints) + 1;
+        m_pages_count = HintDatabase::get_instance().get_count(m_active_helio_hints);
         std::string text_str = std::to_string(m_page_index) + "/" + std::to_string(m_pages_count);
         float text_item_width = ImGui::CalcTextSize(text_str.c_str()).x;
         ImGui::PushItemWidth(text_item_width);

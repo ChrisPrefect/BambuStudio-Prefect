@@ -9,7 +9,7 @@
 | Ausgangstag | `v02.08.02.61` |
 | Zugehöriger Commit | `926a7192574bcb9b3a732e1ec59a46d79cb45466` |
 | Feature-Branch | `prefect/workflow` |
-| Änderungsinventar | `doc/prefect/changes.json` mit F01 bis F11 |
+| Änderungsinventar | `doc/prefect/changes.json` mit F01 bis F13 |
 
 Das Ziel ist eine nachvollziehbare Patchserie über dem neuen Upstream-Release.
 Die Detaildokumente erklären für jede Funktion die Entscheidung, bestehende
@@ -344,3 +344,7 @@ Nach erfolgreicher Abnahme den neuen Basis-Commit in README, Inventar,
 Prüfprotokoll und diesem Updateablauf festhalten, die Patchserie neu exportieren
 und ihre Anwendung auf einem sauberen Checkout prüfen. Die ursprünglichen
 Feature-IDs bleiben unverändert, damit spätere Änderungen vergleichbar bleiben.
+
+## Nachtrag Workflow 3
+
+F09 muss zusätzlich typisierte Tippsbenachrichtigungen unterdrücken, einschließlich des `BBLArcFittingInfo`-Hinweises. Dessen Warning-Level allein ist kein geeigneter Filter: Die automatische Anpassung und echte Warnungen bleiben nötig. Die zusätzlichen, unabhängig schaltbaren Funktionen sind [F12: sofort anordnen](arrange-on-click.md) und [F13: Helio-Werbung](hide-helio-advertising.md). Ihre Detaildokumente enthalten die Updateanker und Gegenprüfungen bei ausgeschaltetem Schalter. Historische Paket- und Pinbelege bleiben an ihre ursprünglichen Sourcecommits gebunden.

@@ -931,9 +931,13 @@ wxBoxSizer *PreferencesDialog::create_item_checkbox(wxString title, wxWindow *pa
         if (param == "background_processing" && wxGetApp().plater())
             wxGetApp().plater()->schedule_background_process();
 
-        if ((param == "prefect_arrange_rotation" || param == "prefect_printer_collapsed" || param == "prefect_hide_tips") &&
+        if ((param == "prefect_arrange_rotation" || param == "prefect_printer_collapsed" || param == "prefect_hide_tips" ||
+             param == "prefect_hide_helio_ads") &&
             wxGetApp().plater())
             wxGetApp().plater()->update_ui_from_settings();
+
+        if (param == "prefect_hide_helio_ads" && wxGetApp().mainframe)
+            wxGetApp().mainframe->update_helio_button_state();
 
         if (param == "prefect_simple_fields_enabled") {
             if (checkbox->GetValue())
@@ -1610,12 +1614,18 @@ wxWindow *PreferencesDialog::create_prefect_tab()
     add(_L("Arrange automatically after importing or pasting multiple objects"),
         _L("Arranges the current plate after importing or pasting at least two separate model objects. Project imports retain their saved arrangement."),
         "prefect_arrange_after_import");
+    add(_L("Arrange immediately when opening arrange options"),
+        _L("Runs arrangement once when you open the toolbar menu. The menu stays open so you can change its options and arrange again."),
+        "prefect_arrange_on_click");
     add(_L("Always import multiple models as separate objects"),
         _L("Skips the multipart-object question during model import. Explicit project imports retain their structure."),
         "prefect_import_separate_objects");
-    add(_L("Hide daily tips completely"),
-        _L("Removes the tips panel and its reserved space from slicing notifications and hides the Daily Tips window."),
+    add(_L("Hide tips and suggestions"),
+        _L("Hide daily tips, tutorial notifications, simplification suggestions and the curve-planning notice. Also skip automatic filament-switcher tips. Important printing, calibration and error messages remain visible."),
         "prefect_hide_tips");
+    add(_L("Hide Helio Additive promotions"),
+        _L("Hide Helio advertising, activation offers and promotional tips. Existing Helio results and explicitly enabled analysis remain available."),
+        "prefect_hide_helio_ads");
     add(_L("Hide the TPU cold-pull reminder"),
         _L("Hides only the cold-pull advisory for TPU. Other material warnings and printer restrictions remain enabled."),
         "prefect_suppress_tpu_cold_pull");
@@ -2178,9 +2188,11 @@ void PreferencesDialog::on_reset_preferences()
         "prefect_support_interface_menu",
         "prefect_arrange_rotation",
         "prefect_arrange_after_import",
+        "prefect_arrange_on_click",
         "prefect_printer_collapsed",
         "prefect_import_separate_objects",
         "prefect_hide_tips",
+        "prefect_hide_helio_ads",
         "prefect_suppress_tpu_cold_pull",
         "prefect_simple_fields_enabled",
         "prefect_simple_fields",

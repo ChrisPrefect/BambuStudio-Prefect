@@ -53,6 +53,7 @@ private:
     float m_footer_height;
     int m_uid;
     bool m_is_helio{ false };
+    bool m_active_helio_hints{ false };
     bool m_first_enter{ false };
     bool m_is_dark{ false };
     DailyTipsLayout m_layout{ DailyTipsLayout::Vertical };

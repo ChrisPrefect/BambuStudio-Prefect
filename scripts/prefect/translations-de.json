@@ -28,5 +28,12 @@
   "Hides only the cold-pull advisory for TPU. Other material warnings and printer restrictions remain enabled.": "Blendet den Cold-Pull-Hinweis für TPU aus. Andere Materialwarnungen und Druckerbeschränkungen bleiben aktiv.",
   "Set as support interface": "Als Supportinterface festlegen",
   "Use this filament for the support/raft interface in the global process settings": "Dieses Filament in den globalen Prozesseinstellungen für die Support-/Raft-Kontaktfläche verwenden",
-  "Click to assign this filament to selected objects. Shift-click to pick filament color.": "Klicken, um markierten Objekten dieses Filament zuzuweisen. Umschalt-Klick öffnet die Farbauswahl."
+  "Click to assign this filament to selected objects. Shift-click to pick filament color.": "Klicken, um markierten Objekten dieses Filament zuzuweisen. Umschalt-Klick öffnet die Farbauswahl.",
+  "Arrange immediately when opening arrange options": "Beim Öffnen der Anordnungsoptionen sofort anordnen",
+  "Runs arrangement once when you open the toolbar menu. The menu stays open so you can change its options and arrange again.": "Startet beim Öffnen des Toolbar-Menüs einmal die Anordnung. Das Menü bleibt offen, damit du Optionen ändern und erneut anordnen kannst.",
+  "Hide Helio Additive promotions": "Helio-Additive-Werbung ausblenden",
+  "Hide Helio advertising, activation offers and promotional tips. Existing Helio results and explicitly enabled analysis remain available.": "Blendet Helio-Werbung, Aktivierungsangebote und Werbetipps aus. Vorhandene Helio-Ergebnisse und ausdrücklich aktivierte Analysen bleiben verfügbar.",
+  "Hide tips and suggestions": "Tipps und Vorschläge ausblenden",
+  "Hide daily tips, tutorial notifications, simplification suggestions and the curve-planning notice. Also skip automatic filament-switcher tips. Important printing, calibration and error messages remain visible.": "Blendet Tagestipps, Tutorialhinweise, Vereinfachungsvorschläge und den Kurvenplanungs-Hinweis aus. Überspringt auch automatische Filamentswitcher-Tipps. Wichtige Druck-, Kalibrierungs- und Fehlermeldungen bleiben sichtbar.",
+  "Optimization requires an eligible Helio subscription.": "Für die Optimierung ist ein entsprechendes Helio-Abonnement erforderlich."
 }

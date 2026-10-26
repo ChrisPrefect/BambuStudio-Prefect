@@ -12,6 +12,20 @@ inline bool arrange_rotation_enabled(bool force_rotation, bool remembered_rotati
     return force_rotation || remembered_rotation;
 }
 
+inline bool arrange_toolbar_enabled(bool can_arrange, bool popup_open)
+{
+    // A running job must not clear the toolbar's pressed state and close the
+    // options popup. Its controls are disabled until another job can start.
+    return can_arrange || popup_open;
+}
+
+inline bool arrange_on_toolbar_open(bool enabled, bool popup_open, bool can_arrange)
+{
+    // The toolbar callback also runs when toggling an item off. Closing the
+    // popup must never arrange, and a busy worker must never receive a retry.
+    return enabled && popup_open && can_arrange;
+}
+
 inline bool auto_arrange_insertion_eligible(bool enabled, std::size_t inserted_objects, bool preserve_layout)
 {
     return enabled && inserted_objects > 1 && !preserve_layout;

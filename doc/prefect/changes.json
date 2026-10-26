@@ -24,7 +24,9 @@
         "tests/prefect/filament_sync_test.cpp"
       ],
       "commit": "7bde42eed27083591b1c26ffedf3441636ff1620",
-      "follow_up_commits": ["8862ffb3d4f9968c932132e28edc135399603361"]
+      "follow_up_commits": [
+        "8862ffb3d4f9968c932132e28edc135399603361"
+      ]
     },
     {
       "id": "F02",
@@ -104,13 +106,18 @@
         }
       ],
       "commit": "259a5f96c6124102d6865d8b08b82ebbf62abf76",
-      "follow_up_commits": ["8862ffb3d4f9968c932132e28edc135399603361", "aefb764d3a36e05004ec82e20ddf37714ce718a7"]
+      "follow_up_commits": [
+        "8862ffb3d4f9968c932132e28edc135399603361",
+        "aefb764d3a36e05004ec82e20ddf37714ce718a7"
+      ]
     },
     {
       "id": "F06",
       "title": "Filament als Supportinterface festlegen",
       "documentation": "doc/prefect/06-support-interface-menu.md",
-      "configuration": {"prefect_support_interface_menu": true},
+      "configuration": {
+        "prefect_support_interface_menu": true
+      },
       "anchors": [
         {
           "file": "src/slic3r/GUI/Plater.cpp",
@@ -122,7 +129,9 @@
         }
       ],
       "commit": "8e00cd6931e28b38966ffbf502d82b1f5f4546c6",
-      "follow_up_commits": ["8862ffb3d4f9968c932132e28edc135399603361"]
+      "follow_up_commits": [
+        "8862ffb3d4f9968c932132e28edc135399603361"
+      ]
     },
     {
       "id": "F07",
@@ -172,33 +181,108 @@
         {
           "file": "src/slic3r/GUI/SlicingProgressNotification.cpp",
           "text": "const bool show_tips"
+        },
+        {
+          "file": "src/slic3r/GUI/NotificationManager.cpp",
+          "text": "prefect_suppress_tip"
+        },
+        {
+          "file": "src/slic3r/GUI/PrefectTipPolicy.hpp",
+          "text": "discard_suppressed_tips"
         }
       ],
-      "commit": "159fc3816810124188975ffa8069ffa64000daf9"
+      "commit": "159fc3816810124188975ffa8069ffa64000daf9",
+      "tests": [
+        "tests/prefect/notification_tips_test.cpp"
+      ]
     },
     {
       "id": "F10",
       "title": "Automatische Rotation beim Anordnen",
       "commit": "9d4fad7292484403f0b026972835035b0a967d20",
       "documentation": "doc/prefect/10-arrange-rotation.md",
-      "configuration": {"prefect_arrange_rotation": true},
+      "configuration": {
+        "prefect_arrange_rotation": true
+      },
       "anchors": [
-        {"file": "src/slic3r/GUI/PrefectArrangePolicy.hpp", "text": "arrange_rotation_enabled"},
-        {"file": "src/slic3r/GUI/Jobs/ArrangeJob.cpp", "text": "prefect_arrange_rotation"}
+        {
+          "file": "src/slic3r/GUI/PrefectArrangePolicy.hpp",
+          "text": "arrange_rotation_enabled"
+        },
+        {
+          "file": "src/slic3r/GUI/Jobs/ArrangeJob.cpp",
+          "text": "prefect_arrange_rotation"
+        }
       ],
-      "tests": ["tests/prefect/arrange_test.cpp"]
+      "tests": [
+        "tests/prefect/arrange_test.cpp"
+      ]
     },
     {
       "id": "F11",
       "title": "Nach Mehrfachimport automatisch anordnen",
       "commit": "9d4fad7292484403f0b026972835035b0a967d20",
       "documentation": "doc/prefect/11-auto-arrange.md",
-      "configuration": {"prefect_arrange_after_import": true},
+      "configuration": {
+        "prefect_arrange_after_import": true
+      },
       "anchors": [
-        {"file": "src/slic3r/GUI/PrefectArrangePolicy.hpp", "text": "pending_arrange_action"},
-        {"file": "src/slic3r/GUI/Plater.cpp", "text": "prefect_arrange_after_import"}
+        {
+          "file": "src/slic3r/GUI/PrefectArrangePolicy.hpp",
+          "text": "pending_arrange_action"
+        },
+        {
+          "file": "src/slic3r/GUI/Plater.cpp",
+          "text": "prefect_arrange_after_import"
+        }
       ],
-      "tests": ["tests/prefect/arrange_test.cpp"]
+      "tests": [
+        "tests/prefect/arrange_test.cpp"
+      ]
+    },
+    {
+      "id": "F12",
+      "title": "Anordnen beim ersten Klick starten und Optionen offen halten",
+      "documentation": "doc/prefect/arrange-on-click.md",
+      "configuration": {
+        "prefect_arrange_on_click": true
+      },
+      "anchors": [
+        {
+          "file": "src/slic3r/GUI/GLCanvas3D.cpp",
+          "text": "prefect_arrange_on_click"
+        }
+      ],
+      "tests": [
+        "tests/prefect/arrange_test.cpp",
+        "tests/prefect/preferences_test.cpp"
+      ]
+    },
+    {
+      "id": "F13",
+      "title": "Helio-Additive-Werbung ausblenden",
+      "documentation": "doc/prefect/hide-helio-advertising.md",
+      "configuration": {
+        "prefect_hide_helio_ads": true
+      },
+      "anchors": [
+        {
+          "file": "src/slic3r/GUI/MainFrame.cpp",
+          "text": "prefect_hide_helio_ads"
+        },
+        {
+          "file": "src/slic3r/GUI/PrefectHelioAdsPolicy.hpp",
+          "text": "daily_tip_source"
+        },
+        {
+          "file": "src/slic3r/GUI/DailyTips.cpp",
+          "text": "m_active_helio_hints"
+        }
+      ],
+      "tests": [
+        "tests/prefect/preferences_test.cpp",
+        "tests/prefect/helio_ads_test.cpp"
+      ]
     }
   ],
   "fork_repository": "https://github.com/ChrisPrefect/BambuStudio-Prefect",

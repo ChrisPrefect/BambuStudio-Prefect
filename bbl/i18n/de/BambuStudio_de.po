@@ -22794,3 +22794,31 @@ msgstr "Ordnet die aktuelle Platte nach dem Import oder Einfügen aus der Zwisch
 #. Prefect workflow
 msgid "Always enabled in Preferences > Prefect workflow. Disable that preference to use this checkbox."
 msgstr "Unter Einstellungen → Workflow immer aktiviert. Deaktiviere dort die Option, um dieses Kontrollkästchen zu verwenden."
+
+#. Prefect workflow
+msgid "Arrange immediately when opening arrange options"
+msgstr "Beim Öffnen der Anordnungsoptionen sofort anordnen"
+
+#. Prefect workflow
+msgid "Runs arrangement once when you open the toolbar menu. The menu stays open so you can change its options and arrange again."
+msgstr "Startet beim Öffnen des Toolbar-Menüs einmal die Anordnung. Das Menü bleibt offen, damit du Optionen ändern und erneut anordnen kannst."
+
+#. Prefect workflow
+msgid "Hide Helio Additive promotions"
+msgstr "Helio-Additive-Werbung ausblenden"
+
+#. Prefect workflow
+msgid "Hide Helio advertising, activation offers and promotional tips. Existing Helio results and explicitly enabled analysis remain available."
+msgstr "Blendet Helio-Werbung, Aktivierungsangebote und Werbetipps aus. Vorhandene Helio-Ergebnisse und ausdrücklich aktivierte Analysen bleiben verfügbar."
+
+#. Prefect workflow
+msgid "Hide tips and suggestions"
+msgstr "Tipps und Vorschläge ausblenden"
+
+#. Prefect workflow
+msgid "Hide daily tips, tutorial notifications, simplification suggestions and the curve-planning notice. Also skip automatic filament-switcher tips. Important printing, calibration and error messages remain visible."
+msgstr "Blendet Tagestipps, Tutorialhinweise, Vereinfachungsvorschläge und den Kurvenplanungs-Hinweis aus. Überspringt auch automatische Filamentswitcher-Tipps. Wichtige Druck-, Kalibrierungs- und Fehlermeldungen bleiben sichtbar."
+
+#. Prefect workflow
+msgid "Optimization requires an eligible Helio subscription."
+msgstr "Für die Optimierung ist ein entsprechendes Helio-Abonnement erforderlich."

@@ -593,6 +593,10 @@ void ExpandButton::msw_rescale()
 
 void ExpandButton::SetRichTooltip(const wxString& iconName, const wxString& text)
 {
+    if (m_tooltip_icon == iconName && m_tooltip_text == text)
+        return;
+    // A preference change must also dismiss a popup that is already visible.
+    HideRichTooltip();
     m_tooltip_icon = iconName;
     m_tooltip_text = text;
 }

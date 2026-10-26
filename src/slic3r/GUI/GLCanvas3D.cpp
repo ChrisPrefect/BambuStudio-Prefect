@@ -7433,6 +7433,14 @@ bool GLCanvas3D::_render_arrange_menu(float left, float toolbar_height)
 
     imgui->begin(_L("Arrange options"), ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 
+    // Keep the options visible while the first arrangement runs, without
+    // changing settings under the worker or accepting another arrangement.
+    // Use ImGui's flag stack: the wrapper's disabled scope cannot be nested
+    // around the existing rotation controls and button wrappers below.
+    const bool controls_disabled = !wxGetApp().plater()->can_do_ui_job();
+    ImGui::PushItemFlag(ImGuiItemFlags_Disabled, controls_disabled);
+    if (controls_disabled)
+        ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
     ArrangeSettings settings = get_arrange_settings();
     ArrangeSettings &settings_out = get_arrange_settings();
     const float slider_icon_width = imgui->get_slider_icon_size().x;
@@ -7561,6 +7569,9 @@ bool GLCanvas3D::_render_arrange_menu(float left, float toolbar_height)
         settings_changed = true;
     }
     ImGui::PopStyleVar(1);
+    if (controls_disabled)
+        ImGui::PopStyleVar();
+    ImGui::PopItemFlag();
     imgui->end();
 
     //BBS
@@ -7952,11 +7963,23 @@ bool GLCanvas3D::_init_main_toolbar()
         item.sprite_id = sprite_id++;
         item.left.action_callback = [this]() {
             if (m_canvas != nullptr) {
+                auto* plater = wxGetApp().plater();
+                const auto& toolbar = get_main_toolbar();
+                if (Prefect::arrange_on_toolbar_open(
+                        wxGetApp().app_config->get_bool("prefect_arrange_on_click"),
+                        toolbar && toolbar->is_item_pressed("arrange"), plater->can_do_ui_job())) {
+                    plater->set_prepare_state(Job::PREPARE_STATE_DEFAULT);
+                    plater->arrange();
+                }
                 NetworkAgent* agent = GUI::wxGetApp().getAgent();
                 if (agent) agent->track_update_property("auto_arrange", std::to_string(++auto_arrange_count));
             }
             };
-        item.enabling_callback = []()->bool { return wxGetApp().plater()->can_do_ui_job(); };
+        item.enabling_callback = [this]()->bool {
+            const auto& toolbar = get_main_toolbar();
+            return Prefect::arrange_toolbar_enabled(wxGetApp().plater()->can_do_ui_job(),
+                                                    toolbar && toolbar->is_item_pressed("arrange"));
+        };
         item.left.toggable = true;
         //BBS: GUI refactor: adjust the main toolbar position
         item.left.render_callback = [this](float left, float right, float bottom, float top, float toolbar_height) {

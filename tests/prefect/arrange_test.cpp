@@ -15,6 +15,17 @@ int main()
     assert(!arrange_rotation_enabled(false, false));
     assert(arrange_rotation_enabled(false, true));
 
+    // Opening the toolbar popup arranges exactly once when enabled and idle.
+    // Closing it or clicking while busy never starts or queues another job.
+    for (int enabled = 0; enabled != 2; ++enabled)
+        for (int open = 0; open != 2; ++open)
+            for (int ready = 0; ready != 2; ++ready)
+                assert(arrange_on_toolbar_open(enabled, open, ready) == (enabled && open && ready));
+    assert(arrange_toolbar_enabled(true, false));
+    assert(arrange_toolbar_enabled(true, true));
+    assert(arrange_toolbar_enabled(false, true)); // popup survives running job
+    assert(!arrange_toolbar_enabled(false, false)); // busy cannot open a new popup
+
     assert(auto_arrange_insertion_eligible(true, 2, false));
     assert(!auto_arrange_insertion_eligible(false, 2, false));
     assert(!auto_arrange_insertion_eligible(true, 0, false));

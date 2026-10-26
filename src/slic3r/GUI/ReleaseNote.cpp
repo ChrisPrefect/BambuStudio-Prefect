@@ -2560,7 +2560,7 @@ void ExpandCenterDialog::on_uninstall(const wxMouseEvent& evt)
     
     // Hide the Helio button in main window
     if (wxGetApp().mainframe->expand_program_holder) {
-        wxGetApp().mainframe->expand_program_holder->ShowExpandButton(wxGetApp().mainframe->expand_helio_id, false);
+        wxGetApp().mainframe->update_helio_button_state();
         wxGetApp().mainframe->Layout();
     }
     
