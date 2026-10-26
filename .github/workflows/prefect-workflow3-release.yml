@@ -1,0 +1,39 @@
+name: Prepare or publish verified Prefect Workflow 3 .5
+
+on:
+  push:
+    branches: [delivery/windows]
+    paths:
+      - .github/workflows/prefect-workflow3-release.yml
+      - delivery/workflow3-release/**
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: prefect-workflow3-release
+  cancel-in-progress: false
+
+jobs:
+  deliver:
+    if: github.repository == 'ChrisPrefect/BambuStudio-Prefect' && github.ref == 'refs/heads/delivery/windows'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: delivery/workflow3-release
+      - name: Run network-free release regression tests
+        run: python3 -m unittest discover -s delivery/workflow3-release -p 'test_*.py' -v
+      - name: Verify pinned inputs and prepare draft or publish prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 delivery/workflow3-release/release.py --report workflow3-release-verification.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Prefect-Workflow3-release-verification
+          path: workflow3-release-verification.json
+          if-no-files-found: error
+          retention-days: 90

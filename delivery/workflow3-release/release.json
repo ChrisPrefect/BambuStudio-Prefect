@@ -1,0 +1,17 @@
+{
+  "source_commit": "939e0b3ce6dce937502666f334950eec2e0f542a",
+  "source_tree": "e397ecc3b38d7a22b6ac4891d0897dfc273d7000",
+  "source_run_id": 40248952898,
+  "artifact_id": 12619554874,
+  "artifact_size": 264429447,
+  "artifact_sha256": "cb9bdf2c59b3cf913bbbbe5a17e5687568000c0b2341462afb9bdb69296246fa",
+  "patch_file": "Prefect-BambuStudio-patches-20261026-workflow3.zip",
+  "patch_size": 1404746,
+  "patch_sha256": "8abbd698fb04595fa27f793673993eea9d68ad3609f971a02894149035555746",
+  "patch_count": 35,
+  "notes_sha256": "6fc6f32624d0f5be9fe508189f559c2c3a8a9908a392081f47afa77f269beb6b",
+  "icon_file": "PrefectBambuStudio.ico",
+  "icon_sha256": "db77286997a999fb0f8e06d7522f3c4f843ed61ea0d8718284d942211e1bf5a8",
+  "icon_size": 14411,
+  "publish": false
+}
