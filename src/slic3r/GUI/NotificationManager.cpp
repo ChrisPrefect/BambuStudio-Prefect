@@ -53,8 +53,7 @@ namespace {
         return wxGetApp().app_config && wxGetApp().app_config->get_bool("prefect_hide_tips");
     }
 
-    bool prefect_suppress_helio_tip(const NotificationManager::NotificationData& data)
-    {
+    const auto prefect_suppress_helio_tip = [](const auto& data) {
         const auto& config = wxGetApp().app_config;
         if (!config || data.type != NotificationType::CustomNotification ||
             data.level != NotificationManager::NotificationLevel::HintNotificationLevel ||
@@ -67,13 +66,12 @@ namespace {
             _u8L("Add an object to the build plate, select a material and printer that Helio supports, then slice.") + "\n\n",
             _u8L("Great! Now click the Helio button to start optimization."),
             _u8L("Click the Optimize/Enhance button to start your first optimization."));
-    }
+    };
 
-    bool prefect_suppress_tip(const NotificationManager::NotificationData& data)
-    {
+    const auto prefect_suppress_tip = [](const auto& data) {
         return Slic3r::Prefect::suppress_tip_notification(prefect_hide_tips(), data.type, data.level) ||
                prefect_suppress_helio_tip(data);
-    }
+    };
 	/* // not used?
 	ImFont* add_default_font(float pixel_size)
 	{
