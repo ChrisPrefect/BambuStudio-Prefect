@@ -1,0 +1,45 @@
+{
+  "schema": "prefect-workflow3-public-runtime-startup-v1",
+  "source_commit": "939e0b3ce6dce937502666f334950eec2e0f542a",
+  "source_tree": "e397ecc3b38d7a22b6ac4891d0897dfc273d7000",
+  "workflow_run_id": 40248952898,
+  "status": "SOURCE_BOUND_OWN_GUI_STARTUP_VERIFIED",
+  "utc": "2026-10-26T00:55:16.855713+00:00",
+  "actual_GUI_startup": true,
+  "actual_window_process_matches_guarded_launch": true,
+  "loaded_installed_v6_dll_verified": true,
+  "exe_sha256": "e113e57c2e6db449de57c438ccab52555d659bfa94b7a0f88b899c419708469c",
+  "dll_sha256": "76857d87f5b1dc325adb5a76a720fc31aaa503aa041b0476d53b1041175269cc",
+  "isolated_profile_effective_workflow_keys": {
+    "prefect_hide_tips": true,
+    "prefect_arrange_on_click": true,
+    "prefect_hide_helio_ads": true,
+    "prefect_arrange_after_import": false,
+    "prefect_arrange_rotation": true
+  },
+  "F12_F13_seed_keys_absent_then_defaulted_true": true,
+  "F11_false_is_QA_override_not_production_default": true,
+  "preferences_dialog_opened_with_workflow_tab_label": true,
+  "screenshots_verified": false,
+  "official_capture_timeouts_observed": 2,
+  "workflow_tab_activation_verified": false,
+  "checkbox_pixel_or_toggle_matrix_verified": false,
+  "arrange_first_toolbar_click_visually_tested": false,
+  "physical_printer_curve_tip_trigger_tested": false,
+  "own_QA_process_stopped_by_exact_bound_helper": true,
+  "existing_user_session_preserved": true,
+  "normal_profile_GUI_restart_tested": false,
+  "limitations": [
+    "Two current official-client captures timed out, including fresh window rebinding.",
+    "Workflow-tab element was rejected as unavailable in the client cache; keyboard navigation did not verify a page change.",
+    "This report establishes startup, loaded binary and effective isolated-profile migration values; it does not establish visible checkbox, first-click arrangement or physical-printer tip behavior."
+  ],
+  "original_private_runtime_report_sha256": "6ac65fa9bf0ccfa2efe9529b22e87fce8e561f868ac3f478a47b1e35113b5358",
+  "privacy": {
+    "raw_logs_included": false,
+    "raw_profiles_included": false,
+    "absolute_user_paths_included": false,
+    "device_or_account_data_included": false,
+    "user_project_data_included": false
+  }
+}

@@ -194,6 +194,10 @@
       "commit": "159fc3816810124188975ffa8069ffa64000daf9",
       "tests": [
         "tests/prefect/notification_tips_test.cpp"
+      ],
+      "follow_up_commits": [
+        "3401f3938e2e3ab70438ea27931496f0f4d4c3b4",
+        "939e0b3ce6dce937502666f334950eec2e0f542a"
       ]
     },
     {
@@ -256,7 +260,8 @@
       "tests": [
         "tests/prefect/arrange_test.cpp",
         "tests/prefect/preferences_test.cpp"
-      ]
+      ],
+      "commit": "3401f3938e2e3ab70438ea27931496f0f4d4c3b4"
     },
     {
       "id": "F13",
@@ -282,9 +287,23 @@
       "tests": [
         "tests/prefect/preferences_test.cpp",
         "tests/prefect/helio_ads_test.cpp"
-      ]
+      ],
+      "commit": "3401f3938e2e3ab70438ea27931496f0f4d4c3b4"
     }
   ],
   "fork_repository": "https://github.com/ChrisPrefect/BambuStudio-Prefect",
-  "foundation_commit": "7a24a42d0db96d22db5dbb7a08699a1a2a8e1443"
+  "foundation_commit": "7a24a42d0db96d22db5dbb7a08699a1a2a8e1443",
+  "current_delivery": {
+    "source_commit": "939e0b3ce6dce937502666f334950eec2e0f542a",
+    "source_tree": "e397ecc3b38d7a22b6ac4891d0897dfc273d7000",
+    "workflow_run_id": 40248952898,
+    "feature_count": 13,
+    "release_tag": "v02.08.02.61-prefect.5",
+    "release_id": 423757668,
+    "installation_role": "Windows-v6",
+    "patch_commits": 35,
+    "replay_tree_checks": 70,
+    "report": "doc/prefect/validation/workflow3.md",
+    "results": "doc/prefect/validation/workflow3-results.json"
+  }
 }

@@ -1,0 +1,57 @@
+{
+  "schema": "prefect-workflow3-public-shortcuts-v1",
+  "source_commit": "939e0b3ce6dce937502666f334950eec2e0f542a",
+  "source_tree": "e397ecc3b38d7a22b6ac4891d0897dfc273d7000",
+  "workflow_run_id": 40248952898,
+  "status": "PASS",
+  "installation_proof_sha256": "70f26b137f3c5ea00d06a810d646b9a0e35b5714a45f4be2f376ceab415dbcf7",
+  "links": [
+    {
+      "role": "StartMenu",
+      "sha256": "626ed11c63db234412bca9b06cda9d508134f3efc0c45114860a1e2e0be89cda",
+      "bytes": 2329,
+      "links": 1,
+      "target_role": "Verified standalone Windows-v6 executable",
+      "working_directory_matches_installation": true,
+      "normal_fork_profile_arguments_preserved": true,
+      "app_user_model_id": "ChrisPrefect.BambuStudio",
+      "icon_role": "Verified Windows-v6 executable",
+      "icon_index": 0
+    },
+    {
+      "role": "ActualTaskBarLink",
+      "sha256": "abe4b025b6afceb2ffe5b40c55959c05fdb8b778e9bb2a930ca18d046079f9e2",
+      "bytes": 2329,
+      "links": 1,
+      "target_role": "Verified standalone Windows-v6 executable",
+      "working_directory_matches_installation": true,
+      "normal_fork_profile_arguments_preserved": true,
+      "app_user_model_id": "ChrisPrefect.BambuStudio",
+      "icon_role": "Verified Windows-v6 executable",
+      "icon_index": 0
+    }
+  ],
+  "existing_owned_start_menu_and_actual_pin_links_retargeted": true,
+  "original_link_bytes_backed_up_privately": true,
+  "desktop_link_present": false,
+  "original_three_pin_files_unchanged": true,
+  "original_three_pin_sha256": {
+    "Bambu Studio.lnk": "307867e6b319caf8315affac82be77a618d9767c66ce58952e3236ac53136986",
+    "File Explorer.lnk": "cf116b33831de9f80847abdb2a0d92ab3d3f956a8e209ec95d35d986eea8c7b5",
+    "Google Chrome.lnk": "7535b5714a2d725bf9ea0a40118157e5e6d110633a51d8a1b1e73aa86080e58d"
+  },
+  "new_pin_created": false,
+  "TaskbarManager_calls": 0,
+  "profile_access": false,
+  "app_launches_during_link_update": 0,
+  "original_private_handoff_sha256": "b1ad86cb5dbe720c8c96752347b82cde25d6c50922b854452952ae0bba6711e6",
+  "original_private_link_update_sha256": "eb9b8fa9c225a3273f8b072264189dae011df9d7fecb8d9810792c41de343cf7",
+  "scope": "Metadata of two existing shortcuts updated and read back; this is not a pin request or an application relaunch.",
+  "privacy": {
+    "raw_logs_included": false,
+    "raw_profiles_included": false,
+    "absolute_user_paths_included": false,
+    "device_or_account_data_included": false,
+    "user_project_data_included": false
+  }
+}

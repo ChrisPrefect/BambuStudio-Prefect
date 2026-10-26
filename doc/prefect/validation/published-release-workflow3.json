@@ -1,0 +1,102 @@
+{
+  "schema": "prefect-workflow3-publication-final-v1",
+  "success": true,
+  "release_id": 423757668,
+  "tag": "v02.08.02.61-prefect.5",
+  "url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.5",
+  "draft": false,
+  "prerelease": true,
+  "published_at": "2026-10-26T01:01:23Z",
+  "source_commit": "939e0b3ce6dce937502666f334950eec2e0f542a",
+  "source_tree": "e397ecc3b38d7a22b6ac4891d0897dfc273d7000",
+  "source_run_id": 40248952898,
+  "artifact_id": 12619554874,
+  "artifact_size": 264429447,
+  "artifact_sha256": "cb9bdf2c59b3cf913bbbbe5a17e5687568000c0b2341462afb9bdb69296246fa",
+  "patch_count": 35,
+  "patch_size": 1404746,
+  "patch_sha256": "8abbd698fb04595fa27f793673993eea9d68ad3609f971a02894149035555746",
+  "notes_sha256": "6fc6f32624d0f5be9fe508189f559c2c3a8a9908a392081f47afa77f269beb6b",
+  "publication_run_id": 40252092127,
+  "publication_conclusion": "success",
+  "publication_commit": "a4ca4b2216ba399883e5144b21792d1cff4250b3",
+  "publication_tree": "9c8c8d204ce3ce98d747e558d724c13c66b74b2e",
+  "publication_parent": "7bba8fe2975f12bf27db1202adbb36252b958481",
+  "only_publication_flag_changed": true,
+  "all_three_anonymous_http200_full_downloads_sha256_verified": true,
+  "public_windows_zip_files": 6756,
+  "public_windows_zip_crc": "passed",
+  "public_patch_zip_crc": "passed",
+  "patch_replay_tree_checks": 70,
+  "assets": [
+    {
+      "id": 676555694,
+      "name": "Prefect-Bambu-Studio-2.8.2.61-Windows-x64.zip",
+      "bytes": 264429447,
+      "sha256": "cb9bdf2c59b3cf913bbbbe5a17e5687568000c0b2341462afb9bdb69296246fa",
+      "public_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.5/Prefect-Bambu-Studio-2.8.2.61-Windows-x64.zip",
+      "anonymous_http_status": 200,
+      "full_payload_verified": true
+    },
+    {
+      "id": 676556039,
+      "name": "Prefect-BambuStudio-patches-20261026-workflow3.zip",
+      "bytes": 1404746,
+      "sha256": "8abbd698fb04595fa27f793673993eea9d68ad3609f971a02894149035555746",
+      "public_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.5/Prefect-BambuStudio-patches-20261026-workflow3.zip",
+      "anonymous_http_status": 200,
+      "full_payload_verified": true
+    },
+    {
+      "id": 676556073,
+      "name": "SHA256SUMS.txt",
+      "bytes": 229,
+      "sha256": "4f41cf4bf6c020ccf33a77b8851b46b7f0b0c3bfdbfe460e1fd846581bdafd6a",
+      "public_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.5/SHA256SUMS.txt",
+      "anonymous_http_status": 200,
+      "full_payload_verified": true
+    }
+  ],
+  "protected_old_release_states": {
+    "418968348": {
+      "tag": "v02.08.02.61-prefect.1",
+      "source_commit": "4b5c3546c7fba94439d9bb0fe69553723b895897",
+      "metadata_body_assets_unchanged": true
+    },
+    "422086779": {
+      "tag": "v02.08.02.61-prefect.2",
+      "source_commit": "9d4fad7292484403f0b026972835035b0a967d20",
+      "metadata_body_assets_unchanged": true
+    },
+    "423441312": {
+      "tag": "v02.08.02.61-prefect.3",
+      "source_commit": "aef480ca62cfc9ce86a065e2769efe199d7450d1",
+      "metadata_body_assets_unchanged": true
+    },
+    "423604332": {
+      "tag": "v02.08.02.61-prefect.4",
+      "source_commit": "3cb50caedececb98a21d2792f41c044ee596f759",
+      "metadata_body_assets_unchanged": true
+    }
+  },
+  "all_five_direct_tag_sources_verified": true,
+  "verification_artifact_id": 12620354037,
+  "verification_artifact_bytes": 1647,
+  "verification_artifact_sha256": "bdb18bf8cebb83f1710beeb61820e8c4988b1f69a9d91df8ad8ebffe4e28c903",
+  "actual_publisher_report_sha256": "903aeffaaef56ac5271ce9a91f81729420127c2922a2525b2f5f3cdc2f0eb60d",
+  "anonymous_public_metadata_http_status": 200,
+  "anonymous_public_metadata_sha256": "0f78f25b5eb81371eb16274704cf96141013ccc3a494098211cccfd4a2bdd03e",
+  "api_snapshot_sha256": "60455ad9027fa555055fa54addf78bd8efb3356ecc11960d96232a0240680fda",
+  "public_download_proof_sha256": "e7c8efd1540daa1f045481b35e8547f3012019f645e00305f475c2a6fa40fbc2",
+  "privacy": {
+    "raw_logs": false,
+    "raw_configuration": false,
+    "absolute_user_paths": false,
+    "PIDs_or_HWNDs": false,
+    "private_recovery_data": false
+  },
+  "activity_scope": "Read-only release verification only; separate runtime/UI acceptance has its own evidence.",
+  "remote_mutations_by_this_verifier": 0,
+  "app_launches_by_this_verifier": 0,
+  "SMB_access": false
+}

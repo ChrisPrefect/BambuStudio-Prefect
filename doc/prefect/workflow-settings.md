@@ -36,6 +36,26 @@ Die Rotation wird bei aktivierter Option für manuelles und automatisches Anordn
 eingeschaltet. Nach dem Abschalten gelten wieder die gespeicherten normalen
 Anordnungseinstellungen. Die automatische Anordnung ist davon unabhängig schaltbar.
 
+F12 startet beim Öffnen des Anordnungs-Popups sofort den vorhandenen Job;
+das Popup bleibt zur Kontrolle der Optionen offen. Ein schließender Klick
+oder ein bereits beschäftigter Worker startet keinen zweiten Auftrag.
+Die Optionen sind während der Arbeit gesperrt. F13 steuert Helio-Werbung
+unabhängig von F09; echte Analyseergebnisse und Fehler bleiben erhalten.
+
+## Aktueller Auslieferungs- und Prüfstand
+
+Die dreizehn Schalter gehören zur veröffentlichten Vorabversion `.5`, Quelle
+`939e0b3ce6dce937502666f334950eec2e0f542a`. Der vollständige Windows-Build,
+acht Policytests, V6-Installation und 35/70-Patchreplay sind geprüft.
+Ein eigener isolierter V6-GUI-Start bestätigt, dass fehlende F12-/F13-Schlüssel
+mit `true` ergänzt werden; ein bereits gespeichertes `false` bleibt nach
+den Migrationstests erhalten. F11 war nur im QA-Profil ausgeschaltet.
+Die konkrete Checkboxdarstellung/-bedienung und der F12-Toolbar-Erstklick
+sind wegen der dokumentierten Capture-/Elementcachefehler noch nicht visuell
+abgenommen. Die vorhandene Benutzersitzung bleibt offen; die installierte
+Version wird beim nächsten normalen Start wirksam.
+[Prüfbericht und genaue Grenzen](validation/workflow3.md).
+
 ## Profilmigration und Upstream-Updates
 
 `AppConfig::set_defaults()` ergänzt nur fehlende Werte. Revision 2 behält

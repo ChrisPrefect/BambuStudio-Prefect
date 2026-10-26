@@ -17,11 +17,12 @@ Aufrufpfade, persistente Schlüssel, Nebenwirkungen und Laufzeitprüfungen.
 Eine Konfliktlösung nach Funktionen und Zuständigkeiten hat Vorrang vor dem
 mechanischen Übernehmen alter Zeilen.
 
-Die aktuelle Serie bis `3cb50caedececb98a21d2792f41c044ee596f759`
-enthält **31 Commits**. Alle **62 Zwischenstände** aus Rohdiff- und
+Die aktuelle Serie bis `939e0b3ce6dce937502666f334950eec2e0f542a`
+enthält **35 Commits**. Alle **70 Zwischenstände** aus Rohdiff- und
 Format-Patch-Replay stimmen exakt mit den Originaltrees überein.
-[Aktueller Replaynachweis](validation/patch-replay-taskbar-v5.md) und
-[maschinenlesbarer Überblick](validation/patch-replay-taskbar-v5.json).
+[Aktueller Replaynachweis](validation/patch-replay-workflow3.md),
+[maschinenlesbarer Überblick](validation/patch-replay-workflow3.json) und
+[unabhängiger abschließender Tree-Gegenvergleich](validation/patch-replay-workflow3-final.json).
 Die Serie enthält zusätzlich zum Workflow den
 [Anzeigenamen und die Windows-Appkennung](12-branding.md),
 [reproduzierbare violette App-Icons](purple-app-icon-assets.md), die
@@ -32,6 +33,19 @@ Bei Updates deren Quellanker und getrennte Build-/Installationsprüfungen
 per `CallAfter` auf die UI-Schleife verschieben, einen Benutzerintent über
 die ganze reentrante Fortsetzung sperren und reale Berechtigungsfehler respektieren.
 Die vorhandene LogSink-Auto-Flush-Änderung bleibt ausschließlich QA-gebunden.
+
+Workflow 3 erweitert F09 um typisierte Meldungseingänge und die Bereinigung
+aktiver/verzögerter Tipps. Die freien Helfer deduzieren den privaten
+`NotificationManager::NotificationData`-Typ durch generische Lambdas; dessen
+Nennung außerhalb der Klasse verursacht C2248. Die konkrete Korrektur und
+vollständig qualifizierten Policy-Namespaceaufrufe stehen in
+[09-hide-tips.md](09-hide-tips.md). Dazu kommen die getrennt schaltbaren
+[F12-Toolbaraktion](arrange-on-click.md) und [F13-Werbefilter](hide-helio-advertising.md).
+Die acht nativen Policytests und der native MSVC-GUI-Build sind beide nötig.
+
+Die [historische .4-Serie](validation/patch-replay-taskbar-v5.md) bis
+`3cb50caedececb98a21d2792f41c044ee596f759` behält ihre 31 Commits und
+62 geprüften Zwischenstände.
 
 Die [historische Brandingserie .3](validation/patch-replay-branding.md) bis
 `aef480ca62cfc9ce86a065e2769efe199d7450d1` behält ihre damals geprüften
@@ -290,7 +304,7 @@ Revisionsschlüssel und Revision 1 werden auf 2 gehoben; eine höhere Revision
 bleibt erhalten. Die Fälle werden mit den tatsächlich verwendeten Defaults- und
 Migrationsfunktionen in `tests/prefect/preferences_test.cpp` geprüft.
 
-`PreferencesDialog::create_prefect_tab` muss weiterhin alle elf Funktionen auf
+`PreferencesDialog::create_prefect_tab` muss weiterhin alle dreizehn Funktionen auf
 einer Seite abbilden, einschließlich eigenem Schalter plus Picker für F02 und
 `prefect_support_interface_menu` für F06. Die gemeinsame
 [Einstellungsdokumentation](workflow-settings.md) benennt alle Schlüssel und
@@ -329,7 +343,7 @@ starten und neue Schalter, Menütexte sowie Tooltips prüfen.
 5. Mit `Start-Prefect.ps1` in einem neuen isolierten Profil starten. Danach
    zusätzlich ein kopiertes vorhandenes Profil prüfen: Revision, Standardwerte,
    individuelle Abschaltentscheidungen und Neustartverhalten kontrollieren.
-6. Die Prüftabellen aller elf Detaildokumente am gebauten Programm durchführen.
+6. Die Prüftabellen aller dreizehn Detaildokumente am gebauten Programm durchführen.
    F01 benötigt einen tatsächlichen Drucker; F04 ein längeres Modell mit
    gleichzeitigem Editieren, Plattenwechsel und manuellem Slice-All. Keine
    Druckauslösung ist für diese Oberflächen-/Slicing-Abnahme erforderlich.

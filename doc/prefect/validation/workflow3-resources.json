@@ -1,0 +1,73 @@
+{
+  "schema": "prefect-workflow3-public-resources-v1",
+  "source_commit": "939e0b3ce6dce937502666f334950eec2e0f542a",
+  "source_tree": "e397ecc3b38d7a22b6ac4891d0897dfc273d7000",
+  "workflow_run_id": 40248952898,
+  "status": "PASS",
+  "installation_proof_sha256": "70f26b137f3c5ea00d06a810d646b9a0e35b5714a45f4be2f376ceab415dbcf7",
+  "branding": {
+    "display_name": "Prefect Bambu Studio",
+    "version_resource_id": 1,
+    "group_icon_resource_id": 2,
+    "embedded_icon_frames": 11,
+    "icon_sha256": "db77286997a999fb0f8e06d7522f3c4f843ed61ea0d8718284d942211e1bf5a8",
+    "frame_sizes": [
+      [
+        16,
+        16
+      ],
+      [
+        20,
+        20
+      ],
+      [
+        24,
+        24
+      ],
+      [
+        32,
+        32
+      ],
+      [
+        40,
+        40
+      ],
+      [
+        48,
+        48
+      ],
+      [
+        64,
+        64
+      ],
+      [
+        128,
+        128
+      ],
+      [
+        154,
+        154
+      ],
+      [
+        192,
+        192
+      ],
+      [
+        256,
+        256
+      ]
+    ],
+    "all_embedded_frame_bytes_match": true
+  },
+  "device_web_runtime_files": 13,
+  "all_device_web_bytes_match_installer": true,
+  "original_private_report_sha256": "8d4bc694fea25a2c4bff8c9a1173868d1b4060329f8186fe5bb9b844d03b4db7",
+  "scope": "Installed PE resources and byte comparisons only; no visible Windows icon-cache pixel claim.",
+  "privacy": {
+    "raw_logs_included": false,
+    "raw_profiles_included": false,
+    "absolute_user_paths_included": false,
+    "device_or_account_data_included": false,
+    "user_project_data_included": false
+  }
+}

@@ -50,14 +50,29 @@ Microsoft verlangt die Prozesskennung früh vor dem Erzeugen von UI und denselbe
 5. Die sichtbaren Windows-Ressourcen aktualisieren. Eingebettetes Icon und Startmenü-/Taskleisten-Verknüpfung gehören zur separaten Icon-/Installationsänderung; ihre AppUserModelID muss exakt mit dem Prozess übereinstimmen.
 6. Den nativen Windows-Build kompilieren/linken, anschließend EXE-Dateibeschreibung, leeres Fenster, benanntes und geändertes Projekt sowie Taskleisten-Gruppe und Start über die angeheftete Verknüpfung am installierten Paket prüfen. Ein Neustart darf das Profil nicht wechseln oder eine zweite Fork-Taskleistengruppe erzeugen.
 
-## Aktueller Nachtrag .4: Taskleistenprüfung
+## Aktueller Stand .5: vorhandener Pin auf V6 aktualisiert
+
+Quelle `939e0b3ce6dce937502666f334950eec2e0f542a` ist vollständig gebaut,
+veröffentlicht und als eigene V6-Installation mit 6.756 Dateien geprüft.
+Elf violette Icon-Größen und der Anzeigename entsprechen den tatsächlichen
+EXE-Ressourcen. Startmenü und vorhandener Taskleistenlink führen jetzt zu V6,
+mit unveränderten normalen Profilargumenten, Icon 0 und
+`ChrisPrefect.BambuStudio`. Die öffentliche Shell bietet bei beiden
+„Von &Taskleiste lösen“ an; die ursprünglichen drei Pins bleiben bytegleich
+und der Desktoplink abwesend. Das ist die Aktualisierung eines vorhandenen
+Pins, keine neue Pinaktion. Ein normaler Neustart über den Pin und ein
+Pixeltest des Windows-Iconcaches werden nicht behauptet.
+[Aktueller Metadaten-/OS-Beleg](validation/workflow3-os-pin.json),
+[Auslieferungsbericht](validation/workflow3.md).
+
+## Historischer Nachtrag .4: Taskleistenprüfung
 
 Quelle `3cb50caedececb98a21d2792f41c044ee596f759` ist vollständig gebaut,
 veröffentlicht und als eigene v5-Installation mit allen 6.756 Dateien geprüft.
 Elf violette Icon-Größen und der Anzeigename entsprechen den tatsächlichen
-EXE-Ressourcen. Aktuell verwenden Startmenü- und Taskleistenlink v5 und das
-normale Fork-Profil; der Desktoplink ist aktuell nicht vorhanden.
-[Beleg und aktuelle Downloads](validation/taskbar-v5.md).
+EXE-Ressourcen. Damals verwendeten Startmenü- und Taskleistenlink v5 und das
+normale Fork-Profil; der Desktoplink war nicht vorhanden.
+[Damals geprüfter Beleg und Downloads](validation/taskbar-v5.md).
 
 Die optionale native Taskleistenintegration verschiebt COM-Aufrufe aus
 Aktivierungsereignissen und tatsächlichen F8-/Menüintents in `CallAfter`.
@@ -69,7 +84,7 @@ Die öffentliche Shell bietet beim normalen Startmenü- und tatsächlichen
 Taskleistenlink „Von &Taskleiste lösen“ an. Der lesende Metadatenvergleich
 bestätigt v5, normales Fork-Profil, Icon 0 und `ChrisPrefect.BambuStudio`;
 die drei ursprünglichen Pins bleiben unverändert.
-[Aktueller Pinbeleg](validation/taskbar-v5-pin-current-public-summary.json).
+[Damals geprüfter Pinbeleg](validation/taskbar-v5-pin-current-public-summary.json).
 Die Herkunft der Pinaktion ist nicht ermittelt. Das [Inventar von 19:24 UTC](validation/taskbar-v5-pin-remaining.json)
 bleibt als damaliger Stand ohne Prefect-Pin erhalten.
 [Quellanker, F8-Semantik und Updatehinweise](taskbar-integration.md).

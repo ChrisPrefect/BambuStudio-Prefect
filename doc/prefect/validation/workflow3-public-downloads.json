@@ -1,0 +1,50 @@
+{
+  "schema": "prefect-workflow3-anonymous-public-assets-v1",
+  "source_commit": "939e0b3ce6dce937502666f334950eec2e0f542a",
+  "source_tree": "e397ecc3b38d7a22b6ac4891d0897dfc273d7000",
+  "release_id": 423757668,
+  "tag": "v02.08.02.61-prefect.5",
+  "all_three_anonymous_http200_full_payloads_sha256_verified": true,
+  "assets": [
+    {
+      "name": "Prefect-Bambu-Studio-2.8.2.61-Windows-x64.zip",
+      "bytes": 264429447,
+      "sha256": "cb9bdf2c59b3cf913bbbbe5a17e5687568000c0b2341462afb9bdb69296246fa",
+      "http_status": 200,
+      "anonymous": true,
+      "public_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.5/Prefect-Bambu-Studio-2.8.2.61-Windows-x64.zip",
+      "full_payload_sha256_verified": true,
+      "zip_crc": "passed",
+      "zip_entries": 6756,
+      "source_marker_matches": true,
+      "files": 6756
+    },
+    {
+      "name": "Prefect-BambuStudio-patches-20261026-workflow3.zip",
+      "bytes": 1404746,
+      "sha256": "8abbd698fb04595fa27f793673993eea9d68ad3609f971a02894149035555746",
+      "http_status": 200,
+      "anonymous": true,
+      "public_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.5/Prefect-BambuStudio-patches-20261026-workflow3.zip",
+      "full_payload_sha256_verified": true,
+      "zip_crc": "passed",
+      "zip_entries": 73,
+      "patch_commits": 35,
+      "replay_tree_checks": 70
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "bytes": 229,
+      "sha256": "4f41cf4bf6c020ccf33a77b8851b46b7f0b0c3bfdbfe460e1fd846581bdafd6a",
+      "http_status": 200,
+      "anonymous": true,
+      "public_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.5/SHA256SUMS.txt",
+      "full_payload_sha256_verified": true
+    }
+  ],
+  "authorization_headers_or_browser_credentials_used": false,
+  "signed_redirect_urls_recorded": false,
+  "remote_mutations": 0,
+  "app_launches": 0,
+  "activity_scope": "This verification helper only."
+}

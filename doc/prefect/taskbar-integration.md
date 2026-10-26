@@ -100,7 +100,17 @@ ein während der Prüfung verwendetes Profil nicht versehentlich zum normalen
 Startprofil der angehefteten Verknüpfung werden. Eine vorbereitete oder nur
 in den TaskBar-Ordner kopierte Datei ist kein erfolgreicher OS-Pin.
 
-Der Nachtrag ist mit Quelle `3cb50caedececb98a21d2792f41c044ee596f759`
+Die aktuelle `.5`-Quelle `939e0b3ce6dce937502666f334950eec2e0f542a`
+behält den Nachtrag. Nach vollständiger V6-Installation wurden nur die beiden
+vorhandenen Startmenü-/Taskleistenlinks nach privater Sicherung aktualisiert.
+Der öffentliche Shelltest vom 26.10.2026 um 00:44:34 UTC bietet an beiden
+„Von &Taskleiste lösen“ an. Ziel, normale Profilargumente, AUMID und EXE-Icon 0
+sind gebunden; alle drei ursprünglichen Pins sind bytegleich und der
+Desktoplink bleibt abwesend. Es gab keinen neuen Pinrequest und keinen
+Neustart über den Pin. [Aktueller OS-/Metadatenbeleg](validation/workflow3-os-pin.json),
+[aktueller Paket- und Laufzeitstand](validation/workflow3.md).
+
+Der historische Nachtrag ist mit Quelle `3cb50caedececb98a21d2792f41c044ee596f759`
 nativ kompiliert und in [Vorabversion .4](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.4)
 veröffentlicht. Ein tatsächlicher eigener GUI-Lauf bestätigt die verzögerte
 Vorprüfung und live lesbare verschlüsselte Logs. Nach Desktopmarker und
@@ -116,8 +126,8 @@ keine zusätzliche konkrete Ursache und keine Empfehlung für erhöhte Rechte ab
 Startmenülink und tatsächlichem Prefect-Taskleistenlink jeweils
 „Von &Taskleiste lösen“. Der lesende Linkvergleich bestätigt v5, normales
 Fork-Profil, Arbeitsverzeichnis, EXE-Icon 0 und `ChrisPrefect.BambuStudio`;
-die drei ursprünglichen Pins sind unverändert. Der Desktoplink ist aktuell
-nicht vorhanden. [Aktueller Pin-/Shellnachweis](validation/taskbar-v5-pin-current-public-summary.json).
+die drei ursprünglichen Pins waren unverändert. Der Desktoplink war
+nicht vorhanden. [Damals geprüfter Pin-/Shellnachweis](validation/taskbar-v5-pin-current-public-summary.json).
 Die Herkunft der Pinaktion wurde nicht ermittelt und wird keiner API-Anfrage
 oder Agentaktion zugeschrieben. Der frühere `E_ACCESSDENIED`-Befund bleibt
 erhalten. Das [Inventar von 19:24 UTC](validation/taskbar-v5-pin-remaining.json)

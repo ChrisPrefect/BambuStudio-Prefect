@@ -1,8 +1,57 @@
 # Prüfprotokoll des Prefect-Forks
 
-Stand: **25. Oktober 2026**, Zeitzone Europe/Zurich.
+Stand: **26. Oktober 2026**, Zeitzone Europe/Zurich.
 
-## Aktueller Prüfstand Prefect Bambu Studio .4
+## Aktueller Prüfstand Workflow 3 / Prefect Bambu Studio .5
+
+Quelle `939e0b3ce6dce937502666f334950eec2e0f542a`, Tree
+`e397ecc3b38d7a22b6ac4891d0897dfc273d7000`. Der vollständige
+[Windows-Lauf 40248952898](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40248952898)
+ist **completed / success**, einschließlich acht nativer C++17-Policytests.
+Artefakt `12619554874`, **264.429.447 Byte**, SHA256
+`cb9bdf2c59b3cf913bbbbe5a17e5687568000c0b2341462afb9bdb69296246fa`.
+Alle **6.756** Dateien der separaten eigenen V6-Installation sind erneut
+gehasht und mit dem ZIP verglichen; 13 DeviceWeb-Dateien und elf violette
+Icon-Größen stimmen bytegenau überein. 35 Commits seit der Basis rekonstruieren
+alle **70 Zwischenbäume** als Rohdiff und Format-Patch.
+[Bericht](validation/workflow3.md), [Ergebnisindex](validation/workflow3-results.json).
+
+Ein eigener isolierter V6-GUI-Start und die tatsächlich geladene neue DLL
+sind nachgewiesen. Fehlende F12-/F13-Schlüssel erhalten `true`, F09 ist aktiv.
+`prefect_arrange_after_import=false` ist ausschließlich eine Einstellung
+dieses QA-Profils; der Funktionsstandard bleibt `true`. Der Einstellungsdialog
+wurde geöffnet. Zwei aktuelle offizielle Captureversuche liefen jedoch in
+einen Timeout; die Workflow-Tabaktivierung scheiterte am Elementcache und
+Tastaturnavigation belegt keinen Seitenwechsel. **Keine visuelle Abnahme der
+13 Checkboxen, des ersten Anordnungsklicks oder des physischen Druckertipps**
+wird daraus abgeleitet. Die eigene Prüfinstanz ist beendet; die bestehende
+ungespeicherte Benutzersitzung bleibt unverändert offen. Ein normaler
+Profilneustart mit V6 ist noch nicht geprüft.
+[Bereinigter Laufzeitbeleg](validation/runtime-workflow3/startup.json).
+
+Startmenü und bereits vorhandener Taskleistenlink sind auf die geprüfte
+V6-Installation aktualisiert, mit unveränderten normalen Profilargumenten,
+`ChrisPrefect.BambuStudio` und EXE-Icon 0. Der lesende öffentliche Shelltest
+vom **26.10.2026, 00:44:34 UTC** bietet bei beiden „Von &Taskleiste lösen“ an;
+die drei ursprünglichen Pins bleiben bytegleich, der Desktoplink abwesend.
+Dies ist keine neue Pinaktion und kein Neustart über den Pin.
+[Metadaten](validation/workflow3-shortcuts.json), [OS-Zustand](validation/workflow3-os-pin.json).
+
+Die [Vorabversion .5](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.5)
+ist seit **26.10.2026, 01:01:23 UTC** veröffentlicht. Alle drei echten anonymen
+HTTP-200-Downloads sind vollständig nach SHA256 geprüft; Windows- und Patch-ZIP
+bestehen CRC, Quellmarker beziehungsweise 35/70-Manifest stimmen überein.
+Die vier älteren Releases mit zwölf Assets und alle fünf direkten Tags sind
+erneut geprüft. [Finaler Veröffentlichungsbeleg](validation/published-release-workflow3.json),
+[öffentliche Downloads](validation/workflow3-public-downloads.json).
+Der [Ergebnisindex](validation/workflow3-results.json) trennt diese Belege
+von Build, Installation, Laufzeit und OS-Pin.
+Der frühere Lauf `40247351853` auf `3401f393` scheiterte mit C2248:
+Ein privater verschachtelter Benachrichtigungstyp wurde in freien Signaturen
+benannt. Der aktuelle native MSVC-Build enthält und bestätigt die gezielte
+Korrektur auf generische Lambdas; Header/PCH bleiben unverändert.
+
+## Historischer Prüfstand Prefect Bambu Studio .4
 
 Quelle `3cb50caedececb98a21d2792f41c044ee596f759`, Tree
 `ca2cd51f1d335f7c5172bad8152b1b727cc0f2fe`. Der vollständige
@@ -24,8 +73,8 @@ Prüfung vom **25.10.2026, 22:23 UTC** findet den echten Prefect-Taskleistenlink
 mit korrekter v5-Installation, normalem Fork-Profil, EXE-Icon 0 und AUMID.
 Die öffentliche Shell meldet bei Startmenü- und Taskleistenlink
 „Von &Taskleiste lösen“; die drei ursprünglichen Pins bleiben SHA-identisch.
-[Aktueller Zustand und Metadaten](validation/taskbar-v5-pin-current-public-summary.json).
-Der Desktoplink ist aktuell nicht vorhanden. Herkunft und Zeitpunkt der
+[Damals beobachteter Zustand und Metadaten](validation/taskbar-v5-pin-current-public-summary.json).
+Der Desktoplink war nicht vorhanden. Herkunft und Zeitpunkt der
 Pinaktion wurden nicht ermittelt; die Prüfung löste keine Pinaktion aus.
 Der [frühere Stand ohne Prefect-Pin um 19:24:20 UTC](validation/taskbar-v5-pin-remaining.json)
 und der native API-Fehler bleiben historische Befunde. Keine Token-, Registry-,
@@ -34,7 +83,7 @@ Sicherheits- oder Datenschutzumgehung wurde dafür vorgenommen.
 Die [Vorabversion .4](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.4)
 ist seit **25.10.2026, 19:18:03 UTC** veröffentlicht. Quelle und alle drei anonymen
 HTTP-200-Downloads sind vollständig anhand der SHA256 geprüft; .1/.2/.3 blieben
-unverändert. [Aktueller Bericht](validation/taskbar-v5.md),
+unverändert. [Historischer Bericht](validation/taskbar-v5.md),
 [Ergebnisindex](validation/taskbar-v5-results.json),
 [Veröffentlichung](validation/published-release-taskbar-v5.json).
 Die neue Prüfung wiederholt keine vollständige Workflow-, Drucker- oder Titelmatrix.

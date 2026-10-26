@@ -2,31 +2,40 @@
 
 Der Anwendungsworkflow liegt in
 `.github/workflows/prefect-workflow.yml` auf `prefect/workflow`.
-Er führt zuerst alle sechs C++17-Policytests und die Manifestprüfung aus.
+Er führt zuerst alle acht C++17-Policytests und die Manifestprüfung aus.
 Danach baut er unter Windows die vollständige GUI und das portable
 Installationsverzeichnis. Der tatsächliche Ergebnisnachweis steht in
 [VALIDATION.md](VALIDATION.md); die Existenz des Workflows allein ist kein
 Buildnachweis.
 
 Der aktuelle vollständige Windows-Build
-[40222805625](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40222805625)
-für `3cb50caedececb98a21d2792f41c044ee596f759` ist erfolgreich. Die
-[veröffentlichte Vorabversion .4](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.4)
-enthält das geprüfte Windows-Paket mit 6.756 Dateien, die Serie aus 31
-Patches und `SHA256SUMS.txt`. Alle 62 Replay-Zwischenstände und die drei
-öffentlichen Downloads sind geprüft. [Aktueller Auslieferungsbericht](validation/taskbar-v5.md)
-und [Veröffentlichungsbeleg](validation/published-release-taskbar-v5.json).
-Der eigene GUI-Lauf bestätigt die verzögerte COM-Vorprüfung und Live-QA-Logs;
-die native API lehnte `GetDefault` mit `E_ACCESSDENIED` ab. Dieser frühere
-Befund bleibt erhalten. **Der tatsächliche OS-Pin ist inzwischen geprüft**:
-Startmenü und Taskleistenlink führen zu v5 mit normalem Fork-Profil und
-passender AUMID; die Windows-Shell bietet „Von &Taskleiste lösen“ an.
-Die bisherigen drei Pins sind unverändert. Der Desktoplink ist aktuell
-nicht vorhanden. [Aktueller lesender Nachweis](validation/taskbar-v5-pin-current-public-summary.json).
+[40248952898](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40248952898)
+für `939e0b3ce6dce937502666f334950eec2e0f542a` ist erfolgreich. Die
+[veröffentlichte Vorabversion .5](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.5)
+enthält das geprüfte Windows-Paket mit 6.756 Dateien, die Serie aus 35
+Patches und `SHA256SUMS.txt`. Alle 70 Replay-Zwischenstände und drei echten
+anonymen öffentlichen Downloads sind vollständig geprüft.
+[Aktueller Auslieferungsbericht](validation/workflow3.md) und
+[Ergebnisindex](validation/workflow3-results.json) sowie
+[öffentlicher Veröffentlichungsnachweis](validation/published-release-workflow3.json).
+Der eigene V6-GUI-Start und die geladene DLL sind geprüft; visuelle
+F12-/F13-Bedienung und der physische Druckertipp bleiben gesonderte Abnahmen.
+Startmenü und vorhandener Taskleistenlink führen zu V6 mit unveränderten
+normalen Profilargumenten und passender AUMID. Die öffentliche Windows-Shell
+bietet bei beiden „Von &Taskleiste lösen“ an, die drei ursprünglichen Pins
+sind unverändert und der Desktoplink abwesend.
+[Aktueller lesender Nachweis](validation/workflow3-os-pin.json).
+Die bestehende ungespeicherte Sitzung wurde für die Installation nicht beendet;
+die neuen Einstiegspunkte gelten beim nächsten normalen Start.
+
+Der [historische Auslieferungsbericht .4](validation/taskbar-v5.md) behält
+seinen damaligen Build 40222805625, die 31/62-Patchbelege und die native
+`GetDefault`-Ablehnung `E_ACCESSDENIED`. Diese Grenze wird durch den aktuellen
+lesenden OS-Pinbeleg weder umgangen noch als erfolgreicher API-Request umgedeutet.
 
 Der [historische Auslieferungsbericht .3](validation/branding.md) behält
 seinen damaligen Build 40198926718, seine 28/56-Patchbelege und drei Titelprüfungen.
-Diese werden nicht als neue Tests am v5-Binärstand ausgegeben.
+Diese werden nicht als neue Tests am V6-Binärstand ausgegeben.
 
 ## Compiler und Abhängigkeiten
 
@@ -157,6 +166,25 @@ Build enthält alle 13 Dateien. [Ursache, Prüfungen und Update-Anker](device-we
 [Paketnachweis](validation/branding-deviceweb.json).
 
 ## Separater Release-Transport
+
+Die aktuelle Vorabversion `.5` verwendet auf `delivery/windows` die getrennte
+Workflowdatei `.github/workflows/prefect-workflow3-release.yml` und
+`delivery/workflow3-release/`. Die Produktionskonfiguration bindet Quelle,
+Tree, erfolgreichen Buildlauf, tatsächliches Artefakt, 35er-Patcharchiv,
+Releasetext und Icon über vollständige SHA256-Werte. Ein Null-/Platzhalterwert
+wird vor API-Schreibzugriffen abgewiesen. Vier ältere Releases und ihre Tags
+sind separat geschützt; bestehende veröffentlichte Assets werden nicht ersetzt.
+Zuerst erzeugt `publish=false` einen neuen Entwurf und prüft dessen drei
+Assetpayloads durch frischen authentifizierten Download im Actionslauf.
+Nach Installation/QA setzt ein eigener Folgecommit ausschließlich
+`publish=true`; dieselben Quelle-/Assetpins bleiben erhalten. Der direkte
+Tag muss auf die gebaute Quelle zeigen. Der finale Bericht trennt den
+erfolgreichen Publisher von unabhängigen anonymen öffentlichen Downloads.
+Diese Transportstufen kompilieren die App nicht erneut und ändern keine
+Anwendungsquellen. [Aktueller Gesamtbeleg](validation/workflow3-results.json).
+
+Die folgenden Absätze beschreiben den historischen Workflow-1-Transport und
+seinen eigenen Finalisierer; ihre alten Release-/Assetpins bleiben erhalten.
 
 Der Branch
 [`delivery/windows`](https://github.com/ChrisPrefect/BambuStudio-Prefect/tree/delivery/windows)

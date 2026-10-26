@@ -15,6 +15,7 @@ Druckwarnungen wie `BBLMultiFilaNoWipeTower` bleiben auch dann sichtbar, wenn de
 - `src/slic3r/GUI/DailyTips.cpp`: `DailyTipsPanel::render`, `DailyTipsWindow::open` und `DailyTipsWindow::render`. Guards liegen vor ImGui-Zustandsänderungen; ein schon offenes Fenster wird beim Abschalten geschlossen.
 - `src/slic3r/GUI/SlicingProgressNotification.cpp`: `const bool show_tips`. Höhe und Padding werden nur bei sichtbaren Tipps eingerechnet. Trenner sowie `BeginChild`/`EndChild` werden zusammen übersprungen.
 - `src/slic3r/GUI/NotificationManager.cpp`: typisierte F09-Filter am Meldungseingang und vor dem Rendern; kein Textvergleich für allgemeine Tipps. Der separate F13-Livefilter für drei alte Helio-Tutorialtexte ist im Helio-Dokument beschrieben.
+- Die freien Helfer `prefect_suppress_tip` und `prefect_suppress_helio_tip` sind bewusst generische Lambdas mit `const auto&`: `NotificationManager::NotificationData` ist privat und darf außerhalb des Klassenkontexts nicht ausdrücklich als Parametertyp genannt werden. Der erste native MSVC-Lauf meldete dafür C2248; die finale Quelle `939e0b3c` deduziert den Typ ohne Änderung des gemeinsamen Headers/PCH. Policyaufrufe sind vollständig als `Slic3r::Prefect::…` qualifiziert, damit ein sichtbarer `Slic3r::GUI::Prefect`-Namespace sie nicht anders bindet.
 - `src/slic3r/GUI/Plater.cpp`: Ready-Zweig von `show_filament_switcher_dialog`.
 - `src/libslic3r/PrefectWorkflowPreferences.hpp`: Standardwert.
 - `src/slic3r/GUI/Preferences.cpp`: Workflow-Schalter und Reset.
@@ -28,6 +29,7 @@ Basis: `v02.08.02.61`, Commit `926a7192574bcb9b3a732e1ec59a46d79cb45466`.
 3. In der Slice-Benachrichtigung sowohl Inhalt als auch zugehörigen Platzbedarf entfernen. Nur `render()` zu überspringen hinterließe eine leere Fläche.
 4. ImGui-Paare und Style-Stacks prüfen. Bedingte Bereiche müssen `BeginChild`/`EndChild` gemeinsam umfassen.
 5. Das Layout während laufendem Slice, Abschluss, Abbruch, Vorschau und bei anderer DPI prüfen.
+6. Die beiden freien Filter als generische Lambdas erhalten oder den Typzugriff innerhalb eines zulässigen Klassenkontexts lösen. Ein isolierter Policytest erkennt keinen unzulässigen Zugriff auf den privaten GUI-Typ; zusätzlich den vollständigen nativen GUI-Build prüfen. Den F09/F13-Filter vor Timestamp-Deduplizierung und vor verzögerten Callbacks lassen und beide Warteschlangen beim Umschalten bereinigen.
 
 ## Abnahme im Programm
 

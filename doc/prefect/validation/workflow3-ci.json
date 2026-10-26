@@ -1,0 +1,227 @@
+{
+  "schema": "prefect-workflow3-source-ci-success-v1",
+  "source_commit": "939e0b3ce6dce937502666f334950eec2e0f542a",
+  "source_tree": "e397ecc3b38d7a22b6ac4891d0897dfc273d7000",
+  "run": {
+    "id": 40248952898,
+    "status": "completed",
+    "conclusion": "success",
+    "updated_at": "2026-10-26T00:37:16Z",
+    "workflow_path": ".github/workflows/prefect-workflow.yml",
+    "url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40248952898"
+  },
+  "artifact": {
+    "id": 12619554874,
+    "name": "BambuStudio-Prefect-Windows-x64-939e0b3ce6dce937502666f334950eec2e0f542a",
+    "bytes": 264429447,
+    "digest": "sha256:cb9bdf2c59b3cf913bbbbe5a17e5687568000c0b2341462afb9bdb69296246fa",
+    "expired": false,
+    "source_run_id": 40248952898,
+    "source_commit": "939e0b3ce6dce937502666f334950eec2e0f542a"
+  },
+  "jobs": [
+    {
+      "id": 121336418092,
+      "name": "policy-tests",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Compile and run workflow policy regressions",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Validate change manifest",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Test DeviceWeb cached-output repair and packaging guard",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Test version metadata epoch and source identity independence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 121336554141,
+      "name": "windows-portable",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run ilammy/msvc-dev-cmd@v1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Select installed Visual Studio generator",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Verify application cache content and timestamp policy",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Verify dependency relocation and early linker checks",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Install upstream build tools",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Restore compiled upstream dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Restore matching official upstream dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Build upstream dependencies",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 10
+        },
+        {
+          "name": "Save compiled upstream dependencies",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 11
+        },
+        {
+          "name": "Identify compatible application build cache",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Restore compatible application objects and build metadata",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Restore timestamps of byte-identical build inputs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Configure Prefect fork",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Validate generated dependency link inputs before compiling",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Restore missing DeviceWeb runtime bundle from original build target",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        },
+        {
+          "name": "Compile and package Prefect fork",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19
+        },
+        {
+          "name": "Capture verified build-input identities and timestamps",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20
+        },
+        {
+          "name": "Save application objects even after a compiler or linker failure",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 42
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 43
+        }
+      ]
+    }
+  ],
+  "observation_scope": "Fresh official GitHub connector jobs/artifact metadata plus fresh public GitHub REST run status; read-only monitor."
+}

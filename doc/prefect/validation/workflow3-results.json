@@ -1,0 +1,182 @@
+{
+  "schema": "prefect-workflow3-public-results-v1",
+  "status": "RELEASED_BUILD_INSTALLATION_OS_PIN_AND_OWN_GUI_STARTUP_VERIFIED",
+  "updated_utc": "2026-10-26T01:13:48.389765+00:00",
+  "source_commit": "939e0b3ce6dce937502666f334950eec2e0f542a",
+  "source_tree": "e397ecc3b38d7a22b6ac4891d0897dfc273d7000",
+  "upstream_tag": "v02.08.02.61",
+  "upstream_commit": "926a7192574bcb9b3a732e1ec59a46d79cb45466",
+  "build": {
+    "workflow_run_id": 40248952898,
+    "url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40248952898",
+    "status": "SUCCESS",
+    "updated_at": "2026-10-26T00:37:16Z",
+    "policy_job_id": 121336418092,
+    "windows_job_id": 121336554141,
+    "artifact_id": 12619554874,
+    "artifact_bytes": 264429447,
+    "artifact_sha256": "cb9bdf2c59b3cf913bbbbe5a17e5687568000c0b2341462afb9bdb69296246fa",
+    "proof": "workflow3-ci.json"
+  },
+  "patches": {
+    "status": "PASS",
+    "commit_count": 35,
+    "replay_checks": 70,
+    "all_raw_and_mail_intermediate_trees_match_source_objects": true,
+    "archive_name": "Prefect-BambuStudio-patches-20261026-workflow3.zip",
+    "archive_bytes": 1404746,
+    "archive_sha256": "8abbd698fb04595fa27f793673993eea9d68ad3609f971a02894149035555746",
+    "zip_members": 73,
+    "zip_crc_passed": true,
+    "normal_index_unchanged": true,
+    "proof": "patch-replay-workflow3-final.json",
+    "detailed_manifest": "patch-replay-workflow3.json"
+  },
+  "changes": {
+    "F09": "Semantic tips filter covers the informational curve-planning notice, explicit suggestion/tutorial types and live active/delayed queues. Real printing/calibration warnings and errors remain eligible.",
+    "F12": "Optional immediate arrangement when opening the toolbar popup; closing/busy states never enqueue another job and controls remain disabled during the worker.",
+    "F13": "Independent Helio promotional surfaces/tutorials are hidden by default; explicitly enabled analysis, results and real errors remain available."
+  },
+  "local_native_policy_tests": {
+    "notification_tips": "PASS",
+    "helio_ads": "PASS",
+    "cpp_standard": "C++17",
+    "assertions_enabled": true,
+    "warnings_as_errors": true,
+    "scope": "Small native policy regression executables only; no GUI build or app launch.",
+    "private_nested_data_generic_lambda_compile_repro": "PASS"
+  },
+  "installation": {
+    "status": "PASS",
+    "application_role": "Own separate Windows-v6 installation",
+    "file_count": 6756,
+    "all_file_sha256_verified": true,
+    "proof": "workflow3-installation.json",
+    "resource_proof": "workflow3-resources.json"
+  },
+  "runtime": {
+    "status": "SOURCE_BOUND_OWN_GUI_STARTUP_VERIFIED_WITH_UI_TEST_LIMITS",
+    "new_source_app_launched": true,
+    "loaded_installed_v6_dll_verified": true,
+    "missing_F12_F13_defaulted_true": true,
+    "F09_effective_true": true,
+    "F11_false_QA_override_only": true,
+    "F09_live_notification_GUI_verified": false,
+    "F12_actual_popup_and_arrangement_GUI_verified": false,
+    "F13_actual_promotion_visibility_GUI_verified": false,
+    "normal_profile_GUI_restart_tested": false,
+    "existing_user_session_preserved": true,
+    "proof": "runtime-workflow3/startup.json"
+  },
+  "os_pin": {
+    "status": "VERIFIED_PINNED_BY_PUBLIC_WINDOWS_SHELL_AND_BOUND_LINK_METADATA",
+    "new_source_pin_binding_verified": true,
+    "new_pin_requested": false,
+    "original_three_pin_files_unchanged": true,
+    "desktop_link_present": false,
+    "actual_relaunch_via_pin_tested": false,
+    "proof": "workflow3-os-pin.json",
+    "metadata_proof": "workflow3-shortcuts.json"
+  },
+  "release": {
+    "status": "PUBLISHED_AND_ANONYMOUS_PUBLIC_DOWNLOADS_VERIFIED",
+    "id": 423757668,
+    "tag": "v02.08.02.61-prefect.5",
+    "url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.5",
+    "published": true,
+    "draft": false,
+    "prerelease": true,
+    "published_at": "2026-10-26T01:01:23Z",
+    "publication_run_id": 40252092127,
+    "publication_commit": "a4ca4b2216ba399883e5144b21792d1cff4250b3",
+    "publication_tree": "9c8c8d204ce3ce98d747e558d724c13c66b74b2e",
+    "public_downloads_verified": true,
+    "assets": [
+      {
+        "id": 676555694,
+        "name": "Prefect-Bambu-Studio-2.8.2.61-Windows-x64.zip",
+        "bytes": 264429447,
+        "sha256": "cb9bdf2c59b3cf913bbbbe5a17e5687568000c0b2341462afb9bdb69296246fa",
+        "public_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.5/Prefect-Bambu-Studio-2.8.2.61-Windows-x64.zip",
+        "anonymous_http_status": 200,
+        "full_payload_verified": true
+      },
+      {
+        "id": 676556039,
+        "name": "Prefect-BambuStudio-patches-20261026-workflow3.zip",
+        "bytes": 1404746,
+        "sha256": "8abbd698fb04595fa27f793673993eea9d68ad3609f971a02894149035555746",
+        "public_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.5/Prefect-BambuStudio-patches-20261026-workflow3.zip",
+        "anonymous_http_status": 200,
+        "full_payload_verified": true
+      },
+      {
+        "id": 676556073,
+        "name": "SHA256SUMS.txt",
+        "bytes": 229,
+        "sha256": "4f41cf4bf6c020ccf33a77b8851b46b7f0b0c3bfdbfe460e1fd846581bdafd6a",
+        "public_url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/download/v02.08.02.61-prefect.5/SHA256SUMS.txt",
+        "anonymous_http_status": 200,
+        "full_payload_verified": true
+      }
+    ],
+    "protected_older_release_ids_unchanged": [
+      418968348,
+      422086779,
+      423441312,
+      423604332
+    ],
+    "all_five_direct_tag_sources_verified": true,
+    "proof": "published-release-workflow3.json",
+    "public_download_proof": "workflow3-public-downloads.json"
+  },
+  "historical_proofs": {
+    "release_4_report": "taskbar-v5.md",
+    "release_4_source": "3cb50caedececb98a21d2792f41c044ee596f759",
+    "prior_runtime_and_pin_proofs_reused_as_new_source_proof": false,
+    "release_3_report": "branding.md",
+    "workflow2_report": "workflow2.md"
+  },
+  "limitations": [
+    "Eight native policy tests and exact source replay do not establish visible GUI behavior.",
+    "Own source-bound V6 startup and loaded DLL are verified; two official captures timed out and cached Workflow-tab activation failed.",
+    "F12 first-click behavior, physical-printer curve-tip suppression and the thirteen visible checkbox/toggle states were not fully verified in GUI.",
+    "The existing user session remains open; installed V6 and updated existing links take effect on the next normal start. No normal-profile GUI restart is claimed.",
+    "Current OS pin status is established by public Shell Unpin verbs and metadata; no new pin request, pin-origin attribution, relaunch-through-pin or visible icon-cache pixel check is claimed.",
+    "Earlier .4/.3/Workflow2 reports retain their original source and runtime bindings."
+  ],
+  "privacy": {
+    "raw_logs_included": false,
+    "raw_profiles_included": false,
+    "absolute_private_paths_included": false,
+    "device_or_account_data_included": false
+  },
+  "public_proof_sha256": {
+    "workflow3-ci.json": "7d0d90448ad6bebd706d713a91eecfd789a77390e6413694b6adbb55822c54ef",
+    "workflow3-installation.json": "70f26b137f3c5ea00d06a810d646b9a0e35b5714a45f4be2f376ceab415dbcf7",
+    "workflow3-resources.json": "4e04369c09bfd1c01cd43d089f8ca380dc2c4f4f3b788ff7ba2c8ed4f67aca44",
+    "workflow3-shortcuts.json": "ba2aa383308c46bb1da18add77d05221ef934a72af891452b34ee8a7bd259ef2",
+    "workflow3-os-pin.json": "e483034b9c9fe218404d43067ca93f179ef7678da170890b78375bbf90a133c5",
+    "runtime-workflow3/startup.json": "cbbd3a4210534864950cae811ca43b21868a91590c99ae5e0c2ee339e1b96875",
+    "patch-replay-workflow3.json": "9fd75cf40b220ba33c287716629b18f193ffa240ebd34a38c9a198728fa9c3f1",
+    "patch-replay-workflow3.md": "337af5f51c79c14bcbd89f98b0ed731f3d92acd161fbc15a571b028f768cad1e",
+    "patch-replay-workflow3-final.json": "2daa8f7a9eea1c8ece035bf78cb0f28f36d4915e30d6183cbc2e5ca725c71c12",
+    "published-release-workflow3.json": "8ff8f83d234a7d0ab884c1324665d90fe3c46d112d6d158eca50b09ffe212c3c",
+    "workflow3-public-downloads.json": "e7c8efd1540daa1f045481b35e8547f3012019f645e00305f475c2a6fa40fbc2"
+  },
+  "source_compatibility_fix": {
+    "status": "PASS_CURRENT_NATIVE_MSVC_BUILD",
+    "file": "NotificationManager.cpp",
+    "change": "Two free helper declarations are generic lambdas, so the private nested NotificationData type is deduced instead of named. Header/PCH unchanged.",
+    "native_compile_repro": "Named private nested type intentionally rejected; deduced generic lambdas and queue predicate compile and execute.",
+    "historical_prior_build": {
+      "source_commit": "3401f3938e2e3ab70438ea27931496f0f4d4c3b4",
+      "workflow_run_id": 40247351853,
+      "status": "completed",
+      "conclusion": "failure",
+      "compiler_error": "C2248: private NotificationManager::NotificationData named in free helper parameters",
+      "proof_scope": "Historical failed native build, not the current source build."
+    }
+  },
+  "public_proof_hash_convention": "SHA256 of canonical Git text blob bytes: UTF-8 with LF line endings."
+}

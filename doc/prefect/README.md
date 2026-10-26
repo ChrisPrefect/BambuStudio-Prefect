@@ -7,7 +7,36 @@ Die gemeinsame Grundlage ist Bambu Studio **v02.08.02.61**, Commit
 `926a7192574bcb9b3a732e1ec59a46d79cb45466`. Das Git-Remote `upstream` zeigt auf
 `https://github.com/bambulab/BambuStudio.git`.
 
-**Aktueller Auslieferungsstand .4 vom 25.10.2026:**
+**Aktueller Auslieferungsstand .5 vom 26.10.2026:**
+`939e0b3ce6dce937502666f334950eec2e0f542a`, Tree
+`e397ecc3b38d7a22b6ac4891d0897dfc273d7000`, enthält alle dreizehn Funktionen.
+Der vollständige [Windows-Build 40248952898](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40248952898)
+und die acht nativen Policytests sind erfolgreich. Alle 6.756 eigenen
+Installationsdateien, 13 DeviceWeb-Dateien und elf violetten Icon-Größen
+sind am separaten V6-Ziel geprüft. Die 35-Commit-Serie rekonstruiert alle
+70 Zwischenstände beider Patchdarstellungen exakt.
+F09 erfasst die verbleibenden typisierten Tipps einschließlich des
+Kurvenplanungshinweises. F12 ergänzt sofortiges Anordnen beim Öffnen der
+Optionen; F13 schaltet Helio-Werbung unabhängig von allgemeinen Tipps ab.
+Die [Vorabversion .5](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.5)
+ist veröffentlicht; alle drei anonymen öffentlichen Downloads sind vollständig
+anhand von SHA256 und ZIP-CRC geprüft. Die vier älteren Releases und ihre
+Tags blieben unverändert. [Veröffentlichungsnachweis](validation/published-release-workflow3.json),
+[aktueller Auslieferungsbericht](validation/workflow3.md),
+[Ergebnisindex und Prüfgrenzen](validation/workflow3-results.json).
+
+Startmenü und vorhandener Taskleistenpin zeigen auf V6 mit unveränderten
+normalen Profilargumenten, AUMID und EXE-Icon 0. Bei beiden bietet die
+öffentliche Windows-Shell „Von &Taskleiste lösen“ an. Die drei ursprünglichen
+Pins sind bytegleich; der Desktoplink ist nicht vorhanden.
+[Aktueller OS-Pinbeleg](validation/workflow3-os-pin.json).
+Ein eigener V6-GUI-Start bestätigt die geladene DLL und die fehlenden
+F12-/F13-Schlüssel mit wirksamem Standard `true`. Die sichtbare Toolbaraktion,
+der physische Druckerhinweis und die vollständige Checkboxbedienung sind
+damit noch nicht abgenommen. Die bestehende ungespeicherte Benutzersitzung
+bleibt offen; V6 wird beim nächsten normalen Start verwendet.
+
+**Historischer Auslieferungsstand .4 vom 25.10.2026:**
 `3cb50caedececb98a21d2792f41c044ee596f759`, Tree
 `ca2cd51f1d335f7c5172bad8152b1b727cc0f2fe`, enthält alle elf Funktionen,
 Namen, violettes Icon, DeviceWeb-Paketprüfung und den Taskleisten-Nachtrag.
@@ -16,16 +45,16 @@ ist erfolgreich. Alle 6.756 eigenen Installationsdateien, 13 DeviceWeb-Dateien
 und elf eingebetteten Icon-Größen sind geprüft. Ein neuer eigener GUI-Lauf
 bestätigt die verzögerte COM-Vorprüfung und lesbare Live-QA-Logs; `GetDefault`
 liefert danach ein echtes, respektiertes `0x80070005`/`E_ACCESSDENIED`.
-**Der tatsächliche Windows-Taskleistenpin ist jetzt nachgewiesen.** Startmenü
-und echter Taskleistenlink zeigen auf v5, verwenden dasselbe normale Fork-Profil,
+**Der tatsächliche Windows-Taskleistenpin war beim damaligen Prüfstand nachgewiesen.** Startmenü
+und echter Taskleistenlink zeigten auf v5 und verwendeten dasselbe normale Fork-Profil,
 EXE-Icon 0 und `ChrisPrefect.BambuStudio`. Die öffentliche Shell bietet bei beiden
 „Von &Taskleiste lösen“ an; alle drei ursprünglichen Pins sind SHA-identisch.
-Der Desktoplink ist aktuell nicht vorhanden. Der [aktuelle Pinbeleg](validation/taskbar-v5-pin-current-public-summary.json)
+Der Desktoplink war nicht vorhanden. Der [damalige Pinbeleg](validation/taskbar-v5-pin-current-public-summary.json)
 dokumentiert den Zustand; die Herkunft der Pinaktion wurde nicht ermittelt.
 Die [veröffentlichte Vorabversion .4](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.4)
 enthält Windows-ZIP, die 31-Commit-Patchserie mit 62 identischen Zwischenständen
 und Prüfsummen; alle drei öffentlichen Downloads sind vollständig anonym geprüft.
-[Aktueller Auslieferungs-/Laufzeitbericht](validation/taskbar-v5.md),
+[Damals geprüfter Auslieferungs-/Laufzeitbericht](validation/taskbar-v5.md),
 [Ergebnisindex](validation/taskbar-v5-results.json).
 
 **Historischer Auslieferungsstand .3 vom 25.10.2026:**
@@ -80,13 +109,13 @@ Der Nachtrag vom 25.10.2026 gibt dem Fork den sichtbaren Namen
 und trennt seine Windows-Taskleistengruppe über `ChrisPrefect.BambuStudio`.
 Details, betroffene Quellstellen, technische Abgrenzung und die Anleitung
 zum Nachtragen bei Upstream-Updates stehen in [12-branding.md](12-branding.md).
-Er wurde mit Paket `.3` eingeführt und ist in `.4` erhalten; die violetten Vektor- und Rasterassets
+Er wurde mit Paket `.3` eingeführt und ist in `.5` erhalten; die violetten Vektor- und Rasterassets
 sind in [purple-app-icon-assets.md](purple-app-icon-assets.md) beschrieben.
 Die drei damaligen Fenstertitel sind an der veröffentlichten `.3`-Quelle geprüft.
-Der aktuelle Taskleisten-Nachtrag ist in [taskbar-integration.md](taskbar-integration.md) dokumentiert.
+Der Taskleisten-Nachtrag ist in [taskbar-integration.md](taskbar-integration.md) dokumentiert.
 Der aktuelle Windows-Pinzustand und die Metadaten des tatsächlichen
 Taskleistenlinks sind getrennt von der früheren nativen API-Ablehnung
-[nachgewiesen](validation/taskbar-v5-pin-current-public-summary.json).
+[nachgewiesen](validation/workflow3-os-pin.json).
 
 ## Anpassungsliste
 
@@ -142,16 +171,16 @@ die Entscheidung über externe Nachbearbeitungsskripte behalten ihre Bedeutung.
 ## Eigenes Profil statt Änderungen an der normalen Installation
 
 Auf dem geprüften Windows-System liegt das aktuelle Paket vollständig unter
-`%USERPROFILE%\BambuStudio-Prefect-Windows-v5`. ZIP-Hash, sämtliche Datei-Hashes,
+`%USERPROFILE%\BambuStudio-Prefect-Windows-v6`. ZIP-Hash, sämtliche Datei-Hashes,
 exakte Paketstruktur und fehlende Ressourcen-/Dateilinks sind im
-[aktuellen Prüfbericht](validation/taskbar-v5.md) festgehalten.
+[aktuellen Prüfbericht](validation/workflow3.md) festgehalten.
 Die Laufzeitprüfung verwendet ein separates Profil mit ausschließlich
 synthetischen Prüfmodellen. Das bestehende normale Fork-Profil wird dabei
 nicht gestartet oder verändert.
-Desktop und Startmenü enthalten **Prefect Bambu Studio** mit geprüftem Ziel,
-Arbeitsverzeichnis, Icon und `ChrisPrefect.BambuStudio`. Der bisherige
-Desktoplink **BambuStudio Prefect patched** wurde bytegenau gesichert und
-erst nach Prüfung beider neuen Links umbenannt. Die bisherige
+Startmenü und der bestehende Taskleistenpin enthalten **Prefect Bambu Studio**
+mit geprüftem V6-Ziel, Arbeitsverzeichnis, Icon und `ChrisPrefect.BambuStudio`.
+Beide vorhandenen Links wurden nach bytegenauer Sicherung ihrer alten Inhalte
+aktualisiert; der Desktoplink bleibt abwesend. Die bisherige
 `--datadir "%APPDATA%\BambuStudio-Prefect"`-Angabe bleibt identisch.
 Der nächste reguläre Start ergänzt dort die neuen Standards über die
 Revision-2-Migration und erhält die schon gespeicherten Entscheidungen.
@@ -191,7 +220,7 @@ Kommunikation mit dem Drucker erforderlich.
 ## Standardwerte und einmalige Migration
 
 `AppConfig::set_defaults()` ergänzt über `PrefectWorkflowPreferences.hpp` fehlende
-Fork-Schalter. Die neun `prefect_*`-Booleans aus F01/F03/F05/F06/F07/F08/F09/F10/F11
+Fork-Schalter. Die elf `prefect_*`-Booleans aus F01/F03/F05/F06/F07/F08/F09/F10/F11/F12/F13
 sind standardmäßig `true`.
 Hintergrundslicing ist ebenfalls standardmäßig aktiv. Die eigene einfache
 Feldauswahl bleibt zunächst deaktiviert. Beim erstmaligen Aktivieren ohne
@@ -204,7 +233,7 @@ wird auf Revision `2` gehoben. Vorhandene Entscheidungen einschließlich
 `background_processing=false` bleiben erhalten. Höhere Revisionen werden
 nicht herabgesetzt. Neue Schlüssel erhalten nur dann den Standard, wenn sie
 fehlen. Die Migration prüft weiterhin das gelesene JSON statt ausschließlich
-der im Konstruktor bereits gesetzten Standardwerte. Die sechs nativen
+der im Konstruktor bereits gesetzten Standardwerte. Die acht nativen
 Policytests enthalten auch die Fälle für erhaltene Abschaltentscheidungen.
 
 Die vorhandene Funktion **Einstellungen zurücksetzen** entfernt auch die neuen
@@ -216,14 +245,14 @@ Funktionen erfordert dagegen keinen Profilreset.
 
 Die maschinenlesbare Bestandsliste steht in [changes.json](changes.json).
 Die abgeschlossene Feature-Commitserie ist in [COMMITS.md](COMMITS.md) zugeordnet.
-`scripts/prefect/check_manifest.py` prüft die elf IDs, die Detaildokumente und
+`scripts/prefect/check_manifest.py` prüft die dreizehn IDs, die Detaildokumente und
 die eingetragenen Quellcodeanker. Der Workflow
 [prefect-workflow.yml](../../.github/workflows/prefect-workflow.yml) kompiliert
 die unabhängigen C++-Policytests und beschreibt anschließend einen vollständigen
 Windows-Build samt portablem Paket. Ob dieser Build tatsächlich ausgeführt
 wurde und erfolgreich war, muss anhand seines Laufs geprüft werden.
 
-Die sechs unabhängigen Tests unter `tests/prefect/*_test.cpp` prüfen:
+Die acht unabhängigen Tests unter `tests/prefect/*_test.cpp` prüfen:
 
 - F01: Stoppen, Warten und Synchronisieren bei Geräte-/Jobzuständen;
 - F02: Feldlisten, Normalisierung, gemeinsame Zeilen und Modusgrenzen;
@@ -231,7 +260,12 @@ Die sechs unabhängigen Tests unter `tests/prefect/*_test.cpp` prüfen:
 - F08: exakte Unterdrückung der Cold-Pull-Warnung mit unverändertem Verhalten
   bei anderen Meldungen und Schweregraden;
 - F10/F11: wirksame Anordnungsrotation, Layoutschutz und Warten beziehungsweise
-  Verwerfen eines aufgeschobenen Anordnungsauftrags;
+  Verwerfen eines aufgeschobenen Anordnungsauftrags; F12 zusätzlich Öffnen,
+  Schließen und beschäftigten Worker;
+- F09: semantische Tippgrenzen, offene und wartende Hinweise, Runtime-Toggle
+  sowie unveränderte echte Warnungen und Fehler;
+- F13: unabhängige Werbeunterdrückung, Tippquellen und gezielte Bereinigung
+  früherer Helio-Tutorials;
 - gemeinsame Einstellungen: Standardwerte und Migration mit erhaltenen
   Abschaltentscheidungen, fehlenden Schlüsseln und bewusst leerer Feldliste.
 

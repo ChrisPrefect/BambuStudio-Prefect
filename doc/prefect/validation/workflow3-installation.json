@@ -1,0 +1,56 @@
+{
+  "schema": "prefect-workflow3-public-installation-v1",
+  "source_commit": "939e0b3ce6dce937502666f334950eec2e0f542a",
+  "source_tree": "e397ecc3b38d7a22b6ac4891d0897dfc273d7000",
+  "workflow_run_id": 40248952898,
+  "status": "PASS",
+  "utc": "2026-10-26T00:39:12.848573+00:00",
+  "artifact_id": 12619554874,
+  "archive_bytes": 264429447,
+  "archive_sha256": "cb9bdf2c59b3cf913bbbbe5a17e5687568000c0b2341462afb9bdb69296246fa",
+  "installation_role": "Own standalone Windows-v6 installation",
+  "file_count": 6756,
+  "directories": 274,
+  "unpacked_bytes": 600230595,
+  "all_file_sha256_verified": true,
+  "postinstall_full_tree_rehashed": 6756,
+  "exact_tree_matches_installer": true,
+  "all_files_regular_single_link": true,
+  "junctions": 0,
+  "symlinks": 0,
+  "hardlinks": 0,
+  "checked_direct_pe_imports": 482,
+  "binaries": {
+    "bambu-studio.exe": {
+      "sha256": "e113e57c2e6db449de57c438ccab52555d659bfa94b7a0f88b899c419708469c",
+      "bytes": 95744,
+      "links": 1
+    },
+    "BambuStudio.dll": {
+      "sha256": "76857d87f5b1dc325adb5a76a720fc31aaa503aa041b0476d53b1041175269cc",
+      "bytes": 139290112,
+      "links": 1
+    }
+  },
+  "source_marker_sha256": "a89a6ecf2a82e77bcf85836e154bfe0f1da2bbc2db4e109d262a3a3c7f343268",
+  "feature_dll_markers": {
+    "hide_helio_advertising": true,
+    "arrange_on_plain_click": true,
+    "neutral_subscription_notice": true,
+    "logging_prefix": true,
+    "foreground_request_site": true,
+    "winrt_runtime_class": true,
+    "ui_installed": true,
+    "preflight_deferred": true,
+    "user_action_deferred": true
+  },
+  "original_private_install_report_sha256": "6a8bde659d90e75dc988179da5c2405b3d0a4a284c90d12becfd43993f405fe7",
+  "original_private_full_tree_report_sha256": "60973c1df72ac97ee37e58e3b61b520167ed98183bf0b68fa939d3c506c30226",
+  "privacy": {
+    "raw_logs_included": false,
+    "raw_profiles_included": false,
+    "absolute_user_paths_included": false,
+    "device_or_account_data_included": false,
+    "user_project_data_included": false
+  }
+}
