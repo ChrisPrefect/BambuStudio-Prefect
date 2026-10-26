@@ -51,9 +51,15 @@ unabhängig von F09; echte Analyseergebnisse und Fehler bleiben erhalten.
 
 ## Aktueller Auslieferungs- und Prüfstand
 
-Die neuen/separat überarbeiteten sechzehn Funktionen sind für `.6` dokumentiert.
-Der neue Sourcecommit, vollständige native Build, GUI-Abnahme und Veröffentlichung
-sind noch nachzuweisen. [Änderungsinventar](changes.json),
+Die sechzehn Funktionen gehören zur veröffentlichten `.6`, Quelle
+`727a703155237a94e4fcc31ebc4effef515d13f0`. Vollständiger nativer Build,
+V7-Installation und 37/74-Replay sind belegt. Eigener QA- und normaler Profilstart
+sind jeweils an die geladene neue DLL gebunden. Neue Standards und erste
+Rotationsmigration sind tatsächlich gespeichert, die bestehende normale
+Feldauswahl samt Aktivierung blieb erhalten. Vollständige Checkbox-, direkte
+Anordnen-/Löschen- und physische Druckerabnahme werden nicht behauptet.
+[Aktueller Bericht und genaue Grenzen](validation/workflow4.md),
+[Änderungsinventar](changes.json),
 [neue Details F14](14-quick-plate-delete.md), [F15](15-single-simple-list.md),
 [F16](16-sync-success-timeout.md). F15 zeigt ohne F02 die normalen einfachen
 Upstream-Felder und mit F02 dessen gespeicherte Liste; Scope-Limits bleiben.

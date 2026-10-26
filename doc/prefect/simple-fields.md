@@ -237,4 +237,10 @@ Suchsprung ohne sichtbare Kategorien; Global ↔ Objekt/Teil/Höhenbereich/Platt
 Tree ↔ normale Stützen und Support aus/an; nur eine gewählte bedingt gesperrte
 Zeile; Nozzlewechsel und Rückkehr zur gruppierten Ansicht. Die Policytests
 prüfen Speicherung und Entscheidungsgrenzen, keinen neuen nativen GUI-Build.
-Für `.6` sind Build, tatsächliche GUI-Abnahme und Veröffentlichung noch offen.
+Der vollständige `.6`-Build und die Veröffentlichung sind inzwischen belegt.
+Im normalen V7-Profil blieb die genaue gespeicherte Auswahl samt Aktivierung
+erhalten; die echte DLL ist gebunden. Die eigene synthetische QA zeigte eine
+flache Controlstruktur, aber nicht alle individuell beschrifteten Felder und
+Enablezustände. Eine vollständige normale Hauptoberflächen-/Checkboxabnahme
+wird daraus nicht abgeleitet. [Aktueller Bericht und Grenzen](validation/workflow4.md),
+[Normalprofilbeleg](validation/workflow4-runtime-normal.json).

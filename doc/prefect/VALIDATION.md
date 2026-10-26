@@ -1,16 +1,50 @@
 # Prüfprotokoll des Prefect-Forks
 
-Stand: **26. Oktober 2026**, Zeitzone Europe/Zurich.
+Stand: **27. Oktober 2026**, Zeitzone Europe/Zurich.
 
-## Neuer Quellnachtrag für .6: Auslieferungsnachweise stehen aus
+## Aktueller Prüfstand Workflow 4 / Prefect Bambu Studio .6
 
-Die aktuelle Quelldokumentation beschreibt F01–F16, einschließlich überarbeiteter
-F02/F03/F10/F12 und neuer F14/F15/F16. Neue Source-/Artefaktpins, vollständiger
-nativer GUI-Build, Installation, Replay, sichtbare Funktionsabnahme und
-Veröffentlichung werden erst nach tatsächlicher Prüfung ergänzt.
-Es werden keine früheren `.5`-Laufzeit- oder Paketbelege als Nachweis der neuen
-Implementierung ausgegeben. [Inventar](changes.json),
-[Einstellungsseite](workflow-settings.md), [Updateanker](UPSTREAM-UPDATES.md).
+Quelle `727a703155237a94e4fcc31ebc4effef515d13f0`, Tree
+`16cbb874d6bef7ebbc3453e407451eb9af252b0e`. Der vollständige
+[Build 40414286154](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40414286154)
+ist erfolgreich, einschließlich neun C++-Policyprogrammen und beiden Python-
+Prüfsuiten. Das echte Artefakt `12695023513` mit 264.440.555 Byte/SHA256
+`add72a5bfc23845c5aee6909d95686d99ec538d26d2f455d16110f4f5b52af73`
+ist nach Download, CRC und Quelle geprüft. Alle 6.756 Dateien der eigenen
+V7-Installation wurden erneut gehasht; 13 DeviceWeb-Dateien, elf violette
+Icon-Größen und 14 DLL-Marker stimmen. 37 Patches rekonstruieren 74 Zwischenbäume
+exakt. [Gesamtbericht](validation/workflow4.md), [Index](validation/workflow4-results.json).
+
+Ein nativer synthetischer CLI-Roundtrip erhält zwei Objekte, drei Instanzen und
+zwei Platten; er ist kein Test des Löschen-Knopfs. Eigener QA- und normaler
+Profilstart sind jeweils an EXE/DLL gebunden. Im normalen Profil blieben genaue
+Feldauswahl und Aktivierung erhalten, MD5 ist gültig, neue Standards und
+Rotationsmarker sind gespeichert. Nutzerkeys und Configfingerprints bleiben
+privat. [Normaler Start](validation/workflow4-runtime-normal.json),
+[eigene QA](validation/workflow4-runtime-qa.json),
+[CLI](validation/workflow4-native-fixture.json).
+
+Die eigene QA-Accessibility zeigt flache Controls und initial eingeklappte
+Druckerbox, identifiziert aber nicht alle selbst gezeichneten Feldlabels und
+Enablezustände. Normale AX enthält keine vollständige Hauptoberfläche.
+Direkte Arrange-/Quick-delete-/Undo-Klicks, alle 16 Checkboxwechsel und physische
+Sync-/Druckerfälle sind nicht vollständig angenommen. Aktuelle Capture-/Modal-
+Cachefehler bleiben Werkzeugbefunde. Die eigene synthetische QA wurde über den
+exakt gebundenen Helfer beendet, ohne behaupteten graceful exit oder Stoppen
+einer Benutzerapp. [Root-UI-Grenzen](validation/workflow4-ui-observations.json).
+
+Vorhandene Startmenü-/Taskleistenlinks führen zu V7 mit normalem Profil und
+AUMID/Icon0. Erfolgreiche öffentliche Unpin-Abfragen bestätigen beide Links;
+drei Stockpins bleiben bytegleich, Desktop abwesend. Der fehlgeschlagene erste
+Pfad-Split-Versuch ist kein gültiger Beleg. [OS-Pin](validation/workflow4-os-pin.json).
+
+Die [`.6`](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.6)
+ist seit **27.10.2026, 00:22:49 Europe/Zurich** veröffentlicht. Publisher
+`40419300381` ist erfolgreich; alle drei anonymen Downloads bestehen SHA256,
+beide ZIP-Archive die CRC-Prüfung. Fünf ältere Releases und sechs direkte Tags bleiben unverändert.
+[Finaler Veröffentlichungsbeleg](validation/published-release-workflow4.json).
+Der finale Dokumentationscommit verändert die gebaute Quelle727 und die 37er-
+Patchserie nicht. Frühere `.5`-Laufzeit-/Paketdaten bleiben historisch.
 
 ## Historischer, zuletzt veröffentlichter Prüfstand Workflow 3 / Prefect Bambu Studio .5
 

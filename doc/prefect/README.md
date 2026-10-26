@@ -7,20 +7,37 @@ Die gemeinsame Grundlage ist Bambu Studio **v02.08.02.61**, Commit
 `926a7192574bcb9b3a732e1ec59a46d79cb45466`. Das Git-Remote `upstream` zeigt auf
 `https://github.com/bambulab/BambuStudio.git`.
 
-**Neue Quelle für die geplante `.6`: noch nicht nativ gebaut oder veröffentlicht.**
-Sie ergänzt F14 (aktuelle Platte mit Undo leeren), F15 (unabhängige flache
-einfache Ansicht) und F16 (kurze manuelle Sync-Erfolgseinblendung). Die eigene
-Feldauswahl bleibt gespeichert; bedingt nicht anwendbare gewählte Felder sind
-auffindbar und deaktiviert. Die Drucker-Box startet eingeklappt und lässt sich
-danach öffnen. Rotation ist ein editierbarer Standard statt eines erzwungenen
-Werts. Jeder direkte Anordnen-Iconklick kann den vorhandenen Job starten, auch
-während Hintergrundslicing; die Optionen bleiben offen.
-Die nachstehenden Funktionsbeschreibungen betreffen diese Quelle.
-Ein neuer vollständiger Windows-Build, reale GUI-Abnahme, Patchreplay und
-Releasebelege für `.6` stehen noch aus. Die früheren `.5`-Belege werden dafür
-nicht wiederverwendet.
+**Aktuelle Vorabversion `.6` vom 27.10.2026:** Quelle
+`727a703155237a94e4fcc31ebc4effef515d13f0`, Tree
+`16cbb874d6bef7ebbc3453e407451eb9af252b0e`. Der vollständige
+[Windows-Build 40414286154](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40414286154)
+ist erfolgreich. Die V7-Installation mit 6.756 Dateien, 13 DeviceWeb-Dateien,
+elf violetten Icon-Größen und 14 DLL-Markern ist geprüft. 37 Patches
+rekonstruieren alle 74 Zwischenbäume exakt. Alle drei öffentlichen Downloads
+der [veröffentlichten `.6`](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.6)
+sind vollständig anonym gehasht; fünf ältere Releases und sechs direkte Tags
+blieben unverändert. [Gesamtbericht und Grenzen](validation/workflow4.md),
+[Ergebnisindex](validation/workflow4-results.json),
+[Veröffentlichung](validation/published-release-workflow4.json).
 
-**Historischer, zuletzt veröffentlichter Auslieferungsstand .5 vom 26.10.2026:**
+Eigener synthetischer GUI-Start und normaler Profilstart sind getrennt mit der
+tatsächlich geladenen V7-DLL gebunden. Die vorhandene Feldauswahl samt Aktivierung
+blieb im normalen Profil erhalten. Die eigene QA-Accessibility zeigt flache
+Controls und die anfangs eingeklappte Box; individuelle selbst gezeichnete
+Feldbeschriftungen, alle Checkboxwechsel, direkte Arrange-/Löschenklicks und
+physische Druckerfälle sind damit nicht vollständig abgenommen. Die normale
+Hauptoberfläche ist nicht vollständig per Accessibility zugänglich; ihre sichtbare
+flache Darstellung wird nicht aus der eigenen QA abgeleitet.
+[Normalprofilbeleg](validation/workflow4-runtime-normal.json),
+[eigene QA](validation/workflow4-runtime-qa.json).
+
+Startmenü und vorhandener Taskleistenpin führen zu V7 mit unveränderten normalen
+Profilargumenten, AUMID und EXE-Icon 0. Beide bieten „Von &Taskleiste lösen“ an;
+die drei ursprünglichen Pins bleiben bytegleich, der Desktoplink abwesend.
+[Aktueller OS-Pinbeleg](validation/workflow4-os-pin.json).
+Der finale Dokumentationscommit ist von Binärquelle und Patchserie getrennt.
+
+**Historischer Auslieferungsstand .5 vom 26.10.2026:**
 `939e0b3ce6dce937502666f334950eec2e0f542a`, Tree
 `e397ecc3b38d7a22b6ac4891d0897dfc273d7000`, enthält alle dreizehn Funktionen.
 Der vollständige [Windows-Build 40248952898](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40248952898)
@@ -187,16 +204,16 @@ die Entscheidung über externe Nachbearbeitungsskripte behalten ihre Bedeutung.
 
 ## Zuletzt geprüfte Installation und eigenes Profil
 
-Der zuletzt belegte veröffentlichte `.5`-Stand liegt vollständig unter
-`%USERPROFILE%\BambuStudio-Prefect-Windows-v6`. ZIP-Hash, sämtliche Datei-Hashes,
+Der aktuelle veröffentlichte `.6`-Stand liegt vollständig unter
+`%USERPROFILE%\BambuStudio-Prefect-Windows-v7`. ZIP-Hash, sämtliche Datei-Hashes,
 exakte Paketstruktur und fehlende Ressourcen-/Dateilinks sind im
-[damaligen Prüfbericht](validation/workflow3.md) festgehalten. Das ist noch keine
-Installation oder Laufzeitprüfung der geänderten `.6`-Quelle.
+[aktuellen Prüfbericht](validation/workflow4.md) festgehalten.
 Die Laufzeitprüfung verwendet ein separates Profil mit ausschließlich
-synthetischen Prüfmodellen. Das bestehende normale Fork-Profil wird dabei
-nicht gestartet oder verändert.
+synthetischen Prüfmodellen. Danach wurde der normale V7-Profilstart separat
+geprüft: tatsächliche DLL, gültige Config und erhaltene Feldauswahl sind belegt.
+Die GUI-Beobachtungen beider Profile werden nicht miteinander gleichgesetzt.
 Startmenü und der bestehende Taskleistenpin enthalten **Prefect Bambu Studio**
-mit geprüftem V6-Ziel, Arbeitsverzeichnis, Icon und `ChrisPrefect.BambuStudio`.
+mit geprüftem V7-Ziel, Arbeitsverzeichnis, Icon und `ChrisPrefect.BambuStudio`.
 Beide vorhandenen Links wurden nach bytegenauer Sicherung ihrer alten Inhalte
 aktualisiert; der Desktoplink bleibt abwesend. Die bisherige
 `--datadir "%APPDATA%\BambuStudio-Prefect"`-Angabe bleibt identisch.
@@ -296,8 +313,8 @@ keine Druckerverbindung. Die dafür erforderlichen Abnahmeszenarien stehen je
 Feature im Detaildokument. Die Umsetzung enthält keine automatische
 Druckauslösung.
 
-Der neue `.6`-Quellnachtrag ist damit beschrieben, aber noch nicht durch einen
-neuen vollständigen nativen Build oder eine reale GUI-Serie abgenommen.
+Der native `.6`-Build und sourcegebundene Starts sind geprüft; die konkret noch
+offenen sichtbaren Bedienfälle stehen im [aktuellen Bericht](validation/workflow4.md).
 
 Für ein Update sind die getrennten Feature-Commits und ein Format-Patch-Export
 vorgesehen. Der vollständige Ablauf einschließlich Konfliktlösung,

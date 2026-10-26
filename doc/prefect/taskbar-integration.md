@@ -100,7 +100,17 @@ ein während der Prüfung verwendetes Profil nicht versehentlich zum normalen
 Startprofil der angehefteten Verknüpfung werden. Eine vorbereitete oder nur
 in den TaskBar-Ordner kopierte Datei ist kein erfolgreicher OS-Pin.
 
-Die aktuelle `.5`-Quelle `939e0b3ce6dce937502666f334950eec2e0f542a`
+Die aktuelle `.6`-Quelle `727a703155237a94e4fcc31ebc4effef515d13f0`
+behält den Nachtrag. Der vorhandene Pin und der Startmenülink wurden auf die
+vollständig geprüfte V7-Installation aktualisiert. Erfolgreiche öffentliche
+Unpin-Abfragen sind an die exakten neuen Linkhashes gebunden; drei ursprüngliche
+Pins bleiben bytegleich, Desktop abwesend. Normale Profilargumente, AUMID und
+EXE-Icon0 sind erhalten. Dies ist keine neue Pinaktion, kein Test eines Starts
+über den Pin und keine Pixelprüfung des Iconcaches.
+[Aktueller OS-/Metadatenbeleg](validation/workflow4-os-pin.json),
+[aktueller Bericht](validation/workflow4.md).
+
+Die historische `.5`-Quelle `939e0b3ce6dce937502666f334950eec2e0f542a`
 behält den Nachtrag. Nach vollständiger V6-Installation wurden nur die beiden
 vorhandenen Startmenü-/Taskleistenlinks nach privater Sicherung aktualisiert.
 Der öffentliche Shelltest vom 26.10.2026 um 00:44:34 UTC bietet an beiden

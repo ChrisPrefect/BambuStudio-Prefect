@@ -1,0 +1,39 @@
+{
+  "schema": "prefect-workflow4-public-os-pin-v1",
+  "documentation_date": "2026-10-27",
+  "documentation_timezone": "Europe/Zurich",
+  "source_commit": "727a703155237a94e4fcc31ebc4effef515d13f0",
+  "source_tree": "16cbb874d6bef7ebbc3453e407451eb9af252b0e",
+  "source_run_id": 40414286154,
+  "status": "VERIFIED_EXISTING_OS_PIN_BOUND_TO_V7",
+  "utc": "2026-10-26T23:10:00.8616586Z",
+  "links": [
+    {
+      "role": "StartMenu",
+      "sha256": "98260cf18cc5752d8dff83cd42de4894fb990d43e605429ac846538bdda93abf",
+      "offers_unpin": true,
+      "observed_taskbar_verb_verbatim": "Von &Taskleiste lösen"
+    },
+    {
+      "role": "ActualTaskBarLink",
+      "sha256": "1c4a898d62f325d483cc4969faaf53dc4d0bad5c3f11616f32a31a1751da8c84",
+      "offers_unpin": true,
+      "observed_taskbar_verb_verbatim": "Von &Taskleiste lösen"
+    }
+  ],
+  "metadata_proof": "workflow4-shortcuts.json",
+  "original_private_authoritative_shell_report_sha256": "6d9481b19f51f7b9804bc4a5c1690758649da926f9df2245b7ee6fa977257da2",
+  "failed_first_query_excluded": true,
+  "original_three_pin_files_unchanged": true,
+  "desktop_link_present": false,
+  "new_pin_requested": false,
+  "actual_relaunch_via_pin_tested": false,
+  "visible_icon_cache_pixel_tested": false,
+  "scope": "Authoritative successful read-only public Shell Unpin observation only; quarantined failed path-split query is excluded. Other Shell verbs and private paths are omitted.",
+  "privacy": {
+    "absolute_user_paths": false,
+    "raw_profiles_or_logs": false,
+    "user_project_or_recovery_data": false,
+    "unrelated_shell_verbs": false
+  }
+}

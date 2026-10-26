@@ -1,0 +1,295 @@
+{
+  "schema": "prefect-workflow4-public-ci-observation-v1",
+  "observed_utc": "2026-10-26T23:11:13.223Z",
+  "documentation_date": "2026-10-27",
+  "documentation_timezone": "Europe/Zurich",
+  "source_commit": "727a703155237a94e4fcc31ebc4effef515d13f0",
+  "source_tree": "16cbb874d6bef7ebbc3453e407451eb9af252b0e",
+  "run": {
+    "id": 40414286154,
+    "status": "completed",
+    "conclusion": "success",
+    "updated_at": "2026-10-26T23:05:48Z",
+    "workflow_path": ".github/workflows/prefect-workflow.yml",
+    "url": "https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40414286154"
+  },
+  "jobs": [
+    {
+      "id": 121892544860,
+      "name": "policy-tests",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-26T22:40:54Z",
+      "completed_at": "2026-10-26T22:41:20Z",
+      "steps": [
+        {
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:40:54Z",
+          "completed_at": "2026-10-26T22:40:54Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:40:54Z",
+          "completed_at": "2026-10-26T22:41:15Z"
+        },
+        {
+          "name": "Compile and run workflow policy regressions",
+          "number": 3,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:41:15Z",
+          "completed_at": "2026-10-26T22:41:17Z"
+        },
+        {
+          "name": "Validate change manifest",
+          "number": 4,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:41:17Z",
+          "completed_at": "2026-10-26T22:41:17Z"
+        },
+        {
+          "name": "Test DeviceWeb cached-output repair and packaging guard",
+          "number": 5,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:41:17Z",
+          "completed_at": "2026-10-26T22:41:18Z"
+        },
+        {
+          "name": "Test version metadata epoch and source identity independence",
+          "number": 6,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:41:18Z",
+          "completed_at": "2026-10-26T22:41:18Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "number": 12,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:41:18Z",
+          "completed_at": "2026-10-26T22:41:18Z"
+        },
+        {
+          "name": "Complete job",
+          "number": 13,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:41:18Z",
+          "completed_at": "2026-10-26T22:41:18Z"
+        }
+      ]
+    },
+    {
+      "id": 121892750589,
+      "name": "windows-portable",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-26T22:41:23Z",
+      "completed_at": "2026-10-26T23:05:47Z",
+      "steps": [
+        {
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:41:24Z",
+          "completed_at": "2026-10-26T22:41:25Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:41:25Z",
+          "completed_at": "2026-10-26T22:41:56Z"
+        },
+        {
+          "name": "Run ilammy/msvc-dev-cmd@v1",
+          "number": 3,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:41:56Z",
+          "completed_at": "2026-10-26T22:42:01Z"
+        },
+        {
+          "name": "Select installed Visual Studio generator",
+          "number": 4,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:42:01Z",
+          "completed_at": "2026-10-26T22:42:06Z"
+        },
+        {
+          "name": "Verify application cache content and timestamp policy",
+          "number": 5,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:42:06Z",
+          "completed_at": "2026-10-26T22:42:12Z"
+        },
+        {
+          "name": "Verify dependency relocation and early linker checks",
+          "number": 6,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:42:12Z",
+          "completed_at": "2026-10-26T22:42:13Z"
+        },
+        {
+          "name": "Install upstream build tools",
+          "number": 7,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:42:13Z",
+          "completed_at": "2026-10-26T22:43:07Z"
+        },
+        {
+          "name": "Restore compiled upstream dependencies",
+          "number": 8,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:43:07Z",
+          "completed_at": "2026-10-26T22:43:22Z"
+        },
+        {
+          "name": "Restore matching official upstream dependencies",
+          "number": 9,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:43:22Z",
+          "completed_at": "2026-10-26T22:43:24Z"
+        },
+        {
+          "name": "Build upstream dependencies",
+          "number": 10,
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-10-26T22:43:24Z",
+          "completed_at": "2026-10-26T22:43:24Z"
+        },
+        {
+          "name": "Save compiled upstream dependencies",
+          "number": 11,
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-10-26T22:43:24Z",
+          "completed_at": "2026-10-26T22:43:24Z"
+        },
+        {
+          "name": "Identify compatible application build cache",
+          "number": 12,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:43:24Z",
+          "completed_at": "2026-10-26T22:43:26Z"
+        },
+        {
+          "name": "Restore compatible application objects and build metadata",
+          "number": 13,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:43:26Z",
+          "completed_at": "2026-10-26T22:44:36Z"
+        },
+        {
+          "name": "Restore timestamps of byte-identical build inputs",
+          "number": 14,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:44:36Z",
+          "completed_at": "2026-10-26T22:46:54Z"
+        },
+        {
+          "name": "Configure Prefect fork",
+          "number": 15,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:46:54Z",
+          "completed_at": "2026-10-26T22:47:53Z"
+        },
+        {
+          "name": "Validate generated dependency link inputs before compiling",
+          "number": 16,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:47:53Z",
+          "completed_at": "2026-10-26T22:47:54Z"
+        },
+        {
+          "name": "Restore missing DeviceWeb runtime bundle from original build target",
+          "number": 17,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:47:54Z",
+          "completed_at": "2026-10-26T22:48:22Z"
+        },
+        {
+          "name": "Compile and package Prefect fork",
+          "number": 18,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:48:22Z",
+          "completed_at": "2026-10-26T22:58:52Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "number": 19,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:58:52Z",
+          "completed_at": "2026-10-26T22:59:17Z"
+        },
+        {
+          "name": "Capture verified build-input identities and timestamps",
+          "number": 20,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T22:59:17Z",
+          "completed_at": "2026-10-26T23:00:43Z"
+        },
+        {
+          "name": "Save application objects even after a compiler or linker failure",
+          "number": 21,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T23:00:43Z",
+          "completed_at": "2026-10-26T23:05:42Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "number": 42,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T23:05:42Z",
+          "completed_at": "2026-10-26T23:05:45Z"
+        },
+        {
+          "name": "Complete job",
+          "number": 43,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-26T23:05:45Z",
+          "completed_at": "2026-10-26T23:05:45Z"
+        }
+      ]
+    }
+  ],
+  "scope": "Fresh read-only official GitHub connector run/jobs metadata. Policy-job success does not establish Windows build success, artifact integrity or GUI behavior.",
+  "artifact_metadata": {
+    "id": 12695023513,
+    "name": "BambuStudio-Prefect-Windows-x64-727a703155237a94e4fcc31ebc4effef515d13f0",
+    "bytes": 264440555,
+    "digest": "sha256:add72a5bfc23845c5aee6909d95686d99ec538d26d2f455d16110f4f5b52af73",
+    "expired": false,
+    "source_commit": "727a703155237a94e4fcc31ebc4effef515d13f0"
+  }
+}

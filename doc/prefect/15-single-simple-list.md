@@ -64,5 +64,10 @@ Die Policytests prüfen F15 an/aus unabhängig von F02, die normalen Modusgrenze
 und eine leere gespeicherte F02-Liste. Nach neuem GUI-Build sind vier
 Kombinationen F02/F15 an/aus zu prüfen; außerdem Einfach ↔ Experte, Suche,
 Global ↔ Objekt/Teil/Höhenbereich/Platte, Nozzlewechsel, eine ausschließlich
-bedingt nicht anwendbare gewählte Zeile und Neustart. **Neuer nativer GUI-Build
-und sichtbare Abnahme der `.6` sind noch nicht belegt.**
+bedingt nicht anwendbare gewählte Zeile und Neustart. Nativer `.6`-Build,
+V7-Installation und Veröffentlichung sind belegt. Die eigene QA-Accessibility
+zeigt flache Controls ohne Kategorien-/Gruppenüberschriften; individuelle
+selbst gezeichnete Labels und alle Zustände sind damit nicht vollständig
+identifiziert. Normaler Start und Auswahlretention sind getrennt belegt,
+eine vollständig sichtbare normale flache Ansicht nicht.
+[Aktueller Bericht mit Scopegrenzen](validation/workflow4.md).

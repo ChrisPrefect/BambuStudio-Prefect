@@ -1,35 +1,33 @@
 # Prefect Bambu Studio
 
-Eigener Workflow-Fork auf Basis von **v02.08.02.61**: automatische Filamentübernahme,
-eigene Felder in der einfachen Ansicht, eingeklappte Drucker-Box,
-Hintergrundslicing, Filamentzuweisung per Klick, Supportinterface-Menü,
-getrennte Modellimporte sowie ausgeblendete TPU-Cold-Pull-Hinweise und Tipps.
-Workflow 2 ergänzt erzwungene Anordnungsrotation und automatische Anordnung
-nach dem Einfügen mehrerer Objekte. Alle elf Optionen stehen gemeinsam unter
-**Einstellungen → Workflow**; Materialklick unterstützt auch Misch-/Verlaufszeilen.
+Workflow-Fork auf Basis von **v02.08.02.61** mit **16 einzeln schaltbaren Funktionen**
+unter **Einstellungen → Workflow**: unter anderem eigene einfache Feldauswahl und
+flache Liste, editierbare Anordnungsrotation, sofortiges Anordnen, aktuelle Platte
+mit Undo leeren, automatische Filamentübernahme und weniger wiederkehrende Hinweise.
 
 Der Fork trägt ein violettes Programmsymbol und zeigt **Prefect Bambu Studio**
 vor dem Projektnamen im Fenstertitel, einschließlich des Änderungssterns.
 
-[**Windows-Vorabversion .4 herunterladen**](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.4)
-enthält das vollständige Windows-Paket, 31 geprüfte Patches und SHA-256-Prüfsummen.
+[**Windows-Vorabversion .6 herunterladen**](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.6)
+enthält das vollständige Windows-Paket, 37 geprüfte Patches und SHA256-Prüfsummen.
 
-[Alle elf Anpassungen und Bedienung](doc/prefect/README.md) ·
+[Alle 16 Anpassungen und Bedienung](doc/prefect/README.md) ·
 [Gemeinsame Einstellungsseite](doc/prefect/workflow-settings.md) ·
 [Änderungen bei Upstream-Updates nachtragen](doc/prefect/UPSTREAM-UPDATES.md) ·
 [Prüfprotokoll](doc/prefect/VALIDATION.md) ·
 [Windows-Builds](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/workflows/prefect-workflow.yml)
 
-Der aktuelle Windows-Build für Quelle `3cb50cae` ist vollständig erfolgreich.
+Der aktuelle Windows-Build für Quelle `727a7031` ist vollständig erfolgreich.
 Alle 6.756 eigenen Installationsdateien, 13 DeviceWeb-Ressourcen und elf
 violetten Icon-Größen sind geprüft. **Prefect Bambu Studio ist an der
 Windows-Taskleiste angeheftet.** Startmenü und Taskleistenlink verwenden die
-eigene v5-Installation, das normale Fork-Profil und `ChrisPrefect.BambuStudio`;
+eigene V7-Installation, das normale Fork-Profil und `ChrisPrefect.BambuStudio`;
 die drei bisherigen Pins sind unverändert. Der öffentliche Windows-Shellzustand
-und sämtliche Linkmetadaten sind [aktuell geprüft](doc/prefect/validation/taskbar-v5-pin-current-public-summary.json).
-Der frühere eigene GUI-Lauf bestätigte die verzögerte Taskleistenprüfung und
-Live-QA-Logs; sein natives `E_ACCESSDENIED` bleibt als getrennter Befund erhalten.
-[Paket-, Laufzeit- und Veröffentlichungsnachweis](doc/prefect/validation/taskbar-v5.md)
+und die Linkbindung sind [aktuell geprüft](doc/prefect/validation/workflow4-os-pin.json).
+Normaler V7-Profilstart, geladene DLL und Erhalt der gespeicherten Feldauswahl
+sind belegt. Einzelne sichtbare Bedien- und Druckerfälle bleiben abgegrenzt;
+eine vollständige GUI-Abnahme wird nicht behauptet.
+[Paket-, Laufzeit- und Veröffentlichungsnachweis](doc/prefect/validation/workflow4.md)
 benennt den genauen Stand. Die drei früheren
 [Titelprüfungen der Ausgabe .3](doc/prefect/validation/branding.md) und die
 [Workflow-2-Laufzeitprüfungen](doc/prefect/validation/workflow2.md) behalten

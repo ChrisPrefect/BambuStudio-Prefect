@@ -17,12 +17,17 @@ Aufrufpfade, persistente Schlüssel, Nebenwirkungen und Laufzeitprüfungen.
 Eine Konfliktlösung nach Funktionen und Zuständigkeiten hat Vorrang vor dem
 mechanischen Übernehmen alter Zeilen.
 
-Der neue Quellnachtrag für `.6` umfasst F01–F16. Ein neuer Commit-/Treepin,
-nativer GUI-Build und Replay-/Releasebeleg werden erst nach tatsächlicher
-Erzeugung eingetragen. Die folgenden abgeschlossenen Serien sind historische
-Belege ihrer jeweiligen Quellen, keine Prüfung der geänderten `.6`.
+Die aktuelle `.6` umfasst F01–F16, Quelle
+`727a703155237a94e4fcc31ebc4effef515d13f0`, Tree
+`16cbb874d6bef7ebbc3453e407451eb9af252b0e`. Alle **37 Commits / 74 Zwischenbäume**
+sind rekonstruiert; vollständiger nativer Build, V7-Installation, sourcegebundene
+Starts und öffentliche Veröffentlichung sind belegt. Die konkreten noch offenen
+Bedienfälle bleiben im [aktuellen Bericht](validation/workflow4.md) abgegrenzt.
+[Replay](validation/patch-replay-workflow4.md),
+[Gegenvergleich](validation/patch-replay-workflow4-final.json).
+Spätere reine Dokumentationscommits sind kein neuer Binärquellstand.
 
-Die zuletzt veröffentlichte Serie `.5` bis `939e0b3ce6dce937502666f334950eec2e0f542a`
+Die historische veröffentlichte Serie `.5` bis `939e0b3ce6dce937502666f334950eec2e0f542a`
 enthält **35 Commits**. Alle **70 Zwischenstände** aus Rohdiff- und
 Format-Patch-Replay stimmen exakt mit den Originaltrees überein.
 [Aktueller Replaynachweis](validation/patch-replay-workflow3.md),
@@ -397,7 +402,7 @@ Feature-IDs bleiben unverändert, damit spätere Änderungen vergleichbar bleibe
 
 F09 muss zusätzlich typisierte Tippsbenachrichtigungen unterdrücken, einschließlich des `BBLArcFittingInfo`-Hinweises. Dessen Warning-Level allein ist kein geeigneter Filter: Die automatische Anpassung und echte Warnungen bleiben nötig. Die zusätzlichen, unabhängig schaltbaren Funktionen sind [F12: sofort anordnen](arrange-on-click.md) und [F13: Helio-Werbung](hide-helio-advertising.md). Ihre Detaildokumente enthalten die Updateanker und Gegenprüfungen bei ausgeschaltetem Schalter. Historische Paket- und Pinbelege bleiben an ihre ursprünglichen Sourcecommits gebunden.
 
-## Nachtrag für Workflow 4 / geplante .6
+## Nachtrag für Workflow 4 / veröffentlichte .6
 
 - **F12:** Den echten GLToolbar-Mauspfad mit `check_hover=true` und der
   ursprünglich angeforderten Item-ID prüfen. Der beim Toolwechsel intern
@@ -422,6 +427,8 @@ F09 muss zusätzlich typisierte Tippsbenachrichtigungen unterdrücken, einschlie
   und die allgemeine Hoverpause anderer Fenster bleiben erhalten.
   [Detail](16-sync-success-timeout.md).
 
-Diese Updateanker beschreiben Sourceverhalten. Vor einer `.6`-Auslieferung
-sind neuer vollständiger nativer Build, aktuelle Paket-/Replaybindungen und
-eigene Laufzeitbelege erforderlich; historische `.5`-Ergebnisse ersetzen sie nicht.
+Diese Updateanker beschreiben Sourceverhalten. Die `.6` besitzt eigene native
+Build-/Paket-/Replay-/Laufzeitbelege und ist veröffentlicht. Die noch offenen
+sichtbaren Klick-/Checkbox-/Druckerfälle werden dadurch nicht als bestanden
+ausgegeben. Bei jedem weiteren Update neue Source-/Artefaktbindungen und
+Laufzeitbelege erzeugen; historische Ergebnisse ersetzen sie nicht.

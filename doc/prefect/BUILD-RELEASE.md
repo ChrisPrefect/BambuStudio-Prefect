@@ -8,13 +8,20 @@ Installationsverzeichnis. Der tatsächliche Ergebnisnachweis steht in
 [VALIDATION.md](VALIDATION.md); die Existenz des Workflows allein ist kein
 Buildnachweis.
 
-Die geänderte Quelle für `.6` umfasst sechzehn Funktionen. Ein neuer nativer
-Buildlauf, tatsächliche Artefaktpins, Installation, GUI-Abnahme, Patchreplay
-und Veröffentlichung sind noch nachzuweisen. Die vorbereitete separate
-Workflow-4-Pipeline darf bis zum echten Source-/Tree-/Runfreeze keine
-Produktions-Platzhalter als gültige Pins akzeptieren.
+Die aktuelle `.6` umfasst sechzehn Funktionen, Quelle
+`727a703155237a94e4fcc31ebc4effef515d13f0`, Tree
+`16cbb874d6bef7ebbc3453e407451eb9af252b0e`.
+[Build 40414286154](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40414286154)
+ist vollständig erfolgreich. Das echte Artefakt `12695023513` hat
+264.440.555 Byte und SHA256
+`add72a5bfc23845c5aee6909d95686d99ec538d26d2f455d16110f4f5b52af73`.
+V7-Installation, 37 Patches mit 74 identischen Zwischenbäumen und die drei
+anonymen öffentlichen Downloads sind geprüft. Eigener QA-/normaler GUI-Start
+und geladene DLL sind gebunden; die konkrete sichtbare Bedienabnahme bleibt
+im [aktuellen Bericht](validation/workflow4.md) abgegrenzt.
+[Veröffentlichungsbeleg `.6`](validation/published-release-workflow4.json).
 
-Der zuletzt veröffentlichte vollständige Windows-Build `.5`
+Der historische vollständige Windows-Build `.5`
 [40248952898](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40248952898)
 für `939e0b3ce6dce937502666f334950eec2e0f542a` ist erfolgreich. Die
 [veröffentlichte Vorabversion .5](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.5)
@@ -173,7 +180,19 @@ Build enthält alle 13 Dateien. [Ursache, Prüfungen und Update-Anker](device-we
 
 ## Separater Release-Transport
 
-Die aktuelle Vorabversion `.5` verwendet auf `delivery/windows` die getrennte
+Die veröffentlichte `.6` verwendet die eigene
+`.github/workflows/prefect-workflow4-release.yml` und `delivery/workflow4-release/`
+auf `delivery/windows`. Der Stage bindet Source727, Tree16cb, erfolgreichen
+Buildrun, tatsächliches Artefakt und 37er-Patcharchiv an ihre Hashes. Erst der
+geprüfte neue Draft erhielt über einen separaten Ein-Flag-Commit `publish=true`.
+Publisher `40419300381` ist erfolgreich; Release `424868721` und alle drei
+anonymen öffentlichen Downloadpayloads sind geprüft. Fünf ältere Releases und
+sechs direkte Tags blieben unverändert. Produktcode, Installation und Assets
+werden durch diesen Publikationsschritt nicht neu erzeugt.
+Die nachfolgenden älteren Transportbeschreibungen behalten ihre historischen
+Pfade und Pins. [Aktueller Gesamtbeleg](validation/workflow4-results.json).
+
+Die historische Vorabversion `.5` verwendet auf `delivery/windows` die getrennte
 Workflowdatei `.github/workflows/prefect-workflow3-release.yml` und
 `delivery/workflow3-release/`. Die Produktionskonfiguration bindet Quelle,
 Tree, erfolgreichen Buildlauf, tatsächliches Artefakt, 35er-Patcharchiv,

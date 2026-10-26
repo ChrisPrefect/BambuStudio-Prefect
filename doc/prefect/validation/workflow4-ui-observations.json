@@ -1,0 +1,51 @@
+{
+  "schema": "prefect-workflow4-official-ui-observations-v1",
+  "source_commit": "727a703155237a94e4fcc31ebc4effef515d13f0",
+  "source_tree": "16cbb874d6bef7ebbc3453e407451eb9af252b0e",
+  "official_client": "Computer Use Sky 0.7.13, plugin 26.1021.31345",
+  "new_binary_GUI_started": true,
+  "main_accessibility": {
+    "flat_selected_controls_present": true,
+    "category_switches_and_group_heading_labels_in_observed_tree": false,
+    "printer_header_present": true,
+    "printer_content_initially_collapsed_in_observed_tree": true,
+    "custom_renderer_label_limit": "The accessibility tree omits custom-drawn option captions; individual option identity and enabled states are not fully accepted from unlabeled controls."
+  },
+  "preferences": {
+    "opened_by_CtrlP": true,
+    "Workflow_tab_label_present": true,
+    "Workflow_mouse_activation": "element 130 is not available in cached app state",
+    "modal_raise": "element 123 has no cached secondary actions",
+    "Escape_closed_preferences": true,
+    "all_16_checkbox_interaction_accepted": false
+  },
+  "screenshot": "Fresh V7 capture timed out: timed out waiting on channel; fresh current client reset and neutral-app captures also failed.",
+  "arrangement": {
+    "A_shortcut_sent_to_observed_GLCanvas": true,
+    "icon_click_performed": false,
+    "placement_result_verified": false
+  },
+  "own_project_save_attempt": {
+    "dialog_in_own_C_inputs": true,
+    "filename_set_value": "element 232 is not available in cached app state",
+    "AltN_and_Tab_did_not_change_observed_search_focus": true,
+    "typed_project_path": false,
+    "saved_project_file": false,
+    "Escape_canceled_dialog": true
+  },
+  "cleanup": {
+    "AltF4_opened_save_prompt": true,
+    "regular_discard_not_verified": true,
+    "only_exact_owned_synthetic_QA_process_stopped_by_guarded_helper": true,
+    "graceful_exit": false,
+    "user_applications_stopped": 0
+  },
+  "acceptance_limits": [
+    "No direct Arrange-icon or quick-delete/Undo GUI acceptance",
+    "No complete per-checkbox toggle or collapse/rotation checkbox GUI acceptance",
+    "No physical printer sync timer or advertisement visibility acceptance"
+  ],
+  "private_UI_APIs": false,
+  "security_privacy_access_changes": false,
+  "SMB_access": false
+}

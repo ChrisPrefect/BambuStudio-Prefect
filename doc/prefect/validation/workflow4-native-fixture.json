@@ -1,0 +1,61 @@
+{
+  "schema": "prefect-v7-synthetic-multiplate-native-validation-v1",
+  "activity_scope": "This report binds one native CLI software test. Helper action counters do not measure unobserved CLI internals or GUI activity. GUI acceptance is performed separately by Root.",
+  "source_commit": "727a703155237a94e4fcc31ebc4effef515d13f0",
+  "source_tree": "16cbb874d6bef7ebbc3453e407451eb9af252b0e",
+  "source_run_id": 40414286154,
+  "artifact_id": 12695023513,
+  "installation_binding": {
+    "source_commit": "727a703155237a94e4fcc31ebc4effef515d13f0",
+    "installer_proof_sha256": "c515e9bda067759c64822bb21d7d0b4384be695f7f66d54e22d13cff0a340978",
+    "binaries": {
+      "bambu-studio.exe": {
+        "sha256": "e113e57c2e6db449de57c438ccab52555d659bfa94b7a0f88b899c419708469c",
+        "bytes": 95744,
+        "links": 1
+      },
+      "BambuStudio.dll": {
+        "sha256": "8f6d5dd5ac2d7a86f3c0f86a9ddeadc115d9913bc31805c6c5e7cf49fad81de5",
+        "bytes": 139324928,
+        "links": 1
+      }
+    },
+    "installed_own_file_count": 6756,
+    "source_marker_sha256": "27ab5b9f2ffbd1521a286c0d8fd7d05db9d8a2e4f2965b46a0c804869cb44eda",
+    "source_tree": "16cbb874d6bef7ebbc3453e407451eb9af252b0e",
+    "artifact_id": 12695023513,
+    "workflow_run_id": 40414286154
+  },
+  "fixture_sha256_before": "1af51f943be4202fb44f50d1ff42d8bb6b1d3aa14ad42c4bdda1037aacadbae7",
+  "fixture_sha256_after": "1af51f943be4202fb44f50d1ff42d8bb6b1d3aa14ad42c4bdda1037aacadbae7",
+  "fixture_bytes": 15779,
+  "native_CLI_exit_code": 0,
+  "native_CLI_result_code": 0,
+  "native_CLI_result_success": true,
+  "native_CLI_actions": [
+    "info",
+    "export_3mf"
+  ],
+  "fresh_private_CWD": true,
+  "child_TEMP_and_TMP_isolated": true,
+  "input_model_objects": 2,
+  "input_instances": 3,
+  "input_plates": 2,
+  "output_model_objects": 2,
+  "output_instances": 3,
+  "output_plates": 2,
+  "shared_instance_zero_on_other_plate_preserved": true,
+  "plate_instance_counts": {
+    "1": 2,
+    "2": 1
+  },
+  "all_instance_transforms_preserved_tolerance_mm": 0.001,
+  "roundtrip_crc": "passed",
+  "roundtrip_sha256": "128b7b63c55ace527cecea1e5136fe6e1576465863fd535881701a1a0acf9cf2",
+  "roundtrip_not_public_due_to_runtime_metadata": true,
+  "GUI_or_datadir_or_debug_flags_used": false,
+  "normal_profile_access_by_inspector": false,
+  "LNK_actions_by_inspector": 0,
+  "GUI_input_actions_by_inspector": 0,
+  "source_or_fixture_writes_by_inspector": 0
+}

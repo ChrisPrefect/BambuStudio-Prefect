@@ -50,7 +50,19 @@ Microsoft verlangt die Prozesskennung früh vor dem Erzeugen von UI und denselbe
 5. Die sichtbaren Windows-Ressourcen aktualisieren. Eingebettetes Icon und Startmenü-/Taskleisten-Verknüpfung gehören zur separaten Icon-/Installationsänderung; ihre AppUserModelID muss exakt mit dem Prozess übereinstimmen.
 6. Den nativen Windows-Build kompilieren/linken, anschließend EXE-Dateibeschreibung, leeres Fenster, benanntes und geändertes Projekt sowie Taskleisten-Gruppe und Start über die angeheftete Verknüpfung am installierten Paket prüfen. Ein Neustart darf das Profil nicht wechseln oder eine zweite Fork-Taskleistengruppe erzeugen.
 
-## Aktueller Stand .5: vorhandener Pin auf V6 aktualisiert
+## Aktueller Stand .6: vorhandener Pin auf V7 aktualisiert
+
+Quelle `727a703155237a94e4fcc31ebc4effef515d13f0` ist vollständig gebaut und
+veröffentlicht. Alle 6.756 Dateien der eigenen V7-Installation und elf violette
+Icon-Größen sind geprüft. Startmenü und vorhandener Taskleistenlink führen zu
+V7 mit normalen Profilargumenten, `ChrisPrefect.BambuStudio` und EXE-Icon 0;
+die erfolgreiche öffentliche Shellabfrage bietet bei beiden Unpin an.
+Drei ursprüngliche Pins sind unverändert, Desktop abwesend. Normaler V7-Start
+und tatsächliche DLL sind separat gebunden; eine vollständige normale GUI-
+oder Iconcache-Pixelabnahme wird nicht behauptet.
+[Aktueller Bericht](validation/workflow4.md), [OS-Pin](validation/workflow4-os-pin.json).
+
+## Historischer Stand .5: vorhandener Pin auf V6 aktualisiert
 
 Quelle `939e0b3ce6dce937502666f334950eec2e0f542a` ist vollständig gebaut,
 veröffentlicht und als eigene V6-Installation mit 6.756 Dateien geprüft.

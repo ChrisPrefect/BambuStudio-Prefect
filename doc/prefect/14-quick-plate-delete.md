@@ -59,5 +59,9 @@ prüft den Standardwert und erhaltene Abschaltentscheidungen.
 Nach einem vollständigen neuen GUI-Build: dieselbe Objektgruppe auf zwei Platten
 verteilen, eine Platte leeren, die andere und die Filamentliste vergleichen und
 Undo/Redo prüfen. Leere Platte, laufenden Job, G-Code-Ansicht sowie Ein-/Ausschalten
-des Toolbarplatzes testen. **Dieser Quellnachtrag für `.6` enthält noch keinen
-neuen Build-, Laufzeit- oder Veröffentlichungsnachweis.**
+des Toolbarplatzes testen. Der native `.6`-Build, die V7-Installation und die
+Veröffentlichung sind belegt. Ein zusätzlicher nativer CLI-Roundtrip bestätigt
+die Erhaltung eines synthetischen Mehrplattenprojekts, ruft aber den
+Quick-delete-Button nicht auf. Dessen tatsächliche Klick-/Undo-Abnahme bleibt
+offen. [Aktueller Bericht](validation/workflow4.md),
+[nativer Fixturetest](validation/workflow4-native-fixture.json).

@@ -22,11 +22,28 @@ Druckerauswahl, Filamentsynchronisierung und Netzwerkfunktionen behalten ihre
 bisherigen Pfade. Die Änderung betrifft den sichtbaren Container; sie ändert
 keine Druckparameter oder Presetwerte.
 
-Diese Semantik gehört zum vorbereiteten Nachtrag für **`.6`**. Ein vollständiger
-neuer Build, eine GUI-Abnahme und die Veröffentlichung dieses Nachtrags sind
-noch ausstehend. Die veröffentlichte **`.5`** ist historisch: Dort war die
-eingeklappte Box bei aktivierter Option dauerhaft gesperrt. Ihr Prüfbericht
-belegt das hier beschriebene neue Verhalten nicht.
+Der hier beschriebene Stand ist in **`.6`** veröffentlicht: Quelle
+`727a703155237a94e4fcc31ebc4effef515d13f0`, Tree
+`16cbb874d6bef7ebbc3453e407451eb9af252b0e`.
+Der [native Buildlauf 40414286154](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40414286154)
+ist vollständig erfolgreich, einschließlich Windows-Kompilierung, Paketierung
+und abschließender Cache-Schritte. Der
+[Release 424868721 / `.6`](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.6)
+wurde am **26.10.2026 um 23:22:49 UTC** veröffentlicht
+(**27.10.2026, 00:22:49 Europe/Zurich**). Alle drei öffentlichen Dateien wurden
+anonym vollständig geladen und nach SHA256 geprüft; beide ZIPs bestehen CRC.
+Die 37 Feature-Commits sind durch 74 identische Patch-Zwischenbäume belegt.
+[Auslieferungsbericht und Prüfgrenzen](validation/workflow4.md),
+[Veröffentlichungsnachweis](validation/published-release-workflow4.json).
+
+Quellgebundene Starts im isolierten Prüfprofil und im normalen Forkprofil sind
+separate Laufzeitnachweise. Sie ersetzen keine sichtbare Bedienprüfung dieser
+Funktion. Die nachstehenden Klick-, Häkchen-, Refresh- und Neustartfälle bleiben
+als manuelle Abnahme offen, soweit sie nicht einzeln ausdrücklich belegt sind.
+
+Die veröffentlichte **`.5`** ist historisch: Dort war die eingeklappte Box bei
+aktivierter Option dauerhaft gesperrt. Ihr Prüfbericht belegt das neue
+Aufklapp-/Refreshverhalten nicht.
 
 ## Quellanker
 
@@ -71,11 +88,13 @@ Basis: Upstream `v02.08.02.61`, Commit
 
 Die Defaults-/Migrationstests in `tests/prefect/preferences_test.cpp` prüfen
 fehlende Schlüssel und erhaltene Abschaltentscheidungen. Sie prüfen keine
-wxWidgets-Höhenbegrenzung oder sichtbare Titelbedienung. Für diese Änderung wird
-hier kein bereits erfolgreicher neuer Build oder GUI-Lauf behauptet.
+wxWidgets-Höhenbegrenzung oder sichtbare Titelbedienung. Die entsprechenden
+Policytests liefen im erfolgreichen Quell-CI mit aktiven Assertions. Der native
+Windows-Build ist erfolgreich; die folgende sichtbare Bedienabnahme ist damit
+noch nicht nachgewiesen.
 
-Die folgende Abnahme erfolgt am neuen vollständigen GUI-Build in einem eigenen
-Prüfprofil:
+Die folgende noch offene Abnahme ist am ausgelieferten `.6`-Build in einem
+eigenen Prüfprofil durchzuführen:
 
 | Fall | Vorgehen und erwartetes Ergebnis |
 | --- | --- |

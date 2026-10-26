@@ -57,7 +57,10 @@
       "tests": [
         "tests/prefect/simple_fields_test.cpp"
       ],
-      "commit": "24ec77e37aa7386a28685b9dc2c4e25eedbceed4"
+      "commit": "24ec77e37aa7386a28685b9dc2c4e25eedbceed4",
+      "follow_up_commits": [
+        "727a703155237a94e4fcc31ebc4effef515d13f0"
+      ]
     },
     {
       "id": "F03",
@@ -76,7 +79,10 @@
           "text": "default_collapse != m_prefect_printer_collapse_applied"
         }
       ],
-      "commit": "21a50b6a27492730d65596854120e12d3fca1401"
+      "commit": "21a50b6a27492730d65596854120e12d3fca1401",
+      "follow_up_commits": [
+        "727a703155237a94e4fcc31ebc4effef515d13f0"
+      ]
     },
     {
       "id": "F04",
@@ -241,7 +247,10 @@
       "tests": [
         "tests/prefect/arrange_test.cpp"
       ],
-      "migration_marker": "prefect_arrange_rotation_default_revision"
+      "migration_marker": "prefect_arrange_rotation_default_revision",
+      "follow_up_commits": [
+        "727a703155237a94e4fcc31ebc4effef515d13f0"
+      ]
     },
     {
       "id": "F11",
@@ -294,7 +303,10 @@
         "tests/prefect/arrange_test.cpp",
         "tests/prefect/preferences_test.cpp"
       ],
-      "commit": "3401f3938e2e3ab70438ea27931496f0f4d4c3b4"
+      "commit": "3401f3938e2e3ab70438ea27931496f0f4d4c3b4",
+      "follow_up_commits": [
+        "727a703155237a94e4fcc31ebc4effef515d13f0"
+      ]
     },
     {
       "id": "F13",
@@ -347,7 +359,8 @@
       "tests": [
         "tests/prefect/plate_clear_test.cpp",
         "tests/prefect/preferences_test.cpp"
-      ]
+      ],
+      "commit": "727a703155237a94e4fcc31ebc4effef515d13f0"
     },
     {
       "id": "F15",
@@ -377,7 +390,8 @@
       "tests": [
         "tests/prefect/simple_fields_test.cpp",
         "tests/prefect/preferences_test.cpp"
-      ]
+      ],
+      "commit": "727a703155237a94e4fcc31ebc4effef515d13f0"
     },
     {
       "id": "F16",
@@ -402,30 +416,25 @@
       ],
       "tests": [
         "tests/prefect/preferences_test.cpp"
-      ]
+      ],
+      "commit": "727a703155237a94e4fcc31ebc4effef515d13f0"
     }
   ],
   "fork_repository": "https://github.com/ChrisPrefect/BambuStudio-Prefect",
   "foundation_commit": "7a24a42d0db96d22db5dbb7a08699a1a2a8e1443",
   "current_delivery": {
-    "source_commit": "939e0b3ce6dce937502666f334950eec2e0f542a",
-    "source_tree": "e397ecc3b38d7a22b6ac4891d0897dfc273d7000",
-    "workflow_run_id": 40248952898,
-    "feature_count": 13,
-    "release_tag": "v02.08.02.61-prefect.5",
-    "release_id": 423757668,
-    "installation_role": "Windows-v6",
-    "patch_commits": 35,
-    "replay_tree_checks": 70,
-    "report": "doc/prefect/validation/workflow3.md",
-    "results": "doc/prefect/validation/workflow3-results.json",
-    "role": "Historical published .5 release; its 13-feature source and evidence are unchanged."
-  },
-  "planned_delivery": {
-    "release_tag": "v02.08.02.61-prefect.6",
+    "source_commit": "727a703155237a94e4fcc31ebc4effef515d13f0",
+    "source_tree": "16cbb874d6bef7ebbc3453e407451eb9af252b0e",
+    "workflow_run_id": 40414286154,
     "feature_count": 16,
-    "status": "SOURCE_DOCUMENTED_NATIVE_BUILD_GUI_ACCEPTANCE_AND_PUBLICATION_PENDING",
-    "new_source_commit_not_yet_recorded": true,
-    "evidence_policy": "No .5 binary, replay or GUI proof is reused as proof of the changed .6 implementation."
+    "release_tag": "v02.08.02.61-prefect.6",
+    "release_id": 424868721,
+    "installation_role": "Windows-v7",
+    "patch_commits": 37,
+    "replay_tree_checks": 74,
+    "report": "doc/prefect/validation/workflow4.md",
+    "results": "doc/prefect/validation/workflow4-results.json",
+    "publication_proof": "doc/prefect/validation/published-release-workflow4.json",
+    "documentation_commit_is_separate_from_binary_source": true
   }
 }

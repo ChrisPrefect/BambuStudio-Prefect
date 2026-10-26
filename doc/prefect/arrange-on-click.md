@@ -27,11 +27,28 @@ Zurücksetzen der Toolbar sind keine zusätzlichen Anordnungswünsche. Bei
 Symbol öffnet/schließt die Optionen, die vorhandene Popuptaste startet den Job.
 Bestehende Tastaturbefehle und Auswahl-/Plattenlogik werden nicht ersetzt.
 
-Diese überarbeitete Semantik ist für **`.6`** vorbereitet. Neuer vollständiger
-Build, sichtbare GUI-Abnahme und Veröffentlichung sind noch ausstehend. Die
-historische veröffentlichte **`.5`** startete nur beim Öffnungsübergang; ihr
-damaliger Startup-/Buildbeleg prüft nicht die neuen Wiederholungsklicks oder
-den manuellen Start bei laufendem Hintergrundslicing.
+Der hier beschriebene Stand ist in **`.6`** veröffentlicht: Quelle
+`727a703155237a94e4fcc31ebc4effef515d13f0`, Tree
+`16cbb874d6bef7ebbc3453e407451eb9af252b0e`.
+Der [native Buildlauf 40414286154](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40414286154)
+ist vollständig erfolgreich, einschließlich Windows-Kompilierung, Paketierung
+und abschließender Cache-Schritte. Der
+[Release 424868721 / `.6`](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.6)
+wurde am **26.10.2026 um 23:22:49 UTC** veröffentlicht
+(**27.10.2026, 00:22:49 Europe/Zurich**). Alle drei öffentlichen Dateien wurden
+anonym vollständig geladen und nach SHA256 geprüft; beide ZIPs bestehen CRC.
+Die 37 Feature-Commits sind durch 74 identische Patch-Zwischenbäume belegt.
+[Auslieferungsbericht und Prüfgrenzen](validation/workflow4.md),
+[Veröffentlichungsnachweis](validation/published-release-workflow4.json).
+
+Quellgebundene Starts im isolierten Prüfprofil und im normalen Forkprofil sind
+separate Laufzeitnachweise. Sie ersetzen keine sichtbare Bedienprüfung dieser
+Funktion. Die nachstehenden Klick-, Häkchen-, Refresh- und Neustartfälle bleiben
+als manuelle Abnahme offen, soweit sie nicht einzeln ausdrücklich belegt sind.
+
+Die historische veröffentlichte **`.5`** startete nur beim Öffnungsübergang;
+ihr damaliger Startup-/Buildbeleg prüft weder die neuen Wiederholungsklicks
+noch den manuellen Start bei laufendem Hintergrundslicing.
 
 ## Quellanker und Aufrufkette
 
@@ -95,11 +112,14 @@ Basis: `v02.08.02.61` / `926a7192574bcb9b3a732e1ec59a46d79cb45466`.
 Arrange-Klick, andere Werkzeuge, programmgesteuertes Schließen, abgeschaltetes
 F12, UI-Busy und erhaltenen Popupzustand. Die Verfügbarkeitsfunktion hat bewusst
 keinen Backgroundslicing-Veto. Diese kleinen Tests mit aktiven Assertions
-belegen weder echte Eventzustellung noch sichtbare Toolbarbedienung. Für den
-neuen Stand wird hier kein erfolgreicher Build-/GUI-Lauf behauptet.
+belegen weder echte Eventzustellung noch sichtbare Toolbarbedienung. Sie liefen
+im erfolgreichen Quell-CI mit aktiven Assertions; auch der native Windows-Build
+ist erfolgreich. Ein tatsächlicher erster oder wiederholter direkter Iconklick
+mit sichtbarem Anordnungsergebnis wird dadurch nicht als bestanden ausgegeben.
 
-Mit mindestens zwei synthetischen, zunächst überlappenden Objekten im separaten
-Prüfprofil am neuen vollständigen Build prüfen. F11 für diesen Versuch
+Die folgenden noch offenen Fälle mit mindestens zwei synthetischen, zunächst
+überlappenden Objekten im separaten Prüfprofil am ausgelieferten `.6`-Build
+prüfen. F11 für diesen Versuch
 ausschalten, damit der Import das Ausgangslayout nicht bereits anordnet:
 
 | Fall | Vorgehen und erwartetes Ergebnis |

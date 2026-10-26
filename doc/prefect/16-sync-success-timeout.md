@@ -62,4 +62,7 @@ eine echte GUI-Abnahme: manueller Sync erfolgreich, Maus darüber, frühes
 manuelles Schließen, erneute Synchronisation, Schalter aus, Fensterzerstörung
 und Fokus in einem anderen Fenster. Ein Konflikt-/Fehlerdialog muss unverändert
 bleiben. Die Preferences-Policy allein belegt diese UI-Fälle nicht.
-**Die neue `.6` ist in diesem Quellstand noch nicht gebaut oder veröffentlicht.**
+Der native `.6`-Build, die V7-Installation und die Veröffentlichung sind
+inzwischen belegt; der echte manuelle Drucker-Sync mit beobachteter Frist und
+Fokusverhalten bleibt eine offene Hardware-/GUI-Abnahme.
+[Aktueller Bericht und Prüfgrenzen](validation/workflow4.md).

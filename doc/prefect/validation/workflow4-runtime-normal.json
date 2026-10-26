@@ -1,0 +1,57 @@
+{
+  "schema": "prefect-normal-v7-runtime-and-retention-final-v1",
+  "utc": "2026-10-26T23:24:42.675126+00:00",
+  "activity_scope": "Read-only inspection of the already running normal V7 process and one explicitly approved normal config file versus Root prior backup. No paths from config/MRU are followed; no UI, security dialog, process-stop, setting or profile-write action is performed by this inspector.",
+  "source_commit": "727a703155237a94e4fcc31ebc4effef515d13f0",
+  "source_tree": "16cbb874d6bef7ebbc3453e407451eb9af252b0e",
+  "source_run_id": 40414286154,
+  "artifact_id": 12695023513,
+  "installation_proof_sha256": "c515e9bda067759c64822bb21d7d0b4384be695f7f66d54e22d13cff0a340978",
+  "process_binding": {
+    "actual_running_V7_image_verified": true,
+    "creation_identity_stable_during_audit": true,
+    "exact_three_CLI_arguments": true,
+    "normal_Prefect_datadir_argument_verified": true,
+    "loaded_DLL_is_actual_V7": true,
+    "loaded_DLL_sha256": "8f6d5dd5ac2d7a86f3c0f86a9ddeadc115d9913bc31805c6c5e7cf49fad81de5",
+    "actual_EXE_sha256": "e113e57c2e6db449de57c438ccab52555d659bfa94b7a0f88b899c419708469c"
+  },
+  "normal_config_MD5_valid": true,
+  "prior_backup_MD5_valid": true,
+  "user_selected_field_count_before": 18,
+  "user_selected_field_count_after": 18,
+  "all_18_user_selected_fields_retained": true,
+  "exact_saved_selection_retained": true,
+  "selection_enable_choice_retained": true,
+  "new_workflow4_defaults_persisted": {
+    "prefect_quick_delete_plate": true,
+    "prefect_simple_single_list": true,
+    "prefect_short_sync_notice": true
+  },
+  "rotation_migration_revision": "1",
+  "arrange_rotation": {
+    "enable_rotation_fff": true,
+    "enable_rotation_fff_seq_print": true,
+    "enable_rotation_sla": true
+  },
+  "Root_reported_normal_GUI": {
+    "official_normal_AUMID_launch_was_requested": true,
+    "actual_prefect_prefixed_normal_window_observed_responsive": true,
+    "launch_tool_timeout_did_not_prove_launch_failure": true,
+    "normal_window_not_disabled_in_fresh_AX": true,
+    "main_fields_button_printer_header_and_GLCanvas_not_available_in_normal_AX": true,
+    "no_complete_normal_main_UI_acceptance_claimed": true
+  },
+  "GUI_observation_provenance": "Root report only; inspector performs no UI or screenshot calls.",
+  "user_field_keys_published": false,
+  "config_hash_published": false,
+  "tokens_or_raw_config_published": false,
+  "profile_writes_by_inspector": 0,
+  "UI_input_actions_by_inspector": 0,
+  "process_stop_actions_by_inspector": 0,
+  "LNK_actions_by_inspector": 0,
+  "security_dialog_or_security_privacy_access_actions": 0,
+  "SMB_access": false,
+  "prior_runtime_audit_summary_sha256": "8ec7bddd8dc9e5093cbf0c002495645759bfa64215bb4ef38a09957fd967d47d",
+  "QA_and_normal_GUI_observations_are_distinct": true
+}

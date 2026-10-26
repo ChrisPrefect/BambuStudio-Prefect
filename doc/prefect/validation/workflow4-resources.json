@@ -1,0 +1,96 @@
+{
+  "schema": "prefect-workflow4-public-installed-resources-v1",
+  "documentation_date": "2026-10-27",
+  "documentation_timezone": "Europe/Zurich",
+  "source_commit": "727a703155237a94e4fcc31ebc4effef515d13f0",
+  "source_tree": "16cbb874d6bef7ebbc3453e407451eb9af252b0e",
+  "source_run_id": 40414286154,
+  "artifact_id": 12695023513,
+  "installation_binding": {
+    "source_commit": "727a703155237a94e4fcc31ebc4effef515d13f0",
+    "installer_proof_sha256": "c515e9bda067759c64822bb21d7d0b4384be695f7f66d54e22d13cff0a340978",
+    "binaries": {
+      "bambu-studio.exe": {
+        "sha256": "e113e57c2e6db449de57c438ccab52555d659bfa94b7a0f88b899c419708469c",
+        "bytes": 95744,
+        "links": 1
+      },
+      "BambuStudio.dll": {
+        "sha256": "8f6d5dd5ac2d7a86f3c0f86a9ddeadc115d9913bc31805c6c5e7cf49fad81de5",
+        "bytes": 139324928,
+        "links": 1
+      }
+    },
+    "installed_own_file_count": 6756,
+    "source_marker_sha256": "27ab5b9f2ffbd1521a286c0d8fd7d05db9d8a2e4f2965b46a0c804869cb44eda",
+    "source_tree": "16cbb874d6bef7ebbc3453e407451eb9af252b0e",
+    "artifact_id": 12695023513,
+    "workflow_run_id": 40414286154
+  },
+  "status": "PASS",
+  "branding": {
+    "display_name": "Prefect Bambu Studio",
+    "version_resource_id": 1,
+    "group_icon_resource_id": 2,
+    "embedded_icon_frames": 11,
+    "icon_sha256": "db77286997a999fb0f8e06d7522f3c4f843ed61ea0d8718284d942211e1bf5a8",
+    "frame_sizes": [
+      [
+        16,
+        16
+      ],
+      [
+        20,
+        20
+      ],
+      [
+        24,
+        24
+      ],
+      [
+        32,
+        32
+      ],
+      [
+        40,
+        40
+      ],
+      [
+        48,
+        48
+      ],
+      [
+        64,
+        64
+      ],
+      [
+        128,
+        128
+      ],
+      [
+        154,
+        154
+      ],
+      [
+        192,
+        192
+      ],
+      [
+        256,
+        256
+      ]
+    ],
+    "all_embedded_frame_bytes_match": true
+  },
+  "device_web_runtime_files": 13,
+  "all_device_web_bytes_match_installer": true,
+  "source_bound_DLL_marker_count": 14,
+  "all_expected_DLL_byte_markers_present": true,
+  "original_private_resource_report_sha256": "52d36d20362d25713f7db8bb4186ca6302118fbd42d20f4db1b67d1a01cead10",
+  "scope": "Installed byte inventory, fourteen DLL marker strings and embedded PE/Web resource comparisons; no GUI behavior or icon-cache pixel claim.",
+  "privacy": {
+    "absolute_user_paths": false,
+    "raw_profiles_or_logs": false,
+    "user_project_or_recovery_data": false
+  }
+}

@@ -104,7 +104,7 @@ an diesen letzten Sourcecommit. Spätere reine Dokuanpassungen werden nicht
 als neue Binärquelle oder erneut ausgeführte GUI-Matrix ausgegeben.
 [Aktuelle Auslieferung und Prüfgrenzen](validation/workflow3.md).
 
-## Nächster Quellnachtrag für .6
+## Veröffentlichtes Workflow 4 / .6
 
 Die neue Quelle erweitert das Inventar auf F01–F16. Überarbeitet werden
 F02 (Präsenz leer gespeicherter Auswahl, dynamische Sichtbarkeit und Scope),
@@ -112,6 +112,18 @@ F03 (bedienbarer Startdefault), F10 (editierbare Rotationsstandards mit einmalig
 Legacy-Migration) und F12 (direkte wiederholte Iconklicks). Neue Funktionen sind
 [F14](14-quick-plate-delete.md), [F15](15-single-simple-list.md) und
 [F16](16-sync-success-timeout.md).
-Der neue Sourcecommit und die daraus exportierte Patchserie werden nach dem
-Freeze eingetragen. Die 35/70-Serie und das Binärpaket oben bleiben unveränderte
-historische `.5`-Nachweise, keine bereits ausgeführte `.6`-Prüfung.
+Die gebaute Quelle ist `727a703155237a94e4fcc31ebc4effef515d13f0`, Tree
+`16cbb874d6bef7ebbc3453e407451eb9af252b0e`. Gegenüber der `.5`-Quellserie
+kommen diese beiden Stufen hinzu:
+
+| Commit | Bedeutung |
+| --- | --- |
+| `65173de8d5e2985bc010184521085280b970dea7` | Tatsächliche `.5`-Auslieferung und damalige Prüfbelege dokumentieren |
+| `727a703155237a94e4fcc31ebc4effef515d13f0` | Editierbare Standards, echte flache einfache Ansicht, direkte Toolbaraktionen und F14/F15/F16 einschließlich Quelltests und Updateankern |
+
+Alle **37 Commits / 74 Zwischenbäume** der Raw-/Format-Patch-Serie sind exakt
+geprüft. [Replay](validation/patch-replay-workflow4.md),
+[tatsächliche `.6`-Auslieferung und Grenzen](validation/workflow4.md).
+Die 35/70-Serie und das Binärpaket oben bleiben unveränderte historische `.5`-
+Nachweise. Der finale reine Dokumentationscommit gehört nicht zur gebauten
+Binärquelle727 und verändert die 37er-Serie nicht.

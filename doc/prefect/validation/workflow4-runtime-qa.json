@@ -1,0 +1,117 @@
+{
+  "schema": "prefect-workflow4-own-QA-runtime-and-Root-UI-final-v1",
+  "utc": "2026-10-26T23:16:48.437064+00:00",
+  "activity_scope": "Read-only inspection of the exact launcher-owned GUI process and its isolated synthetic QA config. Action counters describe this inspector or explicitly named launcher actions; printer traffic and unobserved application internals are not measured.",
+  "source_commit": "727a703155237a94e4fcc31ebc4effef515d13f0",
+  "source_tree": "16cbb874d6bef7ebbc3453e407451eb9af252b0e",
+  "source_run_id": 40414286154,
+  "artifact_id": 12695023513,
+  "launch_proof_sha256": "591e04deeeb0ff0840aee0f8cfef56ff450fac2eb6c902f7396d163259f40f28",
+  "private_proof_sha256": "d78c343e6136f328982f3b5a29ca5c9337483cea4ac63126e94e4868bfbd6fc9",
+  "installation_proof_sha256": "c515e9bda067759c64822bb21d7d0b4384be695f7f66d54e22d13cff0a340978",
+  "process_binding": {
+    "PID_matches_actual_launch": true,
+    "creation_time_matches_actual_launch": true,
+    "exact_executable_and_seven_CLI_arguments": true,
+    "exact_own_profile_and_TEMP": true,
+    "actual_loaded_DLL_is_V7": true,
+    "actual_loaded_DLL_sha256": "8f6d5dd5ac2d7a86f3c0f86a9ddeadc115d9913bc31805c6c5e7cf49fad81de5",
+    "actual_executable_sha256": "e113e57c2e6db449de57c438ccab52555d659bfa94b7a0f88b899c419708469c"
+  },
+  "config_observation": "Persisted own QA configuration after real GUI startup and the Root-reported preferences visit.",
+  "config_MD5_valid": true,
+  "workflow_booleans": {
+    "prefect_auto_sync_filaments": false,
+    "prefect_simple_fields_enabled": true,
+    "prefect_printer_collapsed": true,
+    "background_processing": false,
+    "prefect_click_filament_assigns_selection": true,
+    "prefect_support_interface_menu": true,
+    "prefect_import_separate_objects": true,
+    "prefect_suppress_tpu_cold_pull": true,
+    "prefect_hide_tips": true,
+    "prefect_arrange_rotation": true,
+    "prefect_arrange_after_import": false,
+    "prefect_arrange_on_click": true,
+    "prefect_hide_helio_ads": true,
+    "prefect_quick_delete_plate": true,
+    "prefect_simple_single_list": true,
+    "prefect_short_sync_notice": true
+  },
+  "QA_only_overrides": [
+    "prefect_auto_sync_filaments",
+    "background_processing",
+    "prefect_arrange_after_import"
+  ],
+  "F14_F15_F16_missing_in_pristine_now_persisted_true": true,
+  "rotation_migration_missing_in_pristine_now_revision": "1",
+  "all_three_rotation_seeds_zero_now_true": {
+    "enable_rotation_fff": true,
+    "enable_rotation_fff_seq_print": true,
+    "enable_rotation_sla": true
+  },
+  "workflow_revision": "2",
+  "simple_mode": true,
+  "synthetic_custom_field_count": 18,
+  "all_18_synthetic_fields_preserved": true,
+  "network_plugin_directory_absent": true,
+  "installed_networking_false": true,
+  "hardware_print_actions_requested_by_QA_launcher": 0,
+  "hardware_print_actions_requested_by_inspector": 0,
+  "GUI_input_actions_by_inspector": 0,
+  "process_stop_actions_by_inspector": 0,
+  "normal_profile_reads_by_inspector": 0,
+  "profile_writes_by_inspector": 0,
+  "LNK_actions_by_inspector": 0,
+  "SMB_access": false,
+  "finalized_utc": "2026-10-26T23:27:45.610568+00:00",
+  "initial_live_runtime_summary_sha256": "5b25c64689d9cf46f8cdae35f64d150f98123a8c312b1b251f0bf60ee3b05940",
+  "Root_UI_observation_provenance": "Normalized from Root source-bound observation file. This inspector performs no UI input, screenshot or window enumeration; normal-profile GUI acceptance is a separate record.",
+  "Root_UI_observations_sha256": "566b937f804bd9353eadd1710e38a4b4f028ee1d165a9866608942609b69f9ac",
+  "Root_reported_own_QA_UI": {
+    "official_client": "Computer Use Sky 0.7.13, plugin 26.1021.31345",
+    "new_binary_GUI_started": true,
+    "main_accessibility": {
+      "flat_selected_controls_present": true,
+      "category_switches_and_group_heading_labels_in_observed_tree": false,
+      "printer_header_present": true,
+      "printer_content_initially_collapsed_in_observed_tree": true,
+      "custom_renderer_label_limit": "The accessibility tree omits custom-drawn option captions; individual option identity and enabled states are not fully accepted from unlabeled controls."
+    },
+    "preferences": {
+      "opened_by_CtrlP": true,
+      "Workflow_tab_label_present": true,
+      "Workflow_mouse_activation": "failed: element not available in cached app state",
+      "modal_raise": "failed: no cached secondary actions",
+      "Escape_closed_preferences": true,
+      "all_16_checkbox_interaction_accepted": false
+    },
+    "current_V7_capture": "timed out with the current official WGC client; no pixel acceptance claimed",
+    "arrangement": {
+      "A_shortcut_sent_to_observed_GLCanvas": true,
+      "icon_click_performed": false,
+      "placement_result_verified": false
+    },
+    "own_project_save_attempt": {
+      "dialog_in_own_C_inputs": true,
+      "filename_set_value": "failed: element not available in cached app state",
+      "AltN_and_Tab_did_not_change_observed_search_focus": true,
+      "saved_project_file": false,
+      "Escape_canceled_dialog": true,
+      "target_directory_still_only_two_original_pinned_inputs": true
+    },
+    "acceptance_limits": [
+      "No direct Arrange-icon or quick-delete/Undo GUI acceptance",
+      "No complete per-checkbox toggle or collapse/rotation checkbox GUI acceptance",
+      "No physical printer sync timer or advertisement visibility acceptance"
+    ]
+  },
+  "own_QA_case_end": {
+    "exact_source_PID_creation_CLI_and_handle_identity_verified": true,
+    "stopped_by_Root_guarded_helper": true,
+    "graceful_exit": false,
+    "user_applications_stopped": 0,
+    "stop_result_sha256": "2abeeeae85bc1c2c2dc00196096f244a9a3614125d7f62b7542d4d155d940fe2"
+  },
+  "normal_GUI_observations_not_inferred_from_own_QA": true
+}

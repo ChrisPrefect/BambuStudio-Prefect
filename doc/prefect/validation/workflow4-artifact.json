@@ -1,0 +1,31 @@
+{
+  "schema": "prefect-workflow4-public-artifact-payload-v1",
+  "documentation_date": "2026-10-27",
+  "documentation_timezone": "Europe/Zurich",
+  "status": "PASS_DOWNLOADED_ARTIFACT_HASH_CRC_AND_SOURCE",
+  "source_commit": "727a703155237a94e4fcc31ebc4effef515d13f0",
+  "source_tree": "16cbb874d6bef7ebbc3453e407451eb9af252b0e",
+  "source_run_id": 40414286154,
+  "artifact_id": 12695023513,
+  "observed_utc": "2026-10-26T23:01:59.062805+00:00",
+  "bytes": 264440555,
+  "sha256": "add72a5bfc23845c5aee6909d95686d99ec538d26d2f455d16110f4f5b52af73",
+  "file_count": 6756,
+  "binary_hashes": {
+    "bambu-studio.exe": "e113e57c2e6db449de57c438ccab52555d659bfa94b7a0f88b899c419708469c",
+    "BambuStudio.dll": "8f6d5dd5ac2d7a86f3c0f86a9ddeadc115d9913bc31805c6c5e7cf49fad81de5",
+    "resources/images/BambuStudio.ico": "db77286997a999fb0f8e06d7522f3c4f843ed61ea0d8718284d942211e1bf5a8"
+  },
+  "ZIP_CRC": "passed",
+  "root_verified_source_marker_matches": true,
+  "original_private_download_report_sha256": "71051c0d4afc627fb2ee67c97413359500925b5965931c3c8e30e00421b690c7",
+  "observation_scope": "Root performed the actual official artifact download and complete hash/CRC/source verification; this public summary whitelists the recorded result and matches independent GitHub artifact metadata. It does not claim installation or GUI testing.",
+  "privacy": {
+    "absolute_user_paths": false,
+    "signed_redirect_urls": false,
+    "user_project_or_recovery_data": false,
+    "raw_profiles_or_logs": false
+  },
+  "installation_verified_by_this_report": false,
+  "actual_GUI_launch_verified_by_this_report": false
+}
