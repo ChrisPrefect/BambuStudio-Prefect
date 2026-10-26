@@ -13,5 +13,5 @@
   "icon_size": 14411,
   "patch_file": "Prefect-BambuStudio-patches-20261026-workflow4.zip",
   "icon_file": "PrefectBambuStudio.ico",
-  "publish": false
+  "publish": true
 }
