@@ -5,7 +5,7 @@ const std = @import("std");
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
-    const tests = [_][]const u8{ "arrange", "background", "filament_sync", "preferences", "simple_fields", "workflow", "notification_tips", "helio_ads" };
+    const tests = [_][]const u8{ "arrange", "background", "filament_sync", "preferences", "simple_fields", "workflow", "notification_tips", "helio_ads", "plate_clear" };
     for (tests) |name| {
         const executable = b.addExecutable(.{
             .name = name,

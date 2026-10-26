@@ -1,6 +1,6 @@
 # Alle Workflow-Anpassungen einzeln schalten
 
-Unter **Einstellungen → Workflow** stehen die dreizehn Anpassungen gemeinsam auf
+Unter **Einstellungen → Workflow** stehen die sechzehn Anpassungen gemeinsam auf
 einer scrollbaren Seite. Jeder Schalter speichert einen eigenen Wert im
 Anwendungsprofil. Es ist kein Zurücksetzen des Profils nötig, um eine Funktion
 abzuschalten. Eine gespeicherte eigene Feldauswahl bleibt beim Ausschalten erhalten.
@@ -9,17 +9,20 @@ abzuschalten. Eine gespeicherte eigene Feldauswahl bleibt beim Ausschalten erhal
 | --- | --- | --- |
 | Druckerfilamente automatisch synchronisieren | `prefect_auto_sync_filaments` | an |
 | Eigene Felder in der einfachen Ansicht | `prefect_simple_fields_enabled` | aus; zunächst Upstream-Standardfelder |
-| Obere Drucker-Box eingeklappt halten | `prefect_printer_collapsed` | an |
+| Drucker-Box beim Start einklappen, danach manuell bedienbar | `prefect_printer_collapsed` | an |
 | Automatisch im Hintergrund slicen | `background_processing` | an |
 | Angeklicktes Filament zuweisen | `prefect_click_filament_assigns_selection` | an |
 | Supportinterface-Eintrag im Filamentmenü | `prefect_support_interface_menu` | an |
 | Mehrere Modelle einzeln importieren | `prefect_import_separate_objects` | an |
 | TPU-Cold-Pull-Erinnerung ausblenden | `prefect_suppress_tpu_cold_pull` | an |
 | Tipps ausblenden | `prefect_hide_tips` | an |
-| Automatische Rotation beim Anordnen | `prefect_arrange_rotation` | an |
+| Initialer editierbarer Rotationsstandard beim Anordnen | `prefect_arrange_rotation` | an |
 | Mehrere eingefügte Objekte automatisch anordnen | `prefect_arrange_after_import` | an |
-| Beim ersten Klick sofort anordnen und Optionen anzeigen | `prefect_arrange_on_click` | an |
+| Mit jedem direkten Anordnen-Iconklick starten und Optionen offen halten | `prefect_arrange_on_click` | an |
 | Helio-Additive-Werbung ausblenden | `prefect_hide_helio_ads` | an |
+| Aktuelle Platte ohne Rückfrage leeren | `prefect_quick_delete_plate` | an |
+| Einfache Ansicht als eine Liste | `prefect_simple_single_list` | an, unabhängig von eigener Feldauswahl |
+| Manuelle Sync-Erfolgseinblendung kurz zeigen | `prefect_short_sync_notice` | an, 1000-ms-Timerfrist |
 
 Die Feldauswahl lässt sich auch direkt von dieser Seite öffnen. Beim erstmaligen
 Aktivieren ohne gespeicherte Liste wird die aktuelle einfache Standardansicht
@@ -32,19 +35,31 @@ durch das Abschalten nicht verändert. Materialklick und Supportinterface-Menü
 werden auch im jeweiligen Handler geprüft; ein zuvor geöffnetes Menü darf eine
 inzwischen deaktivierte Funktion nicht mehr ausführen.
 
-Die Rotation wird bei aktivierter Option für manuelles und automatisches Anordnen
-eingeschaltet. Nach dem Abschalten gelten wieder die gespeicherten normalen
-Anordnungseinstellungen. Die automatische Anordnung ist davon unabhängig schaltbar.
+Rotation ist ein Anfangswert; die Checkbox im Anordnungs-Popup bleibt bedienbar.
+Gespeicherte Entscheidungen je FFF-, sequenziellem FFF- und SLA-Modus gewinnen
+danach. Die frühere effektive F10-Erzwingung wird einmal über
+`prefect_arrange_rotation_default_revision` übertragen; sie wird nicht bei
+jedem Lauf erneut angewendet. Die automatische Anordnung bleibt unabhängig.
 
-F12 startet beim Öffnen des Anordnungs-Popups sofort den vorhandenen Job;
-das Popup bleibt zur Kontrolle der Optionen offen. Ein schließender Klick
-oder ein bereits beschäftigter Worker startet keinen zweiten Auftrag.
+F12 startet mit jedem direkten linken Klick auf das Anordnen-Icon den vorhandenen
+Job, sofern kein UI-Job läuft; das Popup bleibt offen. Interner Toolwechsel
+und programmatisches Schließen starten keinen Auftrag. Hintergrundslicing
+blockiert den manuellen Auftrag nicht still, sondern wird vom vorhandenen
+Jobstart angehalten. Der bestehende Anordnen-Button im Popup bleibt erhalten.
 Die Optionen sind während der Arbeit gesperrt. F13 steuert Helio-Werbung
 unabhängig von F09; echte Analyseergebnisse und Fehler bleiben erhalten.
 
 ## Aktueller Auslieferungs- und Prüfstand
 
-Die dreizehn Schalter gehören zur veröffentlichten Vorabversion `.5`, Quelle
+Die neuen/separat überarbeiteten sechzehn Funktionen sind für `.6` dokumentiert.
+Der neue Sourcecommit, vollständige native Build, GUI-Abnahme und Veröffentlichung
+sind noch nachzuweisen. [Änderungsinventar](changes.json),
+[neue Details F14](14-quick-plate-delete.md), [F15](15-single-simple-list.md),
+[F16](16-sync-success-timeout.md). F15 zeigt ohne F02 die normalen einfachen
+Upstream-Felder und mit F02 dessen gespeicherte Liste; Scope-Limits bleiben.
+Eine leere gespeicherte Liste wird über echte Schlüsselpräsenz erkannt.
+
+**Historisch:** Die dreizehn früheren Schalter gehören zur veröffentlichten `.5`, Quelle
 `939e0b3ce6dce937502666f334950eec2e0f542a`. Der vollständige Windows-Build,
 acht Policytests, V6-Installation und 35/70-Patchreplay sind geprüft.
 Ein eigener isolierter V6-GUI-Start bestätigt, dass fehlende F12-/F13-Schlüssel
@@ -71,7 +86,7 @@ Reset-Dialog in `Preferences.cpp`. Die Feldliste wird über
 Die englischen `_L`-Texte stehen samt deutschen Übersetzungen in
 `scripts/prefect/translations-de.json`; das Katalogskript erzeugt PO/MO reproduzierbar.
 
-Bei Updates alle dreizehn Schalter auf Sichtbarkeit, Speicherung nach Neustart und
+Bei Updates alle sechzehn Schalter auf Sichtbarkeit, Speicherung nach Neustart und
 unabhängiges Ein-/Ausschalten prüfen. Für F02 zusätzlich fehlende, leere und mit
 unbekannten Schlüsseln versehene Listen testen. Bestehende explizite `false`-Werte
 dürfen durch neue Standardwerte oder die Migration nicht wieder aktiviert werden.

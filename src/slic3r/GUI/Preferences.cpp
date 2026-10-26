@@ -932,15 +932,15 @@ wxBoxSizer *PreferencesDialog::create_item_checkbox(wxString title, wxWindow *pa
             wxGetApp().plater()->schedule_background_process();
 
         if ((param == "prefect_arrange_rotation" || param == "prefect_printer_collapsed" || param == "prefect_hide_tips" ||
-             param == "prefect_hide_helio_ads") &&
+             param == "prefect_hide_helio_ads" || param == "prefect_quick_delete_plate") &&
             wxGetApp().plater())
             wxGetApp().plater()->update_ui_from_settings();
 
         if (param == "prefect_hide_helio_ads" && wxGetApp().mainframe)
             wxGetApp().mainframe->update_helio_button_state();
 
-        if (param == "prefect_simple_fields_enabled") {
-            if (checkbox->GetValue())
+        if (param == "prefect_simple_fields_enabled" || param == "prefect_simple_single_list") {
+            if (param == "prefect_simple_fields_enabled" && checkbox->GetValue())
                 if (auto* tab = dynamic_cast<TabPrint*>(wxGetApp().get_tab(Preset::TYPE_PRINT)))
                     tab->initialize_simple_fields();
             for (auto* tab : wxGetApp().tabs_list)
@@ -1596,8 +1596,11 @@ wxWindow *PreferencesDialog::create_prefect_tab()
         }
     });
     sizer->Add(wrap_option_row(scrolled, fields_row), flags);
-    add(_L("Keep the printer box collapsed"),
-        _L("Keeps the printer section compact, including after profile changes. Disabling this option allows the printer box to expand again immediately."),
+    add(_L("Show Simple mode settings in one list"),
+        _L("Combines the normal Simple fields or your custom selection into one list without category tabs or group headings. Object and part scope limits are retained."),
+        "prefect_simple_single_list");
+    add(_L("Start with the printer box collapsed"),
+        _L("Collapses the printer box on startup. Click its header to expand or collapse it; later UI refreshes preserve your choice."),
         "prefect_printer_collapsed");
     add(_L("Slice automatically in the background"),
         _L("Slices the current plate after edits using the existing background worker. Print and export still require your action."),
@@ -1608,15 +1611,18 @@ wxWindow *PreferencesDialog::create_prefect_tab()
     add(_L("Show the support-interface filament action"),
         _L("Adds Set as support interface to each filament menu. Disabling this option hides the action without changing the current support-interface setting."),
         "prefect_support_interface_menu");
-    add(_L("Always enable rotation when arranging"),
-        _L("Keeps automatic rotation enabled for manual and automatic arrangement. Disabling this option restores the remembered arrangement rotation choices."),
+    add(_L("Default to rotation when arranging"),
+        _L("Starts new arrangement settings with rotation enabled. The checkbox stays editable, and your changes are remembered."),
         "prefect_arrange_rotation");
     add(_L("Arrange automatically after importing or pasting multiple objects"),
         _L("Arranges the current plate after importing or pasting at least two separate model objects. Project imports retain their saved arrangement."),
         "prefect_arrange_after_import");
     add(_L("Arrange immediately when opening arrange options"),
-        _L("Runs arrangement once when you open the toolbar menu. The menu stays open so you can change its options and arrange again."),
+        _L("Each click on the Arrange toolbar icon starts arrangement. The menu stays open so you can change its options and arrange again."),
         "prefect_arrange_on_click");
+    add(_L("Show quick delete for the current plate"),
+        _L("Adds a leftmost 3D toolbar button that deletes the current plate's objects without confirmation. Other plates and filament settings are kept. Undo restores the deletion."),
+        "prefect_quick_delete_plate");
     add(_L("Always import multiple models as separate objects"),
         _L("Skips the multipart-object question during model import. Explicit project imports retain their structure."),
         "prefect_import_separate_objects");
@@ -1629,6 +1635,9 @@ wxWindow *PreferencesDialog::create_prefect_tab()
     add(_L("Hide the TPU cold-pull reminder"),
         _L("Hides only the cold-pull advisory for TPU. Other material warnings and printer restrictions remain enabled."),
         "prefect_suppress_tpu_cold_pull");
+    add(_L("Hide filament sync success after one second"),
+        _L("Closes only the successful manual filament-sync popup after one second, including while hovered. Other notices and automatic sync are unchanged."),
+        "prefect_short_sync_notice");
     sizer->AddSpacer(FromDIP(20));
     scrolled->SetSizer(sizer);
     scrolled->FitInside();
@@ -2187,8 +2196,12 @@ void PreferencesDialog::on_reset_preferences()
         "prefect_click_filament_assigns_selection",
         "prefect_support_interface_menu",
         "prefect_arrange_rotation",
+        "prefect_arrange_rotation_default_revision",
         "prefect_arrange_after_import",
         "prefect_arrange_on_click",
+        "prefect_quick_delete_plate",
+        "prefect_simple_single_list",
+        "prefect_short_sync_notice",
         "prefect_printer_collapsed",
         "prefect_import_separate_objects",
         "prefect_hide_tips",

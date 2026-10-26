@@ -2,7 +2,17 @@
 
 Stand: **26. Oktober 2026**, Zeitzone Europe/Zurich.
 
-## Aktueller Prüfstand Workflow 3 / Prefect Bambu Studio .5
+## Neuer Quellnachtrag für .6: Auslieferungsnachweise stehen aus
+
+Die aktuelle Quelldokumentation beschreibt F01–F16, einschließlich überarbeiteter
+F02/F03/F10/F12 und neuer F14/F15/F16. Neue Source-/Artefaktpins, vollständiger
+nativer GUI-Build, Installation, Replay, sichtbare Funktionsabnahme und
+Veröffentlichung werden erst nach tatsächlicher Prüfung ergänzt.
+Es werden keine früheren `.5`-Laufzeit- oder Paketbelege als Nachweis der neuen
+Implementierung ausgegeben. [Inventar](changes.json),
+[Einstellungsseite](workflow-settings.md), [Updateanker](UPSTREAM-UPDATES.md).
+
+## Historischer, zuletzt veröffentlichter Prüfstand Workflow 3 / Prefect Bambu Studio .5
 
 Quelle `939e0b3ce6dce937502666f334950eec2e0f542a`, Tree
 `e397ecc3b38d7a22b6ac4891d0897dfc273d7000`. Der vollständige

@@ -9,7 +9,7 @@
 | Ausgangstag | `v02.08.02.61` |
 | Zugehöriger Commit | `926a7192574bcb9b3a732e1ec59a46d79cb45466` |
 | Feature-Branch | `prefect/workflow` |
-| Änderungsinventar | `doc/prefect/changes.json` mit F01 bis F13 |
+| Änderungsinventar | `doc/prefect/changes.json` mit F01 bis F16 |
 
 Das Ziel ist eine nachvollziehbare Patchserie über dem neuen Upstream-Release.
 Die Detaildokumente erklären für jede Funktion die Entscheidung, bestehende
@@ -17,7 +17,12 @@ Aufrufpfade, persistente Schlüssel, Nebenwirkungen und Laufzeitprüfungen.
 Eine Konfliktlösung nach Funktionen und Zuständigkeiten hat Vorrang vor dem
 mechanischen Übernehmen alter Zeilen.
 
-Die aktuelle Serie bis `939e0b3ce6dce937502666f334950eec2e0f542a`
+Der neue Quellnachtrag für `.6` umfasst F01–F16. Ein neuer Commit-/Treepin,
+nativer GUI-Build und Replay-/Releasebeleg werden erst nach tatsächlicher
+Erzeugung eingetragen. Die folgenden abgeschlossenen Serien sind historische
+Belege ihrer jeweiligen Quellen, keine Prüfung der geänderten `.6`.
+
+Die zuletzt veröffentlichte Serie `.5` bis `939e0b3ce6dce937502666f334950eec2e0f542a`
 enthält **35 Commits**. Alle **70 Zwischenstände** aus Rohdiff- und
 Format-Patch-Replay stimmen exakt mit den Originaltrees überein.
 [Aktueller Replaynachweis](validation/patch-replay-workflow3.md),
@@ -171,13 +176,20 @@ Patchexport ermitteln.
 | Gemeinsame Fork-Standards und Workflow-Einstellungen | alle schaltbaren Features | `AppConfig::set_defaults`, `AppConfig::load`, `PreferencesDialog::create_prefect_tab`, Reset-Liste |
 | Druckerfilamente automatisch übernehmen | F01 | `Sidebar::load_ams_list`, Timer, `Sidebar::sync_ams_list`, `filament_sync_action` |
 | Eigene einfache Druckeinstellungen | F02 | `TabPrint::configure_simple_fields`, `ConfigOptionsGroup::is_line_visible`, `OptionsSearcher::append_options` |
-| Drucker-Box eingeklappt halten | F03 | `m_panel_printer_title`, `m_panel_printer_content`, `Sidebar::update_ui_from_settings` |
+| Drucker-Box beim Start einklappen und danach bedienbar lassen | F03 | `m_panel_printer_title`, `m_prefect_printer_collapse_applied`, `Sidebar::update_ui_from_settings` |
 | Vorhandenen Hintergrundworker aktivieren | F04 | `background_processing_enabled`, `update_restart_background_process`, `restart_background_process`, `on_process_completed` |
 | Filamentklick zur Zuweisung | F05 | `PlaterPresetComboBox`, `assign_filament_to_selection`, `ObjectList::set_extruder_for_selected_items` |
 | Supportinterface im Filamentmenü | F06 | `MenuFactory::create_filament_action_menu`, `set_support_interface_filament`, Menü-Kontextindex |
 | Modellimporte einzeln behalten | F07 | `Plater::priv::load_files`, `looks_like_multipart_object`, `ask_multi` |
 | TPU-Cold-Pull-Empfehlung abwählen | F08 | `DevFilaBlackList::check_filaments`, `suppress_tpu_cold_pull`, unveränderter englischer Meldungstext |
 | Tipps vollständig verbergen | F09 | `DailyTipsPanel::render`, `DailyTipsWindow::open/render`, `SlicingProgressNotification::render` |
+| Editierbare Rotationsstandards und spätere eigene Wahl | F10 | `migrate_arrange_rotation_defaults`, `initial_arrange_rotation`, `set_str`, `params.allow_rotations = settings.enable_rotation` |
+| Anordnung nach Mehrfachimport | F11 | `auto_arrange_insertion_eligible`, eingefügte Objekt-IDs und Pending-Job-Guards |
+| Direkte Anordnen-Iconklicks mit offenem Popup | F12 | `requested_item_id`, `preserve_arrange_popup_on_click`, `EVT_GLCANVAS_ARRANGE`, `manual_arrange_available` |
+| Helio-Werbung getrennt ausblenden | F13 | `PrefectHelioAdsPolicy.hpp`, typisierte beziehungsweise exakt begrenzte alte Tutorialhinweise |
+| Aktuelle Platte instanzgenau leeren | F14 | `prefect_clear_current_plate`, `plate_instance_ids`, `Selection::remove_curr_plate`, `get_volume_idxs_from_instance` |
+| Einfache Ansicht unabhängig von F02 abflachen | F15 | `use_single_simple_list`, `prepare_simple_view`, `m_prefect_grouped_pages`, `hide_prefect_group_header` |
+| Manuelle Sync-Erfolgseinblendung kurz zeigen | F16 | `PrefectSyncNoticeDeadline`, `FinishSyncAmsDialog`, `StartOnce(1000)` |
 | Eindeutige Identität, violette Assets und expliziter Taskleistenintent | Branding/Taskbar | `MainFrame::update_title`, AppUserModelID, `PrefectTaskbarPin::defer_foreground_check`, `user_action`, `request_from_user_action`, Weakref-/Closed-Guards und QA-only `locked_backend()->auto_flush(true)` |
 | Dokumentation, Übersetzung und überprüfbarer Build | alle | `changes.json`, Tests, Übersetzungs-Overlay, eigener Workflow, Profilstarter |
 
@@ -211,19 +223,32 @@ müssen zusammenpassen: noch nicht aufgebaute Seiten, aktive Zeilen und Suche.
 Gemeinsam beschriftete Mehrfachzeilen werden als Einheit ausgewählt; auch eine
 manuell unvollständige Liste mit nur dem zweiten Schlüssel zeigt diese Zeile.
 Sowohl Custom-Renderer als auch Grid-Renderer verwenden `is_line_visible`.
-`toggle_visible` und vorhandene Enable-/Disable-Abhängigkeiten bleiben erhalten.
+Die ursprünglichen Enable-/Disable-Abhängigkeiten bleiben erhalten. Ein gewähltes,
+im aktuellen Scope tatsächlich registriertes Feld kann bei `toggle_visible=false`
+sichtbar, aber deaktiviert dargestellt werden; seine Anwendbarkeit wird nicht
+erfunden. Readonly und Drucker-/Nozzle-/Supportgates weiter respektieren.
 
 Neue Prozesskontexte müssen in der Typzuordnung ergänzt werden. Umbenannte
 Optionsschlüssel gegebenenfalls migrieren; unbekannte Schlüssel bei normalem
 Speichern nicht löschen. Der Knopf muss bei leerer einfacher Ansicht erreichbar
 bleiben und die Anwendungsauswahl beim Speichern erhalten.
+Gespeichert-leer über `load_simple_field_selection` und die Präsenzrückgabe von
+`AppConfig::get(section,key,out)` erkennen, nicht über `has()`, das leere Strings
+als fehlend behandelt. Vorhandene nichtleere und unbekannte Schlüssel erhalten.
+Die drei voneinander getrennten Grenzen prüfen: Modus, aktueller Scope und
+dynamische Anwendbarkeit. `bridge_no_support` ist global/objektbezogen, kein
+Teil-/Höhenbereichsparameter; normales Supportmaterial und TreeSupport verwenden
+unterschiedliche Engineparameter. [Details und Abnahme](simple-fields.md).
 
 ### F03: kompakte Drucker-Box
 
 Anfangsgröße, Benutzerklick und erneute Anwendung der Einstellungen prüfen.
+Der Schalter ist ein Startdefault, keine dauerhafte Sperre des Headerklicks.
+Nur eine geänderte Defaultentscheidung erneut anwenden; normale UI- und
+Presetrefreshes dürfen die vom Benutzer gewählte Stellung nicht überschreiben.
 Wenn Upstream ein anderes Collapse-Widget einführt, dessen öffentliche API
-verwenden. Abschalten der Fork-Option muss normales Ein-/Ausklappen wieder
-ermöglichen, ohne Preset- oder Gerätezustand zu verändern.
+verwenden. Ein-/Ausklappen bleibt bei beiden Schalterstellungen möglich,
+ohne Preset- oder Gerätezustand zu verändern.
 
 ### F04: Hintergrundslicing
 
@@ -274,12 +299,21 @@ Abbrechen und Ergebnisstatus nicht beseitigen.
 
 ### F10/F11: Rotation und Anordnung nach dem Einfügen
 
-`PrefectArrangePolicy.hpp` enthält die gemeinsam benutzte Rotations- und
-Warteentscheidung. `GLCanvas3D` zeigt den wirksamen Rotationswert; `ArrangeJob`
-verwendet dieselbe Entscheidung. Das Aktivieren darf die gespeicherten
-Upstream-Werte der einzelnen Anordnungsmodi nicht überschreiben, damit das
-Abschalten das normale Verhalten wiederherstellt. Die Ausrichtung an der
-Y-Achse darf nicht gleichzeitig eine erzwungene freie Rotation aufheben.
+`PrefectArrangePolicy.hpp` enthält Initialisierung, Legacy-Migration und
+Warteentscheidungen. Die alte F10-Erzwingung ist entfernt: `ArrangeJob` verwendet
+das tatsächliche `settings.enable_rotation`. `migrate_arrange_rotation_defaults`
+überträgt nur bei fehlendem `prefect_arrange_rotation_default_revision` die
+frühere effektive Force-Wahl in alle drei Modusschlüssel. Danach gewinnen
+gespeicherte Entscheidungen, auch ein ausdrückliches `false`; höhere Marker
+werden nicht zurückgesetzt. Bei ausgeschaltetem altem F10 keine vorhandenen
+Moduswerte überschreiben. Reset darf bewusst den aktuellen Initialstandard
+setzen. Die Y-Achsenoption bleibt zur tatsächlich aktivierten Rotation passend.
+
+Wichtig bei `AppConfig`-Aufrufstellen: Ein dreiteiliges
+`set("arrange", key, "0")` kann wegen der `const char*`-zu-`bool`-Konvertierung
+den Boolean-Overload wählen und `true` speichern. Für die Popup-Booleans
+`set_str` verwenden; bei Template-Migrationen einen echten `std::string`
+übergeben. Legacy-, `1`/`0`-, `true`/`false`- und `yes`/`no`-Lesefälle prüfen.
 
 F11 wird an erfolgreichen Mehrfachimport und normales Einfügen aus der
 Zwischenablage angeschlossen. Den vorhandenen Job für die eingefügten
@@ -304,7 +338,7 @@ Revisionsschlüssel und Revision 1 werden auf 2 gehoben; eine höhere Revision
 bleibt erhalten. Die Fälle werden mit den tatsächlich verwendeten Defaults- und
 Migrationsfunktionen in `tests/prefect/preferences_test.cpp` geprüft.
 
-`PreferencesDialog::create_prefect_tab` muss weiterhin alle dreizehn Funktionen auf
+`PreferencesDialog::create_prefect_tab` muss weiterhin alle sechzehn Funktionen auf
 einer Seite abbilden, einschließlich eigenem Schalter plus Picker für F02 und
 `prefect_support_interface_menu` für F06. Die gemeinsame
 [Einstellungsdokumentation](workflow-settings.md) benennt alle Schlüssel und
@@ -343,7 +377,7 @@ starten und neue Schalter, Menütexte sowie Tooltips prüfen.
 5. Mit `Start-Prefect.ps1` in einem neuen isolierten Profil starten. Danach
    zusätzlich ein kopiertes vorhandenes Profil prüfen: Revision, Standardwerte,
    individuelle Abschaltentscheidungen und Neustartverhalten kontrollieren.
-6. Die Prüftabellen aller dreizehn Detaildokumente am gebauten Programm durchführen.
+6. Die Prüftabellen aller sechzehn Detaildokumente am gebauten Programm durchführen.
    F01 benötigt einen tatsächlichen Drucker; F04 ein längeres Modell mit
    gleichzeitigem Editieren, Plattenwechsel und manuellem Slice-All. Keine
    Druckauslösung ist für diese Oberflächen-/Slicing-Abnahme erforderlich.
@@ -362,3 +396,32 @@ Feature-IDs bleiben unverändert, damit spätere Änderungen vergleichbar bleibe
 ## Nachtrag Workflow 3
 
 F09 muss zusätzlich typisierte Tippsbenachrichtigungen unterdrücken, einschließlich des `BBLArcFittingInfo`-Hinweises. Dessen Warning-Level allein ist kein geeigneter Filter: Die automatische Anpassung und echte Warnungen bleiben nötig. Die zusätzlichen, unabhängig schaltbaren Funktionen sind [F12: sofort anordnen](arrange-on-click.md) und [F13: Helio-Werbung](hide-helio-advertising.md). Ihre Detaildokumente enthalten die Updateanker und Gegenprüfungen bei ausgeschaltetem Schalter. Historische Paket- und Pinbelege bleiben an ihre ursprünglichen Sourcecommits gebunden.
+
+## Nachtrag für Workflow 4 / geplante .6
+
+- **F12:** Den echten GLToolbar-Mauspfad mit `check_hover=true` und der
+  ursprünglich angeforderten Item-ID prüfen. Der beim Toolwechsel intern
+  ebenfalls aufgerufene alte Arrange-Eintrag muss ausschalten und darf keinen
+  Auftrag erzeugen. Ein erneuter direkter Iconklick bleibt dagegen gedrückt
+  und postet einmal den bestehenden `EVT_GLCANVAS_ARRANGE`-Befehl. UI-Jobs
+  blockieren weitere Arbeit; Hintergrundslicing nicht still als Veto verwenden,
+  da `Jobs::before_start` es vor dem manuellen Job anhält. Den bestehenden
+  Popupbutton erhalten. [Detail](arrange-on-click.md).
+- **F14:** Aktuelle Plattenzuordnung pro Instanz statt nach Instanz 0 oder
+  ganzem Objekt prüfen. IDs vor Mutation sammeln, vorhandenen Snapshot und
+  `erase`-Pfad erhalten. Andere Platten, unplatzierte Kopien, Filamente und
+  Undo/Redo prüfen. [Detail](14-quick-plate-delete.md).
+- **F15:** Nur Einfachmodus und eigener Layoutschalter entscheiden über die
+  flache Ansicht, niemals F02 voraussetzen. Bestehende Groups/Configs teilen,
+  Originalseiten für Rückkehr behalten und nur den tatsächlichen Owner die
+  gemeinsame Parent-Seite leeren lassen. Suchkategorien erhalten und den
+  Suchsprung auf die flache Seite umleiten. [Detail](15-single-simple-list.md).
+- **F16:** Den OneShot-Timer ausschließlich dem manuellen Erfolgsfenster
+  zuordnen. Show/Update starten neu, Hide/Destruktor stoppen. Auto-Hide darf
+  weder OK-Handler noch `on_hide()` mit Hauptfenster-Raise auslösen; Warnungen
+  und die allgemeine Hoverpause anderer Fenster bleiben erhalten.
+  [Detail](16-sync-success-timeout.md).
+
+Diese Updateanker beschreiben Sourceverhalten. Vor einer `.6`-Auslieferung
+sind neuer vollständiger nativer Build, aktuelle Paket-/Replaybindungen und
+eigene Laufzeitbelege erforderlich; historische `.5`-Ergebnisse ersetzen sie nicht.

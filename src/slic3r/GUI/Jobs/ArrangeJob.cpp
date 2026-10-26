@@ -958,7 +958,7 @@ arrangement::ArrangeParams init_arrange_params(Plater *p)
     params.printable_height                    = print_config.printable_height.value;
     params.nozzle_height                       = print.config().nozzle_height.value;
     params.align_center                        = print_config.best_object_pos.value;
-    params.allow_rotations                     = Prefect::arrange_rotation_enabled(wxGetApp().app_config->get_bool("prefect_arrange_rotation"), settings.enable_rotation);
+    params.allow_rotations                     = settings.enable_rotation;
     params.allow_multi_materials_on_same_plate = settings.allow_multi_materials_on_same_plate;
     params.avoid_extrusion_cali_region         = settings.avoid_extrusion_cali_region;
     params.is_seq_print                        = settings.is_seq_print;

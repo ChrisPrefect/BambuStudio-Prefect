@@ -2,13 +2,19 @@
 
 Der Anwendungsworkflow liegt in
 `.github/workflows/prefect-workflow.yml` auf `prefect/workflow`.
-Er führt zuerst alle acht C++17-Policytests und die Manifestprüfung aus.
+Er führt zuerst alle neun C++17-Policytests und die Manifestprüfung aus.
 Danach baut er unter Windows die vollständige GUI und das portable
 Installationsverzeichnis. Der tatsächliche Ergebnisnachweis steht in
 [VALIDATION.md](VALIDATION.md); die Existenz des Workflows allein ist kein
 Buildnachweis.
 
-Der aktuelle vollständige Windows-Build
+Die geänderte Quelle für `.6` umfasst sechzehn Funktionen. Ein neuer nativer
+Buildlauf, tatsächliche Artefaktpins, Installation, GUI-Abnahme, Patchreplay
+und Veröffentlichung sind noch nachzuweisen. Die vorbereitete separate
+Workflow-4-Pipeline darf bis zum echten Source-/Tree-/Runfreeze keine
+Produktions-Platzhalter als gültige Pins akzeptieren.
+
+Der zuletzt veröffentlichte vollständige Windows-Build `.5`
 [40248952898](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40248952898)
 für `939e0b3ce6dce937502666f334950eec2e0f542a` ist erfolgreich. Die
 [veröffentlichte Vorabversion .5](https://github.com/ChrisPrefect/BambuStudio-Prefect/releases/tag/v02.08.02.61-prefect.5)

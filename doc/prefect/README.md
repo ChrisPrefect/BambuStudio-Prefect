@@ -1,13 +1,26 @@
 # Prefect Bambu Studio – Workflow-Fork
 
-Dieser Fork bündelt dreizehn konkret gewünschte Anpassungen am Arbeitsablauf.
+Dieser Fork bündelt sechzehn konkret gewünschte Anpassungen am Arbeitsablauf.
 Der Änderungsstand wird auf dem Branch `prefect/workflow` im eigenen
 [GitHub-Fork](https://github.com/ChrisPrefect/BambuStudio-Prefect) gepflegt.
 Die gemeinsame Grundlage ist Bambu Studio **v02.08.02.61**, Commit
 `926a7192574bcb9b3a732e1ec59a46d79cb45466`. Das Git-Remote `upstream` zeigt auf
 `https://github.com/bambulab/BambuStudio.git`.
 
-**Aktueller Auslieferungsstand .5 vom 26.10.2026:**
+**Neue Quelle für die geplante `.6`: noch nicht nativ gebaut oder veröffentlicht.**
+Sie ergänzt F14 (aktuelle Platte mit Undo leeren), F15 (unabhängige flache
+einfache Ansicht) und F16 (kurze manuelle Sync-Erfolgseinblendung). Die eigene
+Feldauswahl bleibt gespeichert; bedingt nicht anwendbare gewählte Felder sind
+auffindbar und deaktiviert. Die Drucker-Box startet eingeklappt und lässt sich
+danach öffnen. Rotation ist ein editierbarer Standard statt eines erzwungenen
+Werts. Jeder direkte Anordnen-Iconklick kann den vorhandenen Job starten, auch
+während Hintergrundslicing; die Optionen bleiben offen.
+Die nachstehenden Funktionsbeschreibungen betreffen diese Quelle.
+Ein neuer vollständiger Windows-Build, reale GUI-Abnahme, Patchreplay und
+Releasebelege für `.6` stehen noch aus. Die früheren `.5`-Belege werden dafür
+nicht wiederverwendet.
+
+**Historischer, zuletzt veröffentlichter Auslieferungsstand .5 vom 26.10.2026:**
 `939e0b3ce6dce937502666f334950eec2e0f542a`, Tree
 `e397ecc3b38d7a22b6ac4891d0897dfc273d7000`, enthält alle dreizehn Funktionen.
 Der vollständige [Windows-Build 40248952898](https://github.com/ChrisPrefect/BambuStudio-Prefect/actions/runs/40248952898)
@@ -33,8 +46,9 @@ Pins sind bytegleich; der Desktoplink ist nicht vorhanden.
 Ein eigener V6-GUI-Start bestätigt die geladene DLL und die fehlenden
 F12-/F13-Schlüssel mit wirksamem Standard `true`. Die sichtbare Toolbaraktion,
 der physische Druckerhinweis und die vollständige Checkboxbedienung sind
-damit noch nicht abgenommen. Die bestehende ungespeicherte Benutzersitzung
-bleibt offen; V6 wird beim nächsten normalen Start verwendet.
+damit noch nicht abgenommen. Bei dieser damaligen Prüfung blieb die bestehende
+ungespeicherte Benutzersitzung offen; die Links wurden für den folgenden
+normalen Start auf V6 gebunden.
 
 **Historischer Auslieferungsstand .4 vom 25.10.2026:**
 `3cb50caedececb98a21d2792f41c044ee596f759`, Tree
@@ -123,19 +137,22 @@ Taskleistenlinks sind getrennt von der früheren nativen API-Ablehnung
 | --- | --- | --- | --- |
 | F01 | Änderungen der Filamente am ausgewählten Drucker automatisch ins Projekt übernehmen, ohne Sync-Assistenten oder Abschluss-OK | `prefect_auto_sync_filaments=true` | [Automatischer Filamentabgleich](01-filament-auto-sync.md) |
 | F02 | Über **Felder...** neben dem Modusschalter selbst festlegen, welche Druckeinstellungen in der einfachen Ansicht erscheinen | `prefect_simple_fields_enabled=false`; eigene Liste erst nach Auswahl aktiv | [Eigene einfache Ansicht](simple-fields.md) |
-| F03 | Die obere Drucker-Box dauerhaft eingeklappt halten; Kopfzeile bleibt sichtbar | `prefect_printer_collapsed=true` | [Drucker-Box](03-printer-collapsed.md) |
+| F03 | Die Drucker-Box beim Start einklappen; Kopfzeile bleibt danach bedienbar und UI-Refreshes erhalten die gewählte Stellung | `prefect_printer_collapsed=true` | [Drucker-Box](03-printer-collapsed.md) |
 | F04 | Nach Änderungen die aktuelle Platte mit dem vorhandenen Worker automatisch im Hintergrund slicen | `background_processing=true` | [Hintergrundslicing](04-background-slicing.md) |
 | F05 | Markierten Objekten/Teilen durch Klick auf Farbfeld oder Filamentnamen das betreffende Filament zuweisen | `prefect_click_filament_assigns_selection=true` | [Filamentklick](05-click-filament-assignment.md) |
 | F06 | Im Filament-`...`-Menü **Als Supportinterface festlegen** anbieten; setzt das globale Supportinterface-Material | `prefect_support_interface_menu=true`; verwendet vorhandenen `support_interface_filament`-Key | [Supportinterface-Menü](06-support-interface-menu.md) |
 | F07 | Gemeinsam importierte Modelldateien ohne Zusammenfassungsfrage als einzelne Objekte laden | `prefect_import_separate_objects=true` | [Getrennte Importe](07-separate-imports.md) |
 | F08 | Ausschließlich die wiederkehrende TPU-Cold-Pull-Empfehlung ausblenden | `prefect_suppress_tpu_cold_pull=true` | [TPU-Erinnerung](08-tpu-cold-pull.md) |
 | F09 | Tippsfenster, Slicing-Tipps und typisierte Tipps/Vorschläge ausblenden, einschließlich Kurvenplanungs-Hinweis und reserviertem Platz | `prefect_hide_tips=true` | [Tipps abschalten](09-hide-tips.md) |
-| F10 | Automatische Rotation bei manuellem und automatischem Anordnen immer einschalten | `prefect_arrange_rotation=true` | [Anordnungsrotation](10-arrange-rotation.md) |
+| F10 | Rotation initial einschalten und danach je Anordnungsmodus editierbar speichern | `prefect_arrange_rotation=true` | [Anordnungsrotation](10-arrange-rotation.md) |
 | F11 | Nach dem Einfügen mehrerer unabhängiger Objekte automatisch anordnen | `prefect_arrange_after_import=true` | [Automatische Anordnung](11-auto-arrange.md) |
-| F12 | Beim ersten Toolbar-Klick sofort anordnen; Optionspopup für den nächsten Lauf offen halten | `prefect_arrange_on_click=true` | [Sofort anordnen](arrange-on-click.md) |
+| F12 | Mit jedem direkten Anordnen-Iconklick einen Auftrag starten; Optionspopup offen halten | `prefect_arrange_on_click=true` | [Sofort anordnen](arrange-on-click.md) |
 | F13 | Helio-Additive-Werbung und Aktivierungsaufforderungen ausblenden | `prefect_hide_helio_ads=true` | [Helio-Werbung](hide-helio-advertising.md) |
+| F14 | Ganz links in der 3D-Toolbar die aktuelle Platte ohne Rückfrage leeren; Undo und andere Platten erhalten | `prefect_quick_delete_plate=true` | [Platte leeren](14-quick-plate-delete.md) |
+| F15 | Einfache Prozessfelder ohne Kategorienumschalter und Gruppenüberschriften als eine Liste anzeigen; unabhängig von F02 | `prefect_simple_single_list=true` | [Eine einfache Liste](15-single-simple-list.md) |
+| F16 | Nur die manuelle Filamentsync-Erfolgseinblendung nach 1000-ms-Frist ausblenden, unabhängig von Hover und ohne Fokuswechsel | `prefect_short_sync_notice=true` | [Kurze Sync-Bestätigung](16-sync-success-timeout.md) |
 
-Alle dreizehn Funktionen sind unter **Einstellungen → Workflow** einzeln schaltbar.
+Alle sechzehn Funktionen sind unter **Einstellungen → Workflow** einzeln schaltbar.
 Die [vollständige Einstellungsseite](workflow-settings.md) enthält auch den
 Zugang zur eigenen Feldauswahl und einen Schalter für den Supportinterface-
 Menüeintrag. Dieser verwendet `prefect_support_interface_menu=true`; der
@@ -168,12 +185,13 @@ die Entscheidung über externe Nachbearbeitungsskripte behalten ihre Bedeutung.
   hinzugefügte Teile werden nicht pauschal zerlegt.
 - **Weitere Tippsmeldungen:** F09 erfasst auch den Kurvenplanungs-/Bogenanpassungshinweis und automatische Filamentswitcher-Erstnutzungstipps. Druck-/Kalibrierwarnungen bleiben erhalten. Die unabhängige Helio-Werbeoption F13 gilt auch dann, wenn allgemeine Tipps zugelassen sind.
 
-## Eigenes Profil statt Änderungen an der normalen Installation
+## Zuletzt geprüfte Installation und eigenes Profil
 
-Auf dem geprüften Windows-System liegt das aktuelle Paket vollständig unter
+Der zuletzt belegte veröffentlichte `.5`-Stand liegt vollständig unter
 `%USERPROFILE%\BambuStudio-Prefect-Windows-v6`. ZIP-Hash, sämtliche Datei-Hashes,
 exakte Paketstruktur und fehlende Ressourcen-/Dateilinks sind im
-[aktuellen Prüfbericht](validation/workflow3.md) festgehalten.
+[damaligen Prüfbericht](validation/workflow3.md) festgehalten. Das ist noch keine
+Installation oder Laufzeitprüfung der geänderten `.6`-Quelle.
 Die Laufzeitprüfung verwendet ein separates Profil mit ausschließlich
 synthetischen Prüfmodellen. Das bestehende normale Fork-Profil wird dabei
 nicht gestartet oder verändert.
@@ -220,7 +238,7 @@ Kommunikation mit dem Drucker erforderlich.
 ## Standardwerte und einmalige Migration
 
 `AppConfig::set_defaults()` ergänzt über `PrefectWorkflowPreferences.hpp` fehlende
-Fork-Schalter. Die elf `prefect_*`-Booleans aus F01/F03/F05/F06/F07/F08/F09/F10/F11/F12/F13
+Fork-Schalter. Die vierzehn `prefect_*`-Booleans aus F01/F03/F05/F06/F07/F08/F09/F10/F11/F12/F13/F14/F15/F16
 sind standardmäßig `true`.
 Hintergrundslicing ist ebenfalls standardmäßig aktiv. Die eigene einfache
 Feldauswahl bleibt zunächst deaktiviert. Beim erstmaligen Aktivieren ohne
@@ -233,7 +251,7 @@ wird auf Revision `2` gehoben. Vorhandene Entscheidungen einschließlich
 `background_processing=false` bleiben erhalten. Höhere Revisionen werden
 nicht herabgesetzt. Neue Schlüssel erhalten nur dann den Standard, wenn sie
 fehlen. Die Migration prüft weiterhin das gelesene JSON statt ausschließlich
-der im Konstruktor bereits gesetzten Standardwerte. Die acht nativen
+der im Konstruktor bereits gesetzten Standardwerte. Die nativen
 Policytests enthalten auch die Fälle für erhaltene Abschaltentscheidungen.
 
 Die vorhandene Funktion **Einstellungen zurücksetzen** entfernt auch die neuen
@@ -245,27 +263,31 @@ Funktionen erfordert dagegen keinen Profilreset.
 
 Die maschinenlesbare Bestandsliste steht in [changes.json](changes.json).
 Die abgeschlossene Feature-Commitserie ist in [COMMITS.md](COMMITS.md) zugeordnet.
-`scripts/prefect/check_manifest.py` prüft die dreizehn IDs, die Detaildokumente und
+`scripts/prefect/check_manifest.py` prüft die sechzehn IDs, die Detaildokumente und
 die eingetragenen Quellcodeanker. Der Workflow
 [prefect-workflow.yml](../../.github/workflows/prefect-workflow.yml) kompiliert
 die unabhängigen C++-Policytests und beschreibt anschließend einen vollständigen
 Windows-Build samt portablem Paket. Ob dieser Build tatsächlich ausgeführt
 wurde und erfolgreich war, muss anhand seines Laufs geprüft werden.
 
-Die acht unabhängigen Tests unter `tests/prefect/*_test.cpp` prüfen:
+Die neun unabhängigen Tests unter `tests/prefect/*_test.cpp` prüfen:
 
 - F01: Stoppen, Warten und Synchronisieren bei Geräte-/Jobzuständen;
 - F02: Feldlisten, Normalisierung, gemeinsame Zeilen und Modusgrenzen;
 - F04: Timer-/Workerentscheidungen, Plattenwechsel und Skriptwahl;
 - F08: exakte Unterdrückung der Cold-Pull-Warnung mit unverändertem Verhalten
   bei anderen Meldungen und Schweregraden;
-- F10/F11: wirksame Anordnungsrotation, Layoutschutz und Warten beziehungsweise
-  Verwerfen eines aufgeschobenen Anordnungsauftrags; F12 zusätzlich Öffnen,
-  Schließen und beschäftigten Worker;
+- F10/F11: einmalige Legacy-Rotationsmigration, später gespeicherte Moduswahl,
+  Layoutschutz und Warten beziehungsweise Verwerfen eines aufgeschobenen
+  Anordnungsauftrags; F12 zusätzlich direkte Wiederholung, internen Toolwechsel
+  und beschäftigten Worker;
 - F09: semantische Tippgrenzen, offene und wartende Hinweise, Runtime-Toggle
   sowie unveränderte echte Warnungen und Fehler;
 - F13: unabhängige Werbeunterdrückung, Tippquellen und gezielte Bereinigung
   früherer Helio-Tutorials;
+- F14: instanzgenaue Plattenzuordnung bei gemeinsam verwendeten Objekten;
+- F02/F15: Präsenz leer gespeicherter Listen, unabhängige flache Darstellung
+  und sichtbare, aber nicht anwendbare gewählte Zeilen;
 - gemeinsame Einstellungen: Standardwerte und Migration mit erhaltenen
   Abschaltentscheidungen, fehlenden Schlüsseln und bewusst leerer Feldliste.
 
@@ -273,6 +295,9 @@ Sie prüfen keinen vollständigen wxWidgets-Build, kein tatsächliches Slicing u
 keine Druckerverbindung. Die dafür erforderlichen Abnahmeszenarien stehen je
 Feature im Detaildokument. Die Umsetzung enthält keine automatische
 Druckauslösung.
+
+Der neue `.6`-Quellnachtrag ist damit beschrieben, aber noch nicht durch einen
+neuen vollständigen nativen Build oder eine reale GUI-Serie abgenommen.
 
 Für ein Update sind die getrennten Feature-Commits und ein Format-Patch-Export
 vorgesehen. Der vollständige Ablauf einschließlich Konfliktlösung,

@@ -80,7 +80,7 @@ gebauten Binärpakets nicht.
 
 ## Workflow 3 / Vorabversion .5
 
-Die aktuelle vollständige Serie endet bei
+Die historische veröffentlichte `.5`-Serie endet bei
 `939e0b3ce6dce937502666f334950eec2e0f542a`, Tree
 `e397ecc3b38d7a22b6ac4891d0897dfc273d7000`. Sie enthält **35 Commits**
 seit der unveränderten Upstreambasis. Alle **70 Zwischenbäume** beider
@@ -103,3 +103,15 @@ Der native Windows-Build und die veröffentlichte `.5` binden die Binärdateien
 an diesen letzten Sourcecommit. Spätere reine Dokuanpassungen werden nicht
 als neue Binärquelle oder erneut ausgeführte GUI-Matrix ausgegeben.
 [Aktuelle Auslieferung und Prüfgrenzen](validation/workflow3.md).
+
+## Nächster Quellnachtrag für .6
+
+Die neue Quelle erweitert das Inventar auf F01–F16. Überarbeitet werden
+F02 (Präsenz leer gespeicherter Auswahl, dynamische Sichtbarkeit und Scope),
+F03 (bedienbarer Startdefault), F10 (editierbare Rotationsstandards mit einmaliger
+Legacy-Migration) und F12 (direkte wiederholte Iconklicks). Neue Funktionen sind
+[F14](14-quick-plate-delete.md), [F15](15-single-simple-list.md) und
+[F16](16-sync-success-timeout.md).
+Der neue Sourcecommit und die daraus exportierte Patchserie werden nach dem
+Freeze eingetragen. Die 35/70-Serie und das Binärpaket oben bleiben unveränderte
+historische `.5`-Nachweise, keine bereits ausgeführte `.6`-Prüfung.

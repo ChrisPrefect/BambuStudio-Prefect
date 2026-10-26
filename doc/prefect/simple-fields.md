@@ -31,10 +31,19 @@ Das Übernehmen der Feldauswahl lässt eine bestehende Objektauswahl bestehen.
 Die Auswahl gilt für globale Druckeinstellungen sowie für die jeweiligen
 verfügbaren Objekt-, Teil-, Höhenbereichs- und Platteneinstellungen. Ein Feld,
 das für einen bestimmten Kontext vom Upstream entfernt wird, wird durch die
-Auswahl nicht erfunden. Ebenso bleiben Drucker-/Funktionsabhängigkeiten und
-deaktivierte Eingabefelder erhalten. Die erweiterte und die Entwickleransicht
-verwenden weiterhin die Upstream-Moduszuordnung. Filament- und Drucker-Tabs
-werden nicht verändert.
+Auswahl nicht erfunden. Gewählte, im aktuellen Kontext angelegte Felder bleiben
+auch dann auffindbar, wenn eine dynamische Voraussetzung fehlt: Die Zeile bleibt
+sichtbar und die Eingabe ist ausgegraut. Drucker-/Nozzle-/Supportgrenzen und
+Readonly-Regeln bleiben erhalten; Parameterwerte werden dafür nicht verändert.
+Die erweiterte und die Entwickleransicht verwenden weiterhin die Upstream-
+Moduszuordnung. Das normale Brücken-Supportfeld wird dort bei Tree-Support
+ebenfalls sichtbar, aber nicht als wirksame editierbare Option dargestellt.
+Filament- und Drucker-Tabs werden nicht verändert.
+
+Die separate Funktion [F15: eine einfache Liste](15-single-simple-list.md)
+entfernt Kategorienumschalter und Gruppenüberschriften. Sie funktioniert auch
+ohne F02 mit den normalen einfachen Upstream-Feldern. F02 bestimmt die Feldmenge,
+F15 deren Gliederung; beide Entscheidungen bleiben unabhängig gespeichert.
 
 Die Suche in Druckeinstellungen berücksichtigt dieselbe Auswahl: Ein zusätzlich
 eingeblendetes erweitertes Feld ist in der einfachen Ansicht suchbar. Das ist
@@ -47,7 +56,7 @@ Zwei Schlüssel im Abschnitt `app` der `BambuStudio.conf`:
 | Schlüssel | Typ | Standard | Bedeutung |
 | --- | --- | --- | --- |
 | `prefect_simple_fields_enabled` | Boolean | `false` | Eigene Liste in einfacher Prozessansicht anwenden |
-| `prefect_simple_fields` | String | leer | Kommagetrennte stabile Optionsschlüssel |
+| `prefect_simple_fields` | String | zunächst nicht angelegt | Kommagetrennte stabile Optionsschlüssel; gespeichert leer ist eine eigene Entscheidung |
 
 Beispiel:
 
@@ -74,15 +83,57 @@ derzeitigen Standardfelder.
 Es werden nur persönliche GUI-Einstellungen gespeichert. Druckprofile,
 3MF-Projektfelder und Slicer-Algorithmen erhalten keine neuen Parameter.
 
+**Konkrete Präsenzkorrektur:** `AppConfig::has()` wertet einen leeren String als
+nicht vorhanden. Für diese Liste ist das ungeeignet. Der neue Helfer
+`load_simple_field_selection` verwendet deshalb `get("app", key, value)` und
+dessen Präsenzrückgabe. Eine gespeicherte leere Auswahl wird nach Neustart nicht
+mit Standardfeldern aufgefüllt. Vorhandene nichtleere Auswahl und unbekannte
+Schlüssel bleiben erhalten; es wird keine Benutzerliste in den Quellcode kopiert.
+Initialisierung und bestätigter Dialog speichern über den vorhandenen
+`AppConfig::save()`-Weg im verwendeten Fork-Anwendungsprofil. Ein Update benutzt
+dieselbe Profilablage; die Liste gehört nicht zu einem einzelnen Druckpreset.
+
+## Global und Objekte sind Geltungsbereiche
+
+**Global/Objekte** wechselt die Reichweite der Druckparameter. **Einfach/Erweitert**
+ändert dagegen die sichtbaren Felder. Das sind voneinander unabhängige Achsen.
+`ParamsPanel::set_active_tab` wählt bei lokalem Bearbeiten entsprechend der
+Auswahl Teil, Höhenbereich, Objekt oder Platte. `TabPrintModel` entfernt bereits
+beim Aufbau Schlüssel außerhalb des zulässigen `m_keys`-Umfangs.
+
+Die lokale Konfiguration erbt zunächst die Parent-/globalen Werte und wendet
+vorhandene lokale Overrides an. Bearbeiten schreibt nur in die dafür
+ausgewählten Modellkonfigurationen. Zurücksetzen löscht die lokalen Schlüssel,
+damit wieder der übergeordnete Wert gilt; es schreibt keine Kopie eines
+vermeintlichen Standardwerts in alle Objekte.
+
+Das Feld **Brücken nicht unterstützen** heißt in dieser Basis `bridge_no_support`,
+nicht `dont_support_bridges`. Es ist ein `PrintObjectConfig`-Parameter und deshalb
+global oder für ein Objekt zulässig. Ein Teil-Editor mit `PrintRegionConfig`
+und ein Höhenbereich mit dessen begrenztem Schlüsselsatz bieten es strukturell
+nicht an. Die gespeicherte F02-Auswahl darf dieses Scope-Limit nicht umgehen.
+
+Zusätzlich blendet Upstream diese vorhandene Zeile bei aktivem Tree-Support
+über `toggle_line` aus. Normale Stützen werten `bridge_no_support` aus;
+Baumstützen verwenden `max_bridge_length`. Der Fork lässt die Brückenzeile im
+zulässigen Scope auch in der Expertenansicht auffindbar, bei Tree-Support aber
+deaktiviert und mit erläuterndem Tooltip. Ein ausgewähltes Häkchen wird nicht
+als für Tree-Support wirksam ausgegeben. Support aus kann das Feld weiterhin
+über `have_support_material` deaktivieren.
+
 ## Implementierungsstellen und stabile Suchanker
 
 | Datei | Suchanker | Aufgabe |
 | --- | --- | --- |
 | `src/slic3r/GUI/PrefectSimpleView.hpp` | `class SimpleFieldSelection` | Unabhängige Parser-, Normalisierungs-, Serialisierungs- und Sichtbarkeitspolicy |
+| `src/slic3r/GUI/PrefectSimpleView.hpp` | `load_simple_field_selection`, `simple_row_state` | Gespeichert-leer unterscheiden; Zeilensichtbarkeit von Anwendbarkeit trennen |
 | `src/slic3r/GUI/ParamsPanel.hpp` | `m_simple_fields_btn` | Lebensdauer des neuen Knopfs |
 | `src/slic3r/GUI/ParamsPanel.cpp` | `Felder...`, `configure_simple_fields`, `delete_subwindows` | Sichtbarer Zugang neben dem Modusschalter, Layout und Freigabe |
 | `src/slic3r/GUI/Tab.hpp` | `configure_simple_fields` | Öffentliche Dialogfunktion des Prozess-Tabs |
-| `src/slic3r/GUI/Tab.cpp` | `TabPrint::initialize_simple_fields`, `TabPrint::configure_simple_fields` | Fehlende Feldliste initialisieren; Liste aus `m_pages`/Gruppen/Zeilen erzeugen, Suche, Häkchen, Reset, Speichern, Aktualisieren |
+| `src/slic3r/GUI/Tab.cpp` | `TabPrint::initialize_simple_fields`, `TabPrint::configure_simple_fields`, `simple_field_source_pages` | Fehlende Liste initialisieren; Auswahl aus ursprünglichen Seiten erzeugen, auch bei aktivem flachen Layout; Suche, Reset, Speichern |
+| `src/slic3r/GUI/Tab.cpp` | `TabPrint::toggle_options`, `m_prefect_gate_disabled_fields`, `Page::update_visibility` | Gewählte bedingte Zeile erreichbar halten und deaktivieren; ursprüngliche Gates vor jedem Update neu auswerten |
+| `src/slic3r/GUI/ConfigManipulation.cpp` | `toggle_print_fff_options`, `bridge_no_support` | Unveränderte Support-/Funktionsabhängigkeiten |
+| `src/libslic3r/Support/SupportMaterial.cpp`, `src/libslic3r/Support/TreeSupport.cpp` | `bridge_no_support`, `max_bridge_length` | Unveränderte unterschiedliche Engine-Auswertung normaler und Baumstützen |
 | `src/slic3r/GUI/OptionsGroup.hpp` | `is_option_visible`, `m_config_type` | Gemeinsamer virtueller Sichtbarkeitseinstieg; neutraler Initialwert für Gruppen ohne Tab-Kontext |
 | `src/slic3r/GUI/OptionsGroup.cpp` | `ConfigOptionsGroup::is_visible`, `ConfigOptionsGroup::is_option_visible` | Gleiche Sichtbarkeit für noch nicht aufgebaute Seiten und aktive Eingabezeilen |
 | `src/slic3r/GUI/OG_CustomCtrl.cpp` | `CtrlLine::update_visibility` | Vorhandene Modusabfrage an die Gruppenpolicy delegieren; `toggle_visible` beibehalten |
@@ -128,6 +179,13 @@ zusammengesetzten Eingabe wird nicht neu eingeführt.
    niemals als persistente Identität benutzt werden.
 6. Regressionstest kompilieren und ausführen, GUI bauen und die nachstehenden
    Abnahmen durchführen. Ein erfolgreicher Policytest ersetzt keinen GUI-Build.
+7. Zusätzliche dynamische `toggle_line`-Gates getrennt von Modus und Scope
+   prüfen. Gewählte, tatsächlich registrierte Zeilen dürfen sichtbar, aber
+   nicht entgegen ihrer Anwendbarkeit editierbar werden. Vor der erneuten
+   Gate-Berechnung nur die eigene Präsentations-Deaktivierung zurücknehmen;
+   `Field::toggle` muss Readonly weiter respektieren. Eine Seite mit genau
+   einer bedingt nicht anwendbaren gewählten Zeile vor Aktivierung erreichbar
+   halten. Keine ausgeschlossenen Teil-/Höhenbereichsschlüssel hinzufügen.
 
 ## Tests und Abnahmeszenarien
 
@@ -172,3 +230,11 @@ Nach einem vollständigen Build sind zusätzlich diese GUI-Prüfungen erforderli
     vergrößern und verkleinern; keine abgeschnittenen Bestätigungsbuttons.
 
 Der Teststatus des konkreten Fork-Builds steht im zentralen Prüfprotokoll.
+
+Zusätzliche Regressionen für den `.6`-Quellnachtrag: gespeicherte leere und
+nichtleere Listen nach erneutem Laden; F02/F15 in allen vier Kombinationen;
+Suchsprung ohne sichtbare Kategorien; Global ↔ Objekt/Teil/Höhenbereich/Platte;
+Tree ↔ normale Stützen und Support aus/an; nur eine gewählte bedingt gesperrte
+Zeile; Nozzlewechsel und Rückkehr zur gruppierten Ansicht. Die Policytests
+prüfen Speicherung und Entscheidungsgrenzen, keinen neuen nativen GUI-Build.
+Für `.6` sind Build, tatsächliche GUI-Abnahme und Veröffentlichung noch offen.

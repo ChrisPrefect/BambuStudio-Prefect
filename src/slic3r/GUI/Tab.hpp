@@ -26,6 +26,7 @@
 #include <wx/imaglist.h>
 
 #include <map>
+#include <set>
 #include <vector>
 #include <memory>
 
@@ -83,6 +84,7 @@ public:
 	// BBS
     bool            m_split_multi_line      = false;
     bool            m_option_label_at_right = false;
+    bool            m_prefect_single_list = false;
 
 public:
 	std::vector <ConfigOptionsGroupShp> m_optgroups;
@@ -487,6 +489,8 @@ public:
 
     void        configure_simple_fields(wxWindow* parent);
     void        initialize_simple_fields();
+    void        prepare_simple_view();
+    bool        simple_single_list_active() const { return !m_prefect_grouped_pages.empty(); }
 
 	void		build() override;
 	void		reload_config() override;
@@ -497,6 +501,9 @@ public:
 	bool 		supports_printer_technology(const PrinterTechnology tech) const override { return tech == ptFFF; }
 
 private:
+	const std::vector<PageShp>& simple_field_source_pages() const;
+    std::vector<PageShp> m_prefect_grouped_pages;
+    std::set<std::string> m_prefect_gate_disabled_fields;
 	ogStaticText*	m_recommended_thin_wall_thickness_description_line = nullptr;
 	ogStaticText*	m_top_bottom_shell_thickness_explanation = nullptr;
 };

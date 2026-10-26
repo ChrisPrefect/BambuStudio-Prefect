@@ -24,12 +24,15 @@ int main()
     using namespace Slic3r::Prefect;
     StoredPreferences fresh;
     set_workflow_defaults(fresh);
-    assert(fresh.values.size() == 14);
+    assert(fresh.values.size() == 17);
     assert(fresh.get("background_processing") == "true");
     assert(fresh.get("prefect_arrange_rotation") == "true");
     assert(fresh.get("prefect_arrange_after_import") == "true");
     assert(fresh.get("prefect_arrange_on_click") == "true");
     assert(fresh.get("prefect_hide_helio_ads") == "true");
+    assert(fresh.get("prefect_quick_delete_plate") == "true");
+    assert(fresh.get("prefect_simple_single_list") == "true");
+    assert(fresh.get("prefect_short_sync_notice") == "true");
     assert(fresh.get("prefect_support_interface_menu") == "true");
     assert(fresh.get("prefect_simple_fields_enabled") == "false");
     assert(fresh.get("prefect_workflow_revision") == "2");

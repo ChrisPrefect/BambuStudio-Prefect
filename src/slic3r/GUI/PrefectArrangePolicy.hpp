@@ -2,14 +2,38 @@
 #define slic3r_GUI_PrefectArrangePolicy_hpp_
 
 #include <cstddef>
+#include <initializer_list>
+#include <string>
 
 namespace Slic3r { namespace GUI { namespace Prefect {
 
-// The forced preference is an effective override. Never overwrite the user's
-// original per-mode setting, so disabling it restores upstream behavior live.
-inline bool arrange_rotation_enabled(bool force_rotation, bool remembered_rotation)
+// Older fork versions forced rotation on without updating the hidden per-mode
+// values. Transfer that effective choice once; subsequent explicit choices win.
+template<class Config> bool migrate_arrange_rotation_defaults(Config& config)
 {
-    return force_rotation || remembered_rotation;
+    const char* marker = "prefect_arrange_rotation_default_revision";
+    if (!config.get(marker).empty())
+        return false;
+    if (config.get_bool("prefect_arrange_rotation")) {
+        for (const char* key : {"enable_rotation_fff", "enable_rotation_fff_seq_print", "enable_rotation_sla"})
+            config.set("arrange", key, std::string("1"));
+    }
+    config.set(marker, "1");
+    return true;
+}
+
+inline bool initial_arrange_rotation(const std::string& stored_value, bool default_enabled)
+{
+    if (stored_value.empty())
+        return default_enabled;
+    return stored_value == "1" || stored_value == "yes" || stored_value == "true";
+}
+
+inline bool manual_arrange_available(bool has_objects, bool ui_job_running, bool closing)
+{
+    // The normal Arrange job stops background slicing in before_start().
+    // Background slicing must not silently veto a manual toolbar request.
+    return has_objects && !ui_job_running && !closing;
 }
 
 inline bool arrange_toolbar_enabled(bool can_arrange, bool popup_open)
@@ -24,6 +48,11 @@ inline bool arrange_on_toolbar_open(bool enabled, bool popup_open, bool can_arra
     // The toolbar callback also runs when toggling an item off. Closing the
     // popup must never arrange, and a busy worker must never receive a retry.
     return enabled && popup_open && can_arrange;
+}
+
+inline bool preserve_arrange_popup_on_click(bool enabled, bool direct_left_click, const std::string& item_name)
+{
+    return enabled && direct_left_click && item_name == "arrange";
 }
 
 inline bool auto_arrange_insertion_eligible(bool enabled, std::size_t inserted_objects, bool preserve_layout)

@@ -4,7 +4,7 @@ from pathlib import Path
 
 root = Path(__file__).resolve().parents[2]
 manifest = json.loads((root / "doc/prefect/changes.json").read_text(encoding="utf-8"))
-expected = {f"F{index:02d}" for index in range(1, 14)}
+expected = {f"F{index:02d}" for index in range(1, 17)}
 assert {change["id"] for change in manifest["changes"]} == expected
 assert len(manifest["changes"]) == len(expected)
 assert manifest["upstream_commit"] == "926a7192574bcb9b3a732e1ec59a46d79cb45466"

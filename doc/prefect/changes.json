@@ -44,6 +44,14 @@
         {
           "file": "src/slic3r/GUI/PrefectSimpleView.hpp",
           "text": "SimpleFieldSelection"
+        },
+        {
+          "file": "src/slic3r/GUI/PrefectSimpleView.hpp",
+          "text": "load_simple_field_selection"
+        },
+        {
+          "file": "src/slic3r/GUI/Tab.cpp",
+          "text": "m_prefect_gate_disabled_fields"
         }
       ],
       "tests": [
@@ -53,7 +61,7 @@
     },
     {
       "id": "F03",
-      "title": "Druckerbox dauerhaft eingeklappt",
+      "title": "Druckerbox beim Start eingeklappt, danach aufklappbar",
       "documentation": "doc/prefect/03-printer-collapsed.md",
       "configuration": {
         "prefect_printer_collapsed": true
@@ -62,6 +70,10 @@
         {
           "file": "src/slic3r/GUI/Plater.cpp",
           "text": "prefect_printer_collapsed"
+        },
+        {
+          "file": "src/slic3r/GUI/Plater.cpp",
+          "text": "default_collapse != m_prefect_printer_collapse_applied"
         }
       ],
       "commit": "21a50b6a27492730d65596854120e12d3fca1401"
@@ -202,7 +214,7 @@
     },
     {
       "id": "F10",
-      "title": "Automatische Rotation beim Anordnen",
+      "title": "Editierbarer Rotationsstandard beim Anordnen",
       "commit": "9d4fad7292484403f0b026972835035b0a967d20",
       "documentation": "doc/prefect/10-arrange-rotation.md",
       "configuration": {
@@ -211,16 +223,25 @@
       "anchors": [
         {
           "file": "src/slic3r/GUI/PrefectArrangePolicy.hpp",
-          "text": "arrange_rotation_enabled"
+          "text": "migrate_arrange_rotation_defaults"
+        },
+        {
+          "file": "src/slic3r/GUI/PrefectArrangePolicy.hpp",
+          "text": "initial_arrange_rotation"
+        },
+        {
+          "file": "src/slic3r/GUI/GLCanvas3D.cpp",
+          "text": "appcfg->set_str(\"arrange\", rot_key"
         },
         {
           "file": "src/slic3r/GUI/Jobs/ArrangeJob.cpp",
-          "text": "prefect_arrange_rotation"
+          "text": "params.allow_rotations"
         }
       ],
       "tests": [
         "tests/prefect/arrange_test.cpp"
-      ]
+      ],
+      "migration_marker": "prefect_arrange_rotation_default_revision"
     },
     {
       "id": "F11",
@@ -246,7 +267,7 @@
     },
     {
       "id": "F12",
-      "title": "Anordnen beim ersten Klick starten und Optionen offen halten",
+      "title": "Jeder direkte Anordnen-Iconklick startet und hält Optionen offen",
       "documentation": "doc/prefect/arrange-on-click.md",
       "configuration": {
         "prefect_arrange_on_click": true
@@ -255,6 +276,18 @@
         {
           "file": "src/slic3r/GUI/GLCanvas3D.cpp",
           "text": "prefect_arrange_on_click"
+        },
+        {
+          "file": "src/slic3r/GUI/GLToolbar.cpp",
+          "text": "requested_item_id"
+        },
+        {
+          "file": "src/slic3r/GUI/PrefectArrangePolicy.hpp",
+          "text": "preserve_arrange_popup_on_click"
+        },
+        {
+          "file": "src/slic3r/GUI/GLCanvas3D.cpp",
+          "text": "post_event(SimpleEvent(EVT_GLCANVAS_ARRANGE))"
         }
       ],
       "tests": [
@@ -289,6 +322,87 @@
         "tests/prefect/helio_ads_test.cpp"
       ],
       "commit": "3401f3938e2e3ab70438ea27931496f0f4d4c3b4"
+    },
+    {
+      "id": "F14",
+      "title": "Aktuelle Platte ohne Rückfrage leeren",
+      "documentation": "doc/prefect/14-quick-plate-delete.md",
+      "configuration": {
+        "prefect_quick_delete_plate": true
+      },
+      "anchors": [
+        {
+          "file": "src/slic3r/GUI/GLCanvas3D.cpp",
+          "text": "prefect_clear_current_plate"
+        },
+        {
+          "file": "src/slic3r/GUI/Selection.cpp",
+          "text": "get_volume_idxs_from_instance(instance.first, instance.second)"
+        },
+        {
+          "file": "src/slic3r/GUI/PrefectPlatePolicy.hpp",
+          "text": "plate_instance_ids"
+        }
+      ],
+      "tests": [
+        "tests/prefect/plate_clear_test.cpp",
+        "tests/prefect/preferences_test.cpp"
+      ]
+    },
+    {
+      "id": "F15",
+      "title": "Einfache Prozessansicht unabhängig von der Feldauswahl als eine Liste",
+      "documentation": "doc/prefect/15-single-simple-list.md",
+      "configuration": {
+        "prefect_simple_single_list": true
+      },
+      "anchors": [
+        {
+          "file": "src/slic3r/GUI/PrefectSimpleView.hpp",
+          "text": "use_single_simple_list(bool is_simple, bool single_list)"
+        },
+        {
+          "file": "src/slic3r/GUI/Tab.cpp",
+          "text": "TabPrint::prepare_simple_view"
+        },
+        {
+          "file": "src/slic3r/GUI/Tab.cpp",
+          "text": "hide_prefect_group_header"
+        },
+        {
+          "file": "src/slic3r/GUI/Tab.hpp",
+          "text": "m_prefect_grouped_pages"
+        }
+      ],
+      "tests": [
+        "tests/prefect/simple_fields_test.cpp",
+        "tests/prefect/preferences_test.cpp"
+      ]
+    },
+    {
+      "id": "F16",
+      "title": "Manuelle Filamentsync-Erfolgseinblendung nach einer Sekunde ausblenden",
+      "documentation": "doc/prefect/16-sync-success-timeout.md",
+      "configuration": {
+        "prefect_short_sync_notice": true
+      },
+      "anchors": [
+        {
+          "file": "src/slic3r/GUI/SyncAmsInfoDialog.cpp",
+          "text": "PrefectSyncNoticeDeadline"
+        },
+        {
+          "file": "src/slic3r/GUI/SyncAmsInfoDialog.cpp",
+          "text": "StartOnce(1000)"
+        },
+        {
+          "file": "src/slic3r/GUI/SyncAmsInfoDialog.cpp",
+          "text": "FinishSyncAmsDialog::~FinishSyncAmsDialog"
+        }
+      ],
+      "tests": [
+        "tests/prefect/preferences_test.cpp"
+      ]
     }
   ],
   "fork_repository": "https://github.com/ChrisPrefect/BambuStudio-Prefect",
@@ -304,6 +418,14 @@
     "patch_commits": 35,
     "replay_tree_checks": 70,
     "report": "doc/prefect/validation/workflow3.md",
-    "results": "doc/prefect/validation/workflow3-results.json"
+    "results": "doc/prefect/validation/workflow3-results.json",
+    "role": "Historical published .5 release; its 13-feature source and evidence are unchanged."
+  },
+  "planned_delivery": {
+    "release_tag": "v02.08.02.61-prefect.6",
+    "feature_count": 16,
+    "status": "SOURCE_DOCUMENTED_NATIVE_BUILD_GUI_ACCEPTANCE_AND_PUBLICATION_PENDING",
+    "new_source_commit_not_yet_recorded": true,
+    "evidence_policy": "No .5 binary, replay or GUI proof is reused as proof of the changed .6 implementation."
   }
 }

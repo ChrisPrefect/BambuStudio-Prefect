@@ -14,7 +14,9 @@ template<class Config> void set_workflow_defaults(Config& config)
                             "prefect_import_separate_objects", "prefect_hide_tips",
                             "prefect_suppress_tpu_cold_pull", "prefect_support_interface_menu",
                             "prefect_arrange_rotation", "prefect_arrange_after_import",
-                            "prefect_arrange_on_click", "prefect_hide_helio_ads"}) {
+                            "prefect_arrange_on_click", "prefect_hide_helio_ads",
+                            "prefect_quick_delete_plate", "prefect_simple_single_list",
+                            "prefect_short_sync_notice"}) {
         if (config.get(key).empty())
             config.set_bool(key, true);
     }

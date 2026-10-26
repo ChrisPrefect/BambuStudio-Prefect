@@ -1662,6 +1662,11 @@ void Tab::update_visibility()
 {
     Freeze(); // There is needed Freeze/Thaw to avoid a flashing after Show/Layout
 
+    if (auto* print_tab = dynamic_cast<TabPrint*>(this)) {
+        print_tab->prepare_simple_view();
+        print_tab->toggle_options();
+    }
+
     for (auto page : m_pages)
         page->update_visibility(m_mode, page.get() == m_active_page);
     rebuild_page_tree();
@@ -2777,6 +2782,8 @@ void Tab::update_wiping_button_visibility() {
 void Tab::activate_option(const std::string& opt_key, const wxString& category)
 {
     wxString page_title = translate_category(category, m_type);
+    if (auto* print_tab = dynamic_cast<TabPrint*>(this); print_tab && print_tab->simple_single_list_active())
+        page_title.clear(); // Search metadata retains the original category.
 
     auto cur_item = m_tabctrl->GetFirstVisibleItem();
     if (cur_item < 0)
@@ -3200,16 +3207,65 @@ void TabPrint::initialize_simple_fields()
     auto* app_config = wxGetApp().app_config;
     // An empty saved selection is intentional. Only a never-configured list
     // starts from the upstream Simple rows when its workflow switch is enabled.
-    if (app_config->has("prefect_simple_fields"))
-        return;
     Prefect::SimpleFieldSelection fields;
-    for (const auto& page : m_pages)
+    if (Prefect::load_simple_field_selection(*app_config, fields))
+        return;
+    for (const auto& page : simple_field_source_pages())
         for (const auto& group : page->m_optgroups)
             for (const auto& line : group->get_lines())
                 if (!line.get_options().empty() && line.get_options().front().opt.mode <= comSimple)
                     for (const auto& option : line.get_options())
                         fields.keys.insert(Prefect::SimpleFieldSelection::base_key(option.opt_id));
     app_config->set("prefect_simple_fields", fields.serialize());
+    app_config->save();
+}
+
+const std::vector<PageShp>& TabPrint::simple_field_source_pages() const
+{
+    return simple_single_list_active() ? m_prefect_grouped_pages : m_pages;
+}
+
+void TabPrint::prepare_simple_view()
+{
+    auto* app_config = wxGetApp().app_config;
+    const bool single_list = Prefect::use_single_simple_list(m_mode == comSimple,
+        app_config->get_bool("prefect_simple_single_list"));
+    if (single_list == simple_single_list_active() || m_pages.empty())
+        return;
+
+    // Keep the existing group objects, option/config bindings and callbacks.
+    // Only rebuild their controls through the normal page-switch lifecycle.
+    // All process scopes receive update_mode(), including inactive tabs that
+    // share the parent's page window. Only its current owner may clear it.
+    if (m_parent->get_current_tab() == this)
+        clear_pages();
+    else {
+        for (const auto& page : m_pages)
+            page->clear();
+        m_prefect_gate_disabled_fields.clear();
+    }
+    m_active_page = nullptr;
+    m_last_select_item = -1;
+    if (single_list) {
+        m_prefect_grouped_pages.swap(m_pages);
+        auto page = add_options_page(L("Selected settings"), "empty");
+        page->m_prefect_single_list = true;
+        for (const auto& source : m_prefect_grouped_pages) {
+            // The object editor repeats these four fields in Frequent; their
+            // original categories already supply the same actual options.
+            if (source->title() == "Frequent")
+                continue;
+            page->m_optgroups.insert(page->m_optgroups.end(), source->m_optgroups.begin(), source->m_optgroups.end());
+            page->m_opt_id_map.insert(source->m_opt_id_map.begin(), source->m_opt_id_map.end());
+        }
+    } else {
+        m_pages.clear();
+        m_pages.swap(m_prefect_grouped_pages);
+    }
+    // Restore per-nozzle option IDs on every source page after a layout change.
+    // This does not reload values, change a nozzle, or alter a print parameter.
+    if (m_extruder_switch || m_variant_combo)
+        switch_excluder(-1, false);
 }
 
 void TabPrint::configure_simple_fields(wxWindow* parent)
@@ -3220,7 +3276,7 @@ void TabPrint::configure_simple_fields(wxWindow* parent)
         bool upstream_simple;
     };
     std::map<std::string, Entry> entries;
-    for (const auto& page : m_pages)
+    for (const auto& page : simple_field_source_pages())
         for (const auto& group : page->m_optgroups)
             for (const auto& line : group->get_lines()) {
                 Entry entry;
@@ -3241,9 +3297,10 @@ void TabPrint::configure_simple_fields(wxWindow* parent)
             }
 
     auto* app_config = wxGetApp().app_config;
-    Prefect::SimpleFieldSelection fields(app_config->get("prefect_simple_fields"));
+    Prefect::SimpleFieldSelection fields;
+    const bool saved_selection = Prefect::load_simple_field_selection(*app_config, fields);
     const bool enabled = app_config->get_bool("prefect_simple_fields_enabled");
-    if (!app_config->has("prefect_simple_fields"))
+    if (!saved_selection)
         for (const auto& item : entries)
             if (item.second.upstream_simple)
                 fields.keys.insert(item.second.keys.begin(), item.second.keys.end());
@@ -3257,7 +3314,8 @@ void TabPrint::configure_simple_fields(wxWindow* parent)
     auto* explanation = new wxStaticText(&dialog, wxID_ANY,
         wxString::FromUTF8("Wähle die sichtbaren Felder. Die erweiterte Ansicht bleibt vollständig.\n"
                            "Gemeinsame Eingabezeilen werden zusammen gewählt (+).\n"
-                           "Druckerabhängige Felder erscheinen weiterhin nur bei passenden Voraussetzungen."));
+                           "Die Auswahl wird mit OK dauerhaft auf diesem PC gespeichert.\n"
+                           "Nicht anwendbare gewählte Felder bleiben sichtbar und sind ausgegraut."));
     layout->Add(explanation, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, dialog.FromDIP(12));
     auto* search = new wxSearchCtrl(&dialog, wxID_ANY);
     search->SetDescriptiveText(wxString::FromUTF8("Feldname, Kategorie oder Konfigurationsschlüssel suchen"));
@@ -3742,6 +3800,13 @@ void TabPrint::update_description_lines()
 void TabPrint::toggle_options()
 {
     if (!m_active_page) return;
+    // Undo only our last presentation-only disable, then let the original
+    // applicability/read-only rules recompute every control before we expose
+    // conditionally unavailable chosen rows again. Never change config values.
+    for (const auto& key : m_prefect_gate_disabled_fields)
+        if (auto* field = m_active_page->get_field(key))
+            field->toggle(true);
+    m_prefect_gate_disabled_fields.clear();
     // BBS: whether the preset is Bambu Lab printer
     if (m_preset_bundle) {
         bool is_BBL_printer = m_preset_bundle->printers.get_edited_preset().is_bbl_vendor_preset(m_preset_bundle);
@@ -3749,6 +3814,35 @@ void TabPrint::toggle_options()
     }
 
     m_config_manipulation.toggle_print_fff_options(m_config, int(intptr_t(m_extruder_switch->GetClientData())), m_type < Preset::TYPE_COUNT);
+
+    auto* app_config = wxGetApp().app_config;
+    const bool custom_simple = m_mode == comSimple && app_config->get_bool("prefect_simple_fields_enabled");
+    const Prefect::SimpleFieldSelection selected(app_config->get("prefect_simple_fields"));
+    for (const auto& group : m_active_page->m_optgroups)
+        for (const auto& source_line : group->get_lines()) {
+            const auto& options = source_line.get_options();
+            if (options.empty())
+                continue;
+            const bool bridge_row = std::any_of(options.begin(), options.end(), [](const Option& option) {
+                return Prefect::SimpleFieldSelection::base_key(option.opt_id) == "bridge_no_support";
+            });
+            const bool chosen = custom_simple && selected.contains_any(options.begin(), options.end(),
+                [](const Option& option) { return option.opt_id; });
+            const auto state = Prefect::simple_row_state(source_line.toggle_visible, chosen, bridge_row);
+            if (!state.applicable && state.visible) {
+                if (auto* line = m_active_page->get_line(options.front().opt_id))
+                    line->toggle_visible = true;
+                for (const auto& option : options)
+                    if (auto* field = m_active_page->get_field(option.opt_id)) {
+                        field->toggle(false);
+                        m_prefect_gate_disabled_fields.insert(option.opt_id);
+                    }
+            }
+        }
+    if (auto* field = m_active_page->get_field("bridge_no_support"))
+        if (auto* window = field->getWindow())
+            window->SetToolTip(field->get_tooltip_text(m_config->opt_bool("bridge_no_support") ? "true" : "false") +
+                "\n\n" + _L("This option applies to normal supports. Tree supports use maximum bridge length instead."));
 
     Field *field = m_active_page->get_field("support_style");
     auto   support_type = m_config->opt_enum<SupportType>("support_type");
@@ -3802,6 +3896,7 @@ void TabPrint::update()
 
 void TabPrint::clear_pages()
 {
+    m_prefect_gate_disabled_fields.clear();
     Tab::clear_pages();
 
     m_recommended_thin_wall_thickness_description_line = nullptr;
@@ -6688,6 +6783,10 @@ void Tab::rebuild_page_tree()
          if (m_parent->is_active_and_shown_tab(this)) // FIX: modify state not update
             m_tabctrl->SelectItem(item);
     }
+    if (auto* print_tab = dynamic_cast<TabPrint*>(this))
+        // Each tab owns its own TabCtrl and sizer (constructed with panel=this),
+        // so refreshing an inactive scope never changes the active tab's bar.
+        m_main_sizer->Show(m_tabctrl, !print_tab->simple_single_list_active());
 }
 
 void Tab::update_btns_enabling()
@@ -7207,7 +7306,8 @@ void Tab::set_expanded(bool value)
     if (value) {
         if (m_presets_choice)
             m_main_sizer->Show(m_presets_choice);
-        m_main_sizer->Show(m_tabctrl);
+        auto* print_tab = dynamic_cast<TabPrint*>(this);
+        m_main_sizer->Show(m_tabctrl, !print_tab || !print_tab->simple_single_list_active());
     }
     else {
         m_active_page = NULL;
@@ -8640,9 +8740,34 @@ void Page::reload_config()
         group->reload_config();
 }
 
+static void hide_prefect_group_header(const ConfigOptionsGroupShp& group)
+{
+    if (!group->sizer || !group->stb)
+        return;
+    // The original title and search category stay intact. Hide only the
+    // existing header and its immediately following spacing, not input rows.
+    bool after_header = false;
+    for (auto* item : group->sizer->GetChildren()) {
+        if (after_header) {
+            if (item->IsSpacer())
+                item->Show(false);
+            break;
+        }
+        if (item->IsWindow() && item->GetWindow() == group->stb) {
+            item->Show(false);
+            after_header = true;
+        }
+    }
+    group->stb->Hide();
+}
+
 void Page::update_visibility(ConfigOptionMode mode, bool update_contolls_visibility)
 {
     bool ret_val = false;
+    const auto type = static_cast<Tab*>(m_tab_owner)->type();
+    const bool chosen_simple_rows = mode == comSimple &&
+        (type == Preset::TYPE_PRINT || type == Preset::TYPE_MODEL || type == Preset::TYPE_PLATE) &&
+        wxGetApp().app_config->get_bool("prefect_simple_fields_enabled");
 #if HIDE_FIRST_SPLIT_LINE
     // BBS: no line spliter for first group
     bool first = true;
@@ -8652,6 +8777,15 @@ void Page::update_visibility(ConfigOptionMode mode, bool update_contolls_visibil
                    group->update_visibility(mode) :  // update visibility for all controlls in group
                    group->is_visible(mode)           // just detect visibility for the group
                    ) || ret_val;
+        // Before activation there are no Field controls on which to apply the
+        // disabled-state presentation. A selected gated row must still make
+        // its page reachable, including a list consisting only of such rows.
+        if (chosen_simple_rows && !ret_val)
+            for (const auto& line : group->get_lines())
+                if (group->is_line_visible(line, mode)) {
+                    ret_val = true;
+                    break;
+                }
 #if HIDE_FIRST_SPLIT_LINE
         // BBS: no line spliter for first group
         if (update_contolls_visibility && ret_val && first) {
@@ -8659,6 +8793,8 @@ void Page::update_visibility(ConfigOptionMode mode, bool update_contolls_visibil
             first = false;
         }
 #endif
+        if (m_prefect_single_list && update_contolls_visibility)
+            hide_prefect_group_header(group);
     }
 
     m_show = ret_val;
@@ -8697,12 +8833,15 @@ void Page::activate(ConfigOptionMode mode, std::function<void()> throw_if_cancel
     for (auto group : m_optgroups) {
         if (!group->activate(throw_if_canceled))
             continue;
-        m_vsizer->Add(group->sizer, 0, wxEXPAND | (group->is_legend_line() ? (wxLEFT|wxTOP) : wxALL), 10);
+        m_vsizer->Add(group->sizer, 0, wxEXPAND | (m_prefect_single_list ? (wxLEFT|wxRIGHT) :
+            (group->is_legend_line() ? (wxLEFT|wxTOP) : wxALL)), 10);
         group->update_visibility(mode);
 #if HIDE_FIRST_SPLIT_LINE
         if (first) group->stb->Hide();
         first = false;
 #endif
+        if (m_prefect_single_list)
+            hide_prefect_group_header(group);
         group->reload_config();
         throw_if_canceled();
     }

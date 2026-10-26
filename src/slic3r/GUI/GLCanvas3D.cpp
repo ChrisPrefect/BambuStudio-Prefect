@@ -1356,6 +1356,9 @@ const double GLCanvas3D::DefaultCameraZoomToPlateMarginFactor = 1.25;
 
 void GLCanvas3D::load_arrange_settings()
 {
+    auto& appcfg = wxGetApp().app_config;
+    Prefect::migrate_arrange_rotation_defaults(*appcfg);
+    const bool rotation_default = appcfg->get_bool("prefect_arrange_rotation");
     std::string dist_fff_str =
         wxGetApp().app_config->get("arrange", "min_object_distance");
 
@@ -1386,14 +1389,9 @@ void GLCanvas3D::load_arrange_settings()
     if (!dist_sla_str.empty())
         m_arrange_settings_sla.distance = std::stof(dist_sla_str);
 
-    if (!en_rot_fff_str.empty())
-        m_arrange_settings_fff.enable_rotation = (en_rot_fff_str == "1" || en_rot_fff_str == "yes");
-
-    if (!en_rot_fff_seqp_str.empty())
-        m_arrange_settings_fff_seq_print.enable_rotation = (en_rot_fff_seqp_str == "1" || en_rot_fff_seqp_str == "yes");
-
-    if (!en_rot_sla_str.empty())
-        m_arrange_settings_sla.enable_rotation = (en_rot_sla_str == "1" || en_rot_sla_str == "yes");
+    m_arrange_settings_fff.enable_rotation = Prefect::initial_arrange_rotation(en_rot_fff_str, rotation_default);
+    m_arrange_settings_fff_seq_print.enable_rotation = Prefect::initial_arrange_rotation(en_rot_fff_seqp_str, rotation_default);
+    m_arrange_settings_sla.enable_rotation = Prefect::initial_arrange_rotation(en_rot_sla_str, rotation_default);
 
     //BBS: add specific arrange settings
     m_arrange_settings_fff_seq_print.is_seq_print = true;
@@ -7437,7 +7435,9 @@ bool GLCanvas3D::_render_arrange_menu(float left, float toolbar_height)
     // changing settings under the worker or accepting another arrangement.
     // Use ImGui's flag stack: the wrapper's disabled scope cannot be nested
     // around the existing rotation controls and button wrappers below.
-    const bool controls_disabled = !wxGetApp().plater()->can_do_ui_job();
+    const auto* plater = wxGetApp().plater();
+    const bool controls_disabled = !Prefect::manual_arrange_available(
+        !plater->model().objects.empty(), plater->is_any_job_running(), wxGetApp().is_closing());
     ImGui::PushItemFlag(ImGuiItemFlags_Disabled, controls_disabled);
     if (controls_disabled)
         ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
@@ -7448,8 +7448,6 @@ bool GLCanvas3D::_render_arrange_menu(float left, float toolbar_height)
     const float minimal_slider_width = imgui->scaled(4.f);
     float window_width  = minimal_slider_width + 2 * slider_icon_width;
     auto &appcfg = wxGetApp().app_config;
-    const bool force_rotation = appcfg->get_bool("prefect_arrange_rotation");
-    settings.enable_rotation = Prefect::arrange_rotation_enabled(force_rotation, settings.enable_rotation);
     PrinterTechnology ptech = current_printer_technology();
 
     bool settings_changed = false;
@@ -7490,26 +7488,19 @@ bool GLCanvas3D::_render_arrange_menu(float left, float toolbar_height)
 #if !BBL_RELEASE_TO_PUBLIC
     if (imgui->bbl_checkbox(_L("Save SVG"), settings.save_svg)) {
         settings_out.save_svg = settings.save_svg;
-        appcfg->set("arrange", save_svg_key.c_str(), settings_out.save_svg ? "1" : "0");
+        appcfg->set_str("arrange", save_svg_key.c_str(), settings_out.save_svg ? "1" : "0");
         settings_changed = true;
     }
 #endif
-    if (force_rotation)
-        imgui->disabled_begin(true);
     if (imgui->bbl_checkbox(_L("Auto rotate for arrangement"), settings.enable_rotation)) {
         settings_out.enable_rotation = settings.enable_rotation;
-        appcfg->set("arrange", rot_key.c_str(), settings_out.enable_rotation? "1" : "0");
+        appcfg->set_str("arrange", rot_key.c_str(), settings_out.enable_rotation ? "1" : "0");
         settings_changed = true;
-    }
-    if (force_rotation) {
-        imgui->disabled_end();
-        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled))
-            imgui->tooltip(_L("Always enabled in Preferences > Prefect workflow. Disable that preference to use this checkbox."), imgui->scaled(30.f));
     }
 
     if (imgui->bbl_checkbox(_L("Allow multiple materials on same plate"), settings.allow_multi_materials_on_same_plate)) {
         settings_out.allow_multi_materials_on_same_plate = settings.allow_multi_materials_on_same_plate;
-        appcfg->set("arrange", multi_material_key.c_str(), settings_out.allow_multi_materials_on_same_plate ? "1" : "0");
+        appcfg->set_str("arrange", multi_material_key.c_str(), settings_out.allow_multi_materials_on_same_plate ? "1" : "0");
         settings_changed = true;
     }
 
@@ -7519,7 +7510,7 @@ bool GLCanvas3D::_render_arrange_menu(float left, float toolbar_height)
     if (op && op->getBool()) {
         if (imgui->bbl_checkbox(_L("Avoid extrusion calibration region"), settings.avoid_extrusion_cali_region)) {
             settings_out.avoid_extrusion_cali_region = settings.avoid_extrusion_cali_region;
-            appcfg->set("arrange", avoid_extrusion_key.c_str(), settings_out.avoid_extrusion_cali_region ? "1" : "0");
+            appcfg->set_str("arrange", avoid_extrusion_key.c_str(), settings_out.avoid_extrusion_cali_region ? "1" : "0");
             settings_changed = true;
         }
     } else {
@@ -7528,7 +7519,7 @@ bool GLCanvas3D::_render_arrange_menu(float left, float toolbar_height)
 
     // Align to Y axis. Only enable this option when auto rotation not enabled
     {
-        const bool rotation_enabled = Prefect::arrange_rotation_enabled(force_rotation, settings_out.enable_rotation);
+        const bool rotation_enabled = settings_out.enable_rotation;
         if (rotation_enabled) {  // do not allow align to Y axis if rotation is enabled
             imgui->disabled_begin(true);
             settings.align_to_y_axis = false;
@@ -7536,7 +7527,7 @@ bool GLCanvas3D::_render_arrange_menu(float left, float toolbar_height)
 
         if (imgui->bbl_checkbox(_L("Align to Y axis"), settings.align_to_y_axis)) {
             settings_out.align_to_y_axis = settings.align_to_y_axis;
-            appcfg->set("arrange", align_to_y_axis_key, settings_out.align_to_y_axis ? "1" : "0");
+            appcfg->set_str("arrange", align_to_y_axis_key, settings_out.align_to_y_axis ? "1" : "0");
             settings_changed = true;
         }
 
@@ -7554,6 +7545,7 @@ bool GLCanvas3D::_render_arrange_menu(float left, float toolbar_height)
 
     if (imgui->button(_L("Reset"))) {
         settings_out.reset();
+        settings_out.enable_rotation = appcfg->get_bool("prefect_arrange_rotation");
         //BBS: add specific arrange settings
         if (seq_print) settings_out.is_seq_print = true;
 
@@ -7564,8 +7556,8 @@ bool GLCanvas3D::_render_arrange_menu(float left, float toolbar_height)
             settings_out.align_to_y_axis = false;
 
         appcfg->set("arrange", dist_key, float_to_string_decimal_point(settings_out.distance));
-        appcfg->set("arrange", rot_key, settings_out.enable_rotation ? "1" : "0");
-        appcfg->set("arrange", align_to_y_axis_key, settings_out.align_to_y_axis ? "1" : "0");
+        appcfg->set_str("arrange", rot_key, settings_out.enable_rotation ? "1" : "0");
+        appcfg->set_str("arrange", align_to_y_axis_key, settings_out.align_to_y_axis ? "1" : "0");
         settings_changed = true;
     }
     ImGui::PopStyleVar(1);
@@ -7908,6 +7900,36 @@ bool GLCanvas3D::_init_main_toolbar()
     GLToolbarItem::Data item;
 
     if (m_canvas_type == ECanvasType::CanvasView3D) {
+        const auto can_clear_plate = []() {
+            auto* plater = wxGetApp().plater();
+            if (plater == nullptr || wxGetApp().is_closing() || plater->model().objects.empty() ||
+                plater->is_any_job_running() || plater->only_gcode_mode() || plater->using_exported_file())
+                return false;
+            auto* plate = plater->get_partplate_list().get_curr_plate();
+            return plate != nullptr && !plate->empty();
+        };
+        GLToolbarItem::Data clear_plate_item;
+        clear_plate_item.name = "prefect_clear_current_plate";
+        clear_plate_item.icon_filename_callback = [](bool dark) -> std::string {
+            return dark ? "tree_delete_all_dark.svg" : "tree_delete_all.svg";
+        };
+        clear_plate_item.tooltip = _utf8(L("Delete all objects on the current plate")) + "\n" +
+                                   _utf8(L("No confirmation. Undo restores the objects."));
+        clear_plate_item.sprite_id = sprite_id++;
+        clear_plate_item.b_collapsible = false;
+        clear_plate_item.visibility_callback = []() {
+            return wxGetApp().app_config->get_bool("prefect_quick_delete_plate");
+        };
+        clear_plate_item.enabling_callback = [can_clear_plate]() {
+            return wxGetApp().app_config->get_bool("prefect_quick_delete_plate") && can_clear_plate();
+        };
+        clear_plate_item.left.action_callback = [this, can_clear_plate]() {
+            if (m_canvas != nullptr && wxGetApp().app_config->get_bool("prefect_quick_delete_plate") && can_clear_plate())
+                wxGetApp().plater()->remove_curr_plate_all();
+        };
+        if (!p_main_toolbar->add_item(clear_plate_item))
+            return false;
+
         item.name = "add";
         item.icon_filename_callback = [](bool is_dark_mode)->std::string {
             return is_dark_mode ? "toolbar_open_dark.svg" : "toolbar_open.svg";
@@ -7961,23 +7983,30 @@ bool GLCanvas3D::_init_main_toolbar()
             };
         item.tooltip = _utf8(L("Arrange all objects")) + " [A]\n" + _utf8(L("Arrange objects on selected plates")) + " [Shift+A]";
         item.sprite_id = sprite_id++;
-        item.left.action_callback = [this]() {
+        const std::weak_ptr<GLToolbar> arrange_toolbar = p_main_toolbar;
+        item.left.action_callback = [this, arrange_toolbar]() {
             if (m_canvas != nullptr) {
                 auto* plater = wxGetApp().plater();
-                const auto& toolbar = get_main_toolbar();
+                const auto toolbar = arrange_toolbar.lock();
+                const bool available = Prefect::manual_arrange_available(
+                    !plater->model().objects.empty(), plater->is_any_job_running(), wxGetApp().is_closing());
                 if (Prefect::arrange_on_toolbar_open(
                         wxGetApp().app_config->get_bool("prefect_arrange_on_click"),
-                        toolbar && toolbar->is_item_pressed("arrange"), plater->can_do_ui_job())) {
-                    plater->set_prepare_state(Job::PREPARE_STATE_DEFAULT);
-                    plater->arrange();
+                        toolbar && toolbar->is_item_pressed("arrange"), available)) {
+                    // Use the same main-thread command as the A shortcut. Its
+                    // job group stops background slicing before preparation.
+                    post_event(SimpleEvent(EVT_GLCANVAS_ARRANGE));
                 }
                 NetworkAgent* agent = GUI::wxGetApp().getAgent();
                 if (agent) agent->track_update_property("auto_arrange", std::to_string(++auto_arrange_count));
             }
             };
-        item.enabling_callback = [this]()->bool {
-            const auto& toolbar = get_main_toolbar();
-            return Prefect::arrange_toolbar_enabled(wxGetApp().plater()->can_do_ui_job(),
+        item.enabling_callback = [arrange_toolbar]()->bool {
+            const auto toolbar = arrange_toolbar.lock();
+            const auto* plater = wxGetApp().plater();
+            const bool available = Prefect::manual_arrange_available(
+                !plater->model().objects.empty(), plater->is_any_job_running(), wxGetApp().is_closing());
+            return Prefect::arrange_toolbar_enabled(available,
                                                     toolbar && toolbar->is_item_pressed("arrange"));
         };
         item.left.toggable = true;

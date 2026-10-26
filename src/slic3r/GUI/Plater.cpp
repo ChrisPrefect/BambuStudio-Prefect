@@ -2574,8 +2574,6 @@ Sidebar::Sidebar(Plater *parent)
         // add printer title
         scrolled_sizer->Add(p->m_panel_printer_title, 0, wxEXPAND | wxALL, 0);
         p->m_panel_printer_title->Bind(wxEVT_LEFT_DOWN, [this] (auto & e) {
-            if (wxGetApp().app_config->get_bool("prefect_printer_collapsed"))
-                return;
             if (p->m_panel_printer_content->GetMaxHeight() == 0)
                 p->m_panel_printer_content->SetMaxSize({-1, -1});
             else
@@ -5133,10 +5131,12 @@ void Sidebar::show_mode_sizer(bool show)
 
 void Sidebar::update_ui_from_settings()
 {
-    const bool force_collapse = wxGetApp().app_config->get_bool("prefect_printer_collapsed");
-    if (force_collapse || m_prefect_printer_collapse_applied)
-        p->m_panel_printer_content->SetMaxSize({-1, force_collapse ? 0 : -1});
-    m_prefect_printer_collapse_applied = force_collapse;
+    const bool default_collapse = wxGetApp().app_config->get_bool("prefect_printer_collapsed");
+    // Apply a changed default once. Ordinary profile/UI refreshes must leave
+    // the user's subsequent expand/collapse choice alone.
+    if (default_collapse != m_prefect_printer_collapse_applied)
+        p->m_panel_printer_content->SetMaxSize({-1, default_collapse ? 0 : -1});
+    m_prefect_printer_collapse_applied = default_collapse;
     m_scrolled_sizer->Layout();
     // BBS
     //p->object_manipulation->update_ui_from_settings();

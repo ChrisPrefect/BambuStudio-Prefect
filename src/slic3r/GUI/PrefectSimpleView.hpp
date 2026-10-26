@@ -9,6 +9,25 @@
 
 namespace Slic3r { namespace GUI { namespace Prefect {
 
+inline bool use_single_simple_list(bool is_simple, bool single_list)
+{
+    return is_simple && single_list;
+}
+
+struct SimpleRowState {
+    bool visible;
+    bool applicable;
+};
+
+inline SimpleRowState simple_row_state(bool upstream_visible, bool selected_custom_row,
+                                      bool normal_support_bridge_row)
+{
+    // A chosen row is discoverable even while its prerequisite is off. It must
+    // not become editable or change the underlying slicing applicability.
+    return {upstream_visible || selected_custom_row || normal_support_bridge_row,
+            upstream_visible};
+}
+
 class SimpleFieldSelection
 {
 public:
@@ -68,6 +87,17 @@ public:
         return is_simple && is_print && enabled ? contains(key) : upstream_visible;
     }
 };
+
+template<class Config>
+bool load_simple_field_selection(const Config& config, SimpleFieldSelection& fields)
+{
+    std::string serialized;
+    // AppConfig::has treats an empty value as absent. get(section,key,out)
+    // distinguishes an intentionally saved empty list from a new profile.
+    const bool saved = config.get("app", "prefect_simple_fields", serialized);
+    fields = SimpleFieldSelection(serialized);
+    return saved;
+}
 
 }}} // namespace Slic3r::GUI::Prefect
 

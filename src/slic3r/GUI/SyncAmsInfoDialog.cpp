@@ -5,6 +5,9 @@
 #include <wx/sizer.h>
 #include <wx/slider.h>
 #include <wx/dcmemory.h>
+#include <wx/clntdata.h>
+#include <functional>
+#include <utility>
 #include "GUI_App.hpp"
 #include "Tab.hpp"
 #include "PartPlate.hpp"
@@ -3271,6 +3274,36 @@ void SyncNozzleAndAmsDialog::update_info(InputInfo &info) {
     SetPosition(m_input_info.dialog_pos);
 }
 
+namespace {
+// The success frame owns this one-shot timer through wxClientData. Its lifetime
+// ends with the frame, and hiding/reusing the frame stops/restarts the deadline.
+// Keep it independent of the base animation timer, which pauses on mouse hover.
+class PrefectSyncNoticeDeadline final : public wxClientData, public wxTimer
+{
+public:
+    explicit PrefectSyncNoticeDeadline(std::function<void()> dismiss)
+        : m_dismiss(std::move(dismiss)) {}
+
+    ~PrefectSyncNoticeDeadline() override { Stop(); }
+
+    void restart(bool enabled)
+    {
+        Stop();
+        if (enabled)
+            StartOnce(1000);
+    }
+
+    void Notify() override
+    {
+        Stop();
+        m_dismiss();
+    }
+
+private:
+    std::function<void()> m_dismiss;
+};
+}
+
 FinishSyncAmsDialog::FinishSyncAmsDialog(InputInfo &input_info)
     : BaseTransparentDPIFrame(static_cast<wxWindow *>(wxGetApp().mainframe),
                               310,
@@ -3284,9 +3317,30 @@ FinishSyncAmsDialog::FinishSyncAmsDialog(InputInfo &input_info)
 {
     m_button_cancel->Hide();
     //set_target_pos_and_gradual_disappearance(input_info.ams_btn_pos);
+    SetClientObject(new PrefectSyncNoticeDeadline([this]() {
+        if (!IsBeingDeleted() && !wxGetApp().is_closing() && IsShown() &&
+            m_timed_disappearance_mode == DisappearanceMode::TimedDisappearance &&
+            wxGetApp().app_config->get_bool("prefect_short_sync_notice"))
+            Hide(); // No OK/decision handler or parent Show/Raise when information expires.
+    }));
+    Bind(wxEVT_SHOW, [this](wxShowEvent &event) {
+        if (event.GetEventObject() == this) {
+            if (auto *deadline = dynamic_cast<PrefectSyncNoticeDeadline *>(GetClientObject()))
+                deadline->restart(event.IsShown() &&
+                    m_timed_disappearance_mode == DisappearanceMode::TimedDisappearance &&
+                    wxGetApp().app_config->get_bool("prefect_short_sync_notice"));
+        }
+        event.Skip();
+    });
 }
 
-FinishSyncAmsDialog::~FinishSyncAmsDialog() {}
+FinishSyncAmsDialog::~FinishSyncAmsDialog()
+{
+    // Stop before derived members/base windows are torn down. wxClientData
+    // releases the timer object itself later in the event-handler destructor.
+    if (auto *deadline = dynamic_cast<PrefectSyncNoticeDeadline *>(GetClientObject()))
+        deadline->Stop();
+}
 
 void FinishSyncAmsDialog::deal_ok() {
     on_hide();
@@ -3297,6 +3351,9 @@ void FinishSyncAmsDialog::update_info(InputInfo &info)
     m_input_info = info;
     restart();
     SetPosition(m_input_info.dialog_pos);
+    if (auto *deadline = dynamic_cast<PrefectSyncNoticeDeadline *>(GetClientObject()))
+        deadline->restart(IsShown() && m_timed_disappearance_mode == DisappearanceMode::TimedDisappearance &&
+            wxGetApp().app_config->get_bool("prefect_short_sync_notice"));
 }
 
 ExtruderWarningDialog::ExtruderWarningDialog(InputInfo &input_info, std::string icon_name)

@@ -22822,3 +22822,63 @@ msgstr "Blendet Tagestipps, Tutorialhinweise, Vereinfachungsvorschläge und den 
 #. Prefect workflow
 msgid "Optimization requires an eligible Helio subscription."
 msgstr "Für die Optimierung ist ein entsprechendes Helio-Abonnement erforderlich."
+
+#. Prefect workflow
+msgid "Default to rotation when arranging"
+msgstr "Rotation beim Anordnen standardmäßig aktivieren"
+
+#. Prefect workflow
+msgid "Starts new arrangement settings with rotation enabled. The checkbox stays editable, and your changes are remembered."
+msgstr "Beginnt mit aktivierter Rotation als Vorgabe. Das Kontrollkästchen bleibt bedienbar und deine Änderungen werden gespeichert."
+
+#. Prefect workflow
+msgid "Start with the printer box collapsed"
+msgstr "Drucker-Box beim Start einklappen"
+
+#. Prefect workflow
+msgid "Collapses the printer box on startup. Click its header to expand or collapse it; later UI refreshes preserve your choice."
+msgstr "Klappt die Drucker-Box beim Start ein. Ein Klick auf die Kopfzeile öffnet oder schließt sie; spätere UI-Aktualisierungen behalten deine Wahl bei."
+
+#. Prefect workflow
+msgid "Show Simple mode settings in one list"
+msgstr "Einfache Einstellungen in einer Liste anzeigen"
+
+#. Prefect workflow
+msgid "Combines the normal Simple fields or your custom selection into one list without category tabs or group headings. Object and part scope limits are retained."
+msgstr "Zeigt die einfachen Standardfelder oder deine eigene Auswahl in einer Liste ohne Kategorienumschalter und Gruppenüberschriften. Die Grenzen für Objekt- und Teileinstellungen bleiben erhalten."
+
+#. Prefect workflow
+msgid "Show quick delete for the current plate"
+msgstr "Schnelllöschen für die aktuelle Druckplatte anzeigen"
+
+#. Prefect workflow
+msgid "Adds a leftmost 3D toolbar button that deletes the current plate's objects without confirmation. Other plates and filament settings are kept. Undo restores the deletion."
+msgstr "Ergänzt ganz links in der 3D-Werkzeugleiste eine Schaltfläche zum Löschen aller Objekte der aktuellen Platte ohne Rückfrage. Andere Platten und Filamenteinstellungen bleiben erhalten. Rückgängig stellt die Objekte wieder her."
+
+#. Prefect workflow
+msgid "Delete all objects on the current plate"
+msgstr "Alle Objekte auf der aktuellen Druckplatte löschen"
+
+#. Prefect workflow
+msgid "No confirmation. Undo restores the objects."
+msgstr "Ohne Rückfrage. Rückgängig stellt die Objekte wieder her."
+
+#. Prefect workflow
+msgid "Hide filament sync success after one second"
+msgstr "Filament-Sync-Erfolg nach einer Sekunde ausblenden"
+
+#. Prefect workflow
+msgid "Closes only the successful manual filament-sync popup after one second, including while hovered. Other notices and automatic sync are unchanged."
+msgstr "Schließt die Erfolgseinblendung des manuellen Filamentabgleichs nach einer Sekunde, auch wenn der Mauszeiger darauf liegt. Andere Hinweise und der automatische Abgleich bleiben unverändert."
+
+#. Prefect workflow
+msgid "Selected settings"
+msgstr "Ausgewählte Einstellungen"
+
+#. Prefect workflow
+msgid "This option applies to normal supports. Tree supports use maximum bridge length instead."
+msgstr "Diese Option gilt für normale Stützen. Baumstützen verwenden stattdessen die maximale Brückenlänge."
+
+#. Prefect workflow
+msgid "Each click on the Arrange toolbar icon starts arrangement. The menu stays open so you can change its options and arrange again."
+msgstr "Jeder Klick auf das Anordnen-Symbol startet die Anordnung. Das Menü bleibt offen, damit du Optionen ändern und erneut anordnen kannst."

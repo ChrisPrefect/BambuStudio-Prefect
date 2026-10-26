@@ -2,6 +2,7 @@
 #include "libslic3r/libslic3r.h"
 
 #include "GLToolbar.hpp"
+#include "PrefectArrangePolicy.hpp"
 
 #include "slic3r/GUI/GLCanvas3D.hpp"
 #include "slic3r/GUI/GUI_App.hpp"
@@ -1233,19 +1234,28 @@ void GLToolbar::do_action(GLToolbarItem::EActionType type, int item_id, GLCanvas
         return;
     }
 
-    auto do_item_action = [this](GLToolbarItem::EActionType type, const std::shared_ptr<GLToolbarItem>& item, int item_id, GLCanvas3D& parent)->void {
+    const int requested_item_id = item_id;
+    auto do_item_action = [this, requested_item_id, check_hover](GLToolbarItem::EActionType type, const std::shared_ptr<GLToolbarItem>& item, int item_id, GLCanvas3D& parent)->void {
         if (((type == GLToolbarItem::Right) && item->is_right_toggable()) ||
             ((type == GLToolbarItem::Left) && item->is_left_toggable()))
         {
-            GLToolbarItem::EState state = item->get_state();
-            if (state == GLToolbarItem::Hover)
-                item->set_state(GLToolbarItem::HoverPressed);
-            else if (state == GLToolbarItem::HoverPressed)
-                item->set_state(GLToolbarItem::Hover);
-            else if (state == GLToolbarItem::Pressed)
-                item->set_state(GLToolbarItem::Normal);
-            else if (state == GLToolbarItem::Normal)
-                item->set_state(GLToolbarItem::Pressed);
+            // Only the explicitly clicked Arrange icon repeats its action and
+            // keeps its popup open. The previous item is also dispatched here
+            // when switching tools; it must still toggle off without arranging.
+            const bool keep_pressed = Prefect::preserve_arrange_popup_on_click(
+                wxGetApp().app_config->get_bool("prefect_arrange_on_click"),
+                check_hover && type == GLToolbarItem::Left && item_id == requested_item_id, item->get_name());
+            if (!keep_pressed || !item->is_pressed()) {
+                GLToolbarItem::EState state = item->get_state();
+                if (state == GLToolbarItem::Hover)
+                    item->set_state(GLToolbarItem::HoverPressed);
+                else if (state == GLToolbarItem::HoverPressed)
+                    item->set_state(GLToolbarItem::Hover);
+                else if (state == GLToolbarItem::Pressed)
+                    item->set_state(GLToolbarItem::Normal);
+                else if (state == GLToolbarItem::Normal)
+                    item->set_state(GLToolbarItem::Pressed);
+            }
 
             m_pressed_toggable_id = item->is_pressed() ? item_id : -1;
             item->reset_last_action_type();

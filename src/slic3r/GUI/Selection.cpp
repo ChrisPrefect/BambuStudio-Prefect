@@ -1,5 +1,6 @@
 #include "libslic3r/libslic3r.h"
 #include "Selection.hpp"
+#include "PrefectPlatePolicy.hpp"
 
 #include "3DScene.hpp"
 #include "GLCanvas3D.hpp"
@@ -581,18 +582,19 @@ void Selection::remove_curr_plate()
         return;
 
     PartPlate* plate = wxGetApp().plater()->get_partplate_list().get_curr_plate();
-    if (plate->empty())
+    if (!plate || plate->empty())
         return;
 
     wxGetApp().plater()->take_snapshot(std::string("Selection-Delete Curr Plate All"));
     m_mode = Instance;
     clear();
 
-    for (int obj_idx = 0; obj_idx < m_model->objects.size(); obj_idx++) {
-        if (plate && plate->contain_instance(obj_idx, 0)) {
-            std::vector<unsigned int> volume_idxs = get_volume_idxs_from_object(obj_idx);
-            do_add_volumes(volume_idxs);
-        }
+    const auto instances = Prefect::plate_instance_ids(*m_model,
+        [plate](unsigned int object, unsigned int instance) {
+            return plate->contain_instance(object, instance);
+        });
+    for (const auto& instance : instances) {
+        do_add_volumes(get_volume_idxs_from_instance(instance.first, instance.second));
     }
 
     update_type();
