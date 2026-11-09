@@ -78,7 +78,7 @@ jobs:
           $fingerprint = [Convert]::ToHexString([Security.Cryptography.SHA256]::HashData([Text.Encoding]::UTF8.GetBytes($identity))).ToLowerInvariant()
           "PREFECT_TOOLCHAIN_KEY=$fingerprint" >> $env:GITHUB_ENV
           # Reproducible version/branding metadata date; actual provenance remains GITHUB_SHA.
-          python -B scripts/prefect/version_metadata_epoch.py --workspace "$env:GITHUB_WORKSPACE" --revision "322e1526180a6151dbc20622570881956dd5276b" --deepen --github-env "$env:GITHUB_ENV"
+          python -B scripts/prefect/version_metadata_epoch.py --workspace "$env:GITHUB_WORKSPACE" --revision "f1e1e7f37d4cc78b115dc35b9e7bca7c1a3ea97e" --deepen --github-env "$env:GITHUB_ENV"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           cmake --version
           cl 2>&1 | Select-Object -First 3
@@ -135,9 +135,9 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: out/prefect-app
-          key: ${{ steps.app-cache-key.outputs.family }}-322e1526180a6151dbc20622570881956dd5276b-${{ github.run_id }}-${{ github.run_attempt }}
+          key: ${{ steps.app-cache-key.outputs.family }}-f1e1e7f37d4cc78b115dc35b9e7bca7c1a3ea97e-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: |
-            ${{ steps.app-cache-key.outputs.family }}-322e1526180a6151dbc20622570881956dd5276b-
+            ${{ steps.app-cache-key.outputs.family }}-f1e1e7f37d4cc78b115dc35b9e7bca7c1a3ea97e-
             ${{ steps.app-cache-key.outputs.family }}-
       - name: Restore timestamps of byte-identical build inputs
         shell: pwsh
@@ -173,7 +173,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - uses: actions/upload-artifact@v4
         with:
-          name: BambuStudio-Prefect-Windows-x64-322e1526180a6151dbc20622570881956dd5276b
+          name: BambuStudio-Prefect-Windows-x64-f1e1e7f37d4cc78b115dc35b9e7bca7c1a3ea97e
           path: out/prefect-portable/
           if-no-files-found: error
       - name: Capture verified build-input identities and timestamps
