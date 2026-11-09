@@ -189,4 +189,5 @@ jobs:
         with:
           path: out/prefect-app
           key: ${{ steps.app-cache.outputs.cache-primary-key }}
+# Source delta transport validates after trimming its terminal newline.
 
