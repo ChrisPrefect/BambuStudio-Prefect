@@ -1,0 +1,192 @@
+name: Prefect 2.9.1 reviewed source Windows build
+
+on:
+  push:
+    branches: ['delivery/update-2.9.1']
+    paths: ['.github/workflows/prefect-update-291.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: prefect-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  policy-tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore and verify reviewed 2.9.1 source
+        run: python -B delivery/update-291/restore.py
+      - name: Compile and run workflow policy regressions
+        shell: bash
+        run: |
+          mkdir -p out/prefect-tests
+          for test in tests/prefect/*_test.cpp; do
+            binary="out/prefect-tests/$(basename "$test" .cpp)"
+            g++ -std=c++17 -Wall -Wextra -Werror -pedantic "$test" -o "$binary"
+            "$binary"
+          done
+      - name: Validate change manifest
+        run: python scripts/prefect/check_manifest.py
+      - name: Test DeviceWeb cached-output repair and packaging guard
+        run: python -B tests/prefect/device_web_assets_test.py
+      - name: Test version metadata epoch and source identity independence
+        run: python -B tests/prefect/version_metadata_epoch_test.py
+
+  windows-portable:
+    needs: policy-tests
+    runs-on: windows-2025
+    timeout-minutes: 360
+    env:
+      PREFECT_APP_CMAKE_FLAGS: -DBBL_RELEASE_TO_PUBLIC=1 -DBBL_INTERNAL_TESTING=0 -DCMAKE_BUILD_TYPE=Release
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Restore and verify reviewed 2.9.1 source
+        run: python -B delivery/update-291/restore.py
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+      - name: Select installed Visual Studio generator
+        shell: pwsh
+        run: |
+          $major = ([version]$env:VisualStudioVersion).Major
+          $generator = switch ($major) {
+            18 { 'Visual Studio 18 2026' }
+            17 { 'Visual Studio 17 2022' }
+            default { throw "Unsupported Visual Studio major: $major" }
+          }
+          "PREFECT_GENERATOR=$generator" >> $env:GITHUB_ENV
+          "PREFECT_VS_MAJOR=$major" >> $env:GITHUB_ENV
+          $compiler = (Get-Command cl.exe).Source
+          $cmake = (Get-Command cmake.exe).Source
+          $identity = @(
+            $generator
+            $env:VCToolsVersion
+            $env:WindowsSDKVersion
+            $env:ImageOS
+            $env:ImageVersion
+            (Get-FileHash -LiteralPath $compiler -Algorithm SHA256).Hash
+            (Get-FileHash -LiteralPath $cmake -Algorithm SHA256).Hash
+            $env:GITHUB_WORKSPACE.TrimEnd('\', '/').ToLowerInvariant()
+            'x64'
+          ) -join "`n"
+          $fingerprint = [Convert]::ToHexString([Security.Cryptography.SHA256]::HashData([Text.Encoding]::UTF8.GetBytes($identity))).ToLowerInvariant()
+          "PREFECT_TOOLCHAIN_KEY=$fingerprint" >> $env:GITHUB_ENV
+          # Reproducible version/branding metadata date; actual provenance remains GITHUB_SHA.
+          python -B scripts/prefect/version_metadata_epoch.py --workspace "$env:GITHUB_WORKSPACE" --revision "322e1526180a6151dbc20622570881956dd5276b" --deepen --github-env "$env:GITHUB_ENV"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cmake --version
+          cl 2>&1 | Select-Object -First 3
+          $global:LASTEXITCODE = 0
+      - name: Verify application cache content and timestamp policy
+        shell: pwsh
+        run: ./tests/prefect/build_cache_inputs_test.ps1
+      - name: Verify dependency relocation and early linker checks
+        shell: pwsh
+        run: ./tests/prefect/dependency_link_inputs_test.ps1
+      - name: Install upstream build tools
+        shell: pwsh
+        run: |
+          choco install strawberryperl pkgconfiglite nsis -y --no-progress
+          if ($LASTEXITCODE -notin 0, 3010) { exit $LASTEXITCODE }
+      - name: Restore compiled upstream dependencies
+        id: deps
+        uses: actions/cache/restore@v4
+        with:
+          path: out/prefect-deps-stage
+          key: prefect-deps-v2-${{ env.PREFECT_TOOLCHAIN_KEY }}-${{ hashFiles('deps/**', 'cmake/**', 'scripts/prefect/Restore-UpstreamDependencies.ps1') }}
+      - name: Restore matching official upstream dependencies
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ./scripts/prefect/Restore-UpstreamDependencies.ps1
+      - name: Build upstream dependencies
+        if: steps.deps.outputs.cache-hit != 'true' && env.PREFECT_DEPS_RESTORED != 'true'
+        shell: pwsh
+        run: |
+          cmake -S deps -B out/prefect-deps -G "$env:PREFECT_GENERATOR" -A x64 -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DDESTDIR="$env:GITHUB_WORKSPACE/out/prefect-deps-stage" -DCMAKE_BUILD_TYPE=Release -DDEP_DEBUG=OFF
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cmake --build out/prefect-deps --config Release --parallel 2
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      # Save immediately: a later application/link failure must not discard dependencies.
+      - name: Save compiled upstream dependencies
+        if: steps.deps.outputs.cache-hit != 'true'
+        continue-on-error: true
+        uses: actions/cache/save@v4
+        with:
+          path: out/prefect-deps-stage
+          key: ${{ steps.deps.outputs.cache-primary-key }}
+      - name: Identify compatible application build cache
+        id: app-cache-key
+        shell: pwsh
+        env:
+          PREFECT_CMAKE_DEPS_HASH: ${{ hashFiles('CMakeLists.txt', 'src/**/CMakeLists.txt', 'deps/**', 'cmake/**', 'scripts/prefect/Build-CacheInputs.ps1') }}
+        run: |
+          $identity = @($env:PREFECT_TOOLCHAIN_KEY, $env:PREFECT_CMAKE_DEPS_HASH, $env:PREFECT_APP_CMAKE_FLAGS, 'Release|install|x64') -join "`n"
+          $fingerprint = [Convert]::ToHexString([Security.Cryptography.SHA256]::HashData([Text.Encoding]::UTF8.GetBytes($identity))).ToLowerInvariant()
+          "family=prefect-app-v1-$fingerprint" >> $env:GITHUB_OUTPUT
+      - name: Restore compatible application objects and build metadata
+        id: app-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: out/prefect-app
+          key: ${{ steps.app-cache-key.outputs.family }}-322e1526180a6151dbc20622570881956dd5276b-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            ${{ steps.app-cache-key.outputs.family }}-322e1526180a6151dbc20622570881956dd5276b-
+            ${{ steps.app-cache-key.outputs.family }}-
+      - name: Restore timestamps of byte-identical build inputs
+        shell: pwsh
+        run: ./scripts/prefect/Build-CacheInputs.ps1 -Mode Restore -Workspace $env:GITHUB_WORKSPACE -BuildDirectory out/prefect-app -DependencyDirectory out/prefect-deps-stage -Fingerprint '${{ steps.app-cache-key.outputs.family }}'
+      - name: Configure Prefect fork
+        id: app-configure
+        shell: pwsh
+        run: |
+          $appFlags = $env:PREFECT_APP_CMAKE_FLAGS -split ' '
+          cmake -S . -B out/prefect-app -G "$env:PREFECT_GENERATOR" -A x64 @appFlags -DCMAKE_PREFIX_PATH="$env:GITHUB_WORKSPACE/out/prefect-deps-stage/usr/local" -DCMAKE_INSTALL_PREFIX="$env:GITHUB_WORKSPACE/out/prefect-portable"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Validate generated dependency link inputs before compiling
+        shell: pwsh
+        run: ./scripts/prefect/Test-DependencyLinkInputs.ps1 -BuildDirectory out/prefect-app -DependencyPrefix out/prefect-deps-stage/usr/local
+      - name: Restore missing DeviceWeb runtime bundle from original build target
+        shell: pwsh
+        run: |
+          python -B scripts/prefect/device_web_assets.py repair --workspace "$env:GITHUB_WORKSPACE"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cmake --build out/prefect-app --target device_page_build --config Release --parallel 2
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python -B scripts/prefect/device_web_assets.py verify --workspace "$env:GITHUB_WORKSPACE"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Compile and package Prefect fork
+        id: app-build
+        shell: pwsh
+        run: |
+          cmake --build out/prefect-app --target install --config Release --parallel 2
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Copy-Item scripts/prefect/Start-Prefect.ps1 out/prefect-portable/
+          git rev-parse HEAD | Set-Content out/prefect-portable/PREFECT-COMMIT.txt
+          python -B scripts/prefect/device_web_assets.py verify --workspace "$env:GITHUB_WORKSPACE" --install-directory out/prefect-portable
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BambuStudio-Prefect-Windows-x64-322e1526180a6151dbc20622570881956dd5276b
+          path: out/prefect-portable/
+          if-no-files-found: error
+      - name: Capture verified build-input identities and timestamps
+        id: app-cache-inputs
+        if: always() && steps.app-build.outcome != '' && steps.app-build.outcome != 'skipped'
+        continue-on-error: true
+        shell: pwsh
+        run: ./scripts/prefect/Build-CacheInputs.ps1 -Mode Capture -Workspace $env:GITHUB_WORKSPACE -BuildDirectory out/prefect-app -DependencyDirectory out/prefect-deps-stage -Fingerprint '${{ steps.app-cache-key.outputs.family }}'
+      - name: Save application objects even after a compiler or linker failure
+        if: always() && steps.app-cache-inputs.outcome == 'success'
+        continue-on-error: true
+        uses: actions/cache/save@v4
+        with:
+          path: out/prefect-app
+          key: ${{ steps.app-cache.outputs.cache-primary-key }}
+
